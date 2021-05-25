@@ -10,27 +10,31 @@ class SignInPage extends StatelessWidget {
     return ViewModelBuilder<SigninViewModel>.reactive(
       viewModelBuilder: () => SigninViewModel(),
       builder: (context, model, child) => Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                color: Colors.red,
-                height: SizeConfig.blockSizeVertical * 50,
-              ),
-              Text(
-                'You have pushed the button this many times:',
-              ),
-              Text(
-                '${model.counter}',
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: model.incrementCounter,
-          tooltip: 'Increment',
-          child: Icon(Icons.add),
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                Row(
+                  children: [],
+                ),
+                Row(
+                  children: [],
+                ),
+                Row(
+                  children: [],
+                ),
+                Row(
+                  children: [],
+                ),
+                Row(
+                  children: [],
+                ),
+                Row(
+                  children: [],
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );
