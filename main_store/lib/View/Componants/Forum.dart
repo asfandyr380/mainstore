@@ -87,7 +87,12 @@ class Forum extends StatelessWidget {
                         top: 8.0, left: SizeConfig.blockSizeHorizontal * 2),
                     child: Row(
                       children: [
-                        Checkbox(value: false, onChanged: (val) {}),
+                        Checkbox(
+                          side: BorderSide(width: 1),
+                          value: false,
+                          onChanged: (val) {},
+                          activeColor: accentColor,
+                        ),
                         Container(
                           child: Expanded(
                             child: Text(
