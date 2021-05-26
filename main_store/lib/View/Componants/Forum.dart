@@ -6,13 +6,18 @@ import 'package:main_store/View/Widgets/text_field.dart';
 
 // Complete Forum For the SignUp/Sign In Screen
 class Forum extends StatelessWidget {
+  final bool? isSignIn;
+  Forum({this.isSignIn});
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    bool _isSignIn = isSignIn ?? false;
     return Column(
       children: [
         Container(
-          height: SizeConfig.blockSizeVertical * 70,
+          height: _isSignIn
+              ? SizeConfig.blockSizeVertical * 50
+              : SizeConfig.blockSizeVertical * 70,
           width: SizeConfig.blockSizeHorizontal * 35,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -29,27 +34,31 @@ class Forum extends StatelessWidget {
             children: [
               Container(
                 child: Text(
-                  'SIGN UP',
+                  _isSignIn ? 'SIGN IN' : 'SIGN UP',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                 ),
               ),
               Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: TextInputField(
-                      hint_text: 'User Name',
-                    ),
-                  ),
+                  !_isSignIn
+                      ? Container(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: TextInputField(
+                            hint_text: 'User Name',
+                          ),
+                        )
+                      : Container(),
                   SizedBox(
                     height: 15,
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: TextInputField(
-                      hint_text: 'Phone Number',
-                    ),
-                  ),
+                  !_isSignIn
+                      ? Container(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: TextInputField(
+                            hint_text: 'Phone Number',
+                          ),
+                        )
+                      : Container(),
                   SizedBox(
                     height: 15,
                   ),
@@ -67,10 +76,12 @@ class Forum extends StatelessWidget {
                   SizedBox(
                     height: 15,
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: TextInputField(hint_text: 'Confirm Password'),
-                  ),
+                  !_isSignIn
+                      ? Container(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: TextInputField(hint_text: 'Confirm Password'),
+                        )
+                      : Container(),
                   Padding(
                     padding: EdgeInsets.only(
                         top: 8.0, left: SizeConfig.blockSizeHorizontal * 2),
