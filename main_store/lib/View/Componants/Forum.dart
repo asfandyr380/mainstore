@@ -30,7 +30,7 @@ class Forum extends StatelessWidget {
               Container(
                 child: Text(
                   'SIGN UP',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 23),
                 ),
               ),
               Column(
@@ -76,7 +76,12 @@ class Forum extends StatelessWidget {
                         top: 8.0, left: SizeConfig.blockSizeHorizontal * 2),
                     child: Row(
                       children: [
-                        Checkbox(value: false, onChanged: (val) {}),
+                        Checkbox(
+                          side: BorderSide(width: 1),
+                          value: false,
+                          onChanged: (val) {},
+                          activeColor: accentColor,
+                        ),
                         Container(
                           child: Expanded(
                             child: Text(

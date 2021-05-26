@@ -64,9 +64,10 @@ class Footer extends StatelessWidget {
               children: [
                 Container(
                   alignment: Alignment.topLeft,
+                  padding: EdgeInsets.only(top: 8),
                   child: Text(
                     'Quick Links',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                   ),
                 ),
                 Expanded(child: QuickLinks(pageName: 'Home')),
@@ -91,12 +92,12 @@ class Footer extends StatelessWidget {
                 child: FittedBox(
                   child: Text(
                     'Download App',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );
