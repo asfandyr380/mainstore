@@ -13,10 +13,10 @@ class Forum extends StatelessWidget {
       children: [
         Container(
           height: SizeConfig.blockSizeVertical * 70,
-          width: 450,
+          width: SizeConfig.blockSizeHorizontal * 35,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(3),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -72,22 +72,28 @@ class Forum extends StatelessWidget {
                     child: TextInputField(hint_text: 'Confirm Password'),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 8.0, left: 7),
+                    padding: EdgeInsets.only(
+                        top: 8.0, left: SizeConfig.blockSizeHorizontal * 2),
                     child: Row(
                       children: [
                         Checkbox(value: false, onChanged: (val) {}),
                         Container(
-                          child: Text(
-                            agreeing_term_text,
-                            style: TextStyle(fontSize: 10),
+                          child: Expanded(
+                            child: Text(
+                              agreeing_term_text,
+                              style: TextStyle(fontSize: 10),
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  CustomButton(
-                    onPressed: () {},
-                    label: 'SIGN UP',
+                  Container(
+                    padding: EdgeInsets.only(top: 10, bottom: 7),
+                    child: CustomButton(
+                      onPressed: () {},
+                      label: 'SIGN UP',
+                    ),
                   )
                 ],
               )
