@@ -15,35 +15,51 @@ class Header extends StatelessWidget {
       viewModelBuilder: () => HeaderViewModel(),
       builder: (context, model, child) => Column(
         children: [
-          Row(
-            children: [
-              Container(
-                width: SizeConfig.blockSizeHorizontal * 10,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Icon(FontAwesomeIcons.facebookF, size: 15),
-                    Icon(FontAwesomeIcons.twitter, size: 15),
-                    Icon(FontAwesomeIcons.instagram, size: 15),
-                    Icon(FontAwesomeIcons.pinterestP, size: 15),
-                  ],
+          // Social Icons Bar
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, 0.5),
+                  color: Colors.grey,
+                )
+              ],
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: SizeConfig.blockSizeHorizontal * 10,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(FontAwesomeIcons.facebookF, size: 15),
+                      Icon(FontAwesomeIcons.twitter, size: 15),
+                      Icon(FontAwesomeIcons.instagram, size: 15),
+                      Icon(FontAwesomeIcons.pinterestP, size: 15),
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                padding:
-                    EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 33),
-                child: Text('Free Shipping Over 12\$ Order'),
-              )
-            ],
+                Container(
+                  padding: EdgeInsets.only(
+                      left: SizeConfig.blockSizeHorizontal * 33),
+                  child: Text('Free Shipping Over 12\$ Order'),
+                )
+              ],
+            ),
           ),
-          Divider(),
           // Second Row with logo search box and contact
-          SearchBarRow(),
+          Container(
+            child: SearchBarRow(),
+          ),
           //LISTVIEW
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(child: Text('Home')),
+              Container(
+                child: Text('Home', style: menuTextStyle),
+              ),
               Dropdown(
                   items: item,
                   onChange: (newVal) => model.onDropDownChange(newVal, item[0]),
@@ -63,8 +79,18 @@ class Header extends StatelessWidget {
                   onChange: (newVal) =>
                       model.onDropDownChange(newVal, item3[0]),
                   dropdownVal: item3[0]),
-              Container(child: Text('About Us')),
-              Container(child: Text('Contact Us')),
+              Container(
+                child: Text(
+                  'About Us',
+                  style: menuTextStyle,
+                ),
+              ),
+              Container(
+                child: Text(
+                  'Contact Us',
+                  style: menuTextStyle,
+                ),
+              ),
               // Container(
               //   child: Row(
               //     children: [
