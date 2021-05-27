@@ -26,7 +26,7 @@ class Footer extends StatelessWidget {
                 // Logo Image
                 Container(
                   child: Image.asset(
-                    '/Users/hamidu/StudioProjects/mainstore/main_store/assets/images/logo.png',
+                    'assets/images/logo.png',
                     height: 150,
                     width: 150,
                   ),
@@ -88,14 +88,14 @@ class Footer extends StatelessWidget {
                 ),
                 Container(
                   child: Image.asset(
-                    '/Users/hamidu/StudioProjects/mainstore/main_store/assets/images/47q2YGt.png',
+                    'assets/images/47q2YGt.png',
                     width: SizeConfig.blockSizeHorizontal * 10,
                     height: SizeConfig.blockSizeVertical * 8,
                   ),
                 ),
                 Container(
                   child: Image.asset(
-                    '/Users/hamidu/StudioProjects/mainstore/main_store/assets/images/nkZP7fe.png',
+                    'assets/images/nkZP7fe.png',
                     width: SizeConfig.blockSizeHorizontal * 10,
                     height: SizeConfig.blockSizeVertical * 8,
                   ),

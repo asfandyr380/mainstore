@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
-import 'package:main_store/Config/sizeconfig.dart';
 
 class SearchBarRow extends StatelessWidget {
   @override
@@ -11,7 +10,7 @@ class SearchBarRow extends StatelessWidget {
       children: [
         Container(
           child: Image.asset(
-            '/Users/hamidu/StudioProjects/mainstore/main_store/assets/images/logo.png',
+            'assets/images/logo.png',
             height: 150,
             width: 150,
           ),
