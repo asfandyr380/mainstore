@@ -13,7 +13,7 @@ class RootWidget extends StatelessWidget {
     return MaterialApp(
       onGenerateRoute: (settings) => generateRoute(settings),
       navigatorKey: locator<Navigation>().navigationKey,
-      home: CheckOutPage(true),
+      home: SignupPage(),
     );
   }
 }

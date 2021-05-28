@@ -16,25 +16,34 @@ class Footer extends StatelessWidget {
         height: SizeConfig.blockSizeVertical * 25,
         decoration: BoxDecoration(color: footerColor),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Logo Image
                 Container(
-                  child: Image.asset(
-                    '/Users/hamidu/StudioProjects/mainstore/main_store/assets/images/logo.png',
-                    height: 150,
-                    width: 150,
+                  width: SizeConfig.blockSizeHorizontal * 9,
+                  height: SizeConfig.blockSizeVertical * 15,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/images/logo.png'),
+                    ),
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                      height: SizeConfig.blockSizeVertical * 10,
-                      child: Text(footer_desc, style: TextStyle(fontSize: 12))),
+                Container(
+                  padding: EdgeInsets.only(
+                      left: SizeConfig.blockSizeHorizontal * 1.5),
+                  child: FittedBox(
+                    child: Text(
+                      footer_desc,
+                      maxLines: 10,
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -45,27 +54,32 @@ class Footer extends StatelessWidget {
               ),
             ),
             // Quick Links Column
-            Container(
-              width: SizeConfig.blockSizeHorizontal * 10,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    padding:
-                        EdgeInsets.only(top: SizeConfig.blockSizeVertical * 4),
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Quick Links',
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(left: 30),
+                width: SizeConfig.blockSizeHorizontal * 25,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(top: 10),
+                      alignment: Alignment.topLeft,
+                      child: FittedBox(
+                        child: Text(
+                          'Quick Links',
+                          maxLines: 1,
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.w300),
+                        ),
+                      ),
                     ),
-                  ),
-                  Expanded(child: QuickLinks(pageName: 'Home')),
-                  Expanded(child: QuickLinks(pageName: 'About')),
-                  Expanded(child: QuickLinks(pageName: 'Contact')),
-                  Expanded(child: QuickLinks(pageName: 'Privacy Policy')),
-                  Expanded(child: QuickLinks(pageName: 'Terms & Condition')),
-                ],
+                    Expanded(child: QuickLinks(pageName: 'Home')),
+                    Expanded(child: QuickLinks(pageName: 'About')),
+                    Expanded(child: QuickLinks(pageName: 'Contact')),
+                    Expanded(child: QuickLinks(pageName: 'Privacy Policy')),
+                    Expanded(child: QuickLinks(pageName: 'Terms & Condition')),
+                  ],
+                ),
               ),
             ),
             Padding(
@@ -75,34 +89,39 @@ class Footer extends StatelessWidget {
               ),
             ),
             // Download App Column
-            Column(
-              children: [
-                Container(
-                  padding:
-                      EdgeInsets.only(top: SizeConfig.blockSizeVertical * 4),
-                  child: FittedBox(
-                    child: Text(
-                      'Download App',
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
+            Expanded(
+              child: Container(
+                height: SizeConfig.blockSizeVertical * 25,
+                width: SizeConfig.blockSizeHorizontal * 25,
+                padding: EdgeInsets.only(top: 20),
+                child: Column(
+                  children: [
+                    Container(
+                      child: FittedBox(
+                        child: Text(
+                          'Download App',
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.w300),
+                        ),
+                      ),
                     ),
-                  ),
+                    Container(
+                      child: Image.asset(
+                        'assets/images/47q2YGt.png',
+                        width: SizeConfig.blockSizeHorizontal * 10,
+                        height: SizeConfig.blockSizeVertical * 8,
+                      ),
+                    ),
+                    Container(
+                      child: Image.asset(
+                        'assets/images/nkZP7fe.png',
+                        width: SizeConfig.blockSizeHorizontal * 10,
+                        height: SizeConfig.blockSizeVertical * 8,
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  child: Image.asset(
-                    '/Users/hamidu/StudioProjects/mainstore/main_store/assets/images/47q2YGt.png',
-                    width: SizeConfig.blockSizeHorizontal * 10,
-                    height: SizeConfig.blockSizeVertical * 8,
-                  ),
-                ),
-                Container(
-                  child: Image.asset(
-                    '/Users/hamidu/StudioProjects/mainstore/main_store/assets/images/nkZP7fe.png',
-                    width: SizeConfig.blockSizeHorizontal * 10,
-                    height: SizeConfig.blockSizeVertical * 8,
-                  ),
-                ),
-              ],
+              ),
             )
           ],
         ),

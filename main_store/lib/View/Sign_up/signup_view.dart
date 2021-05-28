@@ -15,15 +15,17 @@ class SignupPage extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Header(),
-              Center(child: Forum()),
-              Padding(
-                padding: EdgeInsets.only(top: 15),
-                child: Footer(),
+              Container(
+                child: Header(),
               ),
+              Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Forum(),
+              ),
+              Footer(),
             ],
           ),
         ),

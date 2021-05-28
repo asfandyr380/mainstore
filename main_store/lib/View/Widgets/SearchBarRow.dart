@@ -6,73 +6,106 @@ import 'package:main_store/Config/sizeconfig.dart';
 class SearchBarRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 7),
-          child: Image.asset(
-            '/Users/hamidu/StudioProjects/mainstore/main_store/assets/images/logo.png',
-            height: SizeConfig.blockSizeVertical * 15,
-            width: SizeConfig.blockSizeHorizontal * 7,
+          margin: EdgeInsets.only(left: 50),
+          width: SizeConfig.blockSizeHorizontal * 9,
+          height: SizeConfig.blockSizeVertical * 13,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage('assets/images/logo.png'),
+            ),
           ),
         ),
         // SEARCHBOX ****
-        Row(
-          children: [
-            Container(
-              height: SizeConfig.blockSizeVertical * 5,
-              width: SizeConfig.blockSizeHorizontal * 45,
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search Product...',
-                  hintStyle: TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF959595),
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      width: 1,
+        Container(
+          child: Row(
+            children: [
+              Container(
+                height: SizeConfig.blockSizeVertical * 5,
+                width: SizeConfig.blockSizeHorizontal * 40,
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search Product...',
+                    hintStyle: TextStyle(
+                      fontSize: 10,
+                      color: Color(0xFF959595),
                     ),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(0),
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(0),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(0),
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(0),
+                      ),
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: accentColor,
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(0),
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(0),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: accentColor,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(0),
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(0),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Container(
-              height: SizeConfig.blockSizeVertical * 5,
-              width: SizeConfig.blockSizeHorizontal * 6,
-              child: Icon(
-                FontAwesomeIcons.search,
-                color: Colors.white,
-                size: 20,
-              ),
-              decoration: BoxDecoration(
-                color: Color(0xff40a944),
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
+              Container(
+                height: SizeConfig.blockSizeVertical * 5,
+                width: SizeConfig.blockSizeHorizontal * 5,
+                child: Icon(
+                  FontAwesomeIcons.search,
+                  color: Colors.white,
+                  size: 20,
+                ),
+                decoration: BoxDecoration(
+                  color: Color(0xff40a944),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                margin: EdgeInsets.only(right: 10),
+                child: Text('Login'),
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 10),
+                child: Row(
+                  children: [
+                    Icon(FontAwesomeIcons.heart),
+                  ],
+                ),
+              ),
+              Container(
+                child: Row(
+                  children: [
+                    Icon(FontAwesomeIcons.shoppingCart),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
