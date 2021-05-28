@@ -16,10 +16,10 @@ String phone = '';
 class Forum extends StatelessWidget {
   final bool? isSignIn;
   final Function(
-    String email,
-    String pass,
-    String name,
-    String phone,
+    String,
+    String,
+    String,
+    String,
   ) onClick;
   Forum({this.isSignIn, required this.onClick});
   @override
@@ -62,7 +62,6 @@ class Forum extends StatelessWidget {
                             child: TextInputField(
                               onChange: (val) {
                                 name = val;
-                                print(name);
                               },
                               hint_text: 'User Name',
                             ),
@@ -77,7 +76,6 @@ class Forum extends StatelessWidget {
                             child: TextInputField(
                               onChange: (val) {
                                 phone = val;
-                                print(phone);
                               },
                               hint_text: 'Phone Number',
                             ),
@@ -91,7 +89,6 @@ class Forum extends StatelessWidget {
                       child: TextInputField(
                         onChange: (val) {
                           email = val;
-                          print(email);
                         },
                         hint_text: 'Enter Email',
                       ),
@@ -104,7 +101,6 @@ class Forum extends StatelessWidget {
                       child: TextInputField(
                         onChange: (val) {
                           pass = val;
-                          print(pass);
                         },
                         hint_text: 'Password',
                       ),
@@ -118,7 +114,6 @@ class Forum extends StatelessWidget {
                             child: TextInputField(
                               onChange: (val) {
                                 confirm_pass = val;
-                                print(confirm_pass);
                               },
                               hint_text: 'Confirm Password',
                             ),
@@ -149,7 +144,7 @@ class Forum extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(top: 10, bottom: 7),
                       child: CustomButton(
-                        onPressed: onClick(email, pass, name, phone),
+                        onPressed: () => onClick(email, pass, name, phone),
                         label: 'SIGN UP',
                       ),
                     )

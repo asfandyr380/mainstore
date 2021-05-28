@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
-import 'package:main_store/View/Componants/Forum.dart';
+import 'package:main_store/View/Componants/Forum/Forum.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Sign_in/signin_viewModel.dart';
 import 'package:stacked/stacked.dart';
@@ -27,6 +27,8 @@ class _SignInPageState extends State<SignInPage> {
               Center(
                   child: Forum(
                 isSignIn: true,
+                onClick:
+                    (String email, String pass, String name, String phone) {},
               )),
               Padding(
                 padding: EdgeInsets.only(top: 15),
