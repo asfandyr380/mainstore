@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
 import 'package:main_store/Services/Navigation/router.dart';
+import 'package:main_store/View/CheckOut/CheckOutView.dart';
 import 'package:main_store/View/Sign_in/Signin_view.dart';
 import 'package:main_store/View/Sign_up/signup_view.dart';
 
@@ -12,7 +13,7 @@ class RootWidget extends StatelessWidget {
     return MaterialApp(
       onGenerateRoute: (settings) => generateRoute(settings),
       navigatorKey: locator<Navigation>().navigationKey,
-      home: SignupPage(),
+      home: CheckOutPage(true),
     );
   }
 }

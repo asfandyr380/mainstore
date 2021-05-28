@@ -10,23 +10,24 @@ class SearchBarRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Container(
+          padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 7),
           child: Image.asset(
             '/Users/hamidu/StudioProjects/mainstore/main_store/assets/images/logo.png',
-            height: 150,
-            width: 150,
+            height: SizeConfig.blockSizeVertical * 15,
+            width: SizeConfig.blockSizeHorizontal * 7,
           ),
         ),
         // SEARCHBOX ****
         Row(
           children: [
             Container(
-              height: 30,
-              width: 500,
+              height: SizeConfig.blockSizeVertical * 5,
+              width: SizeConfig.blockSizeHorizontal * 45,
               child: TextField(
                 decoration: InputDecoration(
                   hintText: 'Search Product...',
                   hintStyle: TextStyle(
-                    fontSize: 10,
+                    fontSize: 12,
                     color: Color(0xFF959595),
                   ),
                   border: OutlineInputBorder(
@@ -56,8 +57,8 @@ class SearchBarRow extends StatelessWidget {
               ),
             ),
             Container(
-              height: 30,
-              width: 50,
+              height: SizeConfig.blockSizeVertical * 5,
+              width: SizeConfig.blockSizeHorizontal * 6,
               child: Icon(
                 FontAwesomeIcons.search,
                 color: Colors.white,
@@ -70,28 +71,6 @@ class SearchBarRow extends StatelessWidget {
                   bottomRight: Radius.circular(10),
                 ),
               ),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Icon(
-              FontAwesomeIcons.phoneVolume,
-              size: 30,
-              color: Color(0xff40a944),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '07304137580',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'Customer Support',
-                  style: TextStyle(fontSize: 10),
-                ),
-              ],
             ),
           ],
         ),

@@ -51,7 +51,8 @@ class Footer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 10),
+                    padding:
+                        EdgeInsets.only(top: SizeConfig.blockSizeVertical * 4),
                     alignment: Alignment.topLeft,
                     child: Text(
                       'Quick Links',
@@ -77,7 +78,8 @@ class Footer extends StatelessWidget {
             Column(
               children: [
                 Container(
-                  padding: EdgeInsets.only(top: 10),
+                  padding:
+                      EdgeInsets.only(top: SizeConfig.blockSizeVertical * 4),
                   child: FittedBox(
                     child: Text(
                       'Download App',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:main_store/Config/sizeconfig.dart';
 
 class QuickLinks extends StatelessWidget {
   final String pageName;

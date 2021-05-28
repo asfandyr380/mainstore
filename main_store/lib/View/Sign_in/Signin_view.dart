@@ -22,16 +22,13 @@ class _SignInPageState extends State<SignInPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // header 1st row
               Header(),
               Center(
-                  child: Forum(
-                isSignIn: true,
-              )),
-              Padding(
-                padding: EdgeInsets.only(top: 15),
-                child: Footer(),
-              )
+                child: Forum(
+                  isSignIn: true,
+                ),
+              ),
+              Footer(),
             ],
           ),
         ),

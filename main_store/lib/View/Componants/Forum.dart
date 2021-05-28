@@ -14,6 +14,10 @@ class Forum extends StatelessWidget {
     bool _isSignIn = isSignIn ?? false;
     return Column(
       children: [
+        Divider(
+          height: SizeConfig.blockSizeVertical * 5,
+          color: Color(0xfffafafa),
+        ),
         Container(
           height: _isSignIn
               ? SizeConfig.blockSizeVertical * 50
@@ -115,6 +119,10 @@ class Forum extends StatelessWidget {
               )
             ],
           ),
+        ),
+        Divider(
+          height: SizeConfig.blockSizeVertical * 5,
+          color: Color(0xfffafafa),
         ),
       ],
     );
