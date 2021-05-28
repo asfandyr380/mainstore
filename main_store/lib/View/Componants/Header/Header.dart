@@ -108,6 +108,7 @@ class Header extends StatelessWidget {
               // )
             ],
           ),
+          Divider(),
         ],
       ),
     );

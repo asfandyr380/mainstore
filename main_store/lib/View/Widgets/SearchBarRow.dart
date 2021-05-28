@@ -81,26 +81,28 @@ class SearchBarRow extends StatelessWidget {
           ),
         ),
         Container(
-          padding: EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 9),
+          padding: EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 5),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Icon(
-                FontAwesomeIcons.phoneVolume,
-                size: 30,
-                color: Color(0xff40a944),
+              Container(
+                margin: EdgeInsets.only(right: 10),
+                child: Text('Login'),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '07304137580',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Customer Support',
-                    style: TextStyle(fontSize: 10),
-                  ),
-                ],
+              Container(
+                margin: EdgeInsets.only(right: 10),
+                child: Row(
+                  children: [
+                    Icon(FontAwesomeIcons.heart),
+                  ],
+                ),
+              ),
+              Container(
+                child: Row(
+                  children: [
+                    Icon(FontAwesomeIcons.shoppingCart),
+                  ],
+                ),
               ),
             ],
           ),

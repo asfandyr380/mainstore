@@ -22,14 +22,14 @@ class _SignInPageState extends State<SignInPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // header 1st row
               Header(),
               Center(
-                  child: Forum(
-                isSignIn: true,
-                onClick:
-                    (String email, String pass, String name, String phone) {},
-              )),
+                child: Forum(
+                  isSignIn: true,
+                  onClick:
+                      (String email, String pass, String name, String phone) {},
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.only(top: 15),
                 child: Footer(),
