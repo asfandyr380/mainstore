@@ -26,8 +26,7 @@ class _SignInPageState extends State<SignInPage> {
               Center(
                 child: Forum(
                   isSignIn: true,
-                  onClick:
-                      (String email, String pass, String name, String phone) {},
+                  onSignInClick: (email, pass) => model.signInUser(email, pass),
                 ),
               ),
               Padding(

@@ -11,9 +11,10 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       onGenerateRoute: (settings) => generateRoute(settings),
       navigatorKey: locator<Navigation>().navigationKey,
-      home: SignupPage(),
+      home: SignInPage(),
     );
   }
 }

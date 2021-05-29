@@ -3,7 +3,7 @@ import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 
 class CustomButton extends StatelessWidget {
-  final Function onPressed;
+  final Function? onPressed;
   final String label;
   CustomButton({required this.onPressed, required this.label});
 
@@ -17,7 +17,7 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(primary: accentColor),
         onPressed: () {
-          onPressed();
+          onPressed!();
         },
         child: Text(
           label,

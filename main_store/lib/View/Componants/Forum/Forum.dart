@@ -18,10 +18,14 @@ class Forum extends StatelessWidget {
   final Function(
     String,
     String,
+  )? onSignInClick;
+  final Function(
     String,
     String,
-  ) onClick;
-  Forum({this.isSignIn, required this.onClick});
+    String,
+    String,
+  )? onClick;
+  Forum({this.isSignIn, this.onClick, this.onSignInClick});
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -144,8 +148,10 @@ class Forum extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(top: 10, bottom: 7),
                       child: CustomButton(
-                        onPressed: () => onClick(email, pass, name, phone),
-                        label: 'SIGN UP',
+                        onPressed: _isSignIn
+                            ? () => onSignInClick!(email, pass)
+                            : () => onClick!(email, pass, name, phone),
+                        label: _isSignIn ? 'SIGN IN' : 'SIGN UP',
                       ),
                     )
                   ],
