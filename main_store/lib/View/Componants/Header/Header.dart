@@ -8,9 +8,13 @@ import 'package:main_store/View/Widgets/drop_Down.dart';
 import 'package:stacked/stacked.dart';
 
 class Header extends StatelessWidget {
+  final bool? isSignIn;
+  Header({this.isSignIn});
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    bool _isSignIn = isSignIn ?? false;
     return ViewModelBuilder<HeaderViewModel>.reactive(
       viewModelBuilder: () => HeaderViewModel(),
       builder: (context, model, child) => Column(
@@ -51,7 +55,9 @@ class Header extends StatelessWidget {
           ),
           // Second Row with logo search box and contact
           Container(
-            child: SearchBarRow(),
+            child: SearchBarRow(
+              isSignInPage: _isSignIn,
+            ),
           ),
           //LISTVIEW
           Row(

@@ -4,9 +4,13 @@ import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 
 class SearchBarRow extends StatelessWidget {
+  final bool? isSignInPage;
+  SearchBarRow({this.isSignInPage});
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    bool _isSignInPage = isSignInPage ?? false;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -87,7 +91,7 @@ class SearchBarRow extends StatelessWidget {
             children: [
               Container(
                 margin: EdgeInsets.only(right: 10),
-                child: Text('Login'),
+                child: _isSignInPage ? Text('Signup') : Text('Login'),
               ),
               Container(
                 margin: EdgeInsets.only(right: 10),
