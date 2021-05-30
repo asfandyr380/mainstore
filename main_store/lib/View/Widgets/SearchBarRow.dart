@@ -5,7 +5,8 @@ import 'package:main_store/Config/sizeconfig.dart';
 
 class SearchBarRow extends StatelessWidget {
   final bool? isSignInPage;
-  SearchBarRow({this.isSignInPage});
+  final Function onTap;
+  SearchBarRow({this.isSignInPage, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -89,9 +90,12 @@ class SearchBarRow extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                margin: EdgeInsets.only(right: 10),
-                child: _isSignInPage ? Text('Signup') : Text('Login'),
+              GestureDetector(
+                onTap: () => onTap(),
+                child: Container(
+                  margin: EdgeInsets.only(right: 10),
+                  child: _isSignInPage ? Text('Signup') : Text('Login'),
+                ),
               ),
               Container(
                 margin: EdgeInsets.only(right: 10),

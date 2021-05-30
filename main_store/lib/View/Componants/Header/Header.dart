@@ -9,7 +9,8 @@ import 'package:stacked/stacked.dart';
 
 class Header extends StatelessWidget {
   final bool? isSignIn;
-  Header({this.isSignIn});
+  final Function onTap;
+  Header({this.isSignIn, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +57,7 @@ class Header extends StatelessWidget {
           // Second Row with logo search box and contact
           Container(
             child: SearchBarRow(
+              onTap: () => onTap(),
               isSignInPage: _isSignIn,
             ),
           ),
@@ -97,21 +99,6 @@ class Header extends StatelessWidget {
                   style: menuTextStyle,
                 ),
               ),
-              // Container(
-              //   child: Row(
-              //     children: [
-              //       Text('LOGIN'),
-              //       SizedBox(
-              //         width: 20,
-              //       ),
-              //       Icon(FontAwesomeIcons.heart),
-              //       SizedBox(
-              //         width: 20,
-              //       ),
-              //       Expanded(child: Icon(FontAwesomeIcons.shoppingCart)),
-              //     ],
-              //   ),
-              // )
             ],
           ),
           Divider(),
