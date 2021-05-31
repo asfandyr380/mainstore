@@ -92,24 +92,33 @@ class SearchBarRow extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () => onTap(),
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: _isSignInPage ? Text('Signup') : Text('Login'),
+                  ),
+                ),
+              ),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
                 child: Container(
                   margin: EdgeInsets.only(right: 10),
-                  child: _isSignInPage ? Text('Signup') : Text('Login'),
+                  child: Row(
+                    children: [
+                      Icon(FontAwesomeIcons.heart),
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(right: 10),
-                child: Row(
-                  children: [
-                    Icon(FontAwesomeIcons.heart),
-                  ],
-                ),
-              ),
-              Container(
-                child: Row(
-                  children: [
-                    Icon(FontAwesomeIcons.shoppingCart),
-                  ],
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Container(
+                  child: Row(
+                    children: [
+                      Icon(FontAwesomeIcons.shoppingCart),
+                    ],
+                  ),
                 ),
               ),
             ],
