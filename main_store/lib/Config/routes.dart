@@ -1,2 +1,2 @@
-const String SignIn = "SignInView";
-const String SignUp = "SignUpView";
+const String SignIn = "SignIn";
+const String SignUp = "SignUp";
