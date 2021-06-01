@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:main_store/View/Componants/CategoryBanners/CategoryBanners.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Componants/SwipeBanner/SwipeBannerView.dart';
@@ -19,12 +20,48 @@ class Home extends StatelessWidget {
                   onTap: () {},
                 ),
               ),
-              Container(
-                child: Column(
-                  children: [
-                    SwipeBanner(),
-                  ],
-                ),
+              Column(
+                children: [
+                  SwipeBanner(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        child: CategoryBanners(
+                          bannerText: 'Fruits & \nDried Fruits',
+                        ),
+                      ),
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        child: CategoryBanners(
+                          bannerText: 'Grocery \nItem',
+                          isMiddle: true,
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 10),
+                            child: CategoryBannersSmall(
+                              bannerText: 'Fresh Bread',
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 10),
+                            child: CategoryBannersSmall(
+                              bannerText: 'Fish & SeaFood',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
               ),
               Container(
                 child: Footer(),

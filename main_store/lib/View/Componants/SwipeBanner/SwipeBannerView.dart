@@ -5,6 +5,12 @@ import 'package:main_store/View/Componants/SwipeBanner/SwipeBannerViewModel.dart
 import 'package:stacked/stacked.dart';
 
 class SwipeBanner extends StatelessWidget {
+  List<Widget> banner = [
+    SwipeBannerText(),
+    SwipeBannerText(),
+    SwipeBannerText(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SwipeBannerViewModel>.reactive(
@@ -18,50 +24,7 @@ class SwipeBanner extends StatelessWidget {
           children: [
             PageView(
               onPageChanged: (i) => model.onPageChange(i),
-              children: [for (var image in model.banner) image],
-            ),
-            Container(
-              padding: EdgeInsets.only(
-                top: SizeConfig.blockSizeVertical * 10,
-                left: SizeConfig.blockSizeHorizontal * 7,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // sub Text
-                  Container(
-                    child: Text('100% Genuine Products'),
-                  ),
-                  // Main Body Text
-                  Container(
-                    child: Text(
-                      'Tasty & Healthy \nOrganic Food',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 32,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  // Explore Button
-                  Container(
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: 150,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: accentColor,
-                      ),
-                      child: Text(
-                        'Explore Products',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              children: [for (var image in banner) image],
             ),
             Container(
               padding:
@@ -70,7 +33,7 @@ class SwipeBanner extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  for (int i = 0; i < model.banner.length; i++)
+                  for (int i = 0; i < banner.length; i++)
                     PageSwipeIndicator(
                       index: i,
                       currentIndex: model.currentIndex,
@@ -101,6 +64,57 @@ class PageSwipeIndicator extends StatelessWidget {
       decoration: BoxDecoration(
         color: onCurrentIndex ? accentColor : Colors.grey[100],
         shape: BoxShape.circle,
+      ),
+    );
+  }
+}
+
+class SwipeBannerText extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Container(
+        padding: EdgeInsets.only(
+          top: SizeConfig.blockSizeVertical * 10,
+          left: SizeConfig.blockSizeHorizontal * 7,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // sub Text
+            Container(
+              child: Text('100% Genuine Products'),
+            ),
+            // Main Body Text
+            Container(
+              child: Text(
+                'Tasty & Healthy \nOrganic Food',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 32,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            // Explore Button
+            Container(
+              child: Container(
+                alignment: Alignment.center,
+                width: 150,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: accentColor,
+                ),
+                child: Text(
+                  'Explore Products',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
