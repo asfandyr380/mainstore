@@ -4,6 +4,7 @@ import 'package:main_store/Services/Navigation/navigation_services.dart';
 import 'package:main_store/Services/Navigation/router.dart';
 import 'package:main_store/View/CheckOut/CheckOutView.dart';
 import 'package:main_store/View/Componants/Dialog/DialogView.dart';
+import 'package:main_store/View/Home/HomeView.dart';
 import 'package:main_store/View/Sign_in/Signin_view.dart';
 import 'package:main_store/View/Sign_up/signup_view.dart';
 
@@ -22,7 +23,7 @@ class RootWidget extends StatelessWidget {
         ),
       ),
       navigatorKey: locator<Navigation>().navigationKey,
-      home: SignupPage(),
+      home: Home(),
     );
   }
 }

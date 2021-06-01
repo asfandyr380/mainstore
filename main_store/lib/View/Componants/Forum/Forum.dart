@@ -20,6 +20,7 @@ class Forum extends StatelessWidget {
     String,
   )? onClick;
   Forum({this.isSignIn, this.onClick, this.onSignInClick});
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -58,6 +59,7 @@ class Forum extends StatelessWidget {
                         ? Container(
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: TextInputField(
+                              validateForm: (val) => model.validateForum(val),
                               onChange: (val) {
                                 model.name = val;
                               },
@@ -72,6 +74,7 @@ class Forum extends StatelessWidget {
                         ? Container(
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: TextInputField(
+                              validateForm: (val) => model.validateForum(val),
                               onChange: (val) {
                                 model.phone = val;
                               },
@@ -85,6 +88,7 @@ class Forum extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       child: TextInputField(
+                        validateForm: (val) => model.validateForum(val),
                         onChange: (val) {
                           model.email = val;
                         },
@@ -97,6 +101,7 @@ class Forum extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       child: TextInputField(
+                        validateForm: (val) => model.validateForum(val),
                         onChange: (val) {
                           model.pass = val;
                         },
@@ -110,6 +115,7 @@ class Forum extends StatelessWidget {
                         ? Container(
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: TextInputField(
+                              validateForm: (val) => model.validateForum(val),
                               onChange: (val) {
                                 model.confirm_pass = val;
                               },
@@ -150,15 +156,19 @@ class Forum extends StatelessWidget {
                           isLoading: model.isLoading,
                           onPressed: _isSignIn
                               ? () {
-                                  model.isBusy(true);
-                                  onSignInClick!(model.email, model.pass)
-                                      .then((value) => model.isBusy(value));
+                                  if (_formKey.currentState!.validate()) {
+                                    model.isBusy(true);
+                                    onSignInClick!(model.email, model.pass)
+                                        .then((value) => model.isBusy(value));
+                                  }
                                 }
                               : () {
-                                  model.isBusy(true);
-                                  onClick!(model.email, model.pass, model.name,
-                                          model.phone)
-                                      .then((value) => model.isBusy(value));
+                                  if (_formKey.currentState!.validate()) {
+                                    model.isBusy(true);
+                                    onClick!(model.email, model.pass,
+                                            model.name, model.phone)
+                                        .then((value) => model.isBusy(value));
+                                  }
                                 },
                           label: _isSignIn ? 'SIGN IN' : 'SIGN UP',
                           isEnable: _isSignIn ? true : model.isTicked,
@@ -177,12 +187,15 @@ class Forum extends StatelessWidget {
 class ForgetPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 2),
-      alignment: Alignment.topLeft,
-      child: Text(
-        'Forget Password?',
-        style: TextStyle(color: accentColor),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: Container(
+        padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 2),
+        alignment: Alignment.topLeft,
+        child: Text(
+          'Forget Password?',
+          style: TextStyle(color: accentColor),
+        ),
       ),
     );
   }
