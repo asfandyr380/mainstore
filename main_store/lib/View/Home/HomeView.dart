@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/View/Componants/BrandsCard/BrandsCard.dart';
 import 'package:main_store/View/Componants/CategoryBanners/CategoryBanners.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
@@ -62,6 +64,15 @@ class Home extends StatelessWidget {
                     ],
                   ),
                 ],
+              ),
+              Container(
+                padding: EdgeInsets.only(bottom: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    for (int i = 0; i < 5; i++) BrandsCard(),
+                  ],
+                ),
               ),
               Container(
                 child: Footer(),
