@@ -22,7 +22,10 @@ class _SignInPageState extends State<SignInPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Header(),
+              Header(
+                onTap: () => model.navigateToSignUpPage(),
+                isSignIn: true,
+              ),
               Center(
                 child: Forum(
                   isSignIn: true,

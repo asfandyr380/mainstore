@@ -6,11 +6,17 @@ class CustomButton extends StatelessWidget {
   final Function? onPressed;
   final String label;
   final bool? isEnable;
-  CustomButton({this.isEnable, required this.onPressed, required this.label});
+  final bool? isLoading;
+  CustomButton(
+      {this.isEnable,
+      required this.onPressed,
+      required this.label,
+      this.isLoading});
 
   @override
   Widget build(BuildContext context) {
     bool _isEnable = isEnable ?? false;
+    bool _isLoading = isLoading ?? false;
     SizeConfig().init(context);
     return ConstrainedBox(
       constraints: BoxConstraints.tightFor(
@@ -23,10 +29,18 @@ class CustomButton extends StatelessWidget {
                 onPressed!();
               }
             : null,
-        child: Text(
-          label,
-          style: TextStyle(fontSize: 18),
-        ),
+        child: _isLoading
+            ? Container(
+                width: 15,
+                height: 15,
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              )
+            : Text(
+                label,
+                style: TextStyle(fontSize: 18),
+              ),
       ),
     );
   }

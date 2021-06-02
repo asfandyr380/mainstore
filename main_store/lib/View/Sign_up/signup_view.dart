@@ -18,7 +18,9 @@ class SignupPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               Container(
-                child: Header(),
+                child: Header(
+                  onTap: () => model.navigateToLoginPage(),
+                ),
               ),
               Container(
                 alignment: Alignment.center,

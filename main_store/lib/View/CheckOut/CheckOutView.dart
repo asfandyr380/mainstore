@@ -28,7 +28,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Header(),
+              Header(
+                // TODO: Add Page Navigation Here
+                onTap: () {},
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(
                     vertical: SizeConfig.blockSizeVertical * 6,
@@ -186,8 +189,6 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     //checkout Order Summary
                     OrderSummary(
                       checkout: _checkout,
-                      isPayOut: true,
-                      labelbutton: 'proceed',
                     ),
                   ],
                 ),

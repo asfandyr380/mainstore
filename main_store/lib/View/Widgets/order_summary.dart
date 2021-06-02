@@ -6,21 +6,15 @@ import 'custom_button.dart';
 
 class OrderSummary extends StatelessWidget {
   OrderSummary({
-    this.isPayOut,
-    required this.labelbutton,
-    required bool checkout,
-  }) : _checkout = checkout;
+    this.checkout,
+  });
 
-  final bool _checkout;
-  final String labelbutton;
-  final bool? isPayOut;
+  final bool? checkout;
   @override
   Widget build(BuildContext context) {
-    bool _isPayOut = isPayOut ?? false;
+    bool _checkout = checkout ?? false;
     return Container(
-      height: _checkout
-          ? SizeConfig.blockSizeVertical * 30
-          : SizeConfig.blockSizeVertical * 40,
+      height: SizeConfig.blockSizeVertical * 40,
       width: SizeConfig.blockSizeHorizontal * 18,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -44,7 +38,7 @@ class OrderSummary extends StatelessWidget {
                   'Order Summary',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: SizeConfig.blockSizeVertical * 3.5),
+                      fontSize: SizeConfig.blockSizeHorizontal * 2),
                 ),
               ],
             ),
@@ -55,13 +49,13 @@ class OrderSummary extends StatelessWidget {
                   'Sub Total',
                   style: TextStyle(
                       color: Colors.black54,
-                      fontSize: SizeConfig.blockSizeVertical * 2),
+                      fontSize: SizeConfig.blockSizeHorizontal * 1),
                 ),
                 Text(
                   '\$ 150.00',
                   style: TextStyle(
                       color: Colors.black54,
-                      fontSize: SizeConfig.blockSizeVertical * 2),
+                      fontSize: SizeConfig.blockSizeHorizontal * 1),
                 ),
               ],
             ),
@@ -72,13 +66,13 @@ class OrderSummary extends StatelessWidget {
                   'Shipping',
                   style: TextStyle(
                       color: Colors.black54,
-                      fontSize: SizeConfig.blockSizeVertical * 2),
+                      fontSize: SizeConfig.blockSizeHorizontal * 1),
                 ),
                 Text(
                   '\$ 300',
                   style: TextStyle(
                       color: Colors.black54,
-                      fontSize: SizeConfig.blockSizeVertical * 2),
+                      fontSize: SizeConfig.blockSizeHorizontal * 1),
                 ),
               ],
             ),
@@ -90,13 +84,13 @@ class OrderSummary extends StatelessWidget {
                   'Total',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: SizeConfig.blockSizeVertical * 3.5),
+                      fontSize: SizeConfig.blockSizeHorizontal * 2),
                 ),
                 Text(
                   '\$ 170',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: SizeConfig.blockSizeVertical * 3.5),
+                      fontSize: SizeConfig.blockSizeHorizontal * 2),
                 ),
               ],
             ),
@@ -106,7 +100,7 @@ class OrderSummary extends StatelessWidget {
                   'Select Payment Method:',
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: SizeConfig.blockSizeVertical * 2),
+                      fontSize: SizeConfig.blockSizeHorizontal * 1),
                 ),
               ],
             ),
@@ -119,7 +113,7 @@ class OrderSummary extends StatelessWidget {
                   activeColor: accentColor,
                 ),
                 Container(
-                  height: SizeConfig.blockSizeVertical * 4,
+                  width: SizeConfig.blockSizeHorizontal * 6,
                   child: Image.asset('assets/images/paypal-logo.png'),
                 ),
               ],
@@ -130,7 +124,7 @@ class OrderSummary extends StatelessWidget {
                   width: SizeConfig.blockSizeHorizontal * 16,
                   child: CustomButton(
                     onPressed: () {},
-                    label: _isPayOut ? 'Proceed to Pay' : 'Check Out',
+                    label: _checkout ? 'Check Out' : 'Proceed To Pay',
                   ),
                 ),
               ],

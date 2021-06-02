@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:main_store/Config/locator.dart';
+import 'package:main_store/Services/Fireabase/Firestore/firestore_services.dart';
 
 class Auth {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  FirestoreServices _firestoreServices = locator<FirestoreServices>();
 
   // Sign In User
   Future signIn(String email, String password) async {
@@ -21,25 +24,33 @@ class Auth {
   Future signUp(
       String email, String password, String name, String phone) async {
     try {
-      var result = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((credential) =>
-              updateProfileName(credential, name, phone, email));
-      return result.user != null;
-    } on FirebaseException catch (e) {
+      var authresult = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      if (authresult.user != null) {
+        updateProfileDetails(authresult, name, phone, email);
+        print(authresult.user);
+      }
+      // ignore: unnecessary_null_comparison
+      return authresult != null;
+    } on FirebaseAuthException catch (e) {
       return e.message;
-    } catch (e) {
-      return e;
+    } on PlatformException catch (ex) {
+      return ex.message;
     }
   }
 
   // Update User Name Email and Phone No While Siging Up
-  updateProfileName(UserCredential userCredential, String name, String phone,
+  updateProfileDetails(UserCredential userCredential, String name, String phone,
       String email) async {
     await userCredential.user!.updateProfile(
       displayName: name,
     );
-    // TODO Create New User to The Users Collection
+    _firestoreServices.updateUserProfile(
+      userCredential.user!.uid,
+      name,
+      email,
+      phone,
+    );
   }
 
   // Sign Out User

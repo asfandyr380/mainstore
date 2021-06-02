@@ -9,11 +9,11 @@ import 'package:stacked/stacked.dart';
 // Complete Forum For the SignUp/Sign In Screen
 class Forum extends StatelessWidget {
   final bool? isSignIn;
-  final Function(
+  final Future Function(
     String,
     String,
   )? onSignInClick;
-  final Function(
+  final Future Function(
     String,
     String,
     String,
@@ -143,22 +143,23 @@ class Forum extends StatelessWidget {
                               ],
                             ),
                           )
-                        : Container(
-                            padding: EdgeInsets.only(
-                                left: SizeConfig.blockSizeHorizontal * 2),
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              'Forget Password?',
-                              style: TextStyle(color: accentColor),
-                            ),
-                          ),
+                        : ForgetPasswordPage(),
                     Container(
                         padding: EdgeInsets.only(top: 10, bottom: 7),
                         child: CustomButton(
+                          isLoading: model.isLoading,
                           onPressed: _isSignIn
-                              ? () => onSignInClick!(model.email, model.pass)
-                              : () => onClick!(model.email, model.pass,
-                                  model.name, model.phone),
+                              ? () {
+                                  model.isBusy(true);
+                                  onSignInClick!(model.email, model.pass)
+                                      .then((value) => model.isBusy(value));
+                                }
+                              : () {
+                                  model.isBusy(true);
+                                  onClick!(model.email, model.pass, model.name,
+                                          model.phone)
+                                      .then((value) => model.isBusy(value));
+                                },
                           label: _isSignIn ? 'SIGN IN' : 'SIGN UP',
                           isEnable: _isSignIn ? true : model.isTicked,
                         ))
@@ -168,6 +169,20 @@ class Forum extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ForgetPasswordPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 2),
+      alignment: Alignment.topLeft,
+      child: Text(
+        'Forget Password?',
+        style: TextStyle(color: accentColor),
       ),
     );
   }
