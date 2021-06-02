@@ -6,13 +6,17 @@ class QuickLinks extends StatelessWidget {
   QuickLinks({required this.pageName});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 6),
-      alignment: Alignment.topLeft,
-      child: FittedBox(
-        child: Text(
-          pageName,
-          style: TextStyle(fontSize: 15, decoration: TextDecoration.underline),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: Container(
+        padding: EdgeInsets.only(top: 6),
+        alignment: Alignment.topLeft,
+        child: FittedBox(
+          child: Text(
+            pageName,
+            style:
+                TextStyle(fontSize: 15, decoration: TextDecoration.underline),
+          ),
         ),
       ),
     );

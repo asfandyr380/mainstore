@@ -9,6 +9,13 @@ class ForumViewModel extends ChangeNotifier {
   String confirm_pass = '';
   String phone = '';
 
+  validateForum(String? forumValue) {
+    // ignore: unnecessary_null_comparison
+    if (forumValue == null || forumValue.isEmpty) {
+      return 'This Field Cannot Be Empty';
+    }
+  }
+
   isBusy(bool loadingState) {
     if (isLoading) {
       isLoading = loadingState;

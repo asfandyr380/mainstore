@@ -24,9 +24,12 @@ class Dropdown extends StatelessWidget {
         items: items.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
-            child: Text(
-              value,
-              style: menuTextStyle,
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Text(
+                value,
+                style: menuTextStyle,
+              ),
             ),
           );
         }).toList(),

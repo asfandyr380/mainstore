@@ -65,8 +65,11 @@ class Header extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                child: Text('Home', style: menuTextStyle),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Container(
+                  child: Text('Home', style: menuTextStyle),
+                ),
               ),
               Dropdown(
                   items: item,
@@ -87,16 +90,22 @@ class Header extends StatelessWidget {
                   onChange: (newVal) =>
                       model.onDropDownChange(newVal, item3[0]),
                   dropdownVal: item3[0]),
-              Container(
-                child: Text(
-                  'About Us',
-                  style: menuTextStyle,
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Container(
+                  child: Text(
+                    'About Us',
+                    style: menuTextStyle,
+                  ),
                 ),
               ),
-              Container(
-                child: Text(
-                  'Contact Us',
-                  style: menuTextStyle,
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Container(
+                  child: Text(
+                    'Contact Us',
+                    style: menuTextStyle,
+                  ),
                 ),
               ),
             ],
