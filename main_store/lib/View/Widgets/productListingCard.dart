@@ -76,6 +76,7 @@ class ProductListingCards extends StatelessWidget {
           // Price and Sale Price
           Container(
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _onSale
                     ? Text(

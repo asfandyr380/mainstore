@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/Header/HeaderViewModel.dart';
+import 'package:main_store/View/Componants/SideNav/SideNavView.dart';
+import 'package:main_store/View/Componants/SwipeBanner/SwipeBannerView.dart';
 import 'package:main_store/View/Widgets/SearchBarRow.dart';
 import 'package:stacked/stacked.dart';
 
@@ -88,6 +90,31 @@ class Header extends StatelessWidget {
               : Container(),
         ],
       ),
+    );
+  }
+}
+
+class HomePageHeader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          child: SideNavMenu(),
+        ),
+        Column(
+          children: [
+            Container(
+              padding: EdgeInsets.only(bottom: 10),
+              child: SearchBarRow(),
+            ),
+            Container(
+              child: SwipeBanner(),
+            ),
+          ],
+        )
+      ],
     );
   }
 }

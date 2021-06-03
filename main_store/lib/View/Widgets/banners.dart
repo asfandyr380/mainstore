@@ -78,6 +78,7 @@ class SecondBanner extends StatelessWidget {
   }
 }
 
+// Banner
 class Ban extends StatelessWidget {
   final bool? isMiddle;
   final String? bannerText;
@@ -143,6 +144,40 @@ class SmallBanner extends StatelessWidget {
             ),
             SizedBox(height: 10),
             BannerButton(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MoreandMoreBanner extends StatelessWidget {
+  final String? bannerText;
+  MoreandMoreBanner({this.bannerText});
+  @override
+  Widget build(BuildContext context) {
+    String _bannerText = bannerText ?? '';
+    return Container(
+      height: SizeConfig.blockSizeVertical * 34,
+      width: SizeConfig.blockSizeHorizontal * 45,
+      decoration: BoxDecoration(
+        color: Colors.grey,
+      ),
+      child: Container(
+        padding: EdgeInsets.only(
+            top: SizeConfig.blockSizeVertical * 5,
+            left: SizeConfig.blockSizeHorizontal * 2),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              _bannerText,
+              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 23),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            BannerButton()
           ],
         ),
       ),
