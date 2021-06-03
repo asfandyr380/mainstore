@@ -1,3 +1,3 @@
 const String SignIn = "SignIn";
 const String SignUp = "SignUp";
-const String Home = "Home";
+const String HomeView = "Home";

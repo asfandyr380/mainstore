@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/routes.dart';
+import 'package:main_store/View/Home/HomeView.dart';
 import 'package:main_store/View/Sign_in/Signin_view.dart';
 import 'package:main_store/View/Sign_up/signup_view.dart';
 
@@ -9,6 +10,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _GeneratePageRoute(widget: SignInPage(), routeName: settings.name);
     case SignUp:
       return _GeneratePageRoute(widget: SignupPage(), routeName: settings.name);
+    case HomeView:
+      return _GeneratePageRoute(widget: Home(), routeName: settings.name);
 
     default:
       return MaterialPageRoute(

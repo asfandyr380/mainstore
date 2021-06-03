@@ -17,6 +17,7 @@ class SwipeBanner extends StatelessWidget {
       viewModelBuilder: () => SwipeBannerViewModel(),
       builder: (context, model, child) => Container(
         height: SizeConfig.blockSizeVertical * 45,
+        width: SizeConfig.blockSizeHorizontal * 75,
         decoration: BoxDecoration(
           color: Colors.grey,
         ),
@@ -76,7 +77,7 @@ class SwipeBannerText extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.only(
           top: SizeConfig.blockSizeVertical * 10,
-          left: SizeConfig.blockSizeHorizontal * 7,
+          left: SizeConfig.blockSizeHorizontal * 3,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

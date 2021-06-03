@@ -15,3 +15,5 @@ final List<String> item3 = ['Recipes', '1', '2', '3'];
 
 // Text Styling
 const TextStyle menuTextStyle = TextStyle(fontWeight: FontWeight.bold);
+const TextStyle BannerTextStyle =
+    TextStyle(fontSize: 23, fontWeight: FontWeight.w300);

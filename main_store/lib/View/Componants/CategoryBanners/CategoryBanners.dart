@@ -1,93 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/View/Widgets/banners.dart';
 
 class CategoryBanners extends StatelessWidget {
-  final bool? isMiddle;
   final String? bannerText;
-  CategoryBanners({this.isMiddle, this.bannerText});
-  @override
-  Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    bool _isMiddle = isMiddle ?? false;
-    String _bannerText = bannerText ?? '';
-    return Container(
-      height: SizeConfig.blockSizeVertical * 55,
-      width: _isMiddle
-          ? SizeConfig.blockSizeHorizontal * 25
-          : SizeConfig.blockSizeHorizontal * 20,
-      decoration: BoxDecoration(
-        color: Colors.grey,
-      ),
-      child: Container(
-        padding: EdgeInsets.only(
-          left: SizeConfig.blockSizeHorizontal * 1,
-          top: SizeConfig.blockSizeVertical * 2,
-        ),
-        // TODO: Add Image From the Back-End Here
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(_bannerText),
-            SizedBox(
-              height: 10,
-            ),
-            BannerButton()
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CategoryBannersSmall extends StatelessWidget {
-  final String? bannerText;
-  CategoryBannersSmall({this.bannerText});
+  CategoryBanners({this.bannerText});
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     String _bannerText = bannerText ?? '';
     return Container(
-      height: SizeConfig.blockSizeVertical * 25,
-      width: SizeConfig.blockSizeHorizontal * 18,
-      decoration: BoxDecoration(
-        color: Colors.grey,
-      ),
-      // TODO: Add Image From the Back-End Here
-      child: Padding(
-        padding: EdgeInsets.only(top: 8.0),
-        child: Column(
-          children: [
-            Text(_bannerText),
-            SizedBox(height: 10),
-            BannerButton(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class BannerButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton(
-      style: ButtonStyle(
-        side: MaterialStateProperty.all(
-          BorderSide(
-            color: accentColor,
+      padding: EdgeInsets.symmetric(
+          horizontal: SizeConfig.blockSizeHorizontal * 2,
+          vertical: SizeConfig.blockSizeVertical * 2),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Ban(
+                bannerText: 'Fruits & \nDreid Fruits',
+              ),
+              Ban(
+                bannerText: 'Fresh \nVagitables',
+                isMiddle: true,
+              ),
+              Column(
+                children: [
+                  SmallBanner(
+                    bannerText: 'Fresh Bread',
+                  ),
+                  SizedBox(
+                    height: SizeConfig.blockSizeVertical * 2,
+                  ),
+                  SmallBanner(
+                    bannerText: 'Fish & SeaFood',
+                  ),
+                ],
+              ),
+            ],
           ),
-        ),
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical * 2,
           ),
-        ),
-      ),
-      onPressed: () {},
-      child: Text(
-        'Shop Now',
-        style: TextStyle(color: Colors.black),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                child: SecondBanner(
+                  bannerText: 'Fresh Fruits',
+                ),
+              ),
+              Column(
+                children: [
+                  DiscountBanner(),
+                  SizedBox(
+                    height: SizeConfig.blockSizeVertical * 2,
+                  ),
+                  DiscountBanner(),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

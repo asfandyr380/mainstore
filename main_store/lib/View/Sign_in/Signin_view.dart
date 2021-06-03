@@ -23,7 +23,6 @@ class _SignInPageState extends State<SignInPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Header(
-                onTap: () => model.navigateToSignUpPage(),
                 isSignIn: true,
               ),
               Center(

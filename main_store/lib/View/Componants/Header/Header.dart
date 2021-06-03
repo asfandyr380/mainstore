@@ -4,18 +4,18 @@ import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/Header/HeaderViewModel.dart';
 import 'package:main_store/View/Widgets/SearchBarRow.dart';
-import 'package:main_store/View/Widgets/drop_Down.dart';
 import 'package:stacked/stacked.dart';
 
 class Header extends StatelessWidget {
   final bool? isSignIn;
-  final Function onTap;
-  Header({this.isSignIn, required this.onTap});
+  final bool? onHomepage;
+  Header({this.isSignIn, this.onHomepage});
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     bool _isSignIn = isSignIn ?? false;
+    bool _onHomePage = onHomepage ?? false;
     return ViewModelBuilder<HeaderViewModel>.reactive(
       viewModelBuilder: () => HeaderViewModel(),
       builder: (context, model, child) => Column(
@@ -54,65 +54,128 @@ class Header extends StatelessWidget {
               ],
             ),
           ),
-          // Second Row with logo search box and contact
-          Container(
-            child: SearchBarRow(
-              onTap: () => onTap(),
-              isSignInPage: _isSignIn,
-            ),
-          ),
-          //LISTVIEW
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Container(
-                  child: Text('Home', style: menuTextStyle),
-                ),
-              ),
-              Dropdown(
-                  items: item,
-                  onChange: (newVal) => model.onDropDownChange(newVal, item[0]),
-                  dropdownVal: item[0]),
-              Dropdown(
-                  items: item1,
-                  onChange: (newVal) =>
-                      model.onDropDownChange(newVal, item1[0]),
-                  dropdownVal: item1[0]),
-              Dropdown(
-                  items: item2,
-                  onChange: (newVal) =>
-                      model.onDropDownChange(newVal, item2[0]),
-                  dropdownVal: item2[0]),
-              Dropdown(
-                  items: item3,
-                  onChange: (newVal) =>
-                      model.onDropDownChange(newVal, item3[0]),
-                  dropdownVal: item3[0]),
-              MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Container(
-                  child: Text(
-                    'About Us',
-                    style: menuTextStyle,
+              Container(
+                width: SizeConfig.blockSizeHorizontal * 9,
+                height: SizeConfig.blockSizeVertical * 13,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/images/logo.png'),
                   ),
                 ),
               ),
-              MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Container(
-                  child: Text(
-                    'Contact Us',
-                    style: menuTextStyle,
-                  ),
+              HeaderPageNavigationButton(),
+              Container(
+                padding:
+                    EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 2),
+                child: CartFavandSignupLoginRow(
+                  isSignIn: _isSignIn,
+                  onTap: () => model.navigateToSignInLogInPage(_isSignIn),
                 ),
               ),
             ],
           ),
-          Divider(),
+          // Second Bar
+          _onHomePage
+              ? Container(
+                  padding: EdgeInsets.only(
+                      bottom: 10, left: SizeConfig.blockSizeHorizontal * 25),
+                  child: SearchBarRow(),
+                )
+              : Container(),
         ],
       ),
+    );
+  }
+}
+
+class CartFavandSignupLoginRow extends StatelessWidget {
+  final bool? isSignIn;
+  final Function onTap;
+  CartFavandSignupLoginRow({this.isSignIn, required this.onTap});
+  @override
+  Widget build(BuildContext context) {
+    bool _isSignIn = isSignIn ?? false;
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          GestureDetector(
+            onTap: () => onTap(),
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Container(
+                margin: EdgeInsets.only(right: 10),
+                child: _isSignIn ? Text('LOGIN') : Text('SIGN UP'),
+              ),
+            ),
+          ),
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Container(
+              margin: EdgeInsets.only(right: 10),
+              child: Row(
+                children: [
+                  Icon(FontAwesomeIcons.heart),
+                ],
+              ),
+            ),
+          ),
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Container(
+              child: Row(
+                children: [
+                  Icon(FontAwesomeIcons.shoppingCart),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class HeaderPageNavigationButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Container(
+            child: Text('Home', style: menuTextStyle),
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Container(
+            child: Text(
+              'About Us',
+              style: menuTextStyle,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Container(
+            child: Text(
+              'Contact Us',
+              style: menuTextStyle,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
