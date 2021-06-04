@@ -60,8 +60,8 @@ class PageSwipeIndicator extends StatelessWidget {
       margin: EdgeInsets.only(right: 6),
       duration: Duration(milliseconds: 100),
       curve: Curves.easeOutCubic,
-      height: 10,
-      width: 10,
+      height: SizeConfig.blockSizeVertical * 1.5,
+      width: SizeConfig.blockSizeHorizontal * 1.5,
       decoration: BoxDecoration(
         color: onCurrentIndex ? accentColor : Colors.grey[100],
         shape: BoxShape.circle,
@@ -84,33 +84,44 @@ class SwipeBannerText extends StatelessWidget {
           children: [
             // sub Text
             Container(
-              child: Text('100% Genuine Products'),
+              child: Text(
+                '100% Genuine Products',
+                style: TextStyle(
+                  fontSize: SizeConfig.blockSizeHorizontal * 1,
+                ),
+              ),
             ),
             // Main Body Text
             Container(
+              height: SizeConfig.blockSizeVertical * 13,
+              width: SizeConfig.blockSizeHorizontal * 20,
               child: Text(
-                'Tasty & Healthy \nOrganic Food',
+                'Tasty & Healthy Organic Food',
+                textAlign: TextAlign.start,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 32,
+                  fontSize: SizeConfig.blockSizeHorizontal * 2.5,
                 ),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: SizeConfig.blockSizeVertical * 1,
             ),
             // Explore Button
             Container(
               child: Container(
                 alignment: Alignment.center,
-                width: 150,
-                height: 40,
+                width: SizeConfig.blockSizeHorizontal * 12,
+                height: SizeConfig.blockSizeVertical * 5,
                 decoration: BoxDecoration(
                   color: accentColor,
                 ),
                 child: Text(
                   'Explore Products',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: SizeConfig.blockSizeHorizontal * 1,
+                  ),
                 ),
               ),
             ),

@@ -20,10 +20,10 @@ class CategoryBanners extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Ban(
-                bannerText: 'Fruits & \nDreid Fruits',
+                bannerText: 'Fruits & Dreid Fruits',
               ),
               Ban(
-                bannerText: 'Fresh \nVagitables',
+                bannerText: 'Fresh Vagitables',
                 isMiddle: true,
               ),
               Column(

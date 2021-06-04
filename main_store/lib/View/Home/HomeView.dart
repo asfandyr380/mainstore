@@ -29,7 +29,9 @@ class Home extends StatelessWidget {
             children: [
               // Page Header
               Container(
-                child: Header(),
+                child: Header(
+                  onHomepage: true,
+                ),
               ),
               // Main Page Products Listing
               Container(

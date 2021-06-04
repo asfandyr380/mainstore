@@ -76,8 +76,6 @@ class Category extends StatelessWidget {
 }
 
 class SubItem extends StatelessWidget {
-  const SubItem({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(

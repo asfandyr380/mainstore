@@ -5,20 +5,6 @@ import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/SideNav/SideNavView.dart';
 import 'package:main_store/View/Widgets/drop_Down.dart';
 
-List<String> items = [
-  'All Category'
-      'Healty',
-  'Marrow',
-  'Vagitables',
-  'Green Vagitables',
-  'Fresh Beans',
-  'Leafy Green',
-  'Baby Food',
-  'Mexican',
-  'African',
-  'Food CupBoards',
-];
-
 class SearchBarRow extends StatefulWidget {
   @override
   _SearchBarRowState createState() => _SearchBarRowState();
@@ -36,7 +22,7 @@ class _SearchBarRowState extends State<SearchBarRow> {
             width: SizeConfig.blockSizeHorizontal * 40,
             child: TextField(
               decoration: InputDecoration(
-                hintText: 'Search Product...',
+                hintText: 'Search Product',
                 hintStyle: TextStyle(
                   fontSize: 10,
                   color: Color(0xFF959595),
@@ -69,7 +55,7 @@ class _SearchBarRowState extends State<SearchBarRow> {
             child: Icon(
               FontAwesomeIcons.search,
               color: Colors.white,
-              size: 20,
+              size: SizeConfig.blockSizeHorizontal * 1,
             ),
             decoration: BoxDecoration(
               color: Color(0xff40a944),

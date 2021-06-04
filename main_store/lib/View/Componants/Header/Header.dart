@@ -50,42 +50,53 @@ class Header extends StatelessWidget {
                 ),
                 Container(
                   padding: EdgeInsets.only(
-                      left: SizeConfig.blockSizeHorizontal * 33),
+                    left: SizeConfig.blockSizeHorizontal * 33,
+                  ),
                   child: Text('Free Shipping Over 12\$ Order'),
-                )
+                ),
               ],
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: SizeConfig.blockSizeHorizontal * 9,
-                height: SizeConfig.blockSizeVertical * 13,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: SizeConfig.blockSizeVertical * 2,
+              horizontal: SizeConfig.blockSizeHorizontal * 3,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  child: Image.asset(
+                    'assets/images/logo.png',
                     fit: BoxFit.cover,
-                    image: AssetImage('assets/images/logo.png'),
+                    height: SizeConfig.blockSizeVertical * 12,
+                    width: SizeConfig.blockSizeHorizontal * 12,
                   ),
                 ),
-              ),
-              HeaderPageNavigationButton(),
-              Container(
-                padding:
-                    EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 2),
-                child: CartFavandSignupLoginRow(
-                  isSignIn: _isSignIn,
-                  onTap: () => model.navigateToSignInLogInPage(_isSignIn),
+                Container(
+                  child: HeaderPageNavigationButton(),
                 ),
-              ),
-            ],
+                Container(
+                  child: CartFavandSignupLoginRow(
+                    isSignIn: _isSignIn,
+                    onTap: () => model.navigateToSignInLogInPage(_isSignIn),
+                  ),
+                ),
+              ],
+            ),
           ),
           // Second Bar
-          _onHomePage
-              ? Container(
-                  padding: EdgeInsets.only(
-                      bottom: 10, left: SizeConfig.blockSizeHorizontal * 25),
-                  child: SearchBarRow(),
+          !_onHomePage
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(
+                        bottom: 10,
+                      ),
+                      child: SearchBarRow(),
+                    ),
+                  ],
                 )
               : Container(),
         ],
@@ -106,8 +117,10 @@ class HomePageHeader extends StatelessWidget {
         Column(
           children: [
             Container(
-              padding: EdgeInsets.only(bottom: 10),
               child: SearchBarRow(),
+            ),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical * 2,
             ),
             Container(
               child: SwipeBanner(),
@@ -126,42 +139,83 @@ class CartFavandSignupLoginRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool _isSignIn = isSignIn ?? false;
+    SizeConfig().init(context);
     return Container(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           GestureDetector(
             onTap: () => onTap(),
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: Container(
-                margin: EdgeInsets.only(right: 10),
-                child: _isSignIn ? Text('LOGIN') : Text('SIGN UP'),
+                child: Text(
+                  _isSignIn ? 'SIGN UP' : 'LOGIN',
+                  style:
+                      TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 1),
+                ),
               ),
             ),
+          ),
+          SizedBox(
+            width: SizeConfig.blockSizeHorizontal * 0.8,
           ),
           MouseRegion(
             cursor: SystemMouseCursors.click,
             child: Container(
-              margin: EdgeInsets.only(right: 10),
               child: Row(
                 children: [
-                  Icon(FontAwesomeIcons.heart),
+                  Icon(
+                    FontAwesomeIcons.heart,
+                    size: SizeConfig.blockSizeHorizontal * 2,
+                  ),
+                  IndexIndicator(),
                 ],
               ),
             ),
           ),
+          SizedBox(
+            width: SizeConfig.blockSizeHorizontal * 0.8,
+          ),
           MouseRegion(
             cursor: SystemMouseCursors.click,
             child: Container(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(FontAwesomeIcons.shoppingCart),
+                  Icon(
+                    Icons.shopping_cart_outlined,
+                    size: SizeConfig.blockSizeHorizontal * 2,
+                  ),
+                  IndexIndicator(),
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class IndexIndicator extends StatelessWidget {
+  const IndexIndicator({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      height: SizeConfig.blockSizeVertical * 2.4,
+      width: SizeConfig.blockSizeHorizontal * 2.4,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: accentColor,
+      ),
+      child: Text(
+        '0',
+        style: TextStyle(
+          fontSize: SizeConfig.blockSizeHorizontal * 0.6,
+          color: Colors.white,
+        ),
       ),
     );
   }
@@ -175,30 +229,39 @@ class HeaderPageNavigationButton extends StatelessWidget {
         MouseRegion(
           cursor: SystemMouseCursors.click,
           child: Container(
-            child: Text('Home', style: menuTextStyle),
+            child: Text(
+              'Home',
+              style: menuTextStyle.copyWith(
+                fontSize: SizeConfig.blockSizeHorizontal * 1.2,
+              ),
+            ),
           ),
         ),
         SizedBox(
-          width: 10,
+          width: SizeConfig.blockSizeHorizontal * 1.3,
         ),
         MouseRegion(
           cursor: SystemMouseCursors.click,
           child: Container(
             child: Text(
               'About Us',
-              style: menuTextStyle,
+              style: menuTextStyle.copyWith(
+                fontSize: SizeConfig.blockSizeHorizontal * 1.2,
+              ),
             ),
           ),
         ),
         SizedBox(
-          width: 10,
+          width: SizeConfig.blockSizeHorizontal * 1.3,
         ),
         MouseRegion(
           cursor: SystemMouseCursors.click,
           child: Container(
             child: Text(
               'Contact Us',
-              style: menuTextStyle,
+              style: menuTextStyle.copyWith(
+                fontSize: SizeConfig.blockSizeHorizontal * 1.2,
+              ),
             ),
           ),
         ),

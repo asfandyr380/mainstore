@@ -32,12 +32,20 @@ class DiscountBanner extends StatelessWidget {
             SizedBox(
               height: 5,
             ),
-            Text(
-              'Fresh Mango \nDrinks',
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 23),
+            Container(
+              width: SizeConfig.blockSizeHorizontal * 12,
+              height: SizeConfig.blockSizeVertical * 10,
+              child: Text(
+                'Fresh Mango Drinks',
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: SizeConfig.blockSizeHorizontal * 2,
+                ),
+              ),
             ),
             SizedBox(
-              height: 5,
+              height: SizeConfig.blockSizeVertical * 1,
             ),
             BannerButton()
           ],
@@ -67,9 +75,13 @@ class SecondBanner extends StatelessWidget {
           children: [
             Text(
               _bannerText,
-              style: BannerTextStyle,
+              style: BannerTextStyle.copyWith(
+                fontSize: SizeConfig.blockSizeHorizontal * 2,
+              ),
             ),
-            SizedBox(height: 10),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical * 1,
+            ),
             BannerButton(),
           ],
         ),
@@ -105,12 +117,19 @@ class Ban extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              _bannerText,
-              style: BannerTextStyle,
+            Container(
+              width: SizeConfig.blockSizeHorizontal * 12,
+              height: SizeConfig.blockSizeVertical * 10,
+              child: Text(
+                _bannerText,
+                textAlign: TextAlign.start,
+                style: BannerTextStyle.copyWith(
+                  fontSize: SizeConfig.blockSizeHorizontal * 2,
+                ),
+              ),
             ),
             SizedBox(
-              height: 10,
+              height: SizeConfig.blockSizeVertical * 1,
             ),
             BannerButton()
           ],
@@ -135,14 +154,16 @@ class SmallBanner extends StatelessWidget {
       ),
       // TODO: Add Image From the Back-End Here
       child: Padding(
-        padding: EdgeInsets.only(top: 8.0),
+        padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 1),
         child: Column(
           children: [
             Text(
               _bannerText,
-              style: BannerTextStyle,
+              style: BannerTextStyle.copyWith(
+                fontSize: SizeConfig.blockSizeHorizontal * 2,
+              ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: SizeConfig.blockSizeVertical * 1),
             BannerButton(),
           ],
         ),
@@ -175,7 +196,7 @@ class MoreandMoreBanner extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.w400, fontSize: 23),
             ),
             SizedBox(
-              height: 5,
+              height: SizeConfig.blockSizeVertical * 1,
             ),
             BannerButton()
           ],
@@ -189,22 +210,23 @@ class BannerButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      style: ButtonStyle(
-        side: MaterialStateProperty.all(
-          BorderSide(
-            color: accentColor,
-          ),
+      style: OutlinedButton.styleFrom(
+        primary: accentColor,
+        side: BorderSide(
+          color: accentColor,
         ),
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
+        fixedSize: Size(
+          SizeConfig.blockSizeHorizontal * 8,
+          SizeConfig.blockSizeVertical * 1,
         ),
       ),
       onPressed: () {},
       child: Text(
         'Shop Now',
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: SizeConfig.blockSizeHorizontal * 1,
+        ),
       ),
     );
   }

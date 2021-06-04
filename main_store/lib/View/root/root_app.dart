@@ -8,7 +8,6 @@ import 'package:main_store/View/Cart/CartView.dart';
 import 'package:main_store/View/CheckOut/CheckOutView.dart';
 import 'package:main_store/View/Componants/Dialog/DialogView.dart';
 import 'package:main_store/View/Componants/SideNav/SideNavView.dart';
-import 'package:main_store/View/Componants/login.dart';
 import 'package:main_store/View/Home/HomeView.dart';
 import 'package:main_store/View/Sign_in/Signin_view.dart';
 import 'package:main_store/View/Sign_up/signup_view.dart';

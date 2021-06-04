@@ -21,7 +21,6 @@ class ProductListingCards extends StatelessWidget {
     String _salePrice = salePrice ?? '';
     bool _onSale = onSale ?? false;
     return Container(
-      padding: EdgeInsets.only(bottom: 10),
       child: Column(
         children: [
           Container(
@@ -37,7 +36,10 @@ class ProductListingCards extends StatelessWidget {
                     top: SizeConfig.blockSizeVertical * 1,
                     left: SizeConfig.blockSizeHorizontal * 0.5,
                   ),
-                  child: Icon(FontAwesomeIcons.heart),
+                  child: Icon(
+                    FontAwesomeIcons.heart,
+                    size: SizeConfig.blockSizeHorizontal * 1.5,
+                  ),
                 ),
                 _onSale
                     ? Container(
@@ -51,27 +53,43 @@ class ProductListingCards extends StatelessWidget {
                         child: Text(
                           'Sale!',
                           style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: SizeConfig.blockSizeHorizontal * 1,
+                          ),
                         ),
                       )
                     : Container(),
               ],
             ),
           ),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical * 0.7,
+          ),
           // Product Name
           Container(
-            padding: EdgeInsets.only(top: 10),
             child: Text(
               productName!,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: SizeConfig.blockSizeHorizontal * 1,
+              ),
             ),
+          ),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical * 0.8,
           ),
           // Category Name
           Container(
             child: Text(
               categoryName!,
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(
+                fontSize: SizeConfig.blockSizeHorizontal * 0.7,
+              ),
             ),
+          ),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical * 0.8,
           ),
           // Price and Sale Price
           Container(
@@ -82,19 +100,19 @@ class ProductListingCards extends StatelessWidget {
                     ? Text(
                         '\$$_salePrice',
                         style: TextStyle(
-                          fontSize: 10,
+                          fontSize: SizeConfig.blockSizeHorizontal * 0.9,
                           decoration: TextDecoration.lineThrough,
                         ),
                       )
                     : Container(),
                 SizedBox(
-                  width: 5,
+                  width: SizeConfig.blockSizeHorizontal * 0.5,
                 ),
                 Text(
                   '\$$productPrice',
                   style: TextStyle(
                     color: accentColor,
-                    fontSize: 12,
+                    fontSize: SizeConfig.blockSizeHorizontal * 1,
                   ),
                 ),
               ],
@@ -105,12 +123,19 @@ class ProductListingCards extends StatelessWidget {
             height: SizeConfig.blockSizeVertical * 3,
             width: SizeConfig.blockSizeHorizontal * 7,
             child: ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: accentColor),
+              style: ElevatedButton.styleFrom(
+                primary: accentColor,
+                fixedSize: Size(
+                  SizeConfig.blockSizeHorizontal * 1,
+                  SizeConfig.blockSizeVertical * 1,
+                ),
+              ),
               onPressed: () {},
               child: Text(
                 'Add to Cart',
                 style: TextStyle(
                   color: Colors.white,
+                  fontSize: SizeConfig.blockSizeHorizontal * 1,
                 ),
               ),
             ),
