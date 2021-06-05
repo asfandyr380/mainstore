@@ -1,7 +1,7 @@
 // Themes
 import 'package:flutter/material.dart';
 
-final Color accentColor = Color(0xff40a944);
+const Color accentColor = Color(0xff40a944);
 final footerColor = Color(0xffebebeb);
 // Strings
 final String agreeing_term_text =
