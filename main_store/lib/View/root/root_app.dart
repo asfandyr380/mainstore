@@ -17,7 +17,7 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: Checkout,
+      initialRoute: Cart,
       theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
           textTheme: GoogleFonts.latoTextTheme()),
