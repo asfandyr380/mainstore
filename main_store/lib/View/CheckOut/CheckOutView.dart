@@ -10,7 +10,8 @@ import 'package:stacked/stacked.dart';
 import 'CheckOutViewModel.dart';
 
 class CheckOutPage extends StatefulWidget {
-  CheckOutPage(bool bool);
+  final bool? checkout;
+  CheckOutPage({this.checkout});
 
   @override
   _CheckOutPageState createState() => _CheckOutPageState();
@@ -20,19 +21,20 @@ class _CheckOutPageState extends State<CheckOutPage> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    var checkout;
-    bool _checkout = checkout ?? false;
+    bool _checkout = widget.checkout ?? false;
     return ViewModelBuilder<CheckOutViewModel>.reactive(
       viewModelBuilder: () => CheckOutViewModel(),
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Header(),
-              Padding(
+              Container(
+                child: Header(),
+              ),
+              Container(
                 padding: EdgeInsets.symmetric(
-                    vertical: SizeConfig.blockSizeVertical * 6,
-                    horizontal: SizeConfig.blockSizeHorizontal * 10),
+                  vertical: SizeConfig.blockSizeVertical * 5,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -43,7 +45,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       ),
                       height: _checkout
                           ? SizeConfig.blockSizeVertical * 40
-                          : SizeConfig.blockSizeVertical * 60,
+                          : SizeConfig.blockSizeVertical * 80,
                       width: SizeConfig.blockSizeHorizontal * 45,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -69,19 +71,27 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                   'Contact Information',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 23),
+                                      fontSize:
+                                          SizeConfig.blockSizeHorizontal * 2),
                                 ),
                                 Row(
                                   children: [
                                     Text(
                                       'Already have account?',
-                                      style: TextStyle(fontSize: 10),
+                                      style: TextStyle(
+                                        fontSize:
+                                            SizeConfig.blockSizeHorizontal *
+                                                0.8,
+                                      ),
                                     ),
                                     Text(
                                       ' Log in',
                                       style: TextStyle(
-                                          fontSize: 10,
-                                          color: Colors.lightBlue),
+                                        fontSize:
+                                            SizeConfig.blockSizeHorizontal *
+                                                0.8,
+                                        color: Colors.lightBlue,
+                                      ),
                                     ),
                                   ],
                                 )
@@ -106,8 +116,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                 Text(
                                   'Shipping Information',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 23),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize:
+                                        SizeConfig.blockSizeHorizontal * 2,
+                                  ),
                                 ),
                               ],
                             ),

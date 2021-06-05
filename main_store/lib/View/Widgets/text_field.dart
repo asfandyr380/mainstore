@@ -19,6 +19,9 @@ class TextInputField extends StatelessWidget {
           onChanged: (val) => onChange!(val),
           decoration: InputDecoration(
             hintText: hint_text,
+            hintStyle: TextStyle(
+              fontSize: SizeConfig.blockSizeHorizontal * 1,
+            ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(6),
               borderSide: BorderSide(color: Colors.green),

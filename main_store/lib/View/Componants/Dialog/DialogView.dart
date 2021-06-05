@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Models/AlertRequest.dart';
 import 'package:main_store/Services/Dialog/Dialog_Services.dart';
@@ -31,6 +32,7 @@ class _DialogManagerState extends State<DialogManager> {
         },
         buttons: [
           DialogButton(
+            color: accentColor,
             child: Text(
               req.buttonTitle,
               style: TextStyle(fontSize: 21),

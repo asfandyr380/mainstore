@@ -14,8 +14,8 @@ class OrderSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     bool _checkout = checkout ?? false;
     return Container(
-      height: SizeConfig.blockSizeVertical * 40,
-      width: SizeConfig.blockSizeHorizontal * 18,
+      height: SizeConfig.blockSizeVertical * 48,
+      width: SizeConfig.blockSizeHorizontal * 22,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(3),
