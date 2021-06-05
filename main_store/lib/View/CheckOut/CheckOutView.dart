@@ -28,10 +28,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Header(
-                // TODO: Add Page Navigation Here
-                onTap: () {},
-              ),
+              Header(),
               Padding(
                 padding: EdgeInsets.symmetric(
                     vertical: SizeConfig.blockSizeVertical * 6,

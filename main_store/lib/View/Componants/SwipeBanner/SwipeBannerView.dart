@@ -17,6 +17,7 @@ class SwipeBanner extends StatelessWidget {
       viewModelBuilder: () => SwipeBannerViewModel(),
       builder: (context, model, child) => Container(
         height: SizeConfig.blockSizeVertical * 45,
+        width: SizeConfig.blockSizeHorizontal * 75,
         decoration: BoxDecoration(
           color: Colors.grey,
         ),
@@ -59,8 +60,8 @@ class PageSwipeIndicator extends StatelessWidget {
       margin: EdgeInsets.only(right: 6),
       duration: Duration(milliseconds: 100),
       curve: Curves.easeOutCubic,
-      height: 10,
-      width: 10,
+      height: SizeConfig.blockSizeVertical * 1.5,
+      width: SizeConfig.blockSizeHorizontal * 1.5,
       decoration: BoxDecoration(
         color: onCurrentIndex ? accentColor : Colors.grey[100],
         shape: BoxShape.circle,
@@ -76,40 +77,51 @@ class SwipeBannerText extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.only(
           top: SizeConfig.blockSizeVertical * 10,
-          left: SizeConfig.blockSizeHorizontal * 7,
+          left: SizeConfig.blockSizeHorizontal * 3,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // sub Text
             Container(
-              child: Text('100% Genuine Products'),
+              child: Text(
+                '100% Genuine Products',
+                style: TextStyle(
+                  fontSize: SizeConfig.blockSizeHorizontal * 1,
+                ),
+              ),
             ),
             // Main Body Text
             Container(
+              height: SizeConfig.blockSizeVertical * 13,
+              width: SizeConfig.blockSizeHorizontal * 20,
               child: Text(
-                'Tasty & Healthy \nOrganic Food',
+                'Tasty & Healthy Organic Food',
+                textAlign: TextAlign.start,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 32,
+                  fontSize: SizeConfig.blockSizeHorizontal * 2.5,
                 ),
               ),
             ),
             SizedBox(
-              height: 10,
+              height: SizeConfig.blockSizeVertical * 1,
             ),
             // Explore Button
             Container(
               child: Container(
                 alignment: Alignment.center,
-                width: 150,
-                height: 40,
+                width: SizeConfig.blockSizeHorizontal * 12,
+                height: SizeConfig.blockSizeVertical * 5,
                 decoration: BoxDecoration(
                   color: accentColor,
                 ),
                 child: Text(
                   'Explore Products',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: SizeConfig.blockSizeHorizontal * 1,
+                  ),
                 ),
               ),
             ),

@@ -9,14 +9,15 @@ class QuickLinks extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: Container(
-        padding: EdgeInsets.only(top: 6),
+        padding: EdgeInsets.only(
+          top: SizeConfig.blockSizeVertical * 0.6,
+        ),
         alignment: Alignment.topLeft,
-        child: FittedBox(
-          child: Text(
-            pageName,
-            style:
-                TextStyle(fontSize: 15, decoration: TextDecoration.underline),
-          ),
+        child: Text(
+          pageName,
+          style: TextStyle(
+              fontSize: SizeConfig.blockSizeHorizontal * 1,
+              decoration: TextDecoration.underline),
         ),
       ),
     );

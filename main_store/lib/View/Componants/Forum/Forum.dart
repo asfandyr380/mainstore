@@ -50,14 +50,19 @@ class Forum extends StatelessWidget {
                 Container(
                   child: Text(
                     _isSignIn ? 'SIGN IN' : 'SIGN UP',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: SizeConfig.blockSizeHorizontal * 2,
+                    ),
                   ),
                 ),
                 Column(
                   children: [
                     !_isSignIn
                         ? Container(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: SizeConfig.blockSizeHorizontal * 1.2,
+                            ),
                             child: TextInputField(
                               validateForm: (val) => model.validateForum(val),
                               onChange: (val) {
@@ -68,7 +73,7 @@ class Forum extends StatelessWidget {
                           )
                         : Container(),
                     SizedBox(
-                      height: 15,
+                      height: SizeConfig.blockSizeVertical * 1.5,
                     ),
                     !_isSignIn
                         ? Container(
@@ -83,7 +88,7 @@ class Forum extends StatelessWidget {
                           )
                         : Container(),
                     SizedBox(
-                      height: 15,
+                      height: SizeConfig.blockSizeVertical * 1.5,
                     ),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 15),
@@ -96,7 +101,7 @@ class Forum extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 15,
+                      height: SizeConfig.blockSizeVertical * 1.5,
                     ),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 15),
@@ -109,7 +114,7 @@ class Forum extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 15,
+                      height: SizeConfig.blockSizeVertical * 1.5,
                     ),
                     !_isSignIn
                         ? Container(
@@ -139,19 +144,29 @@ class Forum extends StatelessWidget {
                                   activeColor: accentColor,
                                 ),
                                 Container(
-                                  child: Expanded(
-                                    child: Text(
-                                      agreeing_term_text,
-                                      style: TextStyle(fontSize: 10),
+                                  width: SizeConfig.blockSizeHorizontal * 15,
+                                  height: SizeConfig.blockSizeVertical * 3,
+                                  child: Text(
+                                    agreeing_term_text,
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      fontSize:
+                                          SizeConfig.blockSizeHorizontal * 0.7,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           )
-                        : ForgetPasswordPage(),
+                        : Container(
+                            padding: EdgeInsets.only(
+                                left: SizeConfig.blockSizeHorizontal * 2),
+                            child: ForgetPasswordPage(),
+                          ),
                     Container(
-                        padding: EdgeInsets.only(top: 10, bottom: 7),
+                        padding: EdgeInsets.symmetric(
+                          vertical: SizeConfig.blockSizeVertical * 1,
+                        ),
                         child: CustomButton(
                           isLoading: model.isLoading,
                           onPressed: _isSignIn
@@ -190,11 +205,13 @@ class ForgetPasswordPage extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: Container(
-        padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 2),
         alignment: Alignment.topLeft,
         child: Text(
           'Forget Password?',
-          style: TextStyle(color: accentColor),
+          style: TextStyle(
+            color: accentColor,
+            fontSize: SizeConfig.blockSizeHorizontal * 1,
+          ),
         ),
       ),
     );

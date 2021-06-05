@@ -21,72 +21,79 @@ class Footer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
               children: [
+                // Logo and Site Desription
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Logo Image
                     Container(
-                      width: SizeConfig.blockSizeHorizontal * 9,
-                      height: SizeConfig.blockSizeVertical * 15,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('assets/images/logo.png'),
-                        ),
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        fit: BoxFit.cover,
+                        height: SizeConfig.blockSizeVertical * 10,
+                        width: SizeConfig.blockSizeHorizontal * 10,
                       ),
                     ),
+                    // Site Description
                     Container(
+                      width: SizeConfig.blockSizeHorizontal * 35,
+                      height: SizeConfig.blockSizeVertical * 12,
                       padding: EdgeInsets.only(
                           left: SizeConfig.blockSizeHorizontal * 1.5),
-                      child: FittedBox(
-                        child: Text(
-                          footer_desc,
-                          maxLines: 10,
-                          style: TextStyle(fontSize: 12),
+                      child: Text(
+                        footer_desc,
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          fontSize: SizeConfig.blockSizeHorizontal * 0.9,
                         ),
                       ),
                     ),
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical * 2,
+                  ),
                   child: VerticalDivider(
                     color: Colors.grey,
                   ),
                 ),
                 // Quick Links Column
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.only(left: 30),
-                    width: SizeConfig.blockSizeHorizontal * 25,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(top: 10),
-                          alignment: Alignment.topLeft,
-                          child: FittedBox(
-                            child: Text(
-                              'Quick Links',
-                              maxLines: 1,
-                              style: TextStyle(
-                                  fontSize: 25, fontWeight: FontWeight.w300),
-                            ),
+                Container(
+                  padding: EdgeInsets.only(
+                    left: SizeConfig.blockSizeHorizontal * 3,
+                  ),
+                  width: SizeConfig.blockSizeHorizontal * 25,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 1,
+                        ),
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Quick Links',
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontSize: SizeConfig.blockSizeHorizontal * 2,
+                            fontWeight: FontWeight.w300,
                           ),
                         ),
-                        Expanded(child: QuickLinks(pageName: 'Home')),
-                        Expanded(child: QuickLinks(pageName: 'About')),
-                        Expanded(child: QuickLinks(pageName: 'Contact')),
-                        Expanded(child: QuickLinks(pageName: 'Privacy Policy')),
-                        Expanded(
-                            child: QuickLinks(pageName: 'Terms & Condition')),
-                      ],
-                    ),
+                      ),
+                      QuickLinks(pageName: 'Home'),
+                      QuickLinks(pageName: 'About'),
+                      QuickLinks(pageName: 'Contact'),
+                      QuickLinks(pageName: 'Privacy Policy'),
+                      QuickLinks(pageName: 'Terms & Condition'),
+                    ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical * 2,
+                  ),
                   child: VerticalDivider(
                     color: Colors.grey,
                   ),
@@ -96,15 +103,17 @@ class Footer extends StatelessWidget {
                   child: Container(
                     height: SizeConfig.blockSizeVertical * 25,
                     width: SizeConfig.blockSizeHorizontal * 25,
-                    padding: EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.only(
+                      top: SizeConfig.blockSizeVertical * 2,
+                    ),
                     child: Column(
                       children: [
                         Container(
-                          child: FittedBox(
-                            child: Text(
-                              'Download App',
-                              style: TextStyle(
-                                  fontSize: 25, fontWeight: FontWeight.w300),
+                          child: Text(
+                            'Download App',
+                            style: TextStyle(
+                              fontSize: SizeConfig.blockSizeHorizontal * 2,
+                              fontWeight: FontWeight.w300,
                             ),
                           ),
                         ),
@@ -141,7 +150,12 @@ class Footer extends StatelessWidget {
                 )
               ],
             ),
-            child: Text('© 2021 Family Super Mart All Rights Reserved.'),
+            child: Text(
+              '© 2021 Family Super Mart All Rights Reserved.',
+              style: TextStyle(
+                fontSize: SizeConfig.blockSizeHorizontal * 1,
+              ),
+            ),
           ),
         ],
       ),

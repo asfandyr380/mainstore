@@ -29,12 +29,12 @@ class ProductListingRow extends StatelessWidget {
                   Text(
                     listingName!,
                     style: TextStyle(
-                      fontSize: 32,
+                      fontSize: SizeConfig.blockSizeHorizontal * 2.5,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Container(
-                    height: 4,
+                    height: SizeConfig.blockSizeVertical * 0.5,
                     width: SizeConfig.blockSizeHorizontal * 5,
                     color: accentColor,
                   ),
@@ -48,7 +48,7 @@ class ProductListingRow extends StatelessWidget {
                 children: [
                   ProductListNextArrowButton(
                       icon: Icon(FontAwesomeIcons.arrowLeft)),
-                  SizedBox(width: 5),
+                  SizedBox(width: SizeConfig.blockSizeHorizontal * 0.5),
                   ProductListNextArrowButton(
                       icon: Icon(FontAwesomeIcons.arrowRight)),
                 ],
