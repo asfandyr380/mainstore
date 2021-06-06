@@ -5,6 +5,13 @@ import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
 import 'package:main_store/Services/Navigation/router.dart';
 import 'package:main_store/View/Componants/Dialog/DialogView.dart';
+<<<<<<< HEAD
+=======
+import 'package:main_store/View/Componants/SideNav/SideNavView.dart';
+import 'package:main_store/View/ProductDetail/productDetailView.dart';
+import 'package:main_store/View/Sign_in/Signin_view.dart';
+import 'package:main_store/View/Sign_up/signup_view.dart';
+>>>>>>> 4c911ea0c9509c65c64e7331a04b3468448cd823
 
 // This Widget is the Root of The Application
 class RootWidget extends StatelessWidget {
