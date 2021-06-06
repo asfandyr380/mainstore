@@ -6,4 +6,6 @@ class DocCollectionRef {
 
   CollectionReference get productRef => _firestore.collection("Products");
   CollectionReference get userRef => _firestore.collection("Users");
+  CollectionReference get categoryBanners => _firestore.collection("Banners");
+  CollectionReference get swipeBanner => _firestore.collection("SwipeBanners");
 }

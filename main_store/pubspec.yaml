@@ -31,7 +31,7 @@ dependencies:
   stacked: ^2.1.6
   firebase_auth: ^1.2.0
   firebase_core: ^1.2.0
-  cloud_firestore: ^2.2.0
+  cloud_firestore: 1.0.7
   firebase_storage: ^8.1.0
   get_it: ^6.1.1
   font_awesome_flutter: ^9.0.0

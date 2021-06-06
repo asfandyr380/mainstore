@@ -7,6 +7,11 @@ class Auth {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   FirestoreServices _firestoreServices = locator<FirestoreServices>();
 
+  // returns Fireabase Current User if Signed In
+  Future<bool> currrentUser() async {
+    return _firebaseAuth.currentUser != null;
+  }
+
   // Sign In User
   Future signIn(String email, String password) async {
     try {

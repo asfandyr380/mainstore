@@ -23,7 +23,7 @@ class _SignInPageState extends State<SignInPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Header(
-                isSignIn: true,
+                isSignInPage: true,
               ),
               Center(
                 child: Forum(

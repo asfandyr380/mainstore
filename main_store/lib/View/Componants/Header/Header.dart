@@ -9,17 +9,18 @@ import 'package:main_store/View/Widgets/SearchBarRow.dart';
 import 'package:stacked/stacked.dart';
 
 class Header extends StatelessWidget {
-  final bool? isSignIn;
+  final bool? isSignInPage;
   final bool? onHomepage;
-  Header({this.isSignIn, this.onHomepage});
+  Header({this.isSignInPage, this.onHomepage});
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    bool _isSignIn = isSignIn ?? false;
+    bool _isSignInPage = isSignInPage ?? false;
     bool _onHomePage = onHomepage ?? false;
     return ViewModelBuilder<HeaderViewModel>.reactive(
       viewModelBuilder: () => HeaderViewModel(),
+      onModelReady: (model) => model.getUser(),
       builder: (context, model, child) => Column(
         children: [
           // Social Icons Bar
@@ -78,9 +79,15 @@ class Header extends StatelessWidget {
                 ),
                 Container(
                   child: CartFavandSignupLoginRow(
-                    isSignIn: _isSignIn,
-                    onTap: () => model.navigateToSignInLogInPage(_isSignIn),
-                  ),
+                      userLogedIn: model.userLogedIn,
+                      isSignInPage: _isSignInPage,
+                      onTap: () {
+                        if (model.userLogedIn) {
+                          model.signoutUser();
+                        } else {
+                          model.navigateToSignInLogInPage(_isSignInPage);
+                        }
+                      }),
                 ),
               ],
             ),
@@ -133,12 +140,18 @@ class HomePageHeader extends StatelessWidget {
 }
 
 class CartFavandSignupLoginRow extends StatelessWidget {
-  final bool? isSignIn;
+  final bool? isSignInPage;
   final Function onTap;
-  CartFavandSignupLoginRow({this.isSignIn, required this.onTap});
+  final bool? userLogedIn;
+  CartFavandSignupLoginRow({
+    this.isSignInPage,
+    required this.onTap,
+    this.userLogedIn,
+  });
   @override
   Widget build(BuildContext context) {
-    bool _isSignIn = isSignIn ?? false;
+    bool _isSignInPage = isSignInPage ?? false;
+    bool _userLogedIn = userLogedIn ?? false;
     SizeConfig().init(context);
     return Container(
       child: Row(
@@ -148,11 +161,19 @@ class CartFavandSignupLoginRow extends StatelessWidget {
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: Container(
-                child: Text(
-                  _isSignIn ? 'SIGN UP' : 'LOGIN',
-                  style:
-                      TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 1),
-                ),
+                child: !_userLogedIn
+                    ? Text(
+                        _isSignInPage ? 'SIGN UP' : 'LOGIN',
+                        style: TextStyle(
+                            fontSize: SizeConfig.blockSizeHorizontal * 1),
+                      )
+                    : Text(
+                        'SIGN OUT',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: SizeConfig.blockSizeHorizontal * 1,
+                        ),
+                      ),
               ),
             ),
           ),

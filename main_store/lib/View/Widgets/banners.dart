@@ -94,12 +94,14 @@ class SecondBanner extends StatelessWidget {
 class Ban extends StatelessWidget {
   final bool? isMiddle;
   final String? bannerText;
-  Ban({this.isMiddle, this.bannerText});
+  final String? image;
+  Ban({this.isMiddle, this.bannerText, this.image});
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     bool _isMiddle = isMiddle ?? false;
     String _bannerText = bannerText ?? '';
+    String _image = image ?? '';
     return Container(
       height: SizeConfig.blockSizeVertical * 60,
       width: _isMiddle
@@ -107,13 +109,18 @@ class Ban extends StatelessWidget {
           : SizeConfig.blockSizeHorizontal * 30,
       decoration: BoxDecoration(
         color: Colors.grey,
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: NetworkImage(
+            _image,
+          ),
+        ),
       ),
       child: Container(
         padding: EdgeInsets.only(
           left: SizeConfig.blockSizeHorizontal * 1,
           top: SizeConfig.blockSizeVertical * 2,
         ),
-        // TODO: Add Image From the Back-End Here
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -141,16 +148,24 @@ class Ban extends StatelessWidget {
 
 class SmallBanner extends StatelessWidget {
   final String? bannerText;
-  SmallBanner({this.bannerText});
+  final String? image;
+  SmallBanner({this.bannerText, this.image});
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     String _bannerText = bannerText ?? '';
+    String _image = image ?? '';
     return Container(
       height: SizeConfig.blockSizeVertical * 29,
       width: SizeConfig.blockSizeHorizontal * 20,
       decoration: BoxDecoration(
         color: Colors.grey,
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: NetworkImage(
+            _image,
+          ),
+        ),
       ),
       // TODO: Add Image From the Back-End Here
       child: Padding(

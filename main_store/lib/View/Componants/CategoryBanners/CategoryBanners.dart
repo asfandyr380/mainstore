@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/View/Componants/CategoryBanners/CategoryBannersViewModel.dart';
 import 'package:main_store/View/Widgets/banners.dart';
+import 'package:stacked/stacked.dart';
 
 class CategoryBanners extends StatelessWidget {
   final String? bannerText;
@@ -10,60 +12,60 @@ class CategoryBanners extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     String _bannerText = bannerText ?? '';
-    return Container(
-      padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.blockSizeHorizontal * 2,
-          vertical: SizeConfig.blockSizeVertical * 2),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Ban(
-                bannerText: 'Fruits & Dreid Fruits',
-              ),
-              Ban(
-                bannerText: 'Fresh Vagitables',
-                isMiddle: true,
-              ),
-              Column(
-                children: [
-                  SmallBanner(
-                    bannerText: 'Fresh Bread',
-                  ),
-                  SizedBox(
-                    height: SizeConfig.blockSizeVertical * 2,
-                  ),
-                  SmallBanner(
-                    bannerText: 'Fish & SeaFood',
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: SizeConfig.blockSizeVertical * 2,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                child: SecondBanner(
-                  bannerText: 'Fresh Fruits',
+    return ViewModelBuilder<BannersViewModel>.reactive(
+      viewModelBuilder: () => BannersViewModel(),
+      onModelReady: (model) => model.fetchBanners(),
+      builder: (context, model, child) => Container(
+        padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.blockSizeHorizontal * 2,
+            vertical: SizeConfig.blockSizeVertical * 2),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Ban(
+                  image:
+                      model.bannerlist.isEmpty ? '' : model.bannerlist[0].image,
+                  bannerText: model.bannerlist.isEmpty
+                      ? ''
+                      : model.bannerlist[0].mainText,
                 ),
-              ),
-              Column(
-                children: [
-                  DiscountBanner(),
-                  SizedBox(
-                    height: SizeConfig.blockSizeVertical * 2,
-                  ),
-                  DiscountBanner(),
-                ],
-              ),
-            ],
-          ),
-        ],
+                Ban(
+                  image:
+                      model.bannerlist.isEmpty ? '' : model.bannerlist[1].image,
+                  bannerText: model.bannerlist.isEmpty
+                      ? ''
+                      : model.bannerlist[1].mainText,
+                  isMiddle: true,
+                ),
+                Column(
+                  children: [
+                    SmallBanner(
+                      image: model.bannerlist.isEmpty
+                          ? ''
+                          : model.bannerlist[4].image,
+                      bannerText: model.bannerlist.isEmpty
+                          ? ''
+                          : model.bannerlist[4].mainText,
+                    ),
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical * 2,
+                    ),
+                    SmallBanner(
+                      image: model.bannerlist.isEmpty
+                          ? ''
+                          : model.bannerlist[5].image,
+                      bannerText: model.bannerlist.isEmpty
+                          ? ''
+                          : model.bannerlist[5].mainText,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

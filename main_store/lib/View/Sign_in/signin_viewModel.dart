@@ -4,6 +4,7 @@ import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Services/Dialog/Dialog_Services.dart';
 import 'package:main_store/Services/Fireabase/Auth/firebase_auth.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
+import 'package:main_store/View/Home/HomeView.dart';
 import 'package:main_store/View/Sign_in/Signin_view.dart';
 
 class SigninViewModel extends ChangeNotifier {
@@ -23,7 +24,7 @@ class SigninViewModel extends ChangeNotifier {
     // if result is bool
     if (result is bool) {
       // if Result is True Then User Successfuly Signed In
-      // ToDo: Navigate User to the Home Page
+      _navigation.pushReplaceRoute(Home());
       print(result);
       return !result;
     } else {

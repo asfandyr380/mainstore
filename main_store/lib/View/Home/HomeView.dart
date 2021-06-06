@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/BrandsCard/BrandsCard.dart';
 import 'package:main_store/View/Componants/CategoryBanners/CategoryBanners.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Componants/ProductListingRows/ProductListingRows.dart';
-import 'package:main_store/View/Componants/SideNav/SideNavView.dart';
-import 'package:main_store/View/Componants/SwipeBanner/SwipeBannerView.dart';
 import 'package:main_store/View/Home/HomeViewModel.dart';
 import 'package:main_store/View/Widgets/CardGridView.dart';
-import 'package:main_store/View/Widgets/SearchBarRow.dart';
 import 'package:main_store/View/Widgets/banners.dart';
 import 'package:main_store/View/Widgets/listingName.dart';
-import 'package:main_store/View/Widgets/productListingCard.dart';
 import 'package:stacked/stacked.dart';
 
 class Home extends StatelessWidget {
