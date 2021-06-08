@@ -40,12 +40,7 @@ class Home extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.only(bottom: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    for (int i = 0; i < 5; i++) BrandsCard(),
-                  ],
-                ),
+                child: BrandsRow(),
               ),
               ProductListingRow(
                 listingName: 'Top Selling Products',

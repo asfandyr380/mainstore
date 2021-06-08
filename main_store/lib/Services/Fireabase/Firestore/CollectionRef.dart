@@ -8,4 +8,5 @@ class DocCollectionRef {
   CollectionReference get userRef => _firestore.collection("Users");
   CollectionReference get categoryBanners => _firestore.collection("Banners");
   CollectionReference get swipeBanner => _firestore.collection("SwipeBanners");
+  CollectionReference get Brands => _firestore.collection("Brands");
 }
