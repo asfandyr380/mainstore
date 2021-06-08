@@ -7,11 +7,14 @@ class CardGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: SizeConfig.blockSizeVertical * 2,
+      ),
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
+          crossAxisCount: 3,
         ),
-        itemCount: 15,
+        itemCount: 20,
         itemBuilder: (context, i) {
           return ProductListingCards(
             productName: 'Name',

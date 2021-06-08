@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
-import 'package:main_store/View/Componants/SideNav/SideNavView.dart';
-import 'package:main_store/View/Widgets/drop_Down.dart';
 
 class SearchBarRow extends StatefulWidget {
   @override

@@ -189,19 +189,25 @@ class SmallBanner extends StatelessWidget {
 
 class MoreandMoreBanner extends StatelessWidget {
   final String? bannerText;
-  MoreandMoreBanner({this.bannerText});
+  final String? image;
+  MoreandMoreBanner({this.bannerText, this.image});
   @override
   Widget build(BuildContext context) {
     String _bannerText = bannerText ?? '';
+    String _image = image ?? '';
     return Container(
       height: SizeConfig.blockSizeVertical * 34,
       width: SizeConfig.blockSizeHorizontal * 45,
       decoration: BoxDecoration(
         color: Colors.grey,
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: NetworkImage(_image),
+        ),
       ),
       child: Container(
         padding: EdgeInsets.only(
-            top: SizeConfig.blockSizeVertical * 5,
+            top: SizeConfig.blockSizeVertical * 18,
             left: SizeConfig.blockSizeHorizontal * 2),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

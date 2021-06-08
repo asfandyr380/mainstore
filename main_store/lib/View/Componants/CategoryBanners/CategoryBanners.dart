@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/Models/Banners.dart';
 import 'package:main_store/View/Componants/CategoryBanners/CategoryBannersViewModel.dart';
 import 'package:main_store/View/Widgets/banners.dart';
 import 'package:stacked/stacked.dart';
 
 class CategoryBanners extends StatelessWidget {
-  final String? bannerText;
-  CategoryBanners({this.bannerText});
+  final Function(List<Banners>) getBanner;
+  CategoryBanners({required this.getBanner});
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    String _bannerText = bannerText ?? '';
     return ViewModelBuilder<BannersViewModel>.reactive(
       viewModelBuilder: () => BannersViewModel(),
-      onModelReady: (model) => model.fetchBanners(),
+      onModelReady: (model) {
+        model.fetchBanners().then((value) {
+          getBanner(value);
+        });
+      },
       builder: (context, model, child) => Container(
         padding: EdgeInsets.symmetric(
             horizontal: SizeConfig.blockSizeHorizontal * 2,

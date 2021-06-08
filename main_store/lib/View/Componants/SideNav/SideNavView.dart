@@ -4,43 +4,52 @@ import 'package:main_store/Config/sizeconfig.dart';
 import 'package:stacked/stacked.dart';
 import 'SideNavViewModel.dart';
 
-class SideNavMenu extends StatefulWidget {
-  @override
-  _SideNavMenuState createState() => _SideNavMenuState();
-}
+class SideNavMenu extends StatelessWidget {
+  final bool? productMenu;
+  SideNavMenu({this.productMenu});
 
-class _SideNavMenuState extends State<SideNavMenu> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return ViewModelBuilder<SideNavViewModel>.reactive(
+    bool _productMenu = productMenu ?? false;
+    return ViewModelBuilder.reactive(
       viewModelBuilder: () => SideNavViewModel(),
       builder: (context, model, child) => Container(
         width: SizeConfig.blockSizeHorizontal * 20,
-        height: SizeConfig.blockSizeVertical * 52,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(6),
-            bottomRight: Radius.circular(6),
-          ),
-          border: Border.all(width: 0.1),
-        ),
+        height: !_productMenu
+            ? SizeConfig.blockSizeVertical * 52
+            : SizeConfig.blockSizeVertical * 130,
+        decoration: !_productMenu
+            ? BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(6),
+                  bottomRight: Radius.circular(6),
+                ),
+                border: Border.all(width: 0.1),
+              )
+            : BoxDecoration(),
         child: ListView(
           children: [
-            Container(
-              width: SizeConfig.blockSizeHorizontal * 15,
-              height: SizeConfig.blockSizeVertical * 5,
-              decoration: BoxDecoration(color: accentColor),
-              child: Center(
-                child: Text(
-                  'All Category',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: SizeConfig.blockSizeHorizontal * 1.5),
-                ),
-              ),
-            ),
-            Category()
+            !_productMenu
+                ? Container(
+                    width: SizeConfig.blockSizeHorizontal * 15,
+                    height: SizeConfig.blockSizeVertical * 5,
+                    decoration: BoxDecoration(color: accentColor),
+                    child: Center(
+                      child: Text(
+                        'All Category',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: SizeConfig.blockSizeHorizontal * 1.5),
+                      ),
+                    ),
+                  )
+                : Container(),
+            Category(),
+            Category(),
+            Category(),
+            Category(),
+            Category(),
           ],
         ),
       ),

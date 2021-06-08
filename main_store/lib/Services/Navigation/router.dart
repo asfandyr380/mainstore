@@ -3,6 +3,8 @@ import 'package:main_store/Config/routes.dart';
 import 'package:main_store/View/Cart/CartView.dart';
 import 'package:main_store/View/CheckOut/CheckOutView.dart';
 import 'package:main_store/View/Home/HomeView.dart';
+import 'package:main_store/View/ProductDetail/productDetailView.dart';
+import 'package:main_store/View/ProductListingPage/ProductListingPage.dart';
 import 'package:main_store/View/Sign_in/Signin_view.dart';
 import 'package:main_store/View/Sign_up/signup_view.dart';
 
@@ -20,6 +22,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case Checkout:
       return _GeneratePageRoute(
           widget: CheckOutPage(), routeName: settings.name);
+    case ProductDetailsPage:
+      return _GeneratePageRoute(
+          widget: ProductDetailView(), routeName: settings.name);
+    case ProductListing:
+      return _GeneratePageRoute(
+          widget: ProductListingPage(), routeName: settings.name);
 
     default:
       return MaterialPageRoute(

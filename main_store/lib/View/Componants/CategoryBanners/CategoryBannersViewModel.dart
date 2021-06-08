@@ -12,6 +12,9 @@ class BannersViewModel extends ChangeNotifier {
     if (result is List<Banners>) {
       bannerlist = result;
       notifyListeners();
+      if (bannerlist.isNotEmpty) {
+        return bannerlist;
+      }
     } else {
       // TODO: Show Error
       print(result);

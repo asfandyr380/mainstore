@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/Models/swipeBanner.dart';
 import 'package:main_store/View/Componants/SwipeBanner/SwipeBannerViewModel.dart';
 import 'package:stacked/stacked.dart';
 
 class SwipeBanner extends StatelessWidget {
-  List<Widget> banner = [
-    SwipeBannerText(),
-    SwipeBannerText(),
-    SwipeBannerText(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SwipeBannerViewModel>.reactive(
       viewModelBuilder: () => SwipeBannerViewModel(),
+      onModelReady: (model) => model.fetchBanner(),
       builder: (context, model, child) => Container(
         height: SizeConfig.blockSizeVertical * 45,
         width: SizeConfig.blockSizeHorizontal * 75,
@@ -25,7 +21,12 @@ class SwipeBanner extends StatelessWidget {
           children: [
             PageView(
               onPageChanged: (i) => model.onPageChange(i),
-              children: [for (var image in banner) image],
+              children: [
+                for (var banner in model.list)
+                  BannerImage(
+                    bannerDetails: banner,
+                  ),
+              ],
             ),
             Container(
               padding:
@@ -34,7 +35,7 @@ class SwipeBanner extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  for (int i = 0; i < banner.length; i++)
+                  for (int i = 0; i < model.list.length; i++)
                     PageSwipeIndicator(
                       index: i,
                       currentIndex: model.currentIndex,
@@ -44,6 +45,28 @@ class SwipeBanner extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class BannerImage extends StatelessWidget {
+  final Swipebanner? bannerDetails;
+  BannerImage({this.bannerDetails});
+
+  @override
+  Widget build(BuildContext context) {
+    String _image = bannerDetails!.image ?? '';
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: NetworkImage(_image),
+        ),
+      ),
+      child: SwipeBannerText(
+        mainText: bannerDetails!.mainText ?? '',
+        subText: bannerDetails!.subText ?? '',
       ),
     );
   }
@@ -63,7 +86,7 @@ class PageSwipeIndicator extends StatelessWidget {
       height: SizeConfig.blockSizeVertical * 1.5,
       width: SizeConfig.blockSizeHorizontal * 1.5,
       decoration: BoxDecoration(
-        color: onCurrentIndex ? accentColor : Colors.grey[100],
+        color: onCurrentIndex ? accentColor : Colors.grey,
         shape: BoxShape.circle,
       ),
     );
@@ -71,8 +94,14 @@ class PageSwipeIndicator extends StatelessWidget {
 }
 
 class SwipeBannerText extends StatelessWidget {
+  final String? mainText;
+  final String? subText;
+
+  SwipeBannerText({this.mainText, this.subText});
   @override
   Widget build(BuildContext context) {
+    String _subText = subText ?? '';
+    String _mainText = mainText ?? '';
     return Container(
       child: Container(
         padding: EdgeInsets.only(
@@ -85,7 +114,7 @@ class SwipeBannerText extends StatelessWidget {
             // sub Text
             Container(
               child: Text(
-                '100% Genuine Products',
+                _subText,
                 style: TextStyle(
                   fontSize: SizeConfig.blockSizeHorizontal * 1,
                 ),
@@ -96,7 +125,7 @@ class SwipeBannerText extends StatelessWidget {
               height: SizeConfig.blockSizeVertical * 13,
               width: SizeConfig.blockSizeHorizontal * 20,
               child: Text(
-                'Tasty & Healthy Organic Food',
+                _mainText,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,

@@ -34,7 +34,9 @@ class Home extends StatelessWidget {
                 child: HomePageHeader(),
               ),
               Container(
-                child: CategoryBanners(),
+                child: CategoryBanners(
+                  getBanner: (banners) => model.getBanner(banners),
+                ),
               ),
               Container(
                 padding: EdgeInsets.only(bottom: 10),
@@ -61,10 +63,18 @@ class Home extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MoreandMoreBanner(
-                      bannerText: 'Cosmetics',
+                      bannerText: model.banner.isNotEmpty
+                          ? model.banner[2].mainText
+                          : '',
+                      image:
+                          model.banner.isNotEmpty ? model.banner[2].image : '',
                     ),
                     MoreandMoreBanner(
-                      bannerText: 'Computer Hardware',
+                      bannerText: model.banner.isNotEmpty
+                          ? model.banner[3].mainText
+                          : '',
+                      image:
+                          model.banner.isNotEmpty ? model.banner[3].image : '',
                     ),
                   ],
                 ),
