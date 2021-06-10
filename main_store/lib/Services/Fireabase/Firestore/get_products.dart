@@ -80,4 +80,25 @@ class Products {
       }
     }
   }
+
+  Future relatedProducts(List<String> category) async {
+    try {
+      var result =
+          await ref.Products.where('category', arrayContainsAny: category)
+              .get();
+      if (result.docs.isNotEmpty) {
+        return result.docs
+            .map(
+              (e) => ProductsModel.fromMap(e.data()),
+            )
+            .toList();
+      }
+    } catch (e) {
+      if (e is PlatformException) {
+        return e.message;
+      } else {
+        return e;
+      }
+    }
+  }
 }

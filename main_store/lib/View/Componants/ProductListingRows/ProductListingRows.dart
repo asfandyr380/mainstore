@@ -90,7 +90,7 @@ class ProductListingRow extends StatelessWidget {
                   controller: _scrollController,
                   index: i,
                   child: ProductListingCards(
-                    onTap: () => model.navigatetoDetailPage(),
+                    onTap: () => model.navigatetoDetailPage(productDetails![i]),
                     productName: productDetails![i].name,
                     productPrice: productDetails![i].productPrice,
                     onSale: productDetails![i].onSale,

@@ -114,7 +114,7 @@ class ProductListingCards extends StatelessWidget {
                 children: [
                   _onSale
                       ? Text(
-                          '\$$_salePrice',
+                          '£$_salePrice',
                           style: TextStyle(
                             fontSize: SizeConfig.blockSizeHorizontal * 0.9,
                             decoration: TextDecoration.lineThrough,
@@ -125,7 +125,7 @@ class ProductListingCards extends StatelessWidget {
                     width: SizeConfig.blockSizeHorizontal * 0.5,
                   ),
                   Text(
-                    '\$$_productPrice',
+                    '£$_productPrice',
                     style: TextStyle(
                       color: accentColor,
                       fontSize: SizeConfig.blockSizeHorizontal * 1,

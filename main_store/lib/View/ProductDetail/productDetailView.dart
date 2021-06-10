@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/Models/snapshotCrousel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
@@ -9,19 +10,17 @@ import 'package:main_store/View/ProductDetail/productDetailViewMode.dart';
 import 'package:main_store/View/Widgets/custom_button.dart';
 import 'package:stacked/stacked.dart';
 
-class ProductDetailView extends StatefulWidget {
-  const ProductDetailView({Key? key}) : super(key: key);
+class ProductDetailView extends StatelessWidget {
+  final ProductsModel productDetails;
+  ProductDetailView({required this.productDetails});
 
-  @override
-  _ProductDetailViewState createState() => _ProductDetailViewState();
-}
-
-class _ProductDetailViewState extends State<ProductDetailView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return ViewModelBuilder<ProductDetailViewModel>.reactive(
       viewModelBuilder: () => ProductDetailViewModel(),
+      onModelReady: (model) =>
+          model.fetchRelatedProduct(productDetails.category!),
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -39,11 +38,20 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                   children: [
                     // Product Image Carousal
                     Container(
-                      child: ProductImageCarousel(),
+                      child: ProductImageCarousel(
+                        images: productDetails.images,
+                      ),
                     ),
                     // Product Detials
                     Container(
-                      child: ProductDetails(),
+                      child: ProductDetails(
+                        name: productDetails.name,
+                        by: productDetails.by,
+                        price: productDetails.productPrice,
+                        description: productDetails.description,
+                        salePrice: productDetails.salePrice,
+                        onSale: productDetails.onSale,
+                      ),
                     ),
                   ],
                 ),
@@ -60,7 +68,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                 width: SizeConfig.blockSizeHorizontal * 90,
                 height: SizeConfig.blockSizeVertical * 30,
                 child: Text(
-                  dumpyProductDetail,
+                  "${productDetails.description}",
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontSize: SizeConfig.blockSizeHorizontal * 1,
@@ -73,6 +81,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                 ),
                 child: ProductListingRow(
                   listingName: 'Related Products',
+                  productDetails: model.relatedlist,
                 ),
               ),
               // Footer
@@ -128,20 +137,15 @@ class DescriptionReviewsPanalHeader extends StatelessWidget {
 }
 
 class ProductImageCarousel extends StatelessWidget {
+  final List<String>? images;
+  ProductImageCarousel({this.images});
   @override
   Widget build(BuildContext context) {
     return Container(
       height: SizeConfig.blockSizeVertical * 70,
       width: SizeConfig.blockSizeHorizontal * 30,
-      child: SnapShotCarousel.snapShotCarousel([
-        Image.asset(
-          'assets/images/capture.png',
-        ),
-        Image.asset('assets/images/capture.png'),
-        Image.asset('assets/images/nutella.png'),
-        Image.asset('assets/images/capture.png'),
-        Image.asset('assets/images/suasages.png'),
-      ],
+      child: SnapShotCarousel.snapShotCarousel(
+          [for (var image in images!) Image.network(image)],
           featureImageHeight: SizeConfig.blockSizeVertical * 50,
           placeholderImageHeight: SizeConfig.blockSizeVertical * 10),
     );
@@ -149,14 +153,33 @@ class ProductImageCarousel extends StatelessWidget {
 }
 
 class ProductDetails extends StatelessWidget {
+  final String? name;
+  final String? by;
+  final int? price;
+  final String? description;
+  final int? salePrice;
+  final bool? onSale;
+  ProductDetails(
+      {this.salePrice,
+      this.by,
+      this.description,
+      this.name,
+      this.price,
+      this.onSale});
   @override
   Widget build(BuildContext context) {
+    String _name = name ?? '';
+    String _by = by ?? '';
+    int _price = price ?? 0;
+    String _decsription = description ?? dumpyProductDetail;
+    int _salePrice = salePrice ?? 0;
+    bool _onSale = onSale ?? false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           child: Text(
-            'Hershey’s Syrup',
+            _name,
             style: TextStyle(
               fontSize: SizeConfig.blockSizeHorizontal * 4,
               fontWeight: FontWeight.bold,
@@ -176,7 +199,7 @@ class ProductDetails extends StatelessWidget {
                     fontSize: SizeConfig.blockSizeHorizontal * 1),
               ),
               Text(
-                'Store',
+                _by,
                 style: TextStyle(
                     color: accentColor,
                     fontWeight: FontWeight.bold,
@@ -189,10 +212,28 @@ class ProductDetails extends StatelessWidget {
           height: SizeConfig.blockSizeVertical * 2,
         ),
         Container(
-          child: Text(
-            '\$ 20.25',
-            style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 2),
-          ),
+          child: _onSale
+              ? Row(
+                  children: [
+                    Text(
+                      '£$_salePrice',
+                      style: TextStyle(
+                        fontSize: SizeConfig.blockSizeHorizontal * 1,
+                        decoration: TextDecoration.lineThrough,
+                      ),
+                    ),
+                    Text(
+                      '£$_price',
+                      style: TextStyle(
+                          fontSize: SizeConfig.blockSizeHorizontal * 2),
+                    ),
+                  ],
+                )
+              : Text(
+                  '£$_price',
+                  style:
+                      TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 2),
+                ),
         ),
         SizedBox(
           height: SizeConfig.blockSizeVertical * 3,
@@ -202,7 +243,7 @@ class ProductDetails extends StatelessWidget {
           height: SizeConfig.blockSizeVertical * 9,
           child: SingleChildScrollView(
             child: Text(
-              dumpyProductDetail,
+              _decsription,
               textAlign: TextAlign.justify,
               style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 0.8),
             ),

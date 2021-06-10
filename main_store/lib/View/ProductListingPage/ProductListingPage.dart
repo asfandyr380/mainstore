@@ -5,7 +5,7 @@ import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Componants/SideNav/SideNavView.dart';
 import 'package:main_store/View/ProductListingPage/ProductListingPageViewModel.dart';
-import 'package:main_store/View/Widgets/CardGridView.dart';
+import 'package:main_store/View/Widgets/CardGrid/CardGridView.dart';
 import 'package:main_store/View/Widgets/DropDown/drop_Down.dart';
 import 'package:stacked/stacked.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';

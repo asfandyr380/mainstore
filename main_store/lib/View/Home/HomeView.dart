@@ -7,7 +7,7 @@ import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Componants/ProductListingRows/ProductListingRows.dart';
 import 'package:main_store/View/Home/HomeViewModel.dart';
-import 'package:main_store/View/Widgets/CardGridView.dart';
+import 'package:main_store/View/Widgets/CardGrid/CardGridView.dart';
 import 'package:main_store/View/Widgets/banners.dart';
 import 'package:main_store/View/Widgets/listingName.dart';
 import 'package:stacked/stacked.dart';

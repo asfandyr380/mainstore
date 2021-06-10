@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/routes.dart';
+import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Cart/CartView.dart';
 import 'package:main_store/View/CheckOut/CheckOutView.dart';
 import 'package:main_store/View/Home/HomeView.dart';
@@ -9,6 +10,7 @@ import 'package:main_store/View/Sign_in/Signin_view.dart';
 import 'package:main_store/View/Sign_up/signup_view.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
+  var arg = settings.arguments;
   switch (settings.name) {
     case SignIn:
       return _GeneratePageRoute(widget: SignInPage(), routeName: settings.name);
@@ -23,8 +25,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _GeneratePageRoute(
           widget: CheckOutPage(), routeName: settings.name);
     case ProductDetailsPage:
+      ProductsModel? details = arg as ProductsModel?;
       return _GeneratePageRoute(
-          widget: ProductDetailView(), routeName: settings.name);
+          widget: ProductDetailView(
+            productDetails: details!,
+          ),
+          routeName: settings.name);
     case ProductListing:
       return _GeneratePageRoute(
           widget: ProductListingPage(), routeName: settings.name);
