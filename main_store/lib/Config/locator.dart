@@ -4,6 +4,7 @@ import 'package:main_store/Services/Fireabase/Auth/firebase_auth.dart';
 import 'package:main_store/Services/Fireabase/Firestore/CollectionRef.dart';
 import 'package:main_store/Services/Fireabase/Firestore/firestore_services.dart';
 import 'package:main_store/Services/Fireabase/Firestore/get_banners.dart';
+import 'package:main_store/Services/Fireabase/Firestore/get_products.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
 
 GetIt locator = GetIt.instance;
@@ -15,4 +16,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => DocCollectionRef());
   locator.registerLazySingleton(() => FirestoreServices());
   locator.registerLazySingleton(() => CategoryBanners());
+  locator.registerLazySingleton(() => Products());
 }

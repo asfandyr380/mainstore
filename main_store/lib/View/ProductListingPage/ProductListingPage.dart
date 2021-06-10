@@ -71,7 +71,9 @@ class Products extends StatelessWidget {
           ),
           height: SizeConfig.blockSizeVertical * 160,
           width: SizeConfig.blockSizeHorizontal * 60,
-          child: CardGridView(),
+          child: CardGridView(
+            crossAxixCount: 3,
+          ),
         ),
       ],
     );

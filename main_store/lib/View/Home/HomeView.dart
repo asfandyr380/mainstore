@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Componants/BrandsCard/BrandsCard.dart';
 import 'package:main_store/View/Componants/CategoryBanners/CategoryBanners.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
@@ -17,6 +18,11 @@ class Home extends StatelessWidget {
     SizeConfig().init(context);
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
+      onModelReady: (model) {
+        model.fetchOnSaleProducts();
+        model.fetchTopSellingProducts();
+        model.fetchNearbyProducts();
+      },
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -39,16 +45,22 @@ class Home extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.blockSizeVertical * 2,
+                ),
                 child: BrandsRow(),
+              ),
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * 2,
               ),
               ProductListingRow(
                 listingName: 'Top Selling Products',
+                productDetails: model.topSellingProducts,
               ),
               SizedBox(height: SizeConfig.blockSizeVertical * 2),
               ProductListingRow(
+                productDetails: model.onSaleProducts,
                 listingName: 'On Sale Products',
-                onSale: true,
               ),
               Container(
                 padding: EdgeInsets.symmetric(
@@ -75,7 +87,11 @@ class Home extends StatelessWidget {
                 ),
               ),
               Container(
-                child: NearbyProducts(),
+                padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical * 2),
+                child: NearbyProducts(
+                  productDetails: model.nearbyProducts,
+                ),
               ),
               // Page Footer
               Container(
@@ -90,7 +106,9 @@ class Home extends StatelessWidget {
 }
 
 class NearbyProducts extends StatelessWidget {
-  const NearbyProducts({Key? key}) : super(key: key);
+  List<ProductsModel>? productDetails;
+
+  NearbyProducts({this.productDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +131,9 @@ class NearbyProducts extends StatelessWidget {
             padding: EdgeInsets.symmetric(
               horizontal: SizeConfig.blockSizeVertical * 3,
             ),
-            child: CardGridView(),
+            child: CardGridView(
+              productDetails: productDetails,
+            ),
           )
         ],
       ),

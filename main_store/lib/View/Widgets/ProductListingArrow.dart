@@ -3,17 +3,21 @@ import 'package:main_store/Config/consts.dart';
 
 class ProductListNextArrowButton extends StatelessWidget {
   final Widget? icon;
-  ProductListNextArrowButton({this.icon});
+  final Function onTap;
+  ProductListNextArrowButton({this.icon, required this.onTap});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 30,
-      width: 60,
-      decoration: BoxDecoration(
-        color: footerColor,
-        borderRadius: BorderRadius.circular(6),
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: Container(
+        height: 30,
+        width: 60,
+        decoration: BoxDecoration(
+          color: footerColor,
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: icon,
       ),
-      child: icon,
     );
   }
 }
