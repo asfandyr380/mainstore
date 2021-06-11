@@ -5,9 +5,9 @@ import 'package:main_store/Config/sizeconfig.dart';
 
 class ProductListingCards extends StatelessWidget {
   final String? productName;
-  final int? productPrice;
+  final double? productPrice;
   final String? image;
-  final int? salePrice;
+  final double? salePrice;
   final String? categoryName;
   final bool? onSale;
   final Function? onTap;
@@ -22,8 +22,8 @@ class ProductListingCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    int _salePrice = salePrice ?? 0;
-    int _productPrice = productPrice ?? 0;
+    double _salePrice = salePrice ?? 0;
+    double _productPrice = productPrice ?? 0;
     bool _onSale = onSale ?? false;
     String _image = image ?? placeholderProductPic;
     String _categoryName = categoryName ?? '';

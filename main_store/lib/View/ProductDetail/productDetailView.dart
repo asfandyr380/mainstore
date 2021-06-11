@@ -155,9 +155,9 @@ class ProductImageCarousel extends StatelessWidget {
 class ProductDetails extends StatelessWidget {
   final String? name;
   final String? by;
-  final int? price;
+  final double? price;
   final String? description;
-  final int? salePrice;
+  final double? salePrice;
   final bool? onSale;
   ProductDetails(
       {this.salePrice,
@@ -170,9 +170,9 @@ class ProductDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     String _name = name ?? '';
     String _by = by ?? '';
-    int _price = price ?? 0;
+    double _price = price ?? 0;
     String _decsription = description ?? dumpyProductDetail;
-    int _salePrice = salePrice ?? 0;
+    double _salePrice = salePrice ?? 0;
     bool _onSale = onSale ?? false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

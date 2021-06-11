@@ -1,7 +1,7 @@
 class ProductsModel {
   String? name = '';
-  int? productPrice = 0;
-  int? salePrice = 0;
+  double? productPrice = 0;
+  double? salePrice = 0;
   bool? onSale = false;
   String? description = '';
   List<String>? category = [];
