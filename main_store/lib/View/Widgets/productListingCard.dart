@@ -25,8 +25,7 @@ class ProductListingCards extends StatelessWidget {
     int _salePrice = salePrice ?? 0;
     int _productPrice = productPrice ?? 0;
     bool _onSale = onSale ?? false;
-    String _image = image ??
-        'https://firebasestorage.googleapis.com/v0/b/e-store-647b4.appspot.com/o/ProductImages%2Fbanana_461x461.jpeg?alt=media&token=1ac25579-a915-4d77-92f0-1884fa80ab1c';
+    String _image = image ?? placeholderProductPic;
     String _categoryName = categoryName ?? '';
     return GestureDetector(
       onTap: () => onTap!(),

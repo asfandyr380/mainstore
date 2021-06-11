@@ -5,14 +5,14 @@ import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/Services/Fireabase/Firestore/get_products.dart';
 
 class HomeViewModel extends ChangeNotifier {
-  List<Banners> banner = [];
+  List<Banners> bannerlist = [];
   Products _products = locator<Products>();
   List<ProductsModel> onSaleProducts = [];
   List<ProductsModel> topSellingProducts = [];
   List<ProductsModel> nearbyProducts = [];
 
   getBanner(List<Banners> banners) {
-    banner = banners;
+    bannerlist = banners;
     notifyListeners();
   }
 

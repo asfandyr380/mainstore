@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/BrandsCard/BrandsCardViewModel.dart';
 import 'package:stacked/stacked.dart';
@@ -29,7 +30,7 @@ class BrandsCard extends StatelessWidget {
   BrandsCard({this.image});
   @override
   Widget build(BuildContext context) {
-    String _image = image ?? '';
+    String _image = image ?? placeholderBrandPic;
     SizeConfig().init(context);
     return Container(
       height: SizeConfig.blockSizeVertical * 8,

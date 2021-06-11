@@ -11,4 +11,5 @@ class DocCollectionRef {
   CollectionReference get Brands => _firestore.collection("Brands");
   CollectionReference get Products => _firestore.collection("Products");
   CollectionReference get Stores => _firestore.collection("Stores");
+  CollectionReference get Categorys => _firestore.collection("Categorys");
 }

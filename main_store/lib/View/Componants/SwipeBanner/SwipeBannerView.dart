@@ -56,7 +56,7 @@ class BannerImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String _image = bannerDetails!.image ?? '';
+    String _image = bannerDetails!.image ?? placeholderSwiperBannerPic;
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(

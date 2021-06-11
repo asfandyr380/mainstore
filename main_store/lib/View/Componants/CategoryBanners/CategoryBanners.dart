@@ -29,17 +29,19 @@ class CategoryBanners extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Ban(
-                  image:
-                      model.bannerlist.isEmpty ? '' : model.bannerlist[0].image,
+                  image: model.bannerlist.isEmpty
+                      ? null
+                      : model.bannerlist[0].image,
                   bannerText: model.bannerlist.isEmpty
-                      ? ''
+                      ? null
                       : model.bannerlist[0].mainText,
                 ),
                 Ban(
-                  image:
-                      model.bannerlist.isEmpty ? '' : model.bannerlist[1].image,
+                  image: model.bannerlist.isEmpty
+                      ? null
+                      : model.bannerlist[1].image,
                   bannerText: model.bannerlist.isEmpty
-                      ? ''
+                      ? null
                       : model.bannerlist[1].mainText,
                   isMiddle: true,
                 ),
@@ -47,10 +49,10 @@ class CategoryBanners extends StatelessWidget {
                   children: [
                     SmallBanner(
                       image: model.bannerlist.isEmpty
-                          ? ''
+                          ? null
                           : model.bannerlist[4].image,
                       bannerText: model.bannerlist.isEmpty
-                          ? ''
+                          ? null
                           : model.bannerlist[4].mainText,
                     ),
                     SizedBox(
@@ -58,10 +60,10 @@ class CategoryBanners extends StatelessWidget {
                     ),
                     SmallBanner(
                       image: model.bannerlist.isEmpty
-                          ? ''
+                          ? null
                           : model.bannerlist[5].image,
                       bannerText: model.bannerlist.isEmpty
-                          ? ''
+                          ? null
                           : model.bannerlist[5].mainText,
                     ),
                   ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/Models/categoryModel.dart';
 import 'package:stacked/stacked.dart';
 import 'SideNavViewModel.dart';
 
@@ -12,8 +13,9 @@ class SideNavMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     bool _productMenu = productMenu ?? false;
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<SideNavViewModel>.reactive(
       viewModelBuilder: () => SideNavViewModel(),
+      onModelReady: (model) => model.fetchCategorys(),
       builder: (context, model, child) => Container(
         width: SizeConfig.blockSizeHorizontal * 20,
         height: !_productMenu
@@ -45,11 +47,10 @@ class SideNavMenu extends StatelessWidget {
                     ),
                   )
                 : Container(),
-            Category(),
-            Category(),
-            Category(),
-            Category(),
-            Category(),
+            for (var cate in model.catelist)
+              Category(
+                items: cate,
+              )
           ],
         ),
       ),
@@ -58,26 +59,24 @@ class SideNavMenu extends StatelessWidget {
 }
 
 class Category extends StatelessWidget {
-  final List? items;
+  final CategoryModel? items;
   const Category({this.items});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ExpansionTile(
-        title: Text('Grocery'),
+        title: Text("${items!.cateName}"),
         textColor: accentColor,
         iconColor: accentColor,
         childrenPadding:
             EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 1),
         children: [
-          ListTile(
-            title: Text('items 1'),
-          ),
-          ListTile(
-            title: Text('items 1'),
-          ),
-          SubItem()
+          for (var item in items!.subCategory)
+            SubItem(
+              title: item.cateName,
+              items: item.subCate,
+            )
         ],
       ),
     );
@@ -85,19 +84,27 @@ class Category extends StatelessWidget {
 }
 
 class SubItem extends StatelessWidget {
+  final String? title;
+  final List<String>? items;
+  SubItem({this.items, this.title});
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      title: Text('SubMenu1'),
-      textColor: accentColor,
-      iconColor: accentColor,
-      childrenPadding:
-          EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 1),
-      children: [
-        ListTile(
-          title: Text('items 1'),
-        ),
-      ],
-    );
+    return items!.isNotEmpty
+        ? ExpansionTile(
+            title: Text(title!),
+            textColor: accentColor,
+            iconColor: accentColor,
+            childrenPadding:
+                EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 1),
+            children: [
+              for (var item in items!)
+                ListTile(
+                  title: Text(item),
+                ),
+            ],
+          )
+        : ListTile(
+            title: Text(title!),
+          );
   }
 }

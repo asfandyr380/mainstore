@@ -70,18 +70,20 @@ class Home extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MoreandMoreBanner(
-                      bannerText: model.banner.isNotEmpty
-                          ? model.banner[2].mainText
-                          : '',
-                      image:
-                          model.banner.isNotEmpty ? model.banner[2].image : '',
+                      bannerText: model.bannerlist.isNotEmpty
+                          ? model.bannerlist[2].mainText
+                          : null,
+                      image: model.bannerlist.isNotEmpty
+                          ? model.bannerlist[2].image
+                          : null,
                     ),
                     MoreandMoreBanner(
-                      bannerText: model.banner.isNotEmpty
-                          ? model.banner[3].mainText
-                          : '',
-                      image:
-                          model.banner.isNotEmpty ? model.banner[3].image : '',
+                      bannerText: model.bannerlist.isNotEmpty
+                          ? model.bannerlist[3].mainText
+                          : null,
+                      image: model.bannerlist.isNotEmpty
+                          ? model.bannerlist[3].image
+                          : null,
                     ),
                   ],
                 ),

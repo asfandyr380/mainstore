@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/productsModel.dart';
-import 'package:main_store/Models/snapshotCrousel.dart';
+import 'package:main_store/View/Widgets/snapshotCrousel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Componants/ProductListingRows/ProductListingRows.dart';

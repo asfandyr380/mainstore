@@ -101,7 +101,7 @@ class Ban extends StatelessWidget {
     SizeConfig().init(context);
     bool _isMiddle = isMiddle ?? false;
     String _bannerText = bannerText ?? '';
-    String _image = image ?? '';
+    String _image = image ?? placeholderBannerPic;
     return Container(
       height: SizeConfig.blockSizeVertical * 60,
       width: _isMiddle
@@ -154,7 +154,7 @@ class SmallBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     String _bannerText = bannerText ?? '';
-    String _image = image ?? '';
+    String _image = image ?? placeholderBannerPic;
     return Container(
       height: SizeConfig.blockSizeVertical * 29,
       width: SizeConfig.blockSizeHorizontal * 20,
@@ -194,7 +194,7 @@ class MoreandMoreBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String _bannerText = bannerText ?? '';
-    String _image = image ?? '';
+    String _image = image ?? placeholderBannerPic;
     return Container(
       height: SizeConfig.blockSizeVertical * 34,
       width: SizeConfig.blockSizeHorizontal * 45,
