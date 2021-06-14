@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Componants/SideNav/SideNavView.dart';
@@ -16,8 +18,9 @@ class ProductListingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<ProductListingPageViewModel>.reactive(
       viewModelBuilder: () => ProductListingPageViewModel(),
+      onModelReady: (model) => model.fetchProductByFilter(null, false),
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -36,10 +39,19 @@ class ProductListingPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
-                        child: FilterMenu(),
+                        child: FilterMenu(
+                          value: model.range,
+                          onSliderChange: (val) => model.onChange(val),
+                          onTap: (val) {
+                            model.fetchProductByFilter(val, false);
+                          },
+                        ),
                       ),
                       Container(
-                        child: Products(),
+                        child: Products(
+                          details: model.productList,
+                          orderBy: (val) => model.orderBy(val),
+                        ),
                       ),
                     ],
                   ),
@@ -58,12 +70,16 @@ class ProductListingPage extends StatelessWidget {
 }
 
 class Products extends StatelessWidget {
+  final List<ProductsModel>? details;
+  final Function? orderBy;
+  Products({this.details, this.orderBy});
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          child: FilterHeader(),
+          child: FilterHeader(orderBy: (val) => orderBy!(val)),
         ),
         Container(
           padding: EdgeInsets.only(
@@ -72,6 +88,7 @@ class Products extends StatelessWidget {
           height: SizeConfig.blockSizeVertical * 160,
           width: SizeConfig.blockSizeHorizontal * 60,
           child: CardGridView(
+            productDetails: details,
             crossAxixCount: 3,
           ),
         ),
@@ -81,8 +98,8 @@ class Products extends StatelessWidget {
 }
 
 class FilterHeader extends StatelessWidget {
-  const FilterHeader({Key? key}) : super(key: key);
-
+  final Function(String)? orderBy;
+  FilterHeader({this.orderBy});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -99,7 +116,9 @@ class FilterHeader extends StatelessWidget {
             padding: EdgeInsets.only(
               left: SizeConfig.blockSizeHorizontal * 1,
             ),
-            child: SortBy(),
+            child: SortBy(
+              orderBy: (val) => orderBy!(val),
+            ),
           ),
           Container(
             padding: EdgeInsets.only(
@@ -136,8 +155,8 @@ class FilterHeader extends StatelessWidget {
 }
 
 class SortBy extends StatelessWidget {
-  const SortBy({Key? key}) : super(key: key);
-
+  final Function(String)? orderBy;
+  SortBy({this.orderBy});
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -154,13 +173,10 @@ class SortBy extends StatelessWidget {
         SizedBox(
           width: SizeConfig.blockSizeHorizontal * 1,
         ),
-        Dropdown(
-          items: [
-            'Low to High',
-            'High to Low',
-          ],
-          dropdownVal: 'Low to High',
-        ),
+        Dropdown(items: [
+          'Low to High',
+          'High to Low',
+        ], orderBy: (val) => orderBy!(val)),
       ],
     );
   }
@@ -203,10 +219,14 @@ class Banner extends StatelessWidget {
 }
 
 class FilterMenu extends StatelessWidget {
-  const FilterMenu({Key? key}) : super(key: key);
+  final SfRangeValues? value;
+  final Function(SfRangeValues)? onSliderChange;
+  final Function(String)? onTap;
+  const FilterMenu({this.value, this.onSliderChange, this.onTap});
 
   @override
   Widget build(BuildContext context) {
+    SfRangeValues _values = value ?? SfRangeValues(0, 100);
     return Container(
       width: SizeConfig.blockSizeHorizontal * 30,
       child: Column(
@@ -234,9 +254,11 @@ class FilterMenu extends StatelessWidget {
                   inactiveColor: accentColor.withOpacity(0.5),
                   min: 0,
                   max: 100,
-                  values: SfRangeValues(40, 50),
+                  enableTooltip: true,
+                  numberFormat: NumberFormat('\$'),
+                  values: _values,
                   showLabels: true,
-                  onChanged: (newVal) {},
+                  onChanged: (newVal) => onSliderChange!(newVal),
                 ),
               ],
             ),
@@ -263,6 +285,7 @@ class FilterMenu extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerLeft,
                   child: SideNavMenu(
+                    onTap: (val) => onTap!(val),
                     productMenu: true,
                   ),
                 ),

@@ -53,14 +53,16 @@ class ProductListingRow extends StatelessWidget {
                 child: Row(
                   children: [
                     ProductListNextArrowButton(
-                      onTap: () => model.scrolltoIndex(_scrollController, 0),
+                      onTap: () => model.scrollBack(
+                          _scrollController, productDetails!.length),
                       icon: Icon(FontAwesomeIcons.arrowLeft),
                     ),
                     SizedBox(width: SizeConfig.blockSizeHorizontal * 0.5),
                     ProductListNextArrowButton(
                       onTap: () => productDetails!.length < 5
                           ? null
-                          : model.scrolltoIndex(_scrollController, 5),
+                          : model.scrollNext(
+                              _scrollController, productDetails!.length),
                       icon: Icon(FontAwesomeIcons.arrowRight),
                     ),
                   ],

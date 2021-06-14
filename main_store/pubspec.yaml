@@ -39,6 +39,7 @@ dependencies:
   google_fonts: ^2.1.0
   syncfusion_flutter_sliders: ^19.1.66-beta
   scroll_to_index: ^2.0.0
+  intl: ^0.17.0
   
 dev_dependencies:
   flutter_test:
@@ -67,11 +68,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+  fonts:
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Regular.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

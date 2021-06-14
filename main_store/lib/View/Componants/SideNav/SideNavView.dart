@@ -7,7 +7,8 @@ import 'SideNavViewModel.dart';
 
 class SideNavMenu extends StatelessWidget {
   final bool? productMenu;
-  SideNavMenu({this.productMenu});
+  final Function(String)? onTap;
+  SideNavMenu({this.productMenu, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +51,7 @@ class SideNavMenu extends StatelessWidget {
             for (var cate in model.catelist)
               Category(
                 items: cate,
+                onTap: (val) => onTap!(val),
               )
           ],
         ),
@@ -60,7 +62,8 @@ class SideNavMenu extends StatelessWidget {
 
 class Category extends StatelessWidget {
   final CategoryModel? items;
-  const Category({this.items});
+  final Function(String)? onTap;
+  const Category({this.items, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +79,7 @@ class Category extends StatelessWidget {
             SubItem(
               title: item.cateName,
               items: item.subCate,
+              onTap: (val) => onTap!(val),
             )
         ],
       ),
@@ -86,7 +90,8 @@ class Category extends StatelessWidget {
 class SubItem extends StatelessWidget {
   final String? title;
   final List<String>? items;
-  SubItem({this.items, this.title});
+  final Function(String)? onTap;
+  SubItem({this.items, this.title, this.onTap});
   @override
   Widget build(BuildContext context) {
     return items!.isNotEmpty
@@ -98,13 +103,19 @@ class SubItem extends StatelessWidget {
                 EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 1),
             children: [
               for (var item in items!)
-                ListTile(
-                  title: Text(item),
+                GestureDetector(
+                  onTap: () => onTap!(item),
+                  child: ListTile(
+                    title: Text(item),
+                  ),
                 ),
             ],
           )
-        : ListTile(
-            title: Text(title!),
+        : GestureDetector(
+            onTap: () => onTap!(title!),
+            child: ListTile(
+              title: Text(title!),
+            ),
           );
   }
 }

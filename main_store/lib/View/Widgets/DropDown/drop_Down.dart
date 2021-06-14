@@ -5,16 +5,16 @@ import 'package:main_store/View/Widgets/DropDown/dropdownViewModel.dart';
 import 'package:stacked/stacked.dart';
 
 class Dropdown extends StatelessWidget {
-  final String dropdownVal;
   final List<String> items;
-  Dropdown({required this.items, required this.dropdownVal});
+  final Function(String)? orderBy;
+  Dropdown({required this.items, this.orderBy});
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<DropDownViewModel>.reactive(
       viewModelBuilder: () => DropDownViewModel(),
       builder: (context, model, child) => Container(
         child: DropdownButton<String>(
-          value: model.currentValue,
+          value: model.dropDownVal,
           icon: const Icon(FontAwesomeIcons.chevronDown),
           iconSize: 15,
           elevation: 8,
@@ -23,7 +23,7 @@ class Dropdown extends StatelessWidget {
             color: Colors.white,
           ),
           onChanged: (String? newValue) =>
-              model.onChange(dropdownVal, newValue!),
+              model.onChange(newValue!).then((value) => orderBy!(value)),
           items: items.map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,

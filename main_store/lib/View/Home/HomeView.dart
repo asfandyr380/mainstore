@@ -18,11 +18,11 @@ class Home extends StatelessWidget {
     SizeConfig().init(context);
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
-      onModelReady: (model) {
-        model.fetchOnSaleProducts();
-        model.fetchTopSellingProducts();
-        model.fetchNearbyProducts();
-      },
+      onModelReady: (model) => model.getAvailableProduct().then((list) {
+        model.fetchOnSaleProducts(list);
+        model.fetchTopSellingProducts(list);
+        model.fetchNearbyProducts(list);
+      }),
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Column(

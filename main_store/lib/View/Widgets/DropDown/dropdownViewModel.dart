@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DropDownViewModel extends ChangeNotifier {
-  String currentValue = 'Low to High';
+  String dropDownVal = 'Low to High';
 
-  onChange(String dropDownVal, String newVal) {
+  Future<String> onChange(String newVal) async {
     dropDownVal = newVal;
-    currentValue = dropDownVal;
     notifyListeners();
     return dropDownVal;
   }

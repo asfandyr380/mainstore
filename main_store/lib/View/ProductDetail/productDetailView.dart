@@ -7,7 +7,6 @@ import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Componants/ProductListingRows/ProductListingRows.dart';
 import 'package:main_store/View/ProductDetail/productDetailViewMode.dart';
-import 'package:main_store/View/Widgets/custom_button.dart';
 import 'package:stacked/stacked.dart';
 
 class ProductDetailView extends StatelessWidget {
@@ -180,8 +179,11 @@ class ProductDetails extends StatelessWidget {
         Container(
           child: Text(
             _name,
+            textAlign: TextAlign.left,
             style: TextStyle(
-              fontSize: SizeConfig.blockSizeHorizontal * 4,
+              fontSize: _name.length >= 20
+                  ? SizeConfig.blockSizeHorizontal * 2
+                  : SizeConfig.blockSizeHorizontal * 4,
               fontWeight: FontWeight.bold,
             ),
           ),

@@ -4,7 +4,6 @@ import 'package:main_store/Models/Banners.dart';
 import 'package:main_store/Models/BrandsModel.dart';
 import 'package:main_store/Models/swipeBanner.dart';
 import 'package:main_store/Services/Fireabase/Firestore/CollectionRef.dart';
-import 'package:main_store/View/Componants/SwipeBanner/SwipeBannerView.dart';
 
 class CategoryBanners {
   DocCollectionRef ref = locator<DocCollectionRef>();
