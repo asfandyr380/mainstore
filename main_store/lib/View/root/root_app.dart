@@ -6,6 +6,8 @@ import 'package:main_store/Services/Navigation/navigation_services.dart';
 import 'package:main_store/Services/Navigation/router.dart';
 import 'package:main_store/View/Componants/Dialog/DialogView.dart';
 import 'package:main_store/View/Home/HomeView.dart';
+import 'package:main_store/View/LandingPage_Mobile/LandingPageView.dart';
+import 'package:main_store/View/LandingPage_Mobile/LandingPageViewModel.dart';
 import 'package:main_store/View/ProductDetail/productDetailView.dart';
 import 'package:main_store/View/Sign_in/Signin_view.dart';
 

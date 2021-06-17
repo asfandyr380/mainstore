@@ -142,3 +142,18 @@ class NearbyProducts extends StatelessWidget {
     );
   }
 }
+
+class Homemobile extends StatelessWidget {
+  const Homemobile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder.reactive(
+        builder: (context, model, child) => Scaffold(
+              body: Center(
+                child: Text('HomePage'),
+              ),
+            ),
+        viewModelBuilder: () => HomeViewModel());
+  }
+}
