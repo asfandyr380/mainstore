@@ -7,13 +7,15 @@ import 'package:main_store/Services/Navigation/router.dart';
 import 'package:main_store/View/Componants/Dialog/DialogView.dart';
 import 'package:main_store/View/Home/HomeView.dart';
 import 'package:main_store/View/ProductDetail/productDetailView.dart';
+import 'package:main_store/View/Sign_in/Signin_view.dart';
 
 // This Widget is the Root of The Application
 class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: HomeView,
+      // initialRoute: Cart,
+      home: SignInMobileView(),
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       onGenerateRoute: (settings) => generateRoute(settings),
       builder: (context, widget) => Navigator(
