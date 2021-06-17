@@ -6,6 +6,8 @@ import 'package:main_store/Services/Navigation/navigation_services.dart';
 import 'package:main_store/Services/Navigation/router.dart';
 import 'package:main_store/View/Componants/Dialog/DialogView.dart';
 import 'package:main_store/View/Home/HomeView.dart';
+import 'package:main_store/View/LandingPage_Mobile/LandingPageView.dart';
+import 'package:main_store/View/LandingPage_Mobile/LandingPageViewModel.dart';
 import 'package:main_store/View/ProductDetail/productDetailView.dart';
 
 // This Widget is the Root of The Application
@@ -13,7 +15,7 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: HomeView,
+      initialRoute: LandingPageView,
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       onGenerateRoute: (settings) => generateRoute(settings),
       builder: (context, widget) => Navigator(

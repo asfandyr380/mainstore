@@ -42,3 +42,15 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 }
+
+class SignInMobile extends StatelessWidget {
+  const SignInMobile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    return ViewModelBuilder.reactive(
+        builder: (context, model, child) => Scaffold(),
+        viewModelBuilder: () => SigninViewModel());
+  }
+}

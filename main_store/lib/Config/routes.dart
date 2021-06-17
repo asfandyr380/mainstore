@@ -5,3 +5,4 @@ const String Cart = "Cart";
 const String Checkout = "Checkout";
 const String ProductDetailsPage = "Product";
 const String ProductListing = "Products";
+const String LandingPageView = 'LandingPage';
