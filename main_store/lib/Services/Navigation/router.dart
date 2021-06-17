@@ -4,6 +4,7 @@ import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Cart/CartView.dart';
 import 'package:main_store/View/CheckOut/CheckOutView.dart';
 import 'package:main_store/View/Home/HomeView.dart';
+import 'package:main_store/View/LandingPage_Mobile/LandingPageView.dart';
 import 'package:main_store/View/ProductDetail/productDetailView.dart';
 import 'package:main_store/View/ProductListingPage/ProductListingPage.dart';
 import 'package:main_store/View/Sign_in/Signin_view.dart';
@@ -24,6 +25,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case Checkout:
       return _GeneratePageRoute(
           widget: CheckOutPage(), routeName: settings.name);
+    case LandingPageView:
+      return _GeneratePageRoute(
+          widget: LandingPage(), routeName: settings.name);
     case ProductDetailsPage:
       ProductsModel? details = arg as ProductsModel?;
       return _GeneratePageRoute(

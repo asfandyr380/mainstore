@@ -210,3 +210,95 @@ class _CheckOutPageState extends State<CheckOutPage> {
     );
   }
 }
+
+class CheckOutMobile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    return ViewModelBuilder.reactive(
+        builder: (context, model, child) => SafeArea(
+              child: Scaffold(
+                appBar: AppBar(backgroundColor: Colors.grey),
+                body: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: SizeConfig.blockSizeVertical * 3,
+                            left: SizeConfig.blockSizeHorizontal * 4),
+                        child: Text(
+                          'Contact Information',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.blockSizeHorizontal * 4),
+                        child: TextInputField(
+                          hint_text: 'Enter Phone Number',
+                          onMobile: true,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: SizeConfig.blockSizeVertical * 2,
+                            left: SizeConfig.blockSizeHorizontal * 4),
+                        child: Text(
+                          'Shipping Information',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.blockSizeHorizontal * 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 5,
+                              width: SizeConfig.blockSizeHorizontal * 45,
+                              child: TextInputField(
+                                hint_text: 'First Name',
+                                onMobile: true,
+                              ),
+                            ),
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 5,
+                              width: SizeConfig.blockSizeHorizontal * 45,
+                              child: TextInputField(
+                                hint_text: 'Last Name',
+                                onMobile: true,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                            child: TextInputField(
+                              hint_text: 'Enter Phone Number',
+                              onMobile: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        viewModelBuilder: () => CheckOutViewModel());
+  }
+}
