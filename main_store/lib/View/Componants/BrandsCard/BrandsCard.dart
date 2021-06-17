@@ -40,7 +40,10 @@ class BrandsCard extends StatelessWidget {
         boxShadow: [
           BoxShadow(blurRadius: 0.5),
         ],
-        image: DecorationImage(
+      ),
+      child: Container(
+        padding: EdgeInsets.all(8),
+        child: Image(
           fit: BoxFit.contain,
           image: NetworkImage(_image),
         ),

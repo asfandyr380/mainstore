@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/Models/CartModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Widgets/order_summary.dart';
@@ -34,11 +35,18 @@ class _CartViewPageState extends State<CartViewPage> {
     SizeConfig().init(context);
     return ViewModelBuilder<CartViewModel>.reactive(
       viewModelBuilder: () => CartViewModel(),
+      onModelReady: (model) => model.getCart(),
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Column(
             children: [
               Container(
+                decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    blurRadius: 2,
+                  )
+                ]),
                 child: Header(),
               ),
               Container(
@@ -46,7 +54,8 @@ class _CartViewPageState extends State<CartViewPage> {
                   vertical: SizeConfig.blockSizeVertical * 5,
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Column(
                       children: [
@@ -56,14 +65,19 @@ class _CartViewPageState extends State<CartViewPage> {
                         SizedBox(
                           height: SizeConfig.blockSizeVertical * 3,
                         ),
-                        for (int i = 0; i < 2; i++)
+                        for (var cart in model.cartlist)
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: SizeConfig.blockSizeVertical * 2,
                             ),
-                            child: CartitemsContainer(),
+                            child: CartitemsContainer(
+                              cart: cart,
+                            ),
                           ),
                       ],
+                    ),
+                    SizedBox(
+                      width: SizeConfig.blockSizeHorizontal * 4,
                     ),
                     OrderSummary(
                       checkout: true,
@@ -83,13 +97,12 @@ class _CartViewPageState extends State<CartViewPage> {
 }
 
 class CartitemsContainer extends StatelessWidget {
-  final String? storeName;
-  final String? shippingCharges;
-  CartitemsContainer({this.shippingCharges, this.storeName});
+  final CartModel cart;
+  CartitemsContainer({required this.cart});
   @override
   Widget build(BuildContext context) {
-    String _storeName = storeName ?? '';
-    String _shippingCharges = shippingCharges ?? '';
+    double _shippingCharges = 0;
+    print('Products ${cart.products.length}');
     return Container(
       width: SizeConfig.blockSizeHorizontal * 30,
       height: SizeConfig.blockSizeVertical * 30,
@@ -116,7 +129,7 @@ class CartitemsContainer extends StatelessWidget {
                 children: [
                   TickBox(onTickChange: (val) {}),
                   Text(
-                    _storeName,
+                    cart.storeName!,
                     style:
                         TextStyle(fontSize: SizeConfig.blockSizeVertical * 2),
                   ),
@@ -130,7 +143,7 @@ class CartitemsContainer extends StatelessWidget {
                         fontSize: SizeConfig.blockSizeHorizontal * 0.7),
                   ),
                   Text(
-                    '\$ $_shippingCharges',
+                    '£$_shippingCharges',
                     style: TextStyle(
                         color: accentColor,
                         fontSize: SizeConfig.blockSizeHorizontal * 0.7),
@@ -147,7 +160,12 @@ class CartitemsContainer extends StatelessWidget {
             height: SizeConfig.blockSizeVertical * 20,
             child: ListView(
               children: [
-                for (int i = 0; i < 3; i++) CartItem(),
+                for (var item in cart.products)
+                  CartItem(
+                    image: item.images![0],
+                    name: item.name,
+                    price: item.productPrice,
+                  ),
               ],
             ),
           ),
@@ -158,10 +176,18 @@ class CartitemsContainer extends StatelessWidget {
 }
 
 class CartItem extends StatelessWidget {
-  const CartItem({Key? key}) : super(key: key);
+  final int? quantity;
+  final String? image;
+  final String? name;
+  final double? price;
+  CartItem({this.quantity, this.image, this.name, this.price});
 
   @override
   Widget build(BuildContext context) {
+    String _image = image ?? '';
+    String _name = name ?? '';
+    double _price = price ?? 0;
+    int _quantity = quantity ?? 0;
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: SizeConfig.blockSizeHorizontal * 1,
@@ -175,14 +201,21 @@ class CartItem extends StatelessWidget {
               Container(
                 height: SizeConfig.blockSizeVertical * 8,
                 width: SizeConfig.blockSizeHorizontal * 7,
-                child: Image.asset('assets/images/capture.png'),
+                child: Image.network(_image),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Hershey’s Syrup'),
                   Text(
-                    'USD \$ 3.00',
+                    _name,
+                    style: TextStyle(
+                      fontSize: _name.length >= 20
+                          ? SizeConfig.blockSizeHorizontal * 0.5
+                          : SizeConfig.blockSizeHorizontal * 1,
+                    ),
+                  ),
+                  Text(
+                    '£$_price',
                     style: TextStyle(
                         color: accentColor,
                         fontSize: SizeConfig.blockSizeHorizontal * 0.7),
@@ -220,7 +253,7 @@ class CartItem extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            '1',
+                            '$_quantity',
                             style: TextStyle(
                                 fontSize: SizeConfig.blockSizeHorizontal * 0.7),
                           ),
@@ -236,7 +269,7 @@ class CartItem extends StatelessWidget {
                   Icon(
                     FontAwesomeIcons.trashAlt,
                     size: SizeConfig.blockSizeHorizontal * 1,
-                    color: accentColor,
+                    color: Colors.red.withOpacity(0.5),
                   ),
                   Icon(
                     FontAwesomeIcons.minusSquare,
@@ -254,8 +287,11 @@ class CartItem extends StatelessWidget {
 }
 
 class SelectAllContainer extends StatelessWidget {
+  final int? totalCount;
+  SelectAllContainer({this.totalCount});
   @override
   Widget build(BuildContext context) {
+    int _totalCount = totalCount ?? 0;
     return Container(
       width: SizeConfig.blockSizeHorizontal * 30,
       height: SizeConfig.blockSizeVertical * 10,
@@ -279,7 +315,7 @@ class SelectAllContainer extends StatelessWidget {
           children: [
             Container(
               child: Text(
-                'Shopping Cart(3)',
+                'Shopping Cart($_totalCount)',
                 style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 2),
               ),
             ),

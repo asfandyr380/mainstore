@@ -5,12 +5,22 @@ import 'package:main_store/Models/swipeBanner.dart';
 import 'package:main_store/View/Componants/SwipeBanner/SwipeBannerViewModel.dart';
 import 'package:stacked/stacked.dart';
 
-class SwipeBanner extends StatelessWidget {
+class SwipeBanner extends StatefulWidget {
+  @override
+  _SwipeBannerState createState() => _SwipeBannerState();
+}
+
+class _SwipeBannerState extends State<SwipeBanner> {
+  PageController _pageController = PageController(initialPage: 0);
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SwipeBannerViewModel>.reactive(
       viewModelBuilder: () => SwipeBannerViewModel(),
-      onModelReady: (model) => model.fetchBanner(),
+      onModelReady: (model) {
+        model.fetchBanner();
+        model.autoPlay(_pageController);
+      },
       builder: (context, model, child) => Container(
         height: SizeConfig.blockSizeVertical * 45,
         width: SizeConfig.blockSizeHorizontal * 75,
@@ -20,6 +30,7 @@ class SwipeBanner extends StatelessWidget {
         child: Stack(
           children: [
             PageView(
+              controller: _pageController,
               onPageChanged: (i) => model.onPageChange(i),
               children: [
                 for (var banner in model.list)

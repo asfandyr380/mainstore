@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/Extention/hover_extention.dart';
 
 class DiscountBanner extends StatelessWidget {
   @override
@@ -190,11 +191,15 @@ class SmallBanner extends StatelessWidget {
 class MoreandMoreBanner extends StatelessWidget {
   final String? bannerText;
   final String? image;
-  MoreandMoreBanner({this.bannerText, this.image});
+  final Color? buttonColor;
+  final Color? bannerTextColor;
+  MoreandMoreBanner(
+      {this.bannerText, this.image, this.buttonColor, this.bannerTextColor});
   @override
   Widget build(BuildContext context) {
     String _bannerText = bannerText ?? '';
     String _image = image ?? placeholderBannerPic;
+    Color _bannerTextColor = bannerTextColor ?? Colors.black;
     return Container(
       height: SizeConfig.blockSizeVertical * 34,
       width: SizeConfig.blockSizeHorizontal * 45,
@@ -214,12 +219,17 @@ class MoreandMoreBanner extends StatelessWidget {
           children: [
             Text(
               _bannerText,
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 23),
+              style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 23,
+                  color: _bannerTextColor),
             ),
             SizedBox(
               height: SizeConfig.blockSizeVertical * 1,
             ),
-            BannerButton()
+            BannerButton(
+              buttonColor: buttonColor,
+            )
           ],
         ),
       ),
@@ -228,8 +238,11 @@ class MoreandMoreBanner extends StatelessWidget {
 }
 
 class BannerButton extends StatelessWidget {
+  final Color? buttonColor;
+  BannerButton({this.buttonColor});
   @override
   Widget build(BuildContext context) {
+    Color _buttonColor = buttonColor ?? Colors.black;
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         primary: accentColor,
@@ -245,7 +258,7 @@ class BannerButton extends StatelessWidget {
       child: Text(
         'Shop Now',
         style: TextStyle(
-          color: Colors.black,
+          color: _buttonColor,
           fontSize: SizeConfig.blockSizeHorizontal * 1,
         ),
       ),

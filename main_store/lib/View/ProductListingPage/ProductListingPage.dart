@@ -27,6 +27,12 @@ class ProductListingPage extends StatelessWidget {
             children: [
               // Header
               Container(
+                decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    blurRadius: 2,
+                  )
+                ]),
                 child: Header(),
               ),
               Banner(),

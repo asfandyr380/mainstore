@@ -78,6 +78,8 @@ class Home extends StatelessWidget {
                           : null,
                     ),
                     MoreandMoreBanner(
+                      bannerTextColor: Colors.white,
+                      buttonColor: Colors.white,
                       bannerText: model.bannerlist.isNotEmpty
                           ? model.bannerlist[3].mainText
                           : null,

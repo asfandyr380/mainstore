@@ -52,7 +52,7 @@ class OrderSummary extends StatelessWidget {
                       fontSize: SizeConfig.blockSizeHorizontal * 1),
                 ),
                 Text(
-                  '\$ 150.00',
+                  '£ 150.00',
                   style: TextStyle(
                       color: Colors.black54,
                       fontSize: SizeConfig.blockSizeHorizontal * 1),
@@ -69,7 +69,7 @@ class OrderSummary extends StatelessWidget {
                       fontSize: SizeConfig.blockSizeHorizontal * 1),
                 ),
                 Text(
-                  '\$ 300',
+                  '£ 300',
                   style: TextStyle(
                       color: Colors.black54,
                       fontSize: SizeConfig.blockSizeHorizontal * 1),
@@ -87,7 +87,7 @@ class OrderSummary extends StatelessWidget {
                       fontSize: SizeConfig.blockSizeHorizontal * 2),
                 ),
                 Text(
-                  '\$ 170',
+                  '£ 170',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: SizeConfig.blockSizeHorizontal * 2),
@@ -121,7 +121,7 @@ class OrderSummary extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  width: SizeConfig.blockSizeHorizontal * 16,
+                  width: SizeConfig.blockSizeHorizontal * 20,
                   child: CustomButton(
                     onPressed: () {},
                     label: _checkout ? 'Check Out' : 'Proceed To Pay',

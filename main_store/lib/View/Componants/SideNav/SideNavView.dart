@@ -105,16 +105,22 @@ class SubItem extends StatelessWidget {
               for (var item in items!)
                 GestureDetector(
                   onTap: () => onTap!(item),
-                  child: ListTile(
-                    title: Text(item),
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: ListTile(
+                      title: Text(item),
+                    ),
                   ),
                 ),
             ],
           )
         : GestureDetector(
             onTap: () => onTap!(title!),
-            child: ListTile(
-              title: Text(title!),
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: ListTile(
+                title: Text(title!),
+              ),
             ),
           );
   }

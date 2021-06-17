@@ -7,6 +7,7 @@ import 'package:main_store/View/Componants/SideNav/SideNavView.dart';
 import 'package:main_store/View/Componants/SwipeBanner/SwipeBannerView.dart';
 import 'package:main_store/View/Widgets/SearchBarRow.dart';
 import 'package:stacked/stacked.dart';
+import 'package:main_store/Extention/hover_extention.dart';
 
 class Header extends StatelessWidget {
   final bool? isSignInPage;
@@ -75,10 +76,13 @@ class Header extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  child: HeaderPageNavigationButton(),
+                  child: !_onHomePage
+                      ? SearchBarRow()
+                      : HeaderPageNavigationButton(),
                 ),
                 Container(
                   child: CartFavandSignupLoginRow(
+                      onCartPressed: () => model.navigateToCart(),
                       userLogedIn: model.userLogedIn,
                       isSignInPage: _isSignInPage,
                       onTap: () {
@@ -101,7 +105,7 @@ class Header extends StatelessWidget {
                       padding: EdgeInsets.only(
                         bottom: 10,
                       ),
-                      child: SearchBarRow(),
+                      child: HeaderPageNavigationButton(),
                     ),
                   ],
                 )
@@ -124,6 +128,9 @@ class HomePageHeader extends StatelessWidget {
         Column(
           children: [
             Container(
+              padding: EdgeInsets.only(
+                right: SizeConfig.blockSizeHorizontal * 20,
+              ),
               child: SearchBarRow(),
             ),
             SizedBox(
@@ -143,10 +150,12 @@ class CartFavandSignupLoginRow extends StatelessWidget {
   final bool? isSignInPage;
   final Function onTap;
   final bool? userLogedIn;
+  final Function? onCartPressed;
   CartFavandSignupLoginRow({
     this.isSignInPage,
     required this.onTap,
     this.userLogedIn,
+    this.onCartPressed,
   });
   @override
   Widget build(BuildContext context) {
@@ -156,10 +165,10 @@ class CartFavandSignupLoginRow extends StatelessWidget {
     return Container(
       child: Row(
         children: [
-          GestureDetector(
-            onTap: () => onTap(),
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: () => onTap(),
               child: Container(
                 child: !_userLogedIn
                     ? Text(
@@ -203,9 +212,12 @@ class CartFavandSignupLoginRow extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.shopping_cart_outlined,
-                    size: SizeConfig.blockSizeHorizontal * 2,
+                  IconButton(
+                    onPressed: () => onCartPressed!(),
+                    icon: Icon(
+                      Icons.shopping_cart_outlined,
+                      size: SizeConfig.blockSizeHorizontal * 2,
+                    ),
                   ),
                   IndexIndicator(),
                 ],

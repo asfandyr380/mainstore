@@ -33,6 +33,10 @@ class HeaderViewModel extends ChangeNotifier {
     return userLogedIn;
   }
 
+  navigateToCart() {
+    _navigation.navigateTo(Cart);
+  }
+
   navigateToSignInLogInPage(bool isSignIn) {
     if (isSignIn) {
       _navigation.navigateTo(SignUp);

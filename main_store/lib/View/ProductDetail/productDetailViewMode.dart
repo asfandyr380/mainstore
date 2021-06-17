@@ -1,11 +1,49 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
+import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Models/productsModel.dart';
+import 'package:main_store/Services/Fireabase/Auth/firebase_auth.dart';
+import 'package:main_store/Services/Fireabase/Firestore/cart_services.dart';
 import 'package:main_store/Services/Fireabase/Firestore/get_products.dart';
+import 'package:main_store/Services/Navigation/navigation_services.dart';
 
 class ProductDetailViewModel extends ChangeNotifier {
   Products _products = locator<Products>();
+  CartServices _cart = locator<CartServices>();
+  Navigation _navigation = locator<Navigation>();
+  int quantity = 0;
+
+  addOrMiuns(bool adding) {
+    if (adding) {
+      quantity++;
+      notifyListeners();
+    } else {
+      if (quantity <= 0) {
+        quantity = 0;
+      } else
+        quantity--;
+      notifyListeners();
+    }
+  }
+
+  createBreadCrums() {}
+
+  Auth _auth = locator<Auth>();
   List<ProductsModel> relatedlist = [];
+
+  Future addtoCart(
+      DocumentReference? productId, String? storeName, int quantity) async {
+    print(productId);
+    print(storeName);
+    var user = await _auth.currrentUser();
+    if (user) {
+      String userId = await _auth.getUserId();
+      await _cart.addtoCartCollection(userId, productId!, storeName, quantity);
+    } else {
+      _navigation.navigateTo(SignIn);
+    }
+  }
 
   fetchRelatedProduct(List<String> category) async {
     var result = await _products.relatedProducts(category);
