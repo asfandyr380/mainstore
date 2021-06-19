@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
@@ -34,14 +35,13 @@ class ProductDetailViewModel extends ChangeNotifier {
 
   Future addtoCart(
       DocumentReference? productId, String? storeName, int quantity) async {
-    print(productId);
-    print(storeName);
-    var user = await _auth.currrentUser();
-    if (user) {
+    var _userIp = await Ipify.ipv4();
+    var _user = await _auth.currrentUser();
+    if (_user) {
       String userId = await _auth.getUserId();
       await _cart.addtoCartCollection(userId, productId!, storeName, quantity);
     } else {
-      _navigation.navigateTo(SignIn);
+      await _cart.addtoCartCollection(_userIp, productId!, storeName, quantity);
     }
   }
 

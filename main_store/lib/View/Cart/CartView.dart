@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
@@ -7,6 +8,8 @@ import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Widgets/order_summary.dart';
 import 'package:stacked/stacked.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'CartViewModel.dart';
 
 class TickBox extends StatelessWidget {
@@ -71,8 +74,20 @@ class _CartViewPageState extends State<CartViewPage> {
                               vertical: SizeConfig.blockSizeVertical * 2,
                             ),
                             child: CartitemsContainer(
-                              cart: cart,
-                            ),
+                                cart: cart,
+                                onDelete: (ref) => model
+                                        .removefromCart(cart.storeName!, ref)
+                                        .then((e) {
+                                      showTopSnackBar(
+                                        context,
+                                        CustomSnackBar.error(
+                                          icon: Icon(Icons.delete_forever),
+                                          message: 'Product Removed from Cart',
+                                        ),
+                                        displayDuration:
+                                            Duration(milliseconds: 150),
+                                      );
+                                    })),
                           ),
                       ],
                     ),
@@ -98,14 +113,14 @@ class _CartViewPageState extends State<CartViewPage> {
 
 class CartitemsContainer extends StatelessWidget {
   final CartModel cart;
-  CartitemsContainer({required this.cart});
+  final Function(DocumentReference)? onDelete;
+  CartitemsContainer({required this.cart, this.onDelete});
   @override
   Widget build(BuildContext context) {
     double _shippingCharges = 0;
     print('Products ${cart.products.length}');
     return Container(
       width: SizeConfig.blockSizeHorizontal * 30,
-      height: SizeConfig.blockSizeVertical * 30,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
@@ -157,14 +172,16 @@ class CartitemsContainer extends StatelessWidget {
             thickness: 1,
           ),
           Container(
-            height: SizeConfig.blockSizeVertical * 20,
-            child: ListView(
+            child: Column(
               children: [
                 for (var item in cart.products)
                   CartItem(
                     image: item.images![0],
                     name: item.name,
                     price: item.productPrice,
+                    onDeletePress: () {
+                      onDelete!(item.reference!);
+                    },
                   ),
               ],
             ),
@@ -180,7 +197,9 @@ class CartItem extends StatelessWidget {
   final String? image;
   final String? name;
   final double? price;
-  CartItem({this.quantity, this.image, this.name, this.price});
+  final Function()? onDeletePress;
+  CartItem(
+      {this.quantity, this.image, this.name, this.price, this.onDeletePress});
 
   @override
   Widget build(BuildContext context) {
@@ -228,15 +247,27 @@ class CartItem extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Text(
-                    'Quantity:',
-                    style: TextStyle(
-                        fontSize: SizeConfig.blockSizeHorizontal * 0.7),
+                  Row(
+                    children: [
+                      Text(
+                        'Quantity:',
+                        style: TextStyle(
+                            fontSize: SizeConfig.blockSizeHorizontal * 0.7),
+                      ),
+                      IconButton(
+                        onPressed: () => onDeletePress!(),
+                        icon: Icon(
+                          FontAwesomeIcons.trashAlt,
+                          size: SizeConfig.blockSizeHorizontal * 1,
+                          color: Colors.red.withOpacity(0.5),
+                        ),
+                      ),
+                    ],
                   ),
                   Row(
                     children: [
                       Icon(
-                        FontAwesomeIcons.plusSquare,
+                        FontAwesomeIcons.minusSquare,
                         size: SizeConfig.blockSizeHorizontal * 1,
                         color: accentColor,
                       ),
@@ -259,25 +290,15 @@ class CartItem extends StatelessWidget {
                           ),
                         ),
                       ),
+                      Icon(
+                        FontAwesomeIcons.plusSquare,
+                        size: SizeConfig.blockSizeHorizontal * 1,
+                        color: accentColor,
+                      ),
                     ],
                   ),
                 ],
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    FontAwesomeIcons.trashAlt,
-                    size: SizeConfig.blockSizeHorizontal * 1,
-                    color: Colors.red.withOpacity(0.5),
-                  ),
-                  Icon(
-                    FontAwesomeIcons.minusSquare,
-                    size: SizeConfig.blockSizeHorizontal * 1,
-                    color: accentColor,
-                  ),
-                ],
-              )
             ],
           )
         ],

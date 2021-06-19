@@ -12,7 +12,7 @@ class SwipeBannerViewModel extends ChangeNotifier {
 
   autoPlay(PageController controller) {
     Timer.periodic(Duration(seconds: 3), (Timer timer) {
-      if (currentIndex < list.length) {
+      if (currentIndex < list.length - 1) {
         currentIndex++;
         notifyListeners();
       } else {
@@ -32,7 +32,7 @@ class SwipeBannerViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  fetchBanner() async {
+  Future fetchBanner() async {
     var result = await _banner.getSwipeBanners();
     if (result is List<Swipebanner>) {
       list = result;

@@ -55,6 +55,7 @@ class ProductListingPage extends StatelessWidget {
                       ),
                       Container(
                         child: Products(
+                          isBusy: model.isLoading,
                           details: model.productList,
                           orderBy: (val) => model.orderBy(val),
                         ),
@@ -78,10 +79,12 @@ class ProductListingPage extends StatelessWidget {
 class Products extends StatelessWidget {
   final List<ProductsModel>? details;
   final Function? orderBy;
-  Products({this.details, this.orderBy});
+  final bool? isBusy;
+  Products({this.details, this.orderBy, this.isBusy});
 
   @override
   Widget build(BuildContext context) {
+    bool _isBusy = isBusy ?? false;
     return Column(
       children: [
         Container(
@@ -92,11 +95,15 @@ class Products extends StatelessWidget {
             top: SizeConfig.blockSizeVertical * 2,
           ),
           height: SizeConfig.blockSizeVertical * 160,
-          width: SizeConfig.blockSizeHorizontal * 60,
-          child: CardGridView(
-            productDetails: details,
-            crossAxixCount: 3,
-          ),
+          width: SizeConfig.blockSizeHorizontal * 65,
+          child: !_isBusy
+              ? CardGridView(
+                  productDetails: details,
+                  crossAxixCount: 3,
+                )
+              : Container(
+                  alignment: Alignment.topCenter,
+                  child: CircularProgressIndicator(color: accentColor)),
         ),
       ],
     );
@@ -251,20 +258,24 @@ class FilterMenu extends StatelessWidget {
             height: SizeConfig.blockSizeVertical * 2,
           ),
           Container(
+            alignment: Alignment.centerLeft,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Price Filter'),
-                SfRangeSlider(
-                  activeColor: accentColor,
-                  inactiveColor: accentColor.withOpacity(0.5),
-                  min: 0,
-                  max: 100,
-                  enableTooltip: true,
-                  numberFormat: NumberFormat('\$'),
-                  values: _values,
-                  showLabels: true,
-                  onChanged: (newVal) => onSliderChange!(newVal),
+                Container(
+                  width: SizeConfig.blockSizeHorizontal * 20,
+                  child: SfRangeSlider(
+                    activeColor: accentColor,
+                    inactiveColor: accentColor.withOpacity(0.5),
+                    min: 0,
+                    max: 100,
+                    enableTooltip: true,
+                    numberFormat: NumberFormat('\$'),
+                    values: _values,
+                    showLabels: true,
+                    onChanged: (newVal) => onSliderChange!(newVal),
+                  ),
                 ),
               ],
             ),

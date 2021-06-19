@@ -71,15 +71,16 @@ class CartServices {
     }
   }
 
-  Future removefromcart(String userId, String docId, String productId) async {
+  Future removefromcart(
+      String userId, String storeName, DocumentReference productRef) async {
     try {
-      await _ref.userRef
-          .doc(userId)
-          .collection('Cart')
-          .doc(docId)
-          .collection('Products')
-          .doc(productId)
-          .delete();
+      await _ref.userRef.doc(userId).collection('Cart').doc(storeName).update(
+        {
+          'products': FieldValue.arrayRemove(
+            [productRef],
+          ),
+        },
+      );
     } catch (e) {
       if (e is PlatformException) {
         return e.message;

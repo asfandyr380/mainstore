@@ -4,7 +4,6 @@ import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Componants/ProductListingRows/ProductListingRowViewModel.dart';
-import 'package:main_store/View/ProductListingPage/ProductListingPageViewModel.dart';
 import 'package:main_store/View/Widgets/ProductListingArrow.dart';
 import 'package:main_store/View/Widgets/productListingCard.dart';
 import 'package:stacked/stacked.dart';
@@ -75,7 +74,7 @@ class ProductListingRow extends StatelessWidget {
               vertical: SizeConfig.blockSizeVertical * 3,
               horizontal: SizeConfig.blockSizeHorizontal * 3,
             ),
-            height: SizeConfig.blockSizeVertical * 45,
+            height: SizeConfig.blockSizeVertical * 50,
             width: double.infinity,
             child: ListView.separated(
               controller: _scrollController,

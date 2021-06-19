@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Componants/BrandsCard/BrandsCard.dart';
@@ -7,9 +9,9 @@ import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Componants/ProductListingRows/ProductListingRows.dart';
 import 'package:main_store/View/Home/HomeViewModel.dart';
-import 'package:main_store/View/Widgets/CardGrid/CardGridView.dart';
 import 'package:main_store/View/Widgets/banners.dart';
 import 'package:main_store/View/Widgets/listingName.dart';
+import 'package:main_store/View/Widgets/productListingCard.dart';
 import 'package:stacked/stacked.dart';
 
 class Home extends StatelessWidget {
@@ -94,9 +96,28 @@ class Home extends StatelessWidget {
                 padding: EdgeInsets.symmetric(
                     vertical: SizeConfig.blockSizeVertical * 2),
                 child: NearbyProducts(
+                  navegateToDetails: (e) => model.navigatetodetails(e),
                   productDetails: model.nearbyProducts,
                 ),
               ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.blockSizeVertical * 4,
+                ),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    primary: accentColor,
+                    fixedSize: Size(
+                      SizeConfig.blockSizeHorizontal * 8,
+                      SizeConfig.blockSizeVertical * 5,
+                    ),
+                  ),
+                  child:
+                      Text('Load More', style: TextStyle(color: Colors.white)),
+                ),
+              ),
+              Divider(),
               Container(
                 child: Column(
                   children: [
@@ -134,6 +155,27 @@ class Home extends StatelessWidget {
                   ],
                 ),
               ),
+              Divider(),
+              // Reviews
+              Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.blockSizeHorizontal * 2),
+                width: double.infinity,
+                height: SizeConfig.blockSizeVertical * 20,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, i) => Container(
+                    padding: EdgeInsets.only(
+                        bottom: SizeConfig.blockSizeVertical * 2),
+                    child: ReviewsCard(),
+                  ),
+                  separatorBuilder: (context, i) => SizedBox(
+                    width: SizeConfig.blockSizeHorizontal * 1,
+                  ),
+                  itemCount: 5,
+                ),
+              ),
+
               // Page Footer
               Container(
                 child: Footer(),
@@ -146,10 +188,80 @@ class Home extends StatelessWidget {
   }
 }
 
+class ReviewsCard extends StatelessWidget {
+  const ReviewsCard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: SizeConfig.blockSizeVertical * 25,
+      width: SizeConfig.blockSizeHorizontal * 25,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            blurRadius: 4,
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.blockSizeHorizontal * 2),
+              child: Text(dumyComment)),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical * 1,
+          ),
+          Text('UserName'),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical * 1,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (int i = 0; i < 5; i++)
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: RatingStar(),
+                ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class RatingStar extends StatelessWidget {
+  final bool? isEnable;
+  RatingStar({this.isEnable});
+
+  @override
+  Widget build(BuildContext context) {
+    bool _isEnable = isEnable ?? true;
+    return Container(
+      height: 35,
+      width: 35,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: _isEnable ? Colors.green : Colors.white,
+      ),
+      child: Icon(
+        FontAwesomeIcons.star,
+        size: 15,
+        color: _isEnable ? Colors.white : Colors.black,
+      ),
+    );
+  }
+}
+
 class NearbyProducts extends StatelessWidget {
   List<ProductsModel>? productDetails;
-
-  NearbyProducts({this.productDetails});
+  final Function(ProductsModel)? navegateToDetails;
+  NearbyProducts({this.productDetails, this.navegateToDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -168,12 +280,31 @@ class NearbyProducts extends StatelessWidget {
             ),
           ),
           Container(
-            height: SizeConfig.blockSizeVertical * 150,
+            height: SizeConfig.blockSizeVertical * 160,
             padding: EdgeInsets.symmetric(
               horizontal: SizeConfig.blockSizeVertical * 3,
             ),
-            child: CardGridView(
-              productDetails: productDetails,
+            child: GridView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 4,
+              ),
+              itemCount: productDetails!.length,
+              itemBuilder: (context, i) {
+                return Container(
+                  height: SizeConfig.blockSizeVertical * 10,
+                  width: SizeConfig.blockSizeHorizontal * 5,
+                  child: ProductListingCards(
+                    onTap: () => navegateToDetails!(productDetails![i]),
+                    productName: productDetails![i].name,
+                    categoryName: productDetails![i].by,
+                    productPrice: productDetails![i].productPrice,
+                    image: productDetails![i].images![0],
+                    salePrice: productDetails![i].salePrice,
+                    onSale: productDetails![i].onSale,
+                  ),
+                );
+              },
             ),
           )
         ],
