@@ -35,12 +35,12 @@
     "overrides" : {
       "synthesized" : {
         "table" : {
-          "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "iPhone12,8",
+          "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "iPod9,1",
           "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "14.5",
           "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
           "ENABLE_PREVIEWS" : "NO",
-          "TARGET_DEVICE_IDENTIFIER" : "69C00A6D-DEE6-4AAA-AC8E-8AB308CA3ACC",
-          "TARGET_DEVICE_MODEL" : "iPhone12,8",
+          "TARGET_DEVICE_IDENTIFIER" : "C559833D-80D1-42EA-A7A5-C404E426A5B3",
+          "TARGET_DEVICE_MODEL" : "iPod9,1",
           "TARGET_DEVICE_OS_VERSION" : "14.5",
           "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
         }

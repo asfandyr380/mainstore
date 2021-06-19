@@ -216,86 +216,218 @@ class CheckOutMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return ViewModelBuilder.reactive(
-        builder: (context, model, child) => SafeArea(
-              child: Scaffold(
-                appBar: AppBar(backgroundColor: Colors.grey),
-                body: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(
-                            top: SizeConfig.blockSizeVertical * 3,
-                            left: SizeConfig.blockSizeHorizontal * 4),
+        builder: (context, model, child) => Scaffold(
+              appBar: AppBar(
+                backgroundColor: accentColor,
+              ),
+              body: SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: SizeConfig.blockSizeVertical * 1.5,
+                      ),
+                      child: Center(
                         child: Text(
-                          'Contact Information',
+                          'Check Out',
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                            fontFamily: 'Lato',
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
-                      SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: SizeConfig.blockSizeHorizontal * 4),
-                        child: TextInputField(
-                          hint_text: 'Enter Phone Number',
-                          onMobile: true,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 2,
+                          left: SizeConfig.blockSizeHorizontal * 4),
+                      child: Text(
+                        'Contact Information',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Lato',
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(
-                            top: SizeConfig.blockSizeVertical * 2,
-                            left: SizeConfig.blockSizeHorizontal * 4),
-                        child: Text(
-                          'Shipping Information',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                    ),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.blockSizeHorizontal * 4),
+                      child: TextInputField(
+                        hint_text: 'Enter Phone Number',
+                        onMobile: true,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 1.5,
+                          left: SizeConfig.blockSizeHorizontal * 4),
+                      child: Text(
+                        'Shipping Information',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Lato',
                         ),
                       ),
-                      SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: SizeConfig.blockSizeHorizontal * 4),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              height: SizeConfig.blockSizeVertical * 5,
-                              width: SizeConfig.blockSizeHorizontal * 45,
-                              child: TextInputField(
-                                hint_text: 'First Name',
-                                onMobile: true,
-                              ),
-                            ),
-                            Container(
-                              height: SizeConfig.blockSizeVertical * 5,
-                              width: SizeConfig.blockSizeHorizontal * 45,
-                              child: TextInputField(
-                                hint_text: 'Last Name',
-                                onMobile: true,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Row(
+                    ),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.blockSizeHorizontal * 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
+                            height: SizeConfig.blockSizeVertical * 5,
+                            width: SizeConfig.blockSizeHorizontal * 45,
                             child: TextInputField(
-                              hint_text: 'Enter Phone Number',
+                              hint_text: 'First Name',
+                              onMobile: true,
+                            ),
+                          ),
+                          Container(
+                            height: SizeConfig.blockSizeVertical * 5,
+                            width: SizeConfig.blockSizeHorizontal * 45,
+                            child: TextInputField(
+                              hint_text: 'Last Name',
                               onMobile: true,
                             ),
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.blockSizeHorizontal * 4),
+                      child: TextInputField(
+                        hint_text: 'Address',
+                        onMobile: true,
+                      ),
+                    ),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.blockSizeHorizontal * 4),
+                      child: TextInputField(
+                        hint_text: 'Apartment, Suite, etc. (Optional)',
+                        onMobile: true,
+                      ),
+                    ),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.blockSizeHorizontal * 4),
+                      child: TextInputField(
+                        hint_text: 'City',
+                        onMobile: true,
+                      ),
+                    ),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.blockSizeHorizontal * 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            height: SizeConfig.blockSizeVertical * 5,
+                            width: SizeConfig.blockSizeHorizontal * 45,
+                            child: TextInputField(
+                              //todo: Dropdown menu will come here
+                              hint_text: 'Country / Region',
+                              onMobile: true,
+                            ),
+                          ),
+                          Container(
+                            height: SizeConfig.blockSizeVertical * 5,
+                            width: SizeConfig.blockSizeHorizontal * 45,
+                            child: TextInputField(
+                              hint_text: 'Postal Code',
+                              onMobile: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 2,
+                          left: SizeConfig.blockSizeHorizontal * 4),
+                      child: Text(
+                        'Cart Summary',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Lato'),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 1,
+                          left: SizeConfig.blockSizeHorizontal * 4),
+                      child: Text(
+                        'Subtotal : £320',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 1,
+                          left: SizeConfig.blockSizeHorizontal * 4),
+                      child: Text(
+                        'Shipping : £100',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 1,
+                          left: SizeConfig.blockSizeHorizontal * 4),
+                      child: Text(
+                        'Total : £420',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 1.5,
+                          left: SizeConfig.blockSizeHorizontal * 4),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Proceed to Pay',
+                          style: TextStyle(
+                            fontFamily: 'Lato',
+                            fontSize: 16,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: accentColor,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

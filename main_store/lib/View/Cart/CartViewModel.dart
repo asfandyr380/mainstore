@@ -28,3 +28,5 @@ class CartViewModel extends ChangeNotifier {
     }
   }
 }
+
+class CartMobileViewModel extends ChangeNotifier {}

@@ -333,3 +333,559 @@ class SelectAllContainer extends StatelessWidget {
     );
   }
 }
+
+class CartMobileView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<CartMobileViewModel>.reactive(
+      viewModelBuilder: () => CartMobileViewModel(),
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(
+          backgroundColor: accentColor,
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: SizeConfig.blockSizeHorizontal * 4),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  height: SizeConfig.blockSizeVertical * 10,
+                  width: SizeConfig.blockSizeHorizontal * 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      width: 1,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.blockSizeHorizontal * 2,
+                      vertical: SizeConfig.blockSizeVertical * 0.5,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Shopping Cart (3)',
+                          style: TextStyle(
+                            fontFamily: 'Lato',
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            TickBox(onTickChange: (val) {}),
+                            Text(
+                              'Select All',
+                              style: TextStyle(
+                                fontFamily: 'Lato',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: SizeConfig.blockSizeVertical * 20,
+                  width: SizeConfig.blockSizeHorizontal * 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      width: 1,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.blockSizeHorizontal * 2),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              child: Row(
+                                children: [
+                                  TickBox(onTickChange: (val) {}),
+                                  Text(
+                                    'UK Grocery Store',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Shipping Charges : ',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    '£ 2.00',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: accentColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Divider(
+                          color: Colors.black87,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Row(
+                                  children: [
+                                    TickBox(
+                                      onTickChange: (val) {},
+                                    ),
+                                    Container(
+                                      height: 75,
+                                      width: 75,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.contain,
+                                          image: AssetImage(
+                                              'assets/images/Capture.png'),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        width: SizeConfig.blockSizeHorizontal *
+                                            1.75),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Hershey\'s Syrup',
+                                          style: TextStyle(
+                                            fontFamily: 'Lato',
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            height:
+                                                SizeConfig.blockSizeVertical *
+                                                    1),
+                                        Text(
+                                          'GBP £250',
+                                          style: TextStyle(
+                                            fontFamily: 'Lato',
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Quantity :',
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top:
+                                              SizeConfig.blockSizeVertical * 1),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            height:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    6,
+                                            width:
+                                                SizeConfig.blockSizeVertical *
+                                                    6,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              border: Border.all(
+                                                width: 1,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                '1',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  2),
+                                          Icon(
+                                            FontAwesomeIcons.trashAlt,
+                                            size: 20,
+                                            color: Colors.red,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: SizeConfig.blockSizeVertical * 33,
+                  width: SizeConfig.blockSizeHorizontal * 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      width: 1,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.blockSizeHorizontal * 2),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              child: Row(
+                                children: [
+                                  TickBox(onTickChange: (val) {}),
+                                  Text(
+                                    'MS Store',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Shipping Charges : ',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    '£ 1.00',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: accentColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        Divider(
+                          color: Colors.black87,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Row(
+                                  children: [
+                                    TickBox(
+                                      onTickChange: (val) {},
+                                    ),
+                                    Container(
+                                      height: 75,
+                                      width: 75,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.contain,
+                                          image: AssetImage(
+                                              'assets/images/suasages.png'),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        width: SizeConfig.blockSizeHorizontal *
+                                            1.75),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Hershey\'s Syrup',
+                                          style: TextStyle(
+                                            fontFamily: 'Lato',
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            height:
+                                                SizeConfig.blockSizeVertical *
+                                                    1),
+                                        Text(
+                                          'GBP £250',
+                                          style: TextStyle(
+                                            fontFamily: 'Lato',
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Quantity :',
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top:
+                                              SizeConfig.blockSizeVertical * 1),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            height:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    6,
+                                            width:
+                                                SizeConfig.blockSizeVertical *
+                                                    6,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              border: Border.all(
+                                                width: 1,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                '1',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  2),
+                                          Icon(
+                                            FontAwesomeIcons.trashAlt,
+                                            size: 20,
+                                            color: Colors.red,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.blockSizeVertical * 1,
+                        ),
+                        Divider(
+                          color: Colors.black87,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                child: Row(
+                                  children: [
+                                    TickBox(
+                                      onTickChange: (val) {},
+                                    ),
+                                    Container(
+                                      height: 75,
+                                      width: 75,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.contain,
+                                          image: AssetImage(
+                                              'assets/images/nutella.png'),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                        width: SizeConfig.blockSizeHorizontal *
+                                            1.75),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Nutella',
+                                          style: TextStyle(
+                                            fontFamily: 'Lato',
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                            height:
+                                                SizeConfig.blockSizeVertical *
+                                                    1),
+                                        Text(
+                                          'GBP £10',
+                                          style: TextStyle(
+                                            fontFamily: 'Lato',
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Quantity :',
+                                          style: TextStyle(
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top:
+                                              SizeConfig.blockSizeVertical * 1),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            height:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    6,
+                                            width:
+                                                SizeConfig.blockSizeVertical *
+                                                    6,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              border: Border.all(
+                                                width: 1,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                '2',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  2),
+                                          Icon(
+                                            FontAwesomeIcons.trashAlt,
+                                            size: 20,
+                                            color: Colors.red,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
