@@ -217,12 +217,17 @@ class MoreandMoreBanner extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              _bannerText,
-              style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 23,
-                  color: _bannerTextColor),
+            Container(
+              width: SizeConfig.blockSizeHorizontal * 12,
+              height: SizeConfig.blockSizeVertical * 5,
+              child: Text(
+                _bannerText,
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: SizeConfig.blockSizeHorizontal * 2,
+                    color: _bannerTextColor),
+              ),
             ),
             SizedBox(
               height: SizeConfig.blockSizeVertical * 1,

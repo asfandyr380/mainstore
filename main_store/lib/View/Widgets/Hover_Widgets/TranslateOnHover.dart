@@ -13,16 +13,17 @@ class TranslateOnHover extends StatefulWidget {
 class _TranslateOnHoverState extends State<TranslateOnHover> {
   final nonHoverTransform = Matrix4.identity()..translate(0, 0, 0);
 
-  final hoverTransform = Matrix4.identity()..translate(0, -10, 0);
+  final hoverTransform = Matrix4.identity()..translate(0, 0, 10);
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<TranslateViewModel>.reactive(
       builder: (context, model, child) => MouseRegion(
+        cursor: SystemMouseCursors.click,
         onEnter: (e) => model.mouseEnter(true),
         onExit: (e) => model.mouseEnter(false),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
+        child: Container(
+          // duration: const Duration(milliseconds: 200),
           child: child,
           transform: model.hovering ? hoverTransform : nonHoverTransform,
         ),

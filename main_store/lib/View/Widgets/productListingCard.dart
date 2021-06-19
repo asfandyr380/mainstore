@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 
-class ProductListingCards extends StatelessWidget {
+class ProductListingCards extends StatefulWidget {
   final String? productName;
   final double? productPrice;
   final String? image;
@@ -19,19 +19,49 @@ class ProductListingCards extends StatelessWidget {
       this.salePrice,
       this.onSale,
       this.onTap});
+
+  @override
+  _ProductListingCardsState createState() => _ProductListingCardsState();
+}
+
+class _ProductListingCardsState extends State<ProductListingCards> {
+  bool hovering = false;
+
+  final nonHoverTransform = Matrix4.identity()..translate(0, 0, 0);
+  final hoverTransform = Matrix4.identity()..translate(0, -10, 0);
+
+  void mouseEnter(bool hover) {
+    setState(() {
+      hovering = hover;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    double _salePrice = salePrice ?? 0;
-    double _productPrice = productPrice ?? 0;
-    bool _onSale = onSale ?? false;
-    String _image = image ?? placeholderProductPic;
-    String _categoryName = categoryName ?? '';
+    double _salePrice = widget.salePrice ?? 0;
+    double _productPrice = widget.productPrice ?? 0;
+    bool _onSale = widget.onSale ?? false;
+    String _image = widget.image ?? placeholderProductPic;
+    String _categoryName = widget.categoryName ?? '';
     return GestureDetector(
-      onTap: () => onTap!(),
+      onTap: () => widget.onTap!(),
       child: MouseRegion(
+        onEnter: (e) => mouseEnter(true),
+        onExit: (e) => mouseEnter(false),
         cursor: SystemMouseCursors.click,
-        child: Container(
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 120),
+          transform: hovering ? hoverTransform : nonHoverTransform,
+          decoration: hovering
+              ? BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                        offset: Offset(1, 0), blurRadius: 2, spreadRadius: 1)
+                  ],
+                )
+              : BoxDecoration(color: Colors.white),
           child: Column(
             children: [
               Container(
@@ -86,7 +116,7 @@ class ProductListingCards extends StatelessWidget {
               // Product Name
               Container(
                 child: Text(
-                  productName!,
+                  widget.productName!,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: SizeConfig.blockSizeHorizontal * 1,
