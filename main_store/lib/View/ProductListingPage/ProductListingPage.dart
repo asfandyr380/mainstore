@@ -195,7 +195,7 @@ class Banner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      height: SizeConfig.blockSizeVertical * 40,
+      height: SizeConfig.blockSizeVertical * 20,
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.grey,
@@ -242,7 +242,7 @@ class FilterMenu extends StatelessWidget {
             child: Text(
               'Filter',
               style: TextStyle(
-                fontSize: SizeConfig.blockSizeHorizontal * 3,
+                fontSize: SizeConfig.blockSizeHorizontal * 2,
                 fontWeight: FontWeight.bold,
               ),
             ),

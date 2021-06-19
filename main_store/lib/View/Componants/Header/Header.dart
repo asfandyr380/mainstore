@@ -7,7 +7,6 @@ import 'package:main_store/View/Componants/SideNav/SideNavView.dart';
 import 'package:main_store/View/Componants/SwipeBanner/SwipeBannerView.dart';
 import 'package:main_store/View/Widgets/SearchBarRow.dart';
 import 'package:stacked/stacked.dart';
-import 'package:main_store/Extention/hover_extention.dart';
 
 class Header extends StatelessWidget {
   final bool? isSignInPage;
@@ -24,41 +23,6 @@ class Header extends StatelessWidget {
       onModelReady: (model) => model.getUser(),
       builder: (context, model, child) => Column(
         children: [
-          // Social Icons Bar
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0, 0.5),
-                  color: Colors.grey,
-                )
-              ],
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: SizeConfig.blockSizeHorizontal * 10,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(FontAwesomeIcons.facebookF, size: 15),
-                      Icon(FontAwesomeIcons.twitter, size: 15),
-                      Icon(FontAwesomeIcons.instagram, size: 15),
-                      Icon(FontAwesomeIcons.pinterestP, size: 15),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(
-                    left: SizeConfig.blockSizeHorizontal * 33,
-                  ),
-                  child: Text('Free Shipping Over 12\$ Order'),
-                ),
-              ],
-            ),
-          ),
           Container(
             padding: EdgeInsets.symmetric(
               vertical: SizeConfig.blockSizeVertical * 2,

@@ -97,6 +97,43 @@ class Home extends StatelessWidget {
                   productDetails: model.nearbyProducts,
                 ),
               ),
+              Container(
+                child: Column(
+                  children: [
+                    Container(
+                      child: Text(
+                        'Download App',
+                        style: TextStyle(
+                          fontSize: SizeConfig.blockSizeHorizontal * 2,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Image.asset(
+                            'assets/images/47q2YGt.png',
+                            width: SizeConfig.blockSizeHorizontal * 20,
+                            height: SizeConfig.blockSizeVertical * 18,
+                          ),
+                        ),
+                        SizedBox(
+                          width: SizeConfig.blockSizeHorizontal * 4,
+                        ),
+                        Container(
+                          child: Image.asset(
+                            'assets/images/nkZP7fe.png',
+                            width: SizeConfig.blockSizeHorizontal * 20,
+                            height: SizeConfig.blockSizeVertical * 18,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               // Page Footer
               Container(
                 child: Footer(),

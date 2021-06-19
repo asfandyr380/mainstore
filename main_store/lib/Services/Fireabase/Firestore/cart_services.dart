@@ -70,4 +70,22 @@ class CartServices {
       }
     }
   }
+
+  Future removefromcart(String userId, String docId, String productId) async {
+    try {
+      await _ref.userRef
+          .doc(userId)
+          .collection('Cart')
+          .doc(docId)
+          .collection('Products')
+          .doc(productId)
+          .delete();
+    } catch (e) {
+      if (e is PlatformException) {
+        return e.message;
+      } else {
+        return e;
+      }
+    }
+  }
 }
