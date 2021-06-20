@@ -11,7 +11,7 @@ class HomeViewModel extends ChangeNotifier {
   List<Banners> bannerlist = [];
   List<String> _docIds = [];
   int present = 0;
-  int perPage = 15;
+  int perPage = 11;
   var items = <ProductsModel>[];
   Products _products = locator<Products>();
   List<ProductsModel> onSaleProducts = [];
@@ -19,6 +19,14 @@ class HomeViewModel extends ChangeNotifier {
   List<ProductsModel> nearbyProducts = [];
 
   loadMore() async {
+    if ((present + perPage) > nearbyProducts.length) {
+      items.addAll(nearbyProducts.getRange(present, nearbyProducts.length));
+      notifyListeners();
+    } else {
+      items.addAll(nearbyProducts.getRange(present, present + perPage));
+      notifyListeners();
+    }
+    present = present + perPage;
     notifyListeners();
   }
 

@@ -98,6 +98,9 @@ class Home extends StatelessWidget {
                 child: NearbyProducts(
                   navegateToDetails: (e) => model.navigatetodetails(e),
                   productDetails: model.nearbyProducts,
+                  loadMore: () => model.loadMore(),
+                  present: model.present,
+                  items: model.items,
                 ),
               ),
               Container(
@@ -105,7 +108,7 @@ class Home extends StatelessWidget {
                   vertical: SizeConfig.blockSizeVertical * 4,
                 ),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => model.loadMore(),
                   style: ElevatedButton.styleFrom(
                     primary: accentColor,
                     fixedSize: Size(
@@ -118,7 +121,38 @@ class Home extends StatelessWidget {
                 ),
               ),
               Divider(),
+              // Reviews
               Container(
+                child: Text('What People Says about Us',
+                    style: TextStyle(
+                        fontSize: SizeConfig.blockSizeHorizontal * 2)),
+              ),
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * 2,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.blockSizeHorizontal * 2,
+                ),
+                width: double.infinity,
+                height: SizeConfig.blockSizeVertical * 27,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, i) => Container(
+                    padding: EdgeInsets.symmetric(
+                        vertical: SizeConfig.blockSizeVertical * 2,
+                        horizontal: SizeConfig.blockSizeHorizontal * 1),
+                    child: ReviewsCard(),
+                  ),
+                  separatorBuilder: (context, i) => SizedBox(
+                    width: SizeConfig.blockSizeHorizontal * 1,
+                  ),
+                  itemCount: 5,
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical * 2),
                 child: Column(
                   children: [
                     Container(
@@ -155,27 +189,6 @@ class Home extends StatelessWidget {
                   ],
                 ),
               ),
-              Divider(),
-              // Reviews
-              Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.blockSizeHorizontal * 2),
-                width: double.infinity,
-                height: SizeConfig.blockSizeVertical * 20,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, i) => Container(
-                    padding: EdgeInsets.only(
-                        bottom: SizeConfig.blockSizeVertical * 2),
-                    child: ReviewsCard(),
-                  ),
-                  separatorBuilder: (context, i) => SizedBox(
-                    width: SizeConfig.blockSizeHorizontal * 1,
-                  ),
-                  itemCount: 5,
-                ),
-              ),
-
               // Page Footer
               Container(
                 child: Footer(),
@@ -200,8 +213,9 @@ class ReviewsCard extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withOpacity(0.3),
             blurRadius: 4,
+            offset: Offset(1, 0),
           ),
         ],
       ),
@@ -260,8 +274,16 @@ class RatingStar extends StatelessWidget {
 
 class NearbyProducts extends StatelessWidget {
   List<ProductsModel>? productDetails;
+  final int? present;
+  final items;
   final Function(ProductsModel)? navegateToDetails;
-  NearbyProducts({this.productDetails, this.navegateToDetails});
+  final Function? loadMore;
+  NearbyProducts(
+      {this.productDetails,
+      this.navegateToDetails,
+      this.items,
+      this.present,
+      this.loadMore});
 
   @override
   Widget build(BuildContext context) {
@@ -280,21 +302,30 @@ class NearbyProducts extends StatelessWidget {
             ),
           ),
           Container(
-            height: SizeConfig.blockSizeVertical * 160,
             padding: EdgeInsets.symmetric(
               horizontal: SizeConfig.blockSizeVertical * 3,
             ),
             child: GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              // physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
+                crossAxisCount: 5,
               ),
-              itemCount: productDetails!.length,
+              itemCount: productDetails == null
+                  ? 0
+                  : (present! <= productDetails!.length)
+                      ? items.length + 1
+                      : items.length,
               itemBuilder: (context, i) {
                 return Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical * 2,
+                    horizontal: SizeConfig.blockSizeHorizontal * 2,
+                  ),
                   height: SizeConfig.blockSizeVertical * 10,
                   width: SizeConfig.blockSizeHorizontal * 5,
                   child: ProductListingCards(
+                    isGrid: true,
                     onTap: () => navegateToDetails!(productDetails![i]),
                     productName: productDetails![i].name,
                     categoryName: productDetails![i].by,

@@ -18,7 +18,11 @@ class _SwipeBannerState extends State<SwipeBanner> {
     return ViewModelBuilder<SwipeBannerViewModel>.reactive(
       viewModelBuilder: () => SwipeBannerViewModel(),
       onModelReady: (model) {
-        model.fetchBanner().then((value) => model.autoPlay(_pageController));
+        model.fetchBanner().then((value) {
+          if (model.list.isNotEmpty) {
+            model.autoPlay(_pageController);
+          }
+        });
       },
       builder: (context, model, child) => Container(
         height: SizeConfig.blockSizeVertical * 45,
