@@ -56,11 +56,13 @@ class Home extends StatelessWidget {
                 height: SizeConfig.blockSizeVertical * 2,
               ),
               ProductListingRow(
+                isLoading: model.isLoading,
                 listingName: 'Top Selling Products',
                 productDetails: model.topSellingProducts,
               ),
               SizedBox(height: SizeConfig.blockSizeVertical * 2),
               ProductListingRow(
+                isLoading: model.isLoading,
                 productDetails: model.onSaleProducts,
                 listingName: 'On Sale Products',
               ),
@@ -101,6 +103,7 @@ class Home extends StatelessWidget {
                   loadMore: () => model.loadMore(),
                   present: model.present,
                   items: model.items,
+                  isLoading: model.isLoading,
                 ),
               ),
               Container(
@@ -278,16 +281,19 @@ class NearbyProducts extends StatelessWidget {
   final items;
   final Function(ProductsModel)? navegateToDetails;
   final Function? loadMore;
+  final bool? isLoading;
   NearbyProducts(
       {this.productDetails,
       this.navegateToDetails,
       this.items,
       this.present,
-      this.loadMore});
+      this.loadMore,
+      this.isLoading});
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    bool _isLoading = isLoading ?? false;
     return Container(
       alignment: Alignment.centerLeft,
       child: Column(
@@ -301,43 +307,49 @@ class NearbyProducts extends StatelessWidget {
               listingName: 'Products For You',
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: SizeConfig.blockSizeVertical * 3,
-            ),
-            child: GridView.builder(
-              // physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 5,
-              ),
-              itemCount: productDetails == null
-                  ? 0
-                  : (present! <= productDetails!.length)
-                      ? items.length + 1
-                      : items.length,
-              itemBuilder: (context, i) {
-                return Container(
+          _isLoading
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: accentColor,
+                  ),
+                )
+              : Container(
                   padding: EdgeInsets.symmetric(
-                    vertical: SizeConfig.blockSizeVertical * 2,
-                    horizontal: SizeConfig.blockSizeHorizontal * 2,
+                    horizontal: SizeConfig.blockSizeVertical * 3,
                   ),
-                  height: SizeConfig.blockSizeVertical * 10,
-                  width: SizeConfig.blockSizeHorizontal * 5,
-                  child: ProductListingCards(
-                    isGrid: true,
-                    onTap: () => navegateToDetails!(productDetails![i]),
-                    productName: productDetails![i].name,
-                    categoryName: productDetails![i].by,
-                    productPrice: productDetails![i].productPrice,
-                    image: productDetails![i].images![0],
-                    salePrice: productDetails![i].salePrice,
-                    onSale: productDetails![i].onSale,
+                  child: GridView.builder(
+                    // physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5,
+                    ),
+                    itemCount: productDetails == null
+                        ? 0
+                        : (present! <= productDetails!.length)
+                            ? items.length + 1
+                            : items.length,
+                    itemBuilder: (context, i) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: SizeConfig.blockSizeVertical * 2,
+                          horizontal: SizeConfig.blockSizeHorizontal * 2,
+                        ),
+                        height: SizeConfig.blockSizeVertical * 10,
+                        width: SizeConfig.blockSizeHorizontal * 5,
+                        child: ProductListingCards(
+                          isGrid: true,
+                          onTap: () => navegateToDetails!(productDetails![i]),
+                          productName: productDetails![i].name,
+                          categoryName: productDetails![i].by,
+                          productPrice: productDetails![i].productPrice,
+                          image: productDetails![i].images![0],
+                          salePrice: productDetails![i].salePrice,
+                          onSale: productDetails![i].onSale,
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
-          )
+                )
         ],
       ),
     );

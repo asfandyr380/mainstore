@@ -95,11 +95,11 @@ class Products extends StatelessWidget {
             top: SizeConfig.blockSizeVertical * 2,
           ),
           height: SizeConfig.blockSizeVertical * 160,
-          width: SizeConfig.blockSizeHorizontal * 65,
+          width: SizeConfig.blockSizeHorizontal * 70,
           child: !_isBusy
               ? CardGridView(
                   productDetails: details,
-                  crossAxixCount: 3,
+                  crossAxixCount: 4,
                 )
               : Container(
                   alignment: Alignment.topCenter,
@@ -241,7 +241,7 @@ class FilterMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     SfRangeValues _values = value ?? SfRangeValues(0, 100);
     return Container(
-      width: SizeConfig.blockSizeHorizontal * 30,
+      width: SizeConfig.blockSizeHorizontal * 20,
       child: Column(
         children: [
           Container(

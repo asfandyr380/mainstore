@@ -17,6 +17,12 @@ class HomeViewModel extends ChangeNotifier {
   List<ProductsModel> onSaleProducts = [];
   List<ProductsModel> topSellingProducts = [];
   List<ProductsModel> nearbyProducts = [];
+  bool isLoading = false;
+
+  isBusy(bool state) {
+    isLoading = state;
+    notifyListeners();
+  }
 
   loadMore() async {
     if ((present + perPage) > nearbyProducts.length) {
@@ -49,6 +55,7 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   fetchNearbyProducts(List<String> doclist) async {
+    isBusy(true);
     var result = await _products.nearbyProducts(doclist);
     if (result is List<ProductsModel>) {
       nearbyProducts = result;
@@ -60,9 +67,11 @@ class HomeViewModel extends ChangeNotifier {
     } else {
       print(result);
     }
+    isBusy(false);
   }
 
   fetchTopSellingProducts(List<String> doclist) async {
+    isBusy(true);
     var result = await _products.topSellingProducts(doclist);
     if (result is List<ProductsModel>) {
       topSellingProducts = result;
@@ -70,9 +79,11 @@ class HomeViewModel extends ChangeNotifier {
     } else {
       print(result);
     }
+    isBusy(false);
   }
 
   fetchOnSaleProducts(List<String> doclist) async {
+    isBusy(true);
     var result = await _products.onSaleProducts(doclist);
     if (result is List<ProductsModel>) {
       onSaleProducts = result;
@@ -80,5 +91,6 @@ class HomeViewModel extends ChangeNotifier {
     } else {
       print(result);
     }
+    isBusy(false);
   }
 }

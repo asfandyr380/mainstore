@@ -60,17 +60,13 @@ class _GeneratePageRoute extends PageRouteBuilder {
                 Animation<double> secondaryAnimation) {
               return widget;
             },
-            transitionDuration: Duration(milliseconds: 500),
+            transitionDuration: Duration(milliseconds: 300),
             transitionsBuilder: (BuildContext context,
                 Animation<double> animation,
                 Animation<double> secondaryAnimation,
                 Widget child) {
-              return SlideTransition(
-                textDirection: TextDirection.rtl,
-                position: Tween<Offset>(
-                  begin: Offset(1.0, 0.0),
-                  end: Offset.zero,
-                ).animate(animation),
+              return FadeTransition(
+                opacity: Tween(begin: 0.0, end: 1.0).animate(animation),
                 child: child,
               );
             });

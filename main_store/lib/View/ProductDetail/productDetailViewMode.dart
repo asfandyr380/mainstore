@@ -14,6 +14,7 @@ class ProductDetailViewModel extends ChangeNotifier {
   CartServices _cart = locator<CartServices>();
   Navigation _navigation = locator<Navigation>();
   int quantity = 0;
+  bool isLoading = false;
 
   addOrMiuns(bool adding) {
     if (adding) {
@@ -33,8 +34,14 @@ class ProductDetailViewModel extends ChangeNotifier {
   Auth _auth = locator<Auth>();
   List<ProductsModel> relatedlist = [];
 
+  isBusy(bool state) {
+    isLoading = state;
+    notifyListeners();
+  }
+
   Future addtoCart(
       DocumentReference? productId, String? storeName, int quantity) async {
+    isBusy(true);
     var _userIp = await Ipify.ipv4();
     var _user = await _auth.currrentUser();
     if (_user) {
@@ -43,6 +50,7 @@ class ProductDetailViewModel extends ChangeNotifier {
     } else {
       await _cart.addtoCartCollection(_userIp, productId!, storeName, quantity);
     }
+    isBusy(false);
   }
 
   fetchRelatedProduct(List<String> category) async {
