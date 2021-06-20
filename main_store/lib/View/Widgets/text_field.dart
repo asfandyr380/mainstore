@@ -6,15 +6,21 @@ class TextInputField extends StatelessWidget {
   final Function(String?)? validateForm;
   final Function(String)? onChange;
   final bool? onMobile;
-  TextInputField(
-      {this.onMobile,
-      required this.hint_text,
-      this.onChange,
-      this.validateForm});
+  final bool? onMobileappbar;
+
+  TextInputField({
+    this.onMobile,
+    required this.hint_text,
+    this.onChange,
+    this.validateForm,
+    this.onMobileappbar,
+  });
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     bool _onMobile = onMobile ?? false;
+    bool _onMobileappbar = onMobileappbar ?? false;
+
     return Form(
       // autovalidateMode: AutovalidateMode.always,
       child: Container(
@@ -34,17 +40,27 @@ class TextInputField extends StatelessWidget {
                     left: SizeConfig.blockSizeHorizontal * 3)
                 : null,
             hintStyle: TextStyle(
+              color: _onMobileappbar ? Colors.white70 : Colors.grey,
               fontSize: _onMobile
                   ? SizeConfig.blockSizeHorizontal * 4
                   : SizeConfig.blockSizeHorizontal * 1,
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(6),
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(color: Colors.green),
             ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: _onMobileappbar ? Colors.white70 : Colors.grey,
+                width: 1,
+              ),
+            ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(width: 10),
-              borderRadius: BorderRadius.circular(6),
+              borderSide: BorderSide(
+                width: 10,
+              ),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
         ),

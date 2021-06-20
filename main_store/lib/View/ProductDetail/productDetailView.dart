@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/productsModel.dart';
+import 'package:main_store/View/Widgets/Mobile_AppBar.dart';
 import 'package:main_store/View/Widgets/snapshotCrousel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Componants/ProductListingRows/ProductListingRows.dart';
 import 'package:main_store/View/ProductDetail/productDetailViewMode.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stacked/stacked.dart';
 
 class ProductDetailView extends StatelessWidget {
@@ -336,6 +339,180 @@ class ProductDetails extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class MobileProductDetailView extends StatelessWidget {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final pageViewController = PageController();
+
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    return ViewModelBuilder<ProductDetailViewModel>.reactive(
+      viewModelBuilder: () => ProductDetailViewModel(),
+      builder: (context, model, child) => Scaffold(
+        key: scaffoldKey,
+        drawer: Drawer(
+          elevation: 16,
+          // Drawer content to be added
+          child: Center(
+            child: Text('No Data'),
+          ),
+        ),
+        appBar: mobileAppBar(scaffoldKey),
+        body: Column(
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: SizeConfig.blockSizeVertical * 33,
+                  width: SizeConfig.blockSizeHorizontal * 100,
+                  child: PageView(
+                    controller: pageViewController,
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      Image.network(
+                        'https://picsum.photos/seed/861/600',
+                        fit: BoxFit.fitWidth,
+                      ),
+                      Image.network(
+                        'https://picsum.photos/seed/782/600',
+                        fit: BoxFit.fitWidth,
+                      ),
+                      Image.network(
+                        'https://picsum.photos/seed/792/600',
+                        fit: BoxFit.fitWidth,
+                      )
+                    ],
+                  ),
+                ),
+                Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: SizeConfig.blockSizeVertical * 31,
+                        bottom: SizeConfig.blockSizeVertical * 1),
+                    child: SmoothPageIndicator(
+                      controller: pageViewController,
+                      count: 4,
+                      axisDirection: Axis.horizontal,
+                      onDotClicked: (i) {
+                        pageViewController.animateToPage(
+                          i,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.ease,
+                        );
+                      },
+                      effect: ExpandingDotsEffect(
+                        expansionFactor: 3,
+                        spacing: 8,
+                        radius: 16,
+                        dotWidth: 10,
+                        dotHeight: 10,
+                        dotColor: Color(0xFF9E9E9E),
+                        activeDotColor: Color(0xFF40A944),
+                        paintStyle: PaintingStyle.fill,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.blockSizeHorizontal * 4),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '£ 60',
+                    style: TextStyle(
+                      fontFamily: 'Lato',
+                      color: Color(0xFF40A944),
+                      fontSize: 45,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    child: Text(
+                      'RedBull Energy Drink',
+                      style: TextStyle(
+                        fontFamily: 'Lato',
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    child: Text(
+                      'lorem ipsum ddfds sdf d  aksfdasd ksjdkfd ksfdksjf akjsdfksj  ksjdksf ksdfj ksdjf sjf kjbjd ',
+                      style: TextStyle(
+                        fontFamily: 'Lato',
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Category: ',
+                          style: TextStyle(
+                            fontFamily: 'Lato',
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          'Drinks',
+                          style: TextStyle(
+                            fontFamily: 'Lato',
+                            color: accentColor,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    child: Row(
+                      children: [
+                        Text(
+                          'By: ',
+                          style: TextStyle(
+                            fontFamily: 'Lato',
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          'US Store',
+                          style: TextStyle(
+                            fontFamily: 'Lato',
+                            color: accentColor,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    child: ElevatedButton.icon(
+                      label: Text('Add to Cart'),
+                      icon: FaIcon(FontAwesomeIcons.shoppingCart),
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(primary: accentColor),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
