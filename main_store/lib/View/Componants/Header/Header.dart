@@ -45,7 +45,11 @@ class Header extends StatelessWidget {
                 Container(
                   child: !_onHomePage
                       ? SearchBarRow()
-                      : HeaderPageNavigationButton(),
+                      : HeaderPageNavigationButton(
+                          goHome: () => model.navigateToHome(),
+                          goContact: () => model.navigateToContact(),
+                          goAbout: () => model.navigateToAbout(),
+                        ),
                 ),
                 Container(
                   child: CartFavandSignupLoginRow(
@@ -73,7 +77,11 @@ class Header extends StatelessWidget {
                       padding: EdgeInsets.only(
                         bottom: 10,
                       ),
-                      child: HeaderPageNavigationButton(),
+                      child: HeaderPageNavigationButton(
+                        goHome: () => model.navigateToHome(),
+                        goContact: () => model.navigateToContact(),
+                        goAbout: () => model.navigateToAbout(),
+                      ),
                     ),
                   ],
                 )
@@ -228,51 +236,102 @@ class IndexIndicator extends StatelessWidget {
   }
 }
 
-class HeaderPageNavigationButton extends StatelessWidget {
+class HeaderPageNavigationButton extends StatefulWidget {
+  final Function goHome;
+  final Function goContact;
+  final Function goAbout;
+  HeaderPageNavigationButton(
+      {required this.goAbout, required this.goContact, required this.goHome});
+
+  @override
+  _HeaderPageNavigationButtonState createState() =>
+      _HeaderPageNavigationButtonState();
+}
+
+class _HeaderPageNavigationButtonState
+    extends State<HeaderPageNavigationButton> {
+  bool onHover = false;
+  bool onHover1 = false;
+  bool onHover2 = false;
+
+  mouseEnter(bool state) {
+    setState(() {
+      onHover = state;
+    });
+  }
+
+  mouseEnter1(bool state) {
+    setState(() {
+      onHover1 = state;
+    });
+  }
+
+  mouseEnter2(bool state) {
+    setState(() {
+      onHover2 = state;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: Container(
-            child: Text(
-              'Home',
-              style: menuTextStyle.copyWith(
-                fontSize: SizeConfig.blockSizeHorizontal * 1.2,
-              ),
-            ),
-          ),
+        HeaderPageNavigation(
+          label: 'Home',
+          mouseEnter: (e) => mouseEnter(e),
+          onHover: onHover,
+          onTap: () => widget.goHome(),
         ),
         SizedBox(
           width: SizeConfig.blockSizeHorizontal * 1.3,
         ),
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: Container(
-            child: Text(
-              'About Us',
-              style: menuTextStyle.copyWith(
-                fontSize: SizeConfig.blockSizeHorizontal * 1.2,
-              ),
-            ),
-          ),
+        HeaderPageNavigation(
+          label: 'Contact Us',
+          mouseEnter: (e) => mouseEnter1(e),
+          onHover: onHover1,
+          onTap: () => widget.goContact(),
         ),
         SizedBox(
           width: SizeConfig.blockSizeHorizontal * 1.3,
         ),
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: Container(
-            child: Text(
-              'Contact Us',
-              style: menuTextStyle.copyWith(
-                fontSize: SizeConfig.blockSizeHorizontal * 1.2,
-              ),
-            ),
-          ),
+        HeaderPageNavigation(
+          label: 'About Us',
+          mouseEnter: (e) => mouseEnter2(e),
+          onHover: onHover2,
+          onTap: () => widget.goAbout(),
         ),
       ],
+    );
+  }
+}
+
+class HeaderPageNavigation extends StatelessWidget {
+  final Function(bool)? mouseEnter;
+  final bool? onHover;
+  final Function onTap;
+  final String? label;
+  const HeaderPageNavigation(
+      {this.mouseEnter, this.onHover, required this.onTap, this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    bool _onHover = onHover ?? false;
+    return GestureDetector(
+      onTap: () => onTap(),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (e) => mouseEnter!(true),
+        onExit: (e) => mouseEnter!(false),
+        child: Container(
+          child: Text(
+            '$label',
+            style: menuTextStyle.copyWith(
+              color: _onHover ? accentColor : Colors.black,
+              fontSize: SizeConfig.blockSizeHorizontal * 1.2,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -6,3 +6,5 @@ const String Checkout = "Checkout";
 const String ProductDetailsPage = "Product";
 const String ProductListing = "Products";
 const String LandingPageView = 'LandingPage';
+const String ContactUs = "Contact Us";
+const String AboutUs = "About Us";

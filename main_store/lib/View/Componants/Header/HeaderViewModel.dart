@@ -51,6 +51,18 @@ class HeaderViewModel extends ChangeNotifier {
     return userLogedIn;
   }
 
+  navigateToAbout() {
+    _navigation.navigateTo(AboutUs);
+  }
+
+  navigateToHome() {
+    _navigation.navigateTo(HomeView);
+  }
+
+  navigateToContact() {
+    _navigation.navigateTo(ContactUs);
+  }
+
   navigateToCart() {
     _navigation.navigateTo(Cart);
   }

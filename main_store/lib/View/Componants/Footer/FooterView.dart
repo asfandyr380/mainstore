@@ -61,35 +61,58 @@ class Footer extends StatelessWidget {
                   ),
                 ),
                 // Quick Links Column
-                Container(
-                  padding: EdgeInsets.only(
-                    left: SizeConfig.blockSizeHorizontal * 3,
-                  ),
-                  width: SizeConfig.blockSizeHorizontal * 25,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(
-                          top: SizeConfig.blockSizeVertical * 1,
-                        ),
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Quick Links',
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontSize: SizeConfig.blockSizeHorizontal * 2,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(
+                        left: SizeConfig.blockSizeHorizontal * 3,
                       ),
-                      QuickLinks(pageName: 'Home'),
-                      QuickLinks(pageName: 'About'),
-                      QuickLinks(pageName: 'Contact'),
-                      QuickLinks(pageName: 'Privacy Policy'),
-                      QuickLinks(pageName: 'Terms & Condition'),
-                    ],
-                  ),
+                      width: SizeConfig.blockSizeHorizontal * 20,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1,
+                            ),
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'Quick Links',
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontSize: SizeConfig.blockSizeHorizontal * 2,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                          QuickLinks(pageName: 'Home'),
+                          QuickLinks(pageName: 'About'),
+                          QuickLinks(pageName: 'Contact'),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: SizeConfig.blockSizeHorizontal * 15,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'Our Polices',
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontSize: SizeConfig.blockSizeHorizontal * 2,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                          QuickLinks(pageName: 'Privicy Policy'),
+                          QuickLinks(pageName: 'Terms & Condition'),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -180,6 +203,8 @@ class Footer extends StatelessWidget {
           Container(
             width: double.infinity,
             alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(
+                vertical: SizeConfig.blockSizeVertical * 0.5),
             decoration: BoxDecoration(
               color: footerColor,
               boxShadow: [

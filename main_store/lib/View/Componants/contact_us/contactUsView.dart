@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
@@ -18,7 +19,15 @@ class ContactUsView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Header(),
+              Container(
+                decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    blurRadius: 2,
+                  )
+                ]),
+                child: Header(),
+              ),
               SizedBox(
                 height: SizeConfig.blockSizeVertical * 2,
               ),
@@ -49,8 +58,17 @@ class ContactUsView extends StatelessWidget {
                             child: TextInputField(hint_text: 'Last Name')),
                       ],
                     ),
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical * 1.5,
+                    ),
                     TextInputField(hint_text: 'Email'),
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical * 1.5,
+                    ),
                     TextInputField(hint_text: 'Phone Number'),
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical * 1.5,
+                    ),
                     Container(
                       width: SizeConfig.blockSizeHorizontal * 31,
                       child: TextFormField(
@@ -69,7 +87,7 @@ class ContactUsView extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: SizeConfig.blockSizeVertical * 1.5,
+                      height: SizeConfig.blockSizeVertical * 2.5,
                     ),
                     Padding(
                       padding: EdgeInsets.only(
@@ -77,13 +95,17 @@ class ContactUsView extends StatelessWidget {
                       child: Row(
                         children: [
                           Container(
-                            width: SizeConfig.blockSizeHorizontal * 15,
-                            child: CustomButton(
-                              onPressed: null,
-                              label: 'Contact Us',
-                              isEnable: true,
+                              child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: accentColor,
+                              fixedSize: Size(
+                                SizeConfig.blockSizeHorizontal * 10,
+                                SizeConfig.blockSizeVertical * 5,
+                              ),
                             ),
-                          ),
+                            onPressed: () {},
+                            child: Text('Contact Us'),
+                          )),
                         ],
                       ),
                     )

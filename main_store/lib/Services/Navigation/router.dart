@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Models/productsModel.dart';
+import 'package:main_store/View/About_Us/AboutusView.dart';
 import 'package:main_store/View/Cart/CartView.dart';
 import 'package:main_store/View/CheckOut/CheckOutView.dart';
+import 'package:main_store/View/Componants/contact_us/contactUsView.dart';
 import 'package:main_store/View/Home/HomeView.dart';
 import 'package:main_store/View/LandingPage_Mobile/LandingPageView.dart';
 import 'package:main_store/View/ProductDetail/productDetailView.dart';
@@ -28,6 +30,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case LandingPageView:
       return _GeneratePageRoute(
           widget: LandingPage(), routeName: settings.name);
+    case ContactUs:
+      return _GeneratePageRoute(
+          widget: ContactUsView(), routeName: settings.name);
+    case AboutUs:
+      return _GeneratePageRoute(widget: AboutView(), routeName: settings.name);
     case ProductDetailsPage:
       ProductsModel? details = arg as ProductsModel?;
       return _GeneratePageRoute(
