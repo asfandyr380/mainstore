@@ -9,7 +9,6 @@ import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Componants/ProductListingRows/ProductListingRows.dart';
 import 'package:main_store/View/ProductDetail/productDetailViewMode.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -503,35 +502,35 @@ class MobileProductDetailView extends StatelessWidget {
                     ],
                   ),
                 ),
-                Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        top: SizeConfig.blockSizeVertical * 31,
-                        bottom: SizeConfig.blockSizeVertical * 1),
-                    child: SmoothPageIndicator(
-                      controller: pageViewController,
-                      count: 4,
-                      axisDirection: Axis.horizontal,
-                      onDotClicked: (i) {
-                        pageViewController.animateToPage(
-                          i,
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.ease,
-                        );
-                      },
-                      effect: ExpandingDotsEffect(
-                        expansionFactor: 3,
-                        spacing: 8,
-                        radius: 16,
-                        dotWidth: 10,
-                        dotHeight: 10,
-                        dotColor: Color(0xFF9E9E9E),
-                        activeDotColor: Color(0xFF40A944),
-                        paintStyle: PaintingStyle.fill,
-                      ),
-                    ),
-                  ),
-                ),
+                // Center(
+                //   child: Padding(
+                //     padding: EdgeInsets.only(
+                //         top: SizeConfig.blockSizeVertical * 31,
+                //         bottom: SizeConfig.blockSizeVertical * 1),
+                //     child: SmoothPageIndicator(
+                //       controller: pageViewController,
+                //       count: 4,
+                //       axisDirection: Axis.horizontal,
+                //       onDotClicked: (i) {
+                //         pageViewController.animateToPage(
+                //           i,
+                //           duration: Duration(milliseconds: 500),
+                //           curve: Curves.ease,
+                //         );
+                //       },
+                //       effect: ExpandingDotsEffect(
+                //         expansionFactor: 3,
+                //         spacing: 8,
+                //         radius: 16,
+                //         dotWidth: 10,
+                //         dotHeight: 10,
+                //         dotColor: Color(0xFF9E9E9E),
+                //         activeDotColor: Color(0xFF40A944),
+                //         paintStyle: PaintingStyle.fill,
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             Padding(

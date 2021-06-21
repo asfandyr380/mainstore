@@ -125,9 +125,13 @@ class Home extends StatelessWidget {
               ),
               Divider(),
               // Reviews
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * 2,
+              ),
               Container(
                 child: Text('What People Says about Us',
                     style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         fontSize: SizeConfig.blockSizeHorizontal * 2)),
               ),
               SizedBox(

@@ -67,7 +67,7 @@ class _ProductListingCardsState extends State<ProductListingCards> {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
+                          color: Colors.black.withOpacity(0.10),
                           offset: Offset(1, 0),
                           blurRadius: 7,
                           spreadRadius: 1)

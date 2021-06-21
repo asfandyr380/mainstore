@@ -24,7 +24,7 @@ final String dumyComment =
     'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.';
 // Text Styling
 const TextStyle menuTextStyle = TextStyle(fontWeight: FontWeight.bold);
-const TextStyle BannerTextStyle = TextStyle(fontWeight: FontWeight.w300);
+const TextStyle BannerTextStyle = TextStyle(fontWeight: FontWeight.bold);
 
 final String placeholderSwiperBannerPic =
     'https://firebasestorage.googleapis.com/v0/b/e-store-647b4.appspot.com/o/BannerImages%2Fgrocerystore.png?alt=media&token=f760e8d4-8419-4d9a-bfb3-c1c5cc5b86ab';

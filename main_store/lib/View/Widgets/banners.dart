@@ -40,7 +40,7 @@ class DiscountBanner extends StatelessWidget {
                 'Fresh Mango Drinks',
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.bold,
                   fontSize: SizeConfig.blockSizeHorizontal * 2,
                 ),
               ),

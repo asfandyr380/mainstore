@@ -125,18 +125,21 @@ class Footer extends StatelessWidget {
                         children: [
                           SocialLinkofFooter(
                             icon: FontAwesomeIcons.facebookF,
+                            color: Colors.blueAccent[700],
                           ),
                           SizedBox(
                             width: SizeConfig.blockSizeHorizontal * 1,
                           ),
                           SocialLinkofFooter(
                             icon: FontAwesomeIcons.instagram,
+                            color: Colors.blueAccent[700],
                           ),
                           SizedBox(
                             width: SizeConfig.blockSizeHorizontal * 1,
                           ),
                           SocialLinkofFooter(
                             icon: FontAwesomeIcons.linkedin,
+                            color: Colors.lightBlue[900],
                           ),
                           SizedBox(
                             width: SizeConfig.blockSizeHorizontal * 1,
@@ -202,13 +205,15 @@ class Footer extends StatelessWidget {
 class SocialLinkofFooter extends StatelessWidget {
   final IconData? icon;
   final String? link;
-  SocialLinkofFooter({this.icon, this.link});
+  final Color? color;
+  SocialLinkofFooter({this.icon, this.link, this.color});
 
   @override
   Widget build(BuildContext context) {
     return Icon(
       icon,
       size: SizeConfig.blockSizeHorizontal * 1.3,
+      color: color,
     );
   }
 }
