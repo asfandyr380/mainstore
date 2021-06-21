@@ -8,3 +8,4 @@ const String ProductListing = "Products";
 const String LandingPageView = 'LandingPage';
 const String ContactUs = "ContactUs";
 const String AboutUs = "AboutUs";
+const String SplashScreenView = "SplashScreen";
