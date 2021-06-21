@@ -18,6 +18,12 @@ class SignupPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               Container(
+                decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    blurRadius: 2,
+                  )
+                ]),
                 child: Header(),
               ),
               Container(

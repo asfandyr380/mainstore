@@ -12,6 +12,10 @@ class Auth {
     return _firebaseAuth.currentUser != null;
   }
 
+  Future<String> getUserId() async {
+    return _firebaseAuth.currentUser!.uid;
+  }
+
   // Sign In User
   Future signIn(String email, String password) async {
     try {

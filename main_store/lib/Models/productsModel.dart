@@ -1,17 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ProductsModel {
+  String? productId = '';
+  DocumentReference? reference = null;
   String? name = '';
+  String? description = '';
+  String? by = '';
+  String? storeName = '';
   double? productPrice = 0;
   double? salePrice = 0;
   bool? onSale = false;
-  String? description = '';
-  List<String>? category = [];
   bool? status = false;
+  List<String>? category = [];
   List<String>? searckKey = [];
-  String? by = '';
   List<String>? images = [];
 
   ProductsModel(
-      {this.by,
+      {this.productId,
+      this.by,
       this.category,
       this.description,
       this.images,
@@ -20,9 +26,12 @@ class ProductsModel {
       this.productPrice,
       this.salePrice,
       this.searckKey,
-      this.status});
+      this.status,
+      this.storeName,
+      this.reference});
 
-  ProductsModel.fromMap(Map<String, dynamic>? map)
+  ProductsModel.fromMap(
+      Map<String, dynamic>? map, String id, DocumentReference ref)
       : name = map!['name'] ?? '',
         productPrice = map['productPrice'] ?? '',
         salePrice = map['salePrice'] ?? '',
@@ -32,5 +41,7 @@ class ProductsModel {
         status = map['status'] ?? '',
         category = List.from(map['category']),
         searckKey = List.from(map['searchKey']),
-        images = List.from(map['images']);
+        images = List.from(map['images']),
+        storeName = map['storeName'],
+        reference = ref;
 }

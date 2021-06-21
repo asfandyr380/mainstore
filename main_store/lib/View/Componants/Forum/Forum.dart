@@ -145,7 +145,7 @@ class Forum extends StatelessWidget {
                                 ),
                                 Container(
                                   width: SizeConfig.blockSizeHorizontal * 15,
-                                  height: SizeConfig.blockSizeVertical * 3,
+                                  height: SizeConfig.blockSizeVertical * 3.5,
                                   child: Text(
                                     agreeing_term_text,
                                     textAlign: TextAlign.justify,

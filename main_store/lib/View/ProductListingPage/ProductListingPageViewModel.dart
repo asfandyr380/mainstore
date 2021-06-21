@@ -8,6 +8,12 @@ class ProductListingPageViewModel extends ChangeNotifier {
   Products _products = locator<Products>();
   SfRangeValues range = SfRangeValues(0, 100);
   List<ProductsModel> productList = [];
+  bool isLoading = false;
+
+  isBusy(bool state) {
+    isLoading = state;
+    notifyListeners();
+  }
 
   onChange(SfRangeValues newVal) {
     range = newVal;
@@ -23,6 +29,7 @@ class ProductListingPageViewModel extends ChangeNotifier {
   }
 
   fetchProductByFilter(String? cate, bool? descending) async {
+    isBusy(true);
     var result = await _products.productsbyFilter(
       range.start,
       range.end,
@@ -32,8 +39,10 @@ class ProductListingPageViewModel extends ChangeNotifier {
     if (result is List<ProductsModel>) {
       productList = result;
       notifyListeners();
+      isBusy(false);
     } else {
       print(result);
+      isBusy(false);
     }
   }
 }

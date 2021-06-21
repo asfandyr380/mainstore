@@ -50,6 +50,7 @@ class SideNavMenu extends StatelessWidget {
                 : Container(),
             for (var cate in model.catelist)
               Category(
+                isHome: productMenu,
                 items: cate,
                 onTap: (val) => onTap!(val),
               )
@@ -63,13 +64,16 @@ class SideNavMenu extends StatelessWidget {
 class Category extends StatelessWidget {
   final CategoryModel? items;
   final Function(String)? onTap;
-  const Category({this.items, this.onTap});
-
+  final bool? isHome;
+  Category({this.items, this.onTap, this.isHome});
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ExpansionTile(
-        title: Text("${items!.cateName}"),
+        title: Text(
+          "${items!.cateName}",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         textColor: accentColor,
         iconColor: accentColor,
         childrenPadding:
@@ -77,6 +81,7 @@ class Category extends StatelessWidget {
         children: [
           for (var item in items!.subCategory)
             SubItem(
+              isHome: isHome,
               title: item.cateName,
               items: item.subCate,
               onTap: (val) => onTap!(val),
@@ -91,9 +96,11 @@ class SubItem extends StatelessWidget {
   final String? title;
   final List<String>? items;
   final Function(String)? onTap;
-  SubItem({this.items, this.title, this.onTap});
+  final bool? isHome;
+  SubItem({this.items, this.title, this.onTap, this.isHome});
   @override
   Widget build(BuildContext context) {
+    bool _isHome = isHome ?? false;
     return items!.isNotEmpty
         ? ExpansionTile(
             title: Text(title!),
@@ -105,16 +112,34 @@ class SubItem extends StatelessWidget {
               for (var item in items!)
                 GestureDetector(
                   onTap: () => onTap!(item),
-                  child: ListTile(
-                    title: Text(item),
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: ListTile(
+                      leading: _isHome
+                          ? Checkbox(
+                              onChanged: (val) {},
+                              value: false,
+                            )
+                          : null,
+                      title: Text(item),
+                    ),
                   ),
                 ),
             ],
           )
         : GestureDetector(
             onTap: () => onTap!(title!),
-            child: ListTile(
-              title: Text(title!),
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: ListTile(
+                leading: _isHome
+                    ? Checkbox(
+                        onChanged: (val) {},
+                        value: false,
+                      )
+                    : null,
+                title: Text(title!),
+              ),
             ),
           );
   }

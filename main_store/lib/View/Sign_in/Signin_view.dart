@@ -28,10 +28,21 @@ class _SignInPageState extends State<SignInPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Header(
-                isSignInPage: true,
+              Container(
+                decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    blurRadius: 2,
+                  )
+                ]),
+                child: Header(
+                  isSignInPage: true,
+                ),
               ),
-              Center(
+              Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical * 4),
                 child: Forum(
                   isSignIn: true,
                   onSignInClick: (email, pass) => model.signInUser(email, pass),

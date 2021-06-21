@@ -20,6 +20,8 @@ final String dumpyProductDetail =
         'The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using,' +
         'making it look like readable English. ';
 
+final String dumyComment =
+    'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.';
 // Text Styling
 const TextStyle menuTextStyle = TextStyle(fontWeight: FontWeight.bold);
 const TextStyle BannerTextStyle = TextStyle(fontWeight: FontWeight.w300);
@@ -31,4 +33,4 @@ final String placeholderBrandPic =
 final String placeholderBannerPic =
     'https://firebasestorage.googleapis.com/v0/b/e-store-647b4.appspot.com/o/BannerImages%2Fglobal-grocery-items-counter-ad0653ad.jpg?alt=media&token=bd917ffc-6f98-430a-9ec2-7824049e70f9';
 final String placeholderProductPic =
-    'https://firebasestorage.googleapis.com/v0/b/e-store-647b4.appspot.com/o/ProductImages%2Fbanana_461x461.jpeg?alt=media&token=1ac25579-a915-4d77-92f0-1884fa80ab1c';
+    'https://firebasestorage.googleapis.com/v0/b/e-store-647b4.appspot.com/o/ProductImages%2Fbreaburn_461x461.jpeg?alt=media&token=fb1ae329-4881-4343-9f63-2e37f484c9ec';

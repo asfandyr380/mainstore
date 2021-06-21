@@ -11,6 +11,9 @@ import 'package:main_store/View/Componants/ProductListingRows/ProductListingRows
 import 'package:main_store/View/ProductDetail/productDetailViewMode.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stacked/stacked.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:flutter_breadcrumb/flutter_breadcrumb.dart';
 
 class ProductDetailView extends StatelessWidget {
   final ProductsModel productDetails;
@@ -29,11 +32,41 @@ class ProductDetailView extends StatelessWidget {
             children: [
               // Header
               Container(
+                decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    blurRadius: 2,
+                  )
+                ]),
                 child: Header(),
               ),
               Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.only(
+                  top: SizeConfig.blockSizeVertical * 5,
+                  left: SizeConfig.blockSizeHorizontal * 5,
+                ),
+                child: BreadCrumb(
+                  items: [
+                    BreadCrumbItem(
+                      content: Text('General Grocery'),
+                      color: accentColor,
+                    ),
+                    BreadCrumbItem(
+                      content: Text('Category'),
+                      color: accentColor,
+                    ),
+                    BreadCrumbItem(
+                      content: Text('Product Name'),
+                      color: accentColor,
+                    ),
+                  ],
+                  divider: Icon(Icons.chevron_right),
+                ),
+              ),
+              Container(
                 padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.blockSizeVertical * 5,
+                  vertical: SizeConfig.blockSizeVertical * 2,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -53,6 +86,27 @@ class ProductDetailView extends StatelessWidget {
                         description: productDetails.description,
                         salePrice: productDetails.salePrice,
                         onSale: productDetails.onSale,
+                        addorplus: (val) => model.addOrMiuns(val),
+                        quantity: model.quantity,
+                        isLoading: model.isLoading,
+                        addtoCart: () {
+                          print('addtoCart');
+                          model
+                              .addtoCart(
+                            productDetails.reference,
+                            productDetails.by,
+                            0,
+                          )
+                              .then((val) {
+                            showTopSnackBar(
+                              context,
+                              CustomSnackBar.success(
+                                message: 'Product Added to Cart',
+                              ),
+                              displayDuration: Duration(milliseconds: 150),
+                            );
+                          });
+                        },
                       ),
                     ),
                   ],
@@ -161,13 +215,22 @@ class ProductDetails extends StatelessWidget {
   final String? description;
   final double? salePrice;
   final bool? onSale;
-  ProductDetails(
-      {this.salePrice,
-      this.by,
-      this.description,
-      this.name,
-      this.price,
-      this.onSale});
+  final Function addtoCart;
+  final Function(bool)? addorplus;
+  final int? quantity;
+  final bool? isLoading;
+  ProductDetails({
+    this.salePrice,
+    this.by,
+    this.description,
+    this.name,
+    this.price,
+    this.onSale,
+    required this.addtoCart,
+    this.addorplus,
+    this.quantity,
+    this.isLoading,
+  });
   @override
   Widget build(BuildContext context) {
     String _name = name ?? '';
@@ -176,6 +239,8 @@ class ProductDetails extends StatelessWidget {
     String _decsription = description ?? dumpyProductDetail;
     double _salePrice = salePrice ?? 0;
     bool _onSale = onSale ?? false;
+    int _quantity = quantity ?? 0;
+    bool _isLoading = isLoading ?? false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -202,6 +267,9 @@ class ProductDetails extends StatelessWidget {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: SizeConfig.blockSizeHorizontal * 1),
+              ),
+              SizedBox(
+                width: SizeConfig.blockSizeHorizontal * 0.3,
               ),
               Text(
                 _by,
@@ -261,33 +329,70 @@ class ProductDetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Quantity:',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: SizeConfig.blockSizeHorizontal * 0.8),
-              ),
-              SizedBox(
-                height: SizeConfig.blockSizeVertical * 0.5,
-              ),
-              Container(
-                alignment: Alignment.center,
-                height: SizeConfig.blockSizeVertical * 3,
-                width: SizeConfig.blockSizeHorizontal * 4.5,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(3),
-                  border: Border.all(
-                    width: 1,
-                    color: Colors.black,
+              Row(
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        'Quantity',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: SizeConfig.blockSizeHorizontal * 1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: SizeConfig.blockSizeVertical * 1,
+                      ),
+                      Row(
+                        children: [
+                          MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: IconButton(
+                              onPressed: () => addorplus!(false),
+                              icon: Icon(
+                                FontAwesomeIcons.minusSquare,
+                                size: SizeConfig.blockSizeHorizontal * 1.5,
+                              ),
+                              color: accentColor,
+                            ),
+                          ),
+                          Container(
+                            height: SizeConfig.blockSizeVertical * 4,
+                            width: SizeConfig.blockSizeHorizontal * 6,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                width: 1,
+                                color: footerColor,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '$_quantity',
+                                style: TextStyle(
+                                    fontSize:
+                                        SizeConfig.blockSizeHorizontal * 1),
+                              ),
+                            ),
+                          ),
+                          MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: IconButton(
+                              onPressed: () => addorplus!(true),
+                              icon: Icon(
+                                FontAwesomeIcons.plusSquare,
+                                size: SizeConfig.blockSizeHorizontal * 1.5,
+                              ),
+                              color: accentColor,
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
                   ),
-                ),
-                child: Text(
-                  '1',
-                  style:
-                      TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 0.7),
-                ),
-              ),
+                ],
+              )
             ],
           ),
         ),
@@ -310,12 +415,22 @@ class ProductDetails extends StatelessWidget {
                     SizeConfig.blockSizeVertical * 5,
                   ),
                 ),
-                onPressed: () {},
-                child: Text(
-                  'Add To Cart',
-                  style:
-                      TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 0.9),
-                ),
+                onPressed: () {
+                  addtoCart();
+                },
+                child: !_isLoading
+                    ? Text(
+                        'Add To Cart',
+                        style: TextStyle(
+                            fontSize: SizeConfig.blockSizeHorizontal * 0.9),
+                      )
+                    : Container(
+                        width: 15,
+                        height: 15,
+                        child: CircularProgressIndicator(
+                          color: accentColor,
+                        ),
+                      ),
               ),
               SizedBox(
                 width: SizeConfig.blockSizeHorizontal * 1,

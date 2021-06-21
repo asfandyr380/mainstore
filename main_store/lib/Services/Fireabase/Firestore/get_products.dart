@@ -16,7 +16,10 @@ class Products {
       if (result.docs.isNotEmpty) {
         var storeId = result.docs
             .map(
-              (e) => AvailableProducts.fromMap(e.data(), e.id),
+              (e) => AvailableProducts.fromMap(
+                e.data(),
+                e.id,
+              ),
             )
             .toList();
         for (var product in storeId) {
@@ -42,7 +45,6 @@ class Products {
 
   Future productsbyFilter(
       var start, var end, var category, var descending) async {
-    List<DocumentSnapshot> _productResults = [];
     try {
       var result =
           await _ref.Stores.where('storeStatus', isEqualTo: true).get();
@@ -68,7 +70,7 @@ class Products {
               if (product.id == res.id) {
                 return prodcutResult.docs
                     .map(
-                      (e) => ProductsModel.fromMap(e.data()),
+                      (e) => ProductsModel.fromMap(e.data(), e.id, e.reference),
                     )
                     .toList();
               }
@@ -97,9 +99,7 @@ class Products {
         }
         return doc
             .map(
-              (e) => ProductsModel.fromMap(
-                e.data(),
-              ),
+              (e) => ProductsModel.fromMap(e.data(), e.id, e.reference),
             )
             .toList();
       }
@@ -135,7 +135,7 @@ class Products {
         }
         return _productResults
             .map(
-              (e) => ProductsModel.fromMap(e.data()),
+              (e) => ProductsModel.fromMap(e.data(), e.id, e.reference),
             )
             .toList();
       }
@@ -162,7 +162,7 @@ class Products {
         }
         return _doclist
             .map(
-              (e) => ProductsModel.fromMap(e.data()),
+              (e) => ProductsModel.fromMap(e.data(), e.id, e.reference),
             )
             .toList();
       }
@@ -179,11 +179,12 @@ class Products {
     try {
       var result =
           await _ref.Products.where('category', arrayContainsAny: category)
+              .orderBy('productPrice')
               .get();
       if (result.docs.isNotEmpty) {
         return result.docs
             .map(
-              (e) => ProductsModel.fromMap(e.data()),
+              (e) => ProductsModel.fromMap(e.data(), e.id, e.reference),
             )
             .toList();
       }

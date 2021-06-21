@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/Footer/FooterViewModel.dart';
@@ -98,43 +99,32 @@ class Footer extends StatelessWidget {
                     color: Colors.grey,
                   ),
                 ),
-                // Download App Column
-                Expanded(
-                  child: Container(
-                    height: SizeConfig.blockSizeVertical * 25,
-                    width: SizeConfig.blockSizeHorizontal * 25,
-                    padding: EdgeInsets.only(
-                      top: SizeConfig.blockSizeVertical * 2,
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          child: Text(
-                            'Download App',
-                            style: TextStyle(
-                              fontSize: SizeConfig.blockSizeHorizontal * 2,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          child: Image.asset(
-                            'assets/images/47q2YGt.png',
-                            width: SizeConfig.blockSizeHorizontal * 10,
-                            height: SizeConfig.blockSizeVertical * 8,
-                          ),
-                        ),
-                        Container(
-                          child: Image.asset(
-                            'assets/images/nkZP7fe.png',
-                            width: SizeConfig.blockSizeHorizontal * 10,
-                            height: SizeConfig.blockSizeVertical * 8,
-                          ),
-                        ),
-                      ],
-                    ),
+                Container(
+                  padding: EdgeInsets.only(
+                    right: SizeConfig.blockSizeHorizontal * 4,
                   ),
-                )
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SocialLinkofFooter(
+                        icon: FontAwesomeIcons.facebookF,
+                        link: 'Facebook/example.com',
+                      ),
+                      SocialLinkofFooter(
+                        icon: FontAwesomeIcons.envelope,
+                        link: 'Facebook/example.com',
+                      ),
+                      SocialLinkofFooter(
+                        icon: FontAwesomeIcons.instagram,
+                        link: 'Facebook/example.com',
+                      ),
+                      SocialLinkofFooter(
+                        icon: FontAwesomeIcons.link,
+                        link: 'Facebook/example.com',
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -159,6 +149,25 @@ class Footer extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class SocialLinkofFooter extends StatelessWidget {
+  final IconData? icon;
+  final String? link;
+  SocialLinkofFooter({this.icon, this.link});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon),
+        SizedBox(
+          width: SizeConfig.blockSizeHorizontal * 0.7,
+        ),
+        Text(link!)
+      ],
     );
   }
 }
