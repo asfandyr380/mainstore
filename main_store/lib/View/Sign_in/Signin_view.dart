@@ -7,7 +7,9 @@ import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Forum/Forum.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Sign_in/signin_viewModel.dart';
+import 'package:main_store/View/Widgets/Mobile_AppBar.dart';
 import 'package:main_store/View/Widgets/custom_button.dart';
+import 'package:main_store/View/Widgets/text_field.dart';
 import 'package:stacked/stacked.dart';
 
 class SignInPage extends StatefulWidget {
@@ -58,6 +60,7 @@ class _SignInPageState extends State<SignInPage> {
   }
 }
 
+// MOBILE VIEW OF LOGIN
 class SignInMobileView extends StatefulWidget {
   SignInMobileView({Key? key}) : super(key: key);
 
@@ -66,19 +69,11 @@ class SignInMobileView extends StatefulWidget {
 }
 
 class _SignInMobileViewState extends State<SignInMobileView> {
-  TextEditingController? emailTextController;
-  TextEditingController? textController;
-  TextEditingController? passwordTextController;
-  bool? passwordVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    emailTextController = TextEditingController();
-    textController = TextEditingController();
-    passwordTextController = TextEditingController();
-    passwordVisibility = false;
   }
 
   @override
@@ -90,80 +85,40 @@ class _SignInMobileViewState extends State<SignInMobileView> {
         key: scaffoldKey,
         drawer: Drawer(
           elevation: 16,
-          child: Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              color: Color(0xFFEEEEEE),
-            ),
+          // Drawer content to be added
+          child: Center(
+            child: Text('No Data'),
           ),
         ),
+        appBar: mobileAppBar(scaffoldKey),
         body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    onPressed: () async {
-                      scaffoldKey.currentState?.openDrawer();
-                    },
-                    icon: FaIcon(
-                      FontAwesomeIcons.alignJustify,
-                      color: Colors.black,
-                      size: 30,
-                    ),
-                    iconSize: 30,
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
-                      child: TextFormField(
-                        controller: textController,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          isDense: true,
-                          hintText: 'Search Products',
-                          hintStyle: TextStyle(
-                            fontFamily: 'Lato',
-                            color: Color(0xFF959595),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFF959595),
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(30),
-                              bottomRight: Radius.circular(30),
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFF959595),
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(30),
-                              bottomRight: Radius.circular(30),
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
-                            ),
-                          ),
-                        ),
-                        style: TextStyle(
-                          fontFamily: 'Lato',
-                          color: Color(0xFF959595),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   children: [
+              //     IconButton(
+              //       onPressed: () async {
+              //         scaffoldKey.currentState?.openDrawer();
+              //       },
+              //       icon: FaIcon(
+              //         FontAwesomeIcons.alignJustify,
+              //         color: Colors.black,
+              //         size: 30,
+              //       ),
+              //     ),
+              //     Expanded(
+              //       child: Padding(
+              //         padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+              //         child: TextInputField(
+              //           hint_text: 'Search Products',
+              //           onMobile: true,
+              //         ),
+              //       ),
+              //     )
+              //   ],
+              // ),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: Text(
@@ -171,7 +126,7 @@ class _SignInMobileViewState extends State<SignInMobileView> {
                   style: TextStyle(
                     fontFamily: 'Lato',
                     color: Colors.black,
-                    fontSize: 36,
+                    fontSize: 30,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -179,156 +134,56 @@ class _SignInMobileViewState extends State<SignInMobileView> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 20, 0, 10),
                 child: Container(
-                  width: SizeConfig.blockSizeHorizontal * 0.9,
+                  width: SizeConfig.blockSizeHorizontal * 90,
                   height: 50,
                   decoration: BoxDecoration(
                     color: Colors.white,
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 2, 0, 0),
-                    child: TextFormField(
-                      controller: emailTextController,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        hintText: 'Email',
-                        hintStyle: TextStyle(
-                          fontFamily: 'Lato',
-                          color: Colors.black,
-                          fontWeight: FontWeight.normal,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xFF959595),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xFF959595),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                          ),
-                        ),
-                      ),
-                      style: TextStyle(
-                        fontFamily: 'Lato',
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
+                  child: TextInputField(
+                    hint_text: 'Email',
+                    onMobile: true,
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
                 child: Container(
-                  width: SizeConfig.blockSizeHorizontal * 0.9,
+                  width: SizeConfig.blockSizeHorizontal * 90,
                   height: 50,
                   decoration: BoxDecoration(
                     color: Colors.white,
                   ),
-                  child: TextFormField(
-                    controller: passwordTextController,
-                    obscureText: !passwordVisibility!,
-                    decoration: InputDecoration(
-                      hintText: 'Password',
-                      hintStyle: TextStyle(
-                        fontFamily: 'Lato',
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0xFF959595),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0xFF959595),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                      ),
-                      suffixIcon: InkWell(
-                        onTap: () => setState(
-                          () => passwordVisibility = !passwordVisibility!,
-                        ),
-                        child: Icon(
-                          passwordVisibility!
-                              ? Icons.visibility_outlined
-                              : Icons.visibility_off_outlined,
-                          size: 22,
-                        ),
-                      ),
-                    ),
-                    style: TextStyle(
-                      fontFamily: 'Lato',
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal,
-                    ),
+                  child: TextInputField(
+                    hint_text: 'Password',
+                    onMobile: true,
                   ),
                 ),
               ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: SizeConfig.blockSizeHorizontal * 0.9,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEEEEEE),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: CustomButton(
-                      onPressed: () {
-                        print('Button pressed ...');
-                      },
-                      label: 'SIGN IN',
-                    ),
-                  ),
-                ],
-              ),
               Padding(
-                padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(20, 0, 0, 20),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Align(
-                      alignment: Alignment(0, 0),
-                      child: Text(
-                        'Forget Password?',
-                        style: TextStyle(
-                          fontFamily: 'Lato',
-                          color: accentColor,
-                        ),
+                    Text(
+                      'Forget Password?',
+                      style: TextStyle(
+                        fontFamily: 'Lato',
+                        color: accentColor,
                       ),
                     )
                   ],
+                ),
+              ),
+              Container(
+                width: SizeConfig.blockSizeHorizontal * 50,
+                height: 40,
+                child: CustomButton(
+                  isEnable: true,
+                  onPressed: () {
+                    print('Button pressed ...');
+                  },
+                  label: 'SIGN IN',
                 ),
               ),
               Padding(
@@ -375,280 +230,56 @@ class _SignInMobileViewState extends State<SignInMobileView> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 5, 0, 10),
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Align(
-                      alignment: Alignment(0, 0),
-                      child: Container(
-                        width: 230,
-                        height: 44,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment(0, 0),
-                              child: CustomButton(
-                                label: 'Sign in with Google',
-                                onPressed: null,
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment(-0.83, 0),
-                              child: Container(
-                                width: 22,
-                                height: 22,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.network(
-                                  'https://i0.wp.com/nanophorm.com/wp-content/uploads/2018/04/google-logo-icon-PNG-Transparent-Background.png?w=1000&ssl=1',
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            )
-                          ],
+                    FloatingActionButton.extended(
+                      backgroundColor: Colors.white,
+                      onPressed: null,
+                      icon: Container(
+                        height: 28,
+                        width: 28,
+                        child: Image.network(
+                          'https://i0.wp.com/nanophorm.com/wp-content/uploads/2018/04/google-logo-icon-PNG-Transparent-Background.png?w=1000&ssl=1',
                         ),
                       ),
-                    )
+                      label: Text(
+                        'Sign in with Google',
+                        style: TextStyle(
+                          fontFamily: 'Lato',
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 5, 0, 10),
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Align(
-                      alignment: Alignment(0, 0),
-                      child: Container(
-                        width: 230,
-                        height: 44,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment(0, 0),
-                              child: CustomButton(
-                                label: 'Sign in with Facebook',
-                                onPressed: null,
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment(-0.83, 0),
-                              child: Container(
-                                width: 22,
-                                height: 22,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.network(
-                                  'https://facebookbrand.com/wp-content/uploads/2019/04/f_logo_RGB-Hex-Blue_512.png?w=512&h=512',
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            )
-                          ],
+                    FloatingActionButton.extended(
+                      backgroundColor: Colors.white,
+                      onPressed: null,
+                      icon: Container(
+                        height: 28,
+                        width: 28,
+                        child: Image.network(
+                          'https://facebookbrand.com/wp-content/uploads/2019/04/f_logo_RGB-Hex-Blue_512.png?w=512&h=512',
                         ),
                       ),
-                    )
+                      label: Text(
+                        'Sign in with Facebook',
+                        style: TextStyle(
+                          fontFamily: 'Lato',
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
               Spacer(),
-              Align(
-                alignment: Alignment(0, 0),
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 1, 0, 0),
-                  child: Container(
-                    width: SizeConfig.blockSizeHorizontal * 5,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEEEEEE),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 40,
-                              decoration: BoxDecoration(),
-                              child: IconButton(
-                                onPressed: () {
-                                  print('IconButton pressed ...');
-                                },
-                                icon: FaIcon(
-                                  FontAwesomeIcons.home,
-                                  color: Colors.black,
-                                  size: 30,
-                                ),
-                                iconSize: 30,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
-                              child: Container(
-                                width: 50,
-                                height: 18,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFEEEEEE),
-                                ),
-                                child: Text(
-                                  'Home',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFEEEEEE),
-                              ),
-                              child: IconButton(
-                                onPressed: () {
-                                  print('IconButton pressed ...');
-                                },
-                                icon: FaIcon(
-                                  FontAwesomeIcons.search,
-                                  color: Colors.black,
-                                  size: 30,
-                                ),
-                                iconSize: 30,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
-                              child: Container(
-                                width: 50,
-                                height: 18,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFEEEEEE),
-                                ),
-                                child: Text(
-                                  'Search',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFEEEEEE),
-                              ),
-                              child: IconButton(
-                                onPressed: () {
-                                  print('IconButton pressed ...');
-                                },
-                                icon: FaIcon(
-                                  FontAwesomeIcons.shoppingCart,
-                                  color: Colors.black,
-                                  size: 30,
-                                ),
-                                iconSize: 30,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
-                              child: Container(
-                                width: 50,
-                                height: 18,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFEEEEEE),
-                                ),
-                                child: Text(
-                                  'Cart',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFEEEEEE),
-                              ),
-                              child: IconButton(
-                                onPressed: () {
-                                  print('IconButton pressed ...');
-                                },
-                                icon: FaIcon(
-                                  FontAwesomeIcons.userAlt,
-                                  color: Colors.black,
-                                  size: 30,
-                                ),
-                                iconSize: 30,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
-                              child: Container(
-                                width: 55,
-                                height: 18,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFEEEEEE),
-                                ),
-                                child: Text(
-                                  'Account',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: 'Lato',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
         ),
