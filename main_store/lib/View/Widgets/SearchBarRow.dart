@@ -20,9 +20,12 @@ class _SearchBarRowState extends State<SearchBarRow> {
             width: SizeConfig.blockSizeHorizontal * 40,
             child: TextField(
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(
+                    top: SizeConfig.blockSizeVertical * 0.5,
+                    left: SizeConfig.blockSizeHorizontal * 1),
                 hintText: 'Search Product',
                 hintStyle: TextStyle(
-                  fontSize: 10,
+                  fontSize: SizeConfig.blockSizeHorizontal * 1,
                   color: Color(0xFF959595),
                 ),
                 border: OutlineInputBorder(
