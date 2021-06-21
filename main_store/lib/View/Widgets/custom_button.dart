@@ -40,7 +40,7 @@ class CustomButton extends StatelessWidget {
             : Text(
                 label,
                 style: TextStyle(
-                  fontSize: SizeConfig.blockSizeHorizontal * 4,
+                  fontSize: SizeConfig.blockSizeHorizontal * 1,
                 ),
               ),
       ),
