@@ -13,7 +13,6 @@ class CardGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    bool _disableScroll = disableScroll ?? false;
     int _crossAxisCount = crossAxixCount ?? 4;
     return ViewModelBuilder<CardGridViewModel>.reactive(
       builder: (context, model, child) => Container(
@@ -21,16 +20,20 @@ class CardGridView extends StatelessWidget {
           vertical: SizeConfig.blockSizeVertical * 2,
         ),
         child: GridView.builder(
-          physics: _disableScroll ? NeverScrollableScrollPhysics() : null,
+          shrinkWrap: true,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: _crossAxisCount,
           ),
           itemCount: productDetails!.length,
           itemBuilder: (context, i) {
             return Container(
+              padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.blockSizeVertical * 0.5,
+                  horizontal: SizeConfig.blockSizeHorizontal * 0.5),
               height: SizeConfig.blockSizeVertical * 10,
               width: SizeConfig.blockSizeHorizontal * 5,
               child: ProductListingCards(
+                isGrid: true,
                 onTap: () => model.navigatetodetails(productDetails![i]),
                 productName: productDetails![i].name,
                 categoryName: productDetails![i].by,

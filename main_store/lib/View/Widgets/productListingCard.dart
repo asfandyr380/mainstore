@@ -11,6 +11,7 @@ class ProductListingCards extends StatefulWidget {
   final String? categoryName;
   final bool? onSale;
   final Function? onTap;
+  final bool? isGrid;
   ProductListingCards(
       {this.categoryName,
       this.image,
@@ -18,7 +19,8 @@ class ProductListingCards extends StatefulWidget {
       this.productPrice,
       this.salePrice,
       this.onSale,
-      this.onTap});
+      this.onTap,
+      this.isGrid});
 
   @override
   _ProductListingCardsState createState() => _ProductListingCardsState();
@@ -44,6 +46,7 @@ class _ProductListingCardsState extends State<ProductListingCards> {
     bool _onSale = widget.onSale ?? false;
     String _image = widget.image ?? placeholderProductPic;
     String _categoryName = widget.categoryName ?? '';
+    bool _isGrid = widget.isGrid ?? false;
     return GestureDetector(
       onTap: () => widget.onTap!(),
       child: MouseRegion(
@@ -74,11 +77,13 @@ class _ProductListingCardsState extends State<ProductListingCards> {
             child: Column(
               children: [
                 Container(
-                  height: SizeConfig.blockSizeVertical * 28,
+                  height: _isGrid
+                      ? SizeConfig.blockSizeVertical * 20
+                      : SizeConfig.blockSizeVertical * 28,
                   width: SizeConfig.blockSizeHorizontal * 15,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      fit: BoxFit.cover,
+                      fit: _isGrid ? BoxFit.contain : BoxFit.cover,
                       image: NetworkImage(_image),
                     ),
                   ),
@@ -119,7 +124,9 @@ class _ProductListingCardsState extends State<ProductListingCards> {
                   ),
                 ),
                 SizedBox(
-                  height: SizeConfig.blockSizeVertical * 0.7,
+                  height: _isGrid
+                      ? SizeConfig.blockSizeVertical * 0.2
+                      : SizeConfig.blockSizeVertical * 0.8,
                 ),
                 // Product Name
                 Container(
@@ -131,9 +138,6 @@ class _ProductListingCardsState extends State<ProductListingCards> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: SizeConfig.blockSizeVertical * 0.8,
-                ),
                 // Category Name
                 Container(
                   child: Text(
@@ -142,9 +146,6 @@ class _ProductListingCardsState extends State<ProductListingCards> {
                       fontSize: SizeConfig.blockSizeHorizontal * 0.7,
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: SizeConfig.blockSizeVertical * 0.8,
                 ),
                 // Price and Sale Price
                 Container(

@@ -86,6 +86,7 @@ class ProductDetailView extends StatelessWidget {
                         onSale: productDetails.onSale,
                         addorplus: (val) => model.addOrMiuns(val),
                         quantity: model.quantity,
+                        isLoading: model.isLoading,
                         addtoCart: () {
                           print('addtoCart');
                           model
@@ -215,6 +216,7 @@ class ProductDetails extends StatelessWidget {
   final Function addtoCart;
   final Function(bool)? addorplus;
   final int? quantity;
+  final bool? isLoading;
   ProductDetails({
     this.salePrice,
     this.by,
@@ -225,6 +227,7 @@ class ProductDetails extends StatelessWidget {
     required this.addtoCart,
     this.addorplus,
     this.quantity,
+    this.isLoading,
   });
   @override
   Widget build(BuildContext context) {
@@ -235,6 +238,7 @@ class ProductDetails extends StatelessWidget {
     double _salePrice = salePrice ?? 0;
     bool _onSale = onSale ?? false;
     int _quantity = quantity ?? 0;
+    bool _isLoading = isLoading ?? false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -411,13 +415,20 @@ class ProductDetails extends StatelessWidget {
                 ),
                 onPressed: () {
                   addtoCart();
-                  print('addtoCart');
                 },
-                child: Text(
-                  'Add To Cart',
-                  style:
-                      TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 0.9),
-                ),
+                child: !_isLoading
+                    ? Text(
+                        'Add To Cart',
+                        style: TextStyle(
+                            fontSize: SizeConfig.blockSizeHorizontal * 0.9),
+                      )
+                    : Container(
+                        width: 15,
+                        height: 15,
+                        child: CircularProgressIndicator(
+                          color: accentColor,
+                        ),
+                      ),
               ),
               SizedBox(
                 width: SizeConfig.blockSizeHorizontal * 1,
