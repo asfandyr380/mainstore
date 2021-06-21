@@ -8,6 +8,11 @@ import 'package:main_store/Services/Fireabase/Firestore/CollectionRef.dart';
 class CartServices {
   DocCollectionRef _ref = locator<DocCollectionRef>();
 
+  Future getCartCount(String userId) async {
+    var result = await _ref.userRef.doc(userId).collection('Cart').get();
+    return result.docs.length;
+  }
+
   Future getCartProducts(String userId) async {
     List<ProductsModel> _products = [];
     List<DocumentSnapshot> _snapshot = [];

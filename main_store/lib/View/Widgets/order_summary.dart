@@ -5,14 +5,23 @@ import 'package:main_store/Config/sizeconfig.dart';
 import 'custom_button.dart';
 
 class OrderSummary extends StatelessWidget {
+  final double? subTotal;
+  final double? shippingfee;
+  final double? total;
   OrderSummary({
     this.checkout,
+    this.shippingfee,
+    this.subTotal,
+    this.total,
   });
 
   final bool? checkout;
   @override
   Widget build(BuildContext context) {
     bool _checkout = checkout ?? false;
+    double _subTotal = subTotal ?? 0;
+    double _shippingfee = shippingfee ?? 0;
+    double _total = total ?? 0;
     return Container(
       height: SizeConfig.blockSizeVertical * 48,
       width: SizeConfig.blockSizeHorizontal * 22,
@@ -52,7 +61,7 @@ class OrderSummary extends StatelessWidget {
                       fontSize: SizeConfig.blockSizeHorizontal * 1),
                 ),
                 Text(
-                  '£ 150.00',
+                  '£ ${_subTotal.toStringAsFixed(2)}',
                   style: TextStyle(
                       color: Colors.black54,
                       fontSize: SizeConfig.blockSizeHorizontal * 1),
@@ -69,7 +78,7 @@ class OrderSummary extends StatelessWidget {
                       fontSize: SizeConfig.blockSizeHorizontal * 1),
                 ),
                 Text(
-                  '£ 300',
+                  '£ ${_shippingfee.toStringAsFixed(2)}',
                   style: TextStyle(
                       color: Colors.black54,
                       fontSize: SizeConfig.blockSizeHorizontal * 1),
@@ -87,7 +96,7 @@ class OrderSummary extends StatelessWidget {
                       fontSize: SizeConfig.blockSizeHorizontal * 2),
                 ),
                 Text(
-                  '£ 170',
+                  '£ ${_total.toStringAsFixed(2)}',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: SizeConfig.blockSizeHorizontal * 2),

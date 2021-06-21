@@ -63,7 +63,8 @@ class _CartViewPageState extends State<CartViewPage> {
                     Column(
                       children: [
                         Container(
-                          child: SelectAllContainer(),
+                          child:
+                              SelectAllContainer(totalCount: model.itemCount),
                         ),
                         SizedBox(
                           height: SizeConfig.blockSizeVertical * 3,
@@ -74,20 +75,23 @@ class _CartViewPageState extends State<CartViewPage> {
                               vertical: SizeConfig.blockSizeVertical * 2,
                             ),
                             child: CartitemsContainer(
-                                cart: cart,
-                                onDelete: (ref) => model
-                                        .removefromCart(cart.storeName!, ref)
-                                        .then((e) {
-                                      showTopSnackBar(
-                                        context,
-                                        CustomSnackBar.error(
-                                          icon: Icon(Icons.delete_forever),
-                                          message: 'Product Removed from Cart',
-                                        ),
-                                        displayDuration:
-                                            Duration(milliseconds: 150),
-                                      );
-                                    })),
+                              cart: cart,
+                              onDelete: (ref) => model
+                                  .removefromCart(cart.storeName!, ref)
+                                  .then(
+                                (e) {
+                                  showTopSnackBar(
+                                    context,
+                                    CustomSnackBar.error(
+                                      icon: Icon(Icons.delete_forever),
+                                      message: 'Product Removed from Cart',
+                                    ),
+                                    displayDuration:
+                                        Duration(milliseconds: 150),
+                                  );
+                                },
+                              ),
+                            ),
                           ),
                       ],
                     ),
@@ -95,6 +99,9 @@ class _CartViewPageState extends State<CartViewPage> {
                       width: SizeConfig.blockSizeHorizontal * 4,
                     ),
                     OrderSummary(
+                      subTotal: model.subTotal,
+                      total: model.total,
+                      shippingfee: model.shipping,
                       checkout: true,
                     ),
                   ],
@@ -150,20 +157,24 @@ class CartitemsContainer extends StatelessWidget {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  Text(
-                    'shipping charges:',
-                    style: TextStyle(
-                        fontSize: SizeConfig.blockSizeHorizontal * 0.7),
-                  ),
-                  Text(
-                    '£$_shippingCharges',
-                    style: TextStyle(
-                        color: accentColor,
-                        fontSize: SizeConfig.blockSizeHorizontal * 0.7),
-                  ),
-                ],
+              Container(
+                padding:
+                    EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 1),
+                child: Row(
+                  children: [
+                    Text(
+                      'shipping charges:',
+                      style: TextStyle(
+                          fontSize: SizeConfig.blockSizeHorizontal * 0.7),
+                    ),
+                    Text(
+                      '£$_shippingCharges',
+                      style: TextStyle(
+                          color: accentColor,
+                          fontSize: SizeConfig.blockSizeHorizontal * 0.7),
+                    ),
+                  ],
+                ),
               )
             ],
           ),

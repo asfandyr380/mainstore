@@ -4,14 +4,27 @@ import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Models/CartModel.dart';
 import 'package:main_store/Services/Fireabase/Auth/firebase_auth.dart';
 import 'package:main_store/Services/Fireabase/Firestore/cart_services.dart';
-import 'package:main_store/Services/Navigation/navigation_services.dart';
 import 'package:dart_ipify/dart_ipify.dart';
 
 class CartViewModel extends ChangeNotifier {
   List<CartModel> cartlist = [];
   CartServices _cart = locator<CartServices>();
-  Navigation _navigation = locator<Navigation>();
   Auth _auth = locator<Auth>();
+  double subTotal = 0;
+  double shipping = 0;
+  double total = 0;
+  int itemCount = 0;
+
+  getSummery() {
+    itemCount = cartlist.length;
+    notifyListeners();
+    for (var items in cartlist) {
+      for (var item in items.products) {
+        subTotal += item.productPrice!;
+      }
+    }
+    total = shipping + subTotal;
+  }
 
   getCart() async {
     var _user = await _auth.currrentUser();
@@ -34,6 +47,7 @@ class CartViewModel extends ChangeNotifier {
         print(result);
       }
     }
+    getSummery();
   }
 
   Future removefromCart(String storeName, DocumentReference productRef) async {
@@ -50,6 +64,7 @@ class CartViewModel extends ChangeNotifier {
         getCart();
       });
     }
+    subTotal = 0;
   }
 }
 

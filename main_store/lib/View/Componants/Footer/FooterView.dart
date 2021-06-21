@@ -105,22 +105,68 @@ class Footer extends StatelessWidget {
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SocialLinkofFooter(
-                        icon: FontAwesomeIcons.facebookF,
-                        link: 'Facebook/example.com',
+                      Container(
+                        padding: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 1,
+                        ),
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Follow Us',
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontSize: SizeConfig.blockSizeHorizontal * 2,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
                       ),
-                      SocialLinkofFooter(
-                        icon: FontAwesomeIcons.envelope,
-                        link: 'Facebook/example.com',
+                      Row(
+                        children: [
+                          SocialLinkofFooter(
+                            icon: FontAwesomeIcons.facebookF,
+                          ),
+                          SizedBox(
+                            width: SizeConfig.blockSizeHorizontal * 1,
+                          ),
+                          SocialLinkofFooter(
+                            icon: FontAwesomeIcons.instagram,
+                          ),
+                          SizedBox(
+                            width: SizeConfig.blockSizeHorizontal * 1,
+                          ),
+                          SocialLinkofFooter(
+                            icon: FontAwesomeIcons.linkedin,
+                          ),
+                          SizedBox(
+                            width: SizeConfig.blockSizeHorizontal * 1,
+                          ),
+                          SocialLinkofFooter(
+                            icon: FontAwesomeIcons.link,
+                          ),
+                        ],
                       ),
-                      SocialLinkofFooter(
-                        icon: FontAwesomeIcons.instagram,
-                        link: 'Facebook/example.com',
+                      Container(
+                        child: Row(
+                          children: [
+                            Icon(FontAwesomeIcons.phoneAlt),
+                            SizedBox(
+                              width: SizeConfig.blockSizeHorizontal * 1,
+                            ),
+                            Text('030000000')
+                          ],
+                        ),
                       ),
-                      SocialLinkofFooter(
-                        icon: FontAwesomeIcons.link,
-                        link: 'Facebook/example.com',
+                      Container(
+                        child: Row(
+                          children: [
+                            Icon(FontAwesomeIcons.envelope),
+                            SizedBox(
+                              width: SizeConfig.blockSizeHorizontal * 1,
+                            ),
+                            Text('example@email.com')
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -160,14 +206,9 @@ class SocialLinkofFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon),
-        SizedBox(
-          width: SizeConfig.blockSizeHorizontal * 0.7,
-        ),
-        Text(link!)
-      ],
+    return Icon(
+      icon,
+      size: SizeConfig.blockSizeHorizontal * 1.3,
     );
   }
 }

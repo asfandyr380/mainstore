@@ -20,7 +20,10 @@ class Header extends StatelessWidget {
     bool _onHomePage = onHomepage ?? false;
     return ViewModelBuilder<HeaderViewModel>.reactive(
       viewModelBuilder: () => HeaderViewModel(),
-      onModelReady: (model) => model.getUser(),
+      onModelReady: (model) {
+        model.getUser();
+        model.getCount();
+      },
       builder: (context, model, child) => Column(
         children: [
           Container(
@@ -46,6 +49,7 @@ class Header extends StatelessWidget {
                 ),
                 Container(
                   child: CartFavandSignupLoginRow(
+                      cartCount: model.cartCount,
                       onCartPressed: () => model.navigateToCart(),
                       userLogedIn: model.userLogedIn,
                       isSignInPage: _isSignInPage,
@@ -115,11 +119,13 @@ class CartFavandSignupLoginRow extends StatelessWidget {
   final Function onTap;
   final bool? userLogedIn;
   final Function? onCartPressed;
+  final int? cartCount;
   CartFavandSignupLoginRow({
     this.isSignInPage,
     required this.onTap,
     this.userLogedIn,
     this.onCartPressed,
+    this.cartCount,
   });
   @override
   Widget build(BuildContext context) {
@@ -183,7 +189,9 @@ class CartFavandSignupLoginRow extends StatelessWidget {
                       size: SizeConfig.blockSizeHorizontal * 2,
                     ),
                   ),
-                  IndexIndicator(),
+                  IndexIndicator(
+                    count: cartCount,
+                  ),
                 ],
               ),
             ),
@@ -195,10 +203,12 @@ class CartFavandSignupLoginRow extends StatelessWidget {
 }
 
 class IndexIndicator extends StatelessWidget {
-  const IndexIndicator({Key? key}) : super(key: key);
+  final int? count;
+  IndexIndicator({this.count});
 
   @override
   Widget build(BuildContext context) {
+    int _count = count ?? 0;
     return Container(
       alignment: Alignment.center,
       height: SizeConfig.blockSizeVertical * 2.4,
@@ -208,7 +218,7 @@ class IndexIndicator extends StatelessWidget {
         color: accentColor,
       ),
       child: Text(
-        '0',
+        '$_count',
         style: TextStyle(
           fontSize: SizeConfig.blockSizeHorizontal * 0.6,
           color: Colors.white,

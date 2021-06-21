@@ -28,9 +28,8 @@ class CardGridView extends StatelessWidget {
           itemBuilder: (context, i) {
             return Container(
               padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.blockSizeVertical * 0.5,
+                  vertical: SizeConfig.blockSizeVertical * 0.3,
                   horizontal: SizeConfig.blockSizeHorizontal * 0.5),
-              height: SizeConfig.blockSizeVertical * 10,
               width: SizeConfig.blockSizeHorizontal * 5,
               child: ProductListingCards(
                 isGrid: true,

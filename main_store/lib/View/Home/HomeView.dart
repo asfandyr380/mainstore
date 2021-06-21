@@ -294,6 +294,8 @@ class NearbyProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     bool _isLoading = isLoading ?? false;
+    var width = MediaQuery.of(context).size.width;
+    print(width);
     return Container(
       alignment: Alignment.centerLeft,
       child: Column(
@@ -321,7 +323,13 @@ class NearbyProducts extends StatelessWidget {
                     // physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 5,
+                      crossAxisCount: (width >= 1440)
+                          ? 5
+                          : (width >= 1080)
+                              ? 4
+                              : (width >= 800)
+                                  ? 3
+                                  : 2,
                     ),
                     itemCount: productDetails == null
                         ? 0
