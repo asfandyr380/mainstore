@@ -361,7 +361,7 @@ class NearbyProducts extends StatelessWidget {
                       );
                     },
                   ),
-                )
+                ),
         ],
       ),
     );
