@@ -11,6 +11,7 @@ import 'package:main_store/View/ProductDetail/productDetailView.dart';
 import 'package:main_store/View/ProductListingPage/ProductListingPage.dart';
 import 'package:main_store/View/Sign_in/Signin_view.dart';
 import 'package:main_store/View/Sign_up/signup_view.dart';
+import 'package:main_store/View/Splash%20Screen/Splash_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   var arg = settings.arguments;
@@ -35,6 +36,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           widget: ContactUsView(), routeName: settings.name);
     case AboutUs:
       return _GeneratePageRoute(widget: AboutView(), routeName: settings.name);
+    case SplashScreenView:
+      return _GeneratePageRoute(
+          widget: SplashScreen(), routeName: settings.name);
     case ProductDetailsPage:
       ProductsModel? details = arg as ProductsModel?;
       return _GeneratePageRoute(

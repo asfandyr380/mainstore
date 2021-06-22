@@ -8,14 +8,26 @@ import 'package:main_store/View/CheckOut/CheckOutView.dart';
 import 'package:main_store/View/Home/HomeView.dart';
 import 'package:main_store/View/LandingPage_Mobile/LandingPageViewModel.dart';
 import 'package:main_store/View/SearchPage/SearchPageView.dart';
+import 'package:main_store/View/Widgets/Mobile_AppBar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class LandingPage extends StatelessWidget {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
         builder: (context, model, child) => Scaffold(
+              key: scaffoldKey,
+              drawer: Drawer(
+                elevation: 16,
+                // Drawer content to be added
+                child: Center(
+                  child: Text('No Data'),
+                ),
+              ),
+              appBar: mobileAppBar(scaffoldKey),
               body: PersistentTabView(
                 context,
                 confineInSafeArea: true,

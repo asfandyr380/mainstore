@@ -11,7 +11,7 @@ class HomeViewModel extends ChangeNotifier {
   List<Banners> bannerlist = [];
   List<String> _docIds = [];
   int present = 0;
-  int perPage = 11;
+  int perPage = 14;
   var items = <ProductsModel>[];
   Products _products = locator<Products>();
   List<ProductsModel> onSaleProducts = [];

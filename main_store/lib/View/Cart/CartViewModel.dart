@@ -19,8 +19,8 @@ class CartViewModel extends ChangeNotifier {
     itemCount = cartlist.length;
     notifyListeners();
     for (var items in cartlist) {
-      for (var item in items.products) {
-        subTotal += item.productPrice!;
+      for (var item in items.product) {
+        subTotal += item.products!.productPrice!;
       }
     }
     total = shipping + subTotal;
@@ -35,6 +35,9 @@ class CartViewModel extends ChangeNotifier {
       if (result is List<CartModel>) {
         cartlist = result;
         notifyListeners();
+        for (var cart in result) {
+          print(cart.product);
+        }
       } else {
         print(result);
       }

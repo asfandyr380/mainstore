@@ -34,3 +34,13 @@ final String placeholderBannerPic =
     'https://firebasestorage.googleapis.com/v0/b/e-store-647b4.appspot.com/o/BannerImages%2Fglobal-grocery-items-counter-ad0653ad.jpg?alt=media&token=bd917ffc-6f98-430a-9ec2-7824049e70f9';
 final String placeholderProductPic =
     'https://firebasestorage.googleapis.com/v0/b/e-store-647b4.appspot.com/o/ProductImages%2Fbreaburn_461x461.jpeg?alt=media&token=fb1ae329-4881-4343-9f63-2e37f484c9ec';
+
+final String aboutUSText = 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.' +
+    'The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using,' +
+    'making it look like readable English. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using,' +
+    'making it look like readable English. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using,' +
+    'making it look like readable English. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using,' +
+    'making it look like readable English. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using,' +
+    'making it look like readable English. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using,' +
+    'making it look like readable English. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using,' +
+    'making it look like readable English.';
