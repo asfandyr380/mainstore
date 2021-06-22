@@ -14,59 +14,42 @@ class CartServices {
   }
 
   Future getCartProducts(String userId) async {
-    List<ProductsModel> _products = [];
-    List<DocumentSnapshot> _snapshot = [];
-    List productsRef = [];
-    List<CartModel> cartslist = [];
+    List<CartProducts> cartProducts = [];
+    List<CartModel> cartlist = [];
     var result = await _ref.userRef.doc(userId).collection('Cart').get();
     if (result.docs.isNotEmpty) {
       for (var doc in result.docs) {
-        productsRef = await doc.data()['products'];
-        for (DocumentReference ref in productsRef) {
-          var product = await ref.get();
-          _snapshot.add(product);
+        var carts = await _ref.userRef
+            .doc(userId)
+            .collection('Cart')
+            .doc(doc.id)
+            .collection('CartProducts')
+            .get();
+        for (var cart in carts.docs) {
+          var res = await _ref.Products.doc(cart.id).get();
+          var product =
+              ProductsModel.fromMap(res.data(), res.id, res.reference);
+          var cartProduct = CartProducts.fromMap(cart.data(), product);
+          cartProducts.add(cartProduct);
         }
-        for (var snap in _snapshot) {
-          var productRes =
-              ProductsModel.fromMap(snap.data(), snap.id, snap.reference);
-          _products.add(productRes);
-        }
-        _snapshot = [];
-        var cart = CartModel.fromMap(doc.data(), _products, productsRef);
-        cartslist.add(cart);
-        _products = [];
+        var cart = CartModel.fromMap(cartProducts, doc.id);
+        cartlist.add(cart);
+        cartProducts = [];
       }
-      return cartslist;
+      return cartlist;
     }
   }
 
-  Future addtoCartCollection(var userId, DocumentReference productId,
-      String? storeName, int quantity) async {
+  Future addtoCartCollection(
+      var userId, String productId, String? storeName, int quantity) async {
     try {
       await _ref.userRef
           .doc(userId)
           .collection('Cart')
           .doc(storeName)
-          .get()
-          .then((doc) async {
-        if (doc.exists) {
-          await _ref.userRef
-              .doc(userId)
-              .collection('Cart')
-              .doc(storeName)
-              .update({
-            'products': FieldValue.arrayUnion([productId]),
-          });
-        } else {
-          await _ref.userRef.doc(userId).collection('Cart').doc(storeName).set(
-            {
-              'products': [productId],
-              'quantity': 0,
-              'store': storeName,
-            },
-          );
-        }
-      });
+          .collection('CartProducts')
+          .doc(productId)
+          .delete();
     } catch (e) {
       if (e is PlatformException) {
         return e.message;

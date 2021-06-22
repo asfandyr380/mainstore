@@ -369,14 +369,42 @@ class NearbyProducts extends StatelessWidget {
 }
 
 class Homemobile extends StatelessWidget {
-  const Homemobile({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<HomeViewModel>.reactive(
         builder: (context, model, child) => Scaffold(
-              body: Center(
-                child: Text('HomePage'),
+              body: Container(
+                height: SizeConfig.blockSizeVertical * 15,
+                width: SizeConfig.blockSizeHorizontal * 100,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                        'assets/images/grocery_demographics_banner.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Container(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            '100%',
+                            style: TextStyle(
+                              color: accentColor,
+                            ),
+                          ),
+                          Text(
+                            'Genuine Products',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
         viewModelBuilder: () => HomeViewModel());

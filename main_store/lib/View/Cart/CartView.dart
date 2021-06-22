@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/CartModel.dart';
+import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Widgets/order_summary.dart';
@@ -77,7 +78,7 @@ class _CartViewPageState extends State<CartViewPage> {
                             child: CartitemsContainer(
                               cart: cart,
                               onDelete: (ref) => model
-                                  .removefromCart(cart.storeName!, ref)
+                                  .removefromCart(cart.storeName, ref)
                                   .then(
                                 (e) {
                                   showTopSnackBar(
@@ -125,7 +126,6 @@ class CartitemsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double _shippingCharges = 0;
-    print('Products ${cart.products.length}');
     return Container(
       width: SizeConfig.blockSizeHorizontal * 30,
       decoration: BoxDecoration(
@@ -151,7 +151,7 @@ class CartitemsContainer extends StatelessWidget {
                 children: [
                   TickBox(onTickChange: (val) {}),
                   Text(
-                    cart.storeName!,
+                    cart.storeName,
                     style:
                         TextStyle(fontSize: SizeConfig.blockSizeVertical * 2),
                   ),
@@ -185,13 +185,14 @@ class CartitemsContainer extends StatelessWidget {
           Container(
             child: Column(
               children: [
-                for (var item in cart.products)
+                for (var item in cart.product)
                   CartItem(
-                    image: item.images![0],
-                    name: item.name,
-                    price: item.productPrice,
+                    image: item.products!.images![0],
+                    name: item.products!.name,
+                    price: item.products!.productPrice,
+                    quantity: item.quantity,
                     onDeletePress: () {
-                      onDelete!(item.reference!);
+                      onDelete!(item.products!.reference!);
                     },
                   ),
               ],
@@ -372,9 +373,6 @@ class CartMobileView extends StatelessWidget {
     return ViewModelBuilder<CartMobileViewModel>.reactive(
       viewModelBuilder: () => CartMobileViewModel(),
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          backgroundColor: accentColor,
-        ),
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(
@@ -382,6 +380,7 @@ class CartMobileView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                //Title
                 Container(
                   height: SizeConfig.blockSizeVertical * 10,
                   width: SizeConfig.blockSizeHorizontal * 100,
@@ -911,6 +910,23 @@ class CartMobileView extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ),
+                ),
+                //CheckOut Button
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Check Out',
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: accentColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

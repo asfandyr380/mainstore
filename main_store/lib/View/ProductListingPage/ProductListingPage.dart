@@ -271,7 +271,7 @@ class FilterMenu extends StatelessWidget {
                     min: 0,
                     max: 100,
                     enableTooltip: true,
-                    numberFormat: NumberFormat('\$'),
+                    numberFormat: NumberFormat('£'),
                     values: _values,
                     showLabels: true,
                     onChanged: (newVal) => onSliderChange!(newVal),

@@ -1,49 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/consts.dart';
-import 'package:main_store/View/Home/HomeView.dart';
+import 'package:main_store/View/Splash%20Screen/SplashViewModel.dart';
+import 'package:stacked/stacked.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration(seconds: 2), () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-            return Home();
-          },
-        ),
-      );
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Center(
-            child: Container(
-              child: Image(
-                image: AssetImage('assets/images/logo.png'),
+    return ViewModelBuilder<SplashViewModel>.reactive(
+        onModelReady: (model) => model.navigateToHome(),
+        builder: (context, model, child) => Scaffold(
+              body: Center(
+                child: Container(
+                  child: CircularProgressIndicator(
+                    color: accentColor,
+                  ),
+                ),
               ),
             ),
-          ),
-          Container(
-            child: CircularProgressIndicator(
-              color: accentColor,
-            ),
-          )
-        ],
-      ),
-    );
+        viewModelBuilder: () => SplashViewModel());
   }
 }

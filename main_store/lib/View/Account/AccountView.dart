@@ -10,9 +10,6 @@ class AccountView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<AccountViewModel>.reactive(
         builder: (context, model, child) => Scaffold(
-              appBar: AppBar(
-                backgroundColor: accentColor,
-              ),
               body: Column(
                 children: [
                   Center(
