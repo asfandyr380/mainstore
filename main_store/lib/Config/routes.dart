@@ -9,3 +9,4 @@ const String LandingPageView = 'LandingPage';
 const String ContactUs = "ContactUs";
 const String AboutUs = "AboutUs";
 const String SplashScreenView = "SplashScreen";
+const String Wishlist = 'Wish_list';

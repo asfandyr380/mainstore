@@ -12,6 +12,7 @@ class HeaderViewModel extends ChangeNotifier {
   CartServices _cart = locator<CartServices>();
   bool userLogedIn = false;
   int cartCount = 0;
+
   getCount() async {
     var _userIp = await Ipify.ipv4();
     var _user = await _auth.currrentUser();
@@ -65,6 +66,10 @@ class HeaderViewModel extends ChangeNotifier {
 
   navigateToCart() {
     _navigation.navigateTo(Cart);
+  }
+
+  navigateToWishlist() {
+    _navigation.navigateTo(Wishlist);
   }
 
   navigateToSignInLogInPage(bool isSignIn) {

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Models/CartModel.dart';
@@ -14,19 +13,62 @@ class CartViewModel extends ChangeNotifier {
   double shipping = 0;
   double total = 0;
   int itemCount = 0;
+  int quantity = 0;
+  bool selected = false;
+  bool nestedSelect = false;
+  bool isLoading = false;
 
-  getSummery() {
-    itemCount = cartlist.length;
+  isBusy(bool state) {
+    isLoading = state;
     notifyListeners();
-    for (var items in cartlist) {
-      for (var item in items.product) {
-        subTotal += item.products!.productPrice!;
-      }
+  }
+
+  onSelect(bool val, CartProducts cart) {
+    cart.isSelected = val;
+    notifyListeners();
+    getSummery(product: cart);
+  }
+
+  nestedSelectall(bool checkState, CartModel cartProducts) {
+    cartProducts.isSelected = checkState;
+    for (var cart in cartProducts.product) {
+      cart.isSelected = checkState;
+      notifyListeners();
+      getSummery(cart: cartProducts, product: cart);
     }
+  }
+
+  selectall(bool checkstate) {
+    for (var cart in cartlist) {
+      selected = checkstate;
+      cart.isSelected = checkstate;
+      nestedSelectall(checkstate, cart);
+      notifyListeners();
+      // getSummery(cart, cart.product);
+    }
+  }
+
+  getCount() {
+    itemCount = 0;
+    for (var cart in cartlist) {
+      itemCount = itemCount + cart.product.length;
+    }
+  }
+
+  getSummery({CartModel? cart, required CartProducts product}) {
+    if (product.isSelected!) {
+      subTotal += product.products!.productPrice!;
+      notifyListeners();
+    } else {
+      subTotal -= product.products!.productPrice!;
+      notifyListeners();
+    }
+
     total = shipping + subTotal;
   }
 
   getCart() async {
+    isBusy(true);
     var _user = await _auth.currrentUser();
     var _userIp = await Ipify.ipv4();
     if (_user) {
@@ -35,9 +77,6 @@ class CartViewModel extends ChangeNotifier {
       if (result is List<CartModel>) {
         cartlist = result;
         notifyListeners();
-        for (var cart in result) {
-          print(cart.product);
-        }
       } else {
         print(result);
       }
@@ -50,20 +89,21 @@ class CartViewModel extends ChangeNotifier {
         print(result);
       }
     }
-    getSummery();
+    isBusy(false);
+    getCount();
   }
 
-  Future removefromCart(String storeName, DocumentReference productRef) async {
+  Future removefromCart(String storeName, String productId) async {
     var user = await _auth.currrentUser();
+    print(productId);
     var _userIp = await Ipify.ipv4();
     if (user) {
       String userId = await _auth.getUserId();
-      await _cart.removefromcart(userId, storeName, productRef).then((value) {
+      await _cart.removefromcart(userId, storeName, productId).then((value) {
         getCart();
       });
     } else {
-      // TODO Remove from ip base user
-      await _cart.removefromcart(_userIp, storeName, productRef).then((value) {
+      await _cart.removefromcart(_userIp, storeName, productId).then((value) {
         getCart();
       });
     }

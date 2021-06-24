@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/CartModel.dart';
-import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Widgets/order_summary.dart';
@@ -15,13 +13,15 @@ import 'CartViewModel.dart';
 
 class TickBox extends StatelessWidget {
   final Function(bool?) onTickChange;
-  TickBox({required this.onTickChange});
+  final bool? value;
+  TickBox({required this.onTickChange, this.value});
 
   @override
   Widget build(BuildContext context) {
+    bool _value = value ?? false;
     return Checkbox(
       side: BorderSide(width: 0.5),
-      value: false,
+      value: _value,
       onChanged: (val) => onTickChange(val),
       activeColor: accentColor,
     );
@@ -64,36 +64,52 @@ class _CartViewPageState extends State<CartViewPage> {
                     Column(
                       children: [
                         Container(
-                          child:
-                              SelectAllContainer(totalCount: model.itemCount),
+                          child: SelectAllContainer(
+                            totalCount: model.itemCount,
+                            selected: model.selected,
+                            isSelected: (val) => model.selectall(val),
+                          ),
                         ),
-                        SizedBox(
-                          height: SizeConfig.blockSizeVertical * 3,
-                        ),
+                        model.isLoading
+                            ? Container(
+                                width: SizeConfig.blockSizeHorizontal * 30,
+                                child: LinearProgressIndicator(
+                                  color: accentColor,
+                                  backgroundColor: accentColor.withOpacity(0.5),
+                                ),
+                              )
+                            : SizedBox(
+                                height: SizeConfig.blockSizeVertical * 3,
+                              ),
                         for (var cart in model.cartlist)
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: SizeConfig.blockSizeVertical * 2,
-                            ),
-                            child: CartitemsContainer(
-                              cart: cart,
-                              onDelete: (ref) => model
-                                  .removefromCart(cart.storeName, ref)
-                                  .then(
-                                (e) {
-                                  showTopSnackBar(
-                                    context,
-                                    CustomSnackBar.error(
-                                      icon: Icon(Icons.delete_forever),
-                                      message: 'Product Removed from Cart',
-                                    ),
-                                    displayDuration:
-                                        Duration(milliseconds: 150),
-                                  );
-                                },
+                          if (cart.product.isNotEmpty)
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: SizeConfig.blockSizeVertical * 2,
+                              ),
+                              child: CartitemsContainer(
+                                cart: cart,
+                                selected: cart.isSelected,
+                                onSelect: (val, cart) =>
+                                    model.onSelect(val, cart),
+                                nestedSelectAll: (val) =>
+                                    model.nestedSelectall(val, cart),
+                                onDelete: (ref, store) =>
+                                    model.removefromCart(store, ref).then(
+                                  (e) {
+                                    showTopSnackBar(
+                                      context,
+                                      CustomSnackBar.error(
+                                        icon: Icon(Icons.delete_forever),
+                                        message: 'Product Removed from Cart',
+                                      ),
+                                      displayDuration:
+                                          Duration(milliseconds: 150),
+                                    );
+                                  },
+                                ),
                               ),
                             ),
-                          ),
                       ],
                     ),
                     SizedBox(
@@ -121,8 +137,19 @@ class _CartViewPageState extends State<CartViewPage> {
 
 class CartitemsContainer extends StatelessWidget {
   final CartModel cart;
-  final Function(DocumentReference)? onDelete;
-  CartitemsContainer({required this.cart, this.onDelete});
+  final Function(String, String)? onDelete;
+  final Function(bool, int)? addorPlus;
+  final bool? selected;
+  final Function(bool)? nestedSelectAll;
+  final Function(bool, CartProducts)? onSelect;
+  CartitemsContainer({
+    required this.cart,
+    this.onDelete,
+    this.addorPlus,
+    this.selected,
+    this.nestedSelectAll,
+    this.onSelect,
+  });
   @override
   Widget build(BuildContext context) {
     double _shippingCharges = 0;
@@ -149,7 +176,10 @@ class CartitemsContainer extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  TickBox(onTickChange: (val) {}),
+                  TickBox(
+                    onTickChange: (val) => nestedSelectAll!(val!),
+                    value: selected,
+                  ),
                   Text(
                     cart.storeName,
                     style:
@@ -186,15 +216,22 @@ class CartitemsContainer extends StatelessWidget {
             child: Column(
               children: [
                 for (var item in cart.product)
-                  CartItem(
-                    image: item.products!.images![0],
-                    name: item.products!.name,
-                    price: item.products!.productPrice,
-                    quantity: item.quantity,
-                    onDeletePress: () {
-                      onDelete!(item.products!.reference!);
-                    },
-                  ),
+                  if (cart.product.isNotEmpty)
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: SizeConfig.blockSizeVertical * 1),
+                      child: CartItem(
+                        onSelect: (val) => onSelect!(val, item),
+                        nestedSelect: item.isSelected,
+                        image: item.products!.images![0],
+                        name: item.products!.name,
+                        price: item.products!.productPrice,
+                        quantity: item.quantity,
+                        onDeletePress: () {
+                          onDelete!(item.products!.productId, cart.storeName);
+                        },
+                      ),
+                    ),
               ],
             ),
           ),
@@ -210,8 +247,17 @@ class CartItem extends StatelessWidget {
   final String? name;
   final double? price;
   final Function()? onDeletePress;
-  CartItem(
-      {this.quantity, this.image, this.name, this.price, this.onDeletePress});
+  final bool? nestedSelect;
+  final Function(bool)? onSelect;
+  CartItem({
+    this.quantity,
+    this.image,
+    this.name,
+    this.price,
+    this.onDeletePress,
+    this.nestedSelect,
+    this.onSelect,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -219,23 +265,35 @@ class CartItem extends StatelessWidget {
     String _name = name ?? '';
     double _price = price ?? 0;
     int _quantity = quantity ?? 0;
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.blockSizeHorizontal * 1,
-          vertical: SizeConfig.blockSizeVertical * 2),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
+    SizeConfig().init(context);
+    return Stack(
+      children: [
+        Container(
+          height: SizeConfig.blockSizeVertical * 12,
+          padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.blockSizeHorizontal * 1,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TickBox(onTickChange: (val) {}),
+              Container(
+                child: TickBox(
+                  onTickChange: (val) => onSelect!(val!),
+                  value: nestedSelect,
+                ),
+              ),
               Container(
                 height: SizeConfig.blockSizeVertical * 8,
-                width: SizeConfig.blockSizeHorizontal * 7,
-                child: Image.network(_image),
+                width: SizeConfig.blockSizeHorizontal * 5,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(_image),
+                  ),
+                ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     _name,
@@ -245,6 +303,9 @@ class CartItem extends StatelessWidget {
                           : SizeConfig.blockSizeHorizontal * 1,
                     ),
                   ),
+                  SizedBox(
+                    height: SizeConfig.blockSizeVertical * 0.5,
+                  ),
                   Text(
                     '£$_price',
                     style: TextStyle(
@@ -252,76 +313,137 @@ class CartItem extends StatelessWidget {
                         fontSize: SizeConfig.blockSizeHorizontal * 0.7),
                   )
                 ],
-              )
-            ],
-          ),
-          Row(
-            children: [
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Quantity:',
-                        style: TextStyle(
-                            fontSize: SizeConfig.blockSizeHorizontal * 0.7),
-                      ),
-                      IconButton(
-                        onPressed: () => onDeletePress!(),
-                        icon: Icon(
-                          FontAwesomeIcons.trashAlt,
-                          size: SizeConfig.blockSizeHorizontal * 1,
-                          color: Colors.red.withOpacity(0.5),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.minusSquare,
-                        size: SizeConfig.blockSizeHorizontal * 1,
-                        color: accentColor,
-                      ),
-                      Container(
-                        height: SizeConfig.blockSizeVertical * 2,
-                        width: SizeConfig.blockSizeHorizontal * 3,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(
-                            width: 1,
-                            color: footerColor,
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            '$_quantity',
-                            style: TextStyle(
-                                fontSize: SizeConfig.blockSizeHorizontal * 0.7),
-                          ),
-                        ),
-                      ),
-                      Icon(
-                        FontAwesomeIcons.plusSquare,
-                        size: SizeConfig.blockSizeHorizontal * 1,
-                        color: accentColor,
-                      ),
-                    ],
-                  ),
-                ],
+              ),
+              SizedBox(
+                width: SizeConfig.blockSizeHorizontal * 0.5,
+              ),
+              Container(
+                child: QuantityColumn(
+                  quantity: _quantity,
+                ),
               ),
             ],
-          )
-        ],
-      ),
+          ),
+        ),
+        Container(
+          alignment: Alignment.topRight,
+          padding: EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 1),
+          child: IconButton(
+            onPressed: () => onDeletePress!(),
+            icon: Icon(
+              FontAwesomeIcons.trashAlt,
+              size: SizeConfig.blockSizeHorizontal * 1,
+              color: Colors.red.withOpacity(0.5),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class QuantityColumn extends StatefulWidget {
+  final int? quantity;
+  const QuantityColumn({this.quantity});
+
+  @override
+  _QuantityColumnState createState() => _QuantityColumnState();
+}
+
+class _QuantityColumnState extends State<QuantityColumn> {
+  int q = 0;
+
+  addOrMiuns(
+    bool adding,
+  ) {
+    if (adding) {
+      setState(() {
+        q++;
+      });
+    } else {
+      if (q <= 1) {
+        setState(() {
+          q = 1;
+        });
+      } else
+        setState(() {
+          q--;
+        });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    q = widget.quantity!;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          child: Text(
+            'Quantity:',
+            style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 0.7),
+          ),
+        ),
+        Row(
+          children: [
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: IconButton(
+                onPressed: () => addOrMiuns(false),
+                icon: Icon(
+                  FontAwesomeIcons.minusSquare,
+                  size: SizeConfig.blockSizeHorizontal * 1,
+                ),
+                color: accentColor,
+              ),
+            ),
+            Container(
+              height: SizeConfig.blockSizeVertical * 2,
+              width: SizeConfig.blockSizeHorizontal * 3,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(
+                  width: 1,
+                  color: footerColor,
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  '${q}',
+                  style:
+                      TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 0.7),
+                ),
+              ),
+            ),
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: IconButton(
+                onPressed: () => addOrMiuns(true),
+                icon: Icon(
+                  FontAwesomeIcons.plusSquare,
+                  size: SizeConfig.blockSizeHorizontal * 1,
+                ),
+                color: accentColor,
+              ),
+            )
+          ],
+        )
+      ],
     );
   }
 }
 
 class SelectAllContainer extends StatelessWidget {
   final int? totalCount;
-  SelectAllContainer({this.totalCount});
+  final bool? selected;
+  final Function(bool)? isSelected;
+  SelectAllContainer({this.totalCount, this.selected, this.isSelected});
   @override
   Widget build(BuildContext context) {
     int _totalCount = totalCount ?? 0;
@@ -355,7 +477,10 @@ class SelectAllContainer extends StatelessWidget {
             Container(
               child: Row(
                 children: [
-                  TickBox(onTickChange: (val) {}),
+                  TickBox(
+                    value: selected!,
+                    onTickChange: (val) => isSelected!(val!),
+                  ),
                   Text('Select All'),
                 ],
               ),

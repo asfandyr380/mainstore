@@ -92,9 +92,8 @@ class ProductDetailView extends StatelessWidget {
                           print('addtoCart');
                           model
                               .addtoCart(
-                            productDetails.reference,
+                            productDetails.productId,
                             productDetails.by,
-                            0,
                           )
                               .then((val) {
                             showTopSnackBar(

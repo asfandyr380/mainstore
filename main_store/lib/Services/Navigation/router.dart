@@ -12,6 +12,7 @@ import 'package:main_store/View/ProductListingPage/ProductListingPage.dart';
 import 'package:main_store/View/Sign_in/Signin_view.dart';
 import 'package:main_store/View/Sign_up/signup_view.dart';
 import 'package:main_store/View/Splash%20Screen/Splash_screen.dart';
+import 'package:main_store/View/Wish_List/wishlist.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   var arg = settings.arguments;
@@ -39,6 +40,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case SplashScreenView:
       return _GeneratePageRoute(
           widget: SplashScreen(), routeName: settings.name);
+    case Wishlist:
+      return _GeneratePageRoute(
+          widget: WishlistView(), routeName: settings.name);
     case ProductDetailsPage:
       ProductsModel? details = arg as ProductsModel?;
       return _GeneratePageRoute(

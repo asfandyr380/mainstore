@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Models/CartModel.dart';
@@ -14,6 +14,8 @@ class CartServices {
   }
 
   Future getCartProducts(String userId) async {
+    // TODO Fetch Realtime Data From Backend
+
     List<CartProducts> cartProducts = [];
     List<CartModel> cartlist = [];
     var result = await _ref.userRef.doc(userId).collection('Cart').get();
@@ -25,10 +27,17 @@ class CartServices {
             .doc(doc.id)
             .collection('CartProducts')
             .get();
+        if (carts.docs.isEmpty) {
+          await _ref.userRef
+              .doc(userId)
+              .collection('Cart')
+              .doc(doc.id)
+              .delete();
+        }
         for (var cart in carts.docs) {
           var res = await _ref.Products.doc(cart.id).get();
           var product =
-              ProductsModel.fromMap(res.data(), res.id, res.reference);
+              ProductsModel.fromMap(res.data(), cart.id, res.reference);
           var cartProduct = CartProducts.fromMap(cart.data(), product);
           cartProducts.add(cartProduct);
         }
@@ -47,9 +56,15 @@ class CartServices {
           .doc(userId)
           .collection('Cart')
           .doc(storeName)
-          .collection('CartProducts')
-          .doc(productId)
-          .delete();
+          .set({'store': storeName}).then((value) async {
+        await _ref.userRef
+            .doc(userId)
+            .collection('Cart')
+            .doc(storeName)
+            .collection('CartProducts')
+            .doc(productId)
+            .set({'quantity': quantity});
+      });
     } catch (e) {
       if (e is PlatformException) {
         return e.message;
@@ -60,15 +75,15 @@ class CartServices {
   }
 
   Future removefromcart(
-      String userId, String storeName, DocumentReference productRef) async {
+      String userId, String storeName, String productId) async {
     try {
-      await _ref.userRef.doc(userId).collection('Cart').doc(storeName).update(
-        {
-          'products': FieldValue.arrayRemove(
-            [productRef],
-          ),
-        },
-      );
+      await _ref.userRef
+          .doc(userId)
+          .collection('Cart')
+          .doc(storeName)
+          .collection('CartProducts')
+          .doc(productId)
+          .delete();
     } catch (e) {
       if (e is PlatformException) {
         return e.message;

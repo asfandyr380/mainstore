@@ -55,6 +55,7 @@ class Header extends StatelessWidget {
                   child: CartFavandSignupLoginRow(
                       cartCount: model.cartCount,
                       onCartPressed: () => model.navigateToCart(),
+                      goToWishList: () => model.navigateToWishlist(),
                       userLogedIn: model.userLogedIn,
                       isSignInPage: _isSignInPage,
                       onTap: () {
@@ -128,12 +129,14 @@ class CartFavandSignupLoginRow extends StatelessWidget {
   final bool? userLogedIn;
   final Function? onCartPressed;
   final int? cartCount;
+  final Function? goToWishList;
   CartFavandSignupLoginRow({
     this.isSignInPage,
     required this.onTap,
     this.userLogedIn,
     this.onCartPressed,
     this.cartCount,
+    this.goToWishList,
   });
   @override
   Widget build(BuildContext context) {
@@ -172,9 +175,12 @@ class CartFavandSignupLoginRow extends StatelessWidget {
             child: Container(
               child: Row(
                 children: [
-                  Icon(
-                    FontAwesomeIcons.heart,
-                    size: SizeConfig.blockSizeHorizontal * 2,
+                  IconButton(
+                    onPressed: () => goToWishList!(),
+                    icon: Icon(
+                      FontAwesomeIcons.heart,
+                      size: SizeConfig.blockSizeHorizontal * 2,
+                    ),
                   ),
                   IndexIndicator(),
                 ],
