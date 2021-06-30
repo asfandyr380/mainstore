@@ -18,31 +18,65 @@ class WishlistView extends StatelessWidget {
       viewModelBuilder: () => WishlistViewModel(),
       onModelReady: (model) => model.fetchWishlist(),
       builder: (context, model, child) => Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Header
-              Container(
-                child: Header(),
-              ),
-              for (var item in model.products)
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.blockSizeHorizontal * 3,
-                    vertical: SizeConfig.blockSizeVertical * 2,
-                  ),
-                  child: WishCard(
-                    details: item,
-                  ),
+        body: model.products.isNotEmpty
+            ? SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    // Header
+                    Container(
+                      decoration:
+                          BoxDecoration(color: Colors.white, boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          blurRadius: 2,
+                        )
+                      ]),
+                      child: Header(),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical * 1,
+                    ),
+                    for (var item in model.products)
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.blockSizeHorizontal * 3,
+                          vertical: SizeConfig.blockSizeVertical * 2,
+                        ),
+                        child: WishCard(
+                          details: item,
+                        ),
+                      ),
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical * 4,
+                    ),
+                    // Footer
+                    Container(
+                      child: Footer(),
+                    ),
+                  ],
                 ),
-              // Footer
-              Container(
-                child: Footer(),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Header
+                  Container(
+                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        blurRadius: 2,
+                      )
+                    ]),
+                    child: Header(),
+                  ),
+                  // Footer
+                  Container(
+                    child: Footer(),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -82,7 +116,7 @@ class _WishCardState extends State<WishCard> {
         curve: Curves.decelerate,
         transform: hovring ? hoverTransform : nonHoverTransform,
         width: double.infinity,
-        height: SizeConfig.blockSizeVertical * 18,
+        height: SizeConfig.blockSizeVertical * 12,
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -96,10 +130,11 @@ class _WishCardState extends State<WishCard> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              width: SizeConfig.blockSizeHorizontal * 10,
+              width: SizeConfig.blockSizeHorizontal * 6.2,
               decoration: BoxDecoration(
                 color: Colors.grey,
                 image: DecorationImage(
+                  fit: BoxFit.contain,
                   image: NetworkImage(_image),
                 ),
               ),
@@ -112,7 +147,7 @@ class _WishCardState extends State<WishCard> {
                   Text(
                     _name,
                     style: TextStyle(
-                      fontSize: SizeConfig.blockSizeHorizontal * 3,
+                      fontSize: SizeConfig.blockSizeHorizontal * 2,
                     ),
                   ),
                   SizedBox(
@@ -121,7 +156,7 @@ class _WishCardState extends State<WishCard> {
                   Text(
                     '£ $_price',
                     style: TextStyle(
-                      fontSize: SizeConfig.blockSizeHorizontal * 1.5,
+                      fontSize: SizeConfig.blockSizeHorizontal * 1,
                       color: accentColor,
                     ),
                   ),
@@ -173,7 +208,9 @@ class _WishCardState extends State<WishCard> {
                 ],
               ),
             ),
-            CartButton(),
+            Container(
+              child: CartButton(),
+            ),
           ],
         ),
       ),
@@ -236,7 +273,7 @@ class _CartButtonState extends State<CartButton> {
                   ),
                   Text(
                     'Add To Cart',
-                    overflow: TextOverflow.fade,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: Colors.white,
                     ),

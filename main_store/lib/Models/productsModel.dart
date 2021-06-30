@@ -11,12 +11,13 @@ class ProductsModel {
   double? salePrice = 0;
   bool? onSale = false;
   bool? status = false;
+  bool? onWishlist = false;
   List<String>? category = [];
   List<String>? searckKey = [];
   List<String>? images = [];
 
   ProductsModel.fromMap(
-      Map<String, dynamic>? map, String id, DocumentReference ref)
+      Map<String, dynamic>? map, String id, DocumentReference ref, onWishList)
       : name = map!['name'] ?? '',
         productPrice = map['productPrice'] ?? '',
         salePrice = map['salePrice'] ?? '',
@@ -28,6 +29,7 @@ class ProductsModel {
         searckKey = List.from(map['searchKey']),
         images = List.from(map['images']),
         storeName = map['storeName'],
+        onWishlist = onWishList,
         reference = ref,
         productId = id;
 }

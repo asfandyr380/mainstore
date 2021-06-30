@@ -5,6 +5,8 @@ import 'package:main_store/Models/CartModel.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/Services/Fireabase/Firestore/CollectionRef.dart';
 
+import 'Wishlist_services.dart';
+
 class CartServices {
   DocCollectionRef _ref = locator<DocCollectionRef>();
 
@@ -37,7 +39,7 @@ class CartServices {
         for (var cart in carts.docs) {
           var res = await _ref.Products.doc(cart.id).get();
           var product =
-              ProductsModel.fromMap(res.data(), cart.id, res.reference);
+              ProductsModel.fromMap(res.data(), cart.id, res.reference, false);
           var cartProduct = CartProducts.fromMap(cart.data(), product);
           cartProducts.add(cartProduct);
         }

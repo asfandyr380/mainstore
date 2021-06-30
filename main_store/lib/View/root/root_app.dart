@@ -4,6 +4,8 @@ import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
 import 'package:main_store/Services/Navigation/router.dart';
+import 'package:main_store/View/Account/AccountView.dart';
+import 'package:main_store/View/AdminConsole/adminConsoleView.dart';
 import 'package:main_store/View/CheckOut/CheckOutView.dart';
 import 'package:main_store/View/Componants/Dialog/DialogView.dart';
 import 'package:main_store/View/Componants/contact_us/contactUsView.dart';
@@ -18,8 +20,8 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: LandingPage(),
-      initialRoute: Wishlist,
+      home: AdminConsoleView(),
+      // initialRoute: Wishlist,
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       onGenerateRoute: (settings) => generateRoute(settings),
       builder: (context, widget) => Navigator(

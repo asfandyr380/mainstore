@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Widgets/CardGrid/CardGridViewModel.dart';
-import 'package:main_store/View/Widgets/productListingCard.dart';
+import 'package:main_store/View/Widgets/ProductCard/productListingCard.dart';
 import 'package:stacked/stacked.dart';
 
 class CardGridView extends StatelessWidget {
@@ -40,6 +40,8 @@ class CardGridView extends StatelessWidget {
                 image: productDetails![i].images![0],
                 salePrice: productDetails![i].salePrice,
                 onSale: productDetails![i].onSale,
+                reference: productDetails![i].reference,
+                onWishlist: productDetails![i].onWishlist,
               ),
             );
           },

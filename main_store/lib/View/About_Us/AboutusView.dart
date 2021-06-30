@@ -15,36 +15,34 @@ class AboutView extends StatelessWidget {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => AboutViewModel(),
       builder: (context, model, child) => Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Header
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      blurRadius: 2,
-                    ),
-                  ],
-                ),
-                child: Header(
-                  isSignInPage: true,
-                ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Header
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    blurRadius: 2,
+                  ),
+                ],
               ),
-              // // About Us Page
-              AboutUsDetails(),
-              SizedBox(
-                height: SizeConfig.blockSizeVertical * 3,
+              child: Header(
+                isSignInPage: true,
               ),
-              // Footer,
-              Container(
-                child: Footer(),
-              )
-            ],
-          ),
+            ),
+            // // About Us Page
+            AboutUsDetails(),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical * 3,
+            ),
+            // Footer,
+            Container(
+              child: Footer(),
+            )
+          ],
         ),
       ),
     );

@@ -5,7 +5,7 @@ import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Componants/ProductListingRows/ProductListingRowViewModel.dart';
 import 'package:main_store/View/Widgets/ProductListingArrow.dart';
-import 'package:main_store/View/Widgets/productListingCard.dart';
+import 'package:main_store/View/Widgets/ProductCard/productListingCard.dart';
 import 'package:stacked/stacked.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
@@ -108,6 +108,8 @@ class ProductListingRow extends StatelessWidget {
                           salePrice: productDetails![i].salePrice,
                           categoryName: productDetails![i].by,
                           image: productDetails![i].images![0],
+                          reference: productDetails![i].reference,
+                          onWishlist: productDetails![i].onWishlist,
                         ),
                       );
                     },

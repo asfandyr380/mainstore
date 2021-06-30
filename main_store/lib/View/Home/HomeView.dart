@@ -11,7 +11,7 @@ import 'package:main_store/View/Componants/ProductListingRows/ProductListingRows
 import 'package:main_store/View/Home/HomeViewModel.dart';
 import 'package:main_store/View/Widgets/banners.dart';
 import 'package:main_store/View/Widgets/listingName.dart';
-import 'package:main_store/View/Widgets/productListingCard.dart';
+import 'package:main_store/View/Widgets/ProductCard/productListingCard.dart';
 import 'package:stacked/stacked.dart';
 
 class Home extends StatelessWidget {
@@ -357,6 +357,8 @@ class NearbyProducts extends StatelessWidget {
                           image: productDetails![i].images![0],
                           salePrice: productDetails![i].salePrice,
                           onSale: productDetails![i].onSale,
+                          reference: productDetails![i].reference,
+                          onWishlist: productDetails![i].onWishlist,
                         ),
                       );
                     },
