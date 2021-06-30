@@ -108,8 +108,6 @@ class ProductListingRow extends StatelessWidget {
                           salePrice: productDetails![i].salePrice,
                           categoryName: productDetails![i].by,
                           image: productDetails![i].images![0],
-                          reference: productDetails![i].reference,
-                          onWishlist: productDetails![i].onWishlist,
                         ),
                       );
                     },

@@ -40,8 +40,6 @@ class CardGridView extends StatelessWidget {
                 image: productDetails![i].images![0],
                 salePrice: productDetails![i].salePrice,
                 onSale: productDetails![i].onSale,
-                reference: productDetails![i].reference,
-                onWishlist: productDetails![i].onWishlist,
               ),
             );
           },
