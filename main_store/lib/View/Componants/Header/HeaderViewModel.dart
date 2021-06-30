@@ -5,6 +5,7 @@ import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Services/Fireabase/Auth/firebase_auth.dart';
 import 'package:main_store/Services/Fireabase/Firestore/cart_services.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
+import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 
 class HeaderViewModel extends ChangeNotifier {
   Navigation _navigation = locator<Navigation>();
@@ -12,6 +13,7 @@ class HeaderViewModel extends ChangeNotifier {
   CartServices _cart = locator<CartServices>();
   bool userLogedIn = false;
   int cartCount = 0;
+  StorageServices _services = locator<StorageServices>();
 
   getCount() async {
     var _userIp = await Ipify.ipv4();
@@ -35,20 +37,15 @@ class HeaderViewModel extends ChangeNotifier {
 
   // Signout Current User
   signoutUser() async {
-    await _auth.signOut().then(
+    await _services.deleteUser().then(
           (value) => getUser(),
         );
   }
 
   Future<bool> getUser() async {
-    bool result = await _auth.currrentUser();
-    if (result) {
-      userLogedIn = result;
-      notifyListeners();
-    } else {
-      userLogedIn = result;
-      notifyListeners();
-    }
+    bool result = await _services.getUser();
+    userLogedIn = result;
+    notifyListeners();
     return userLogedIn;
   }
 

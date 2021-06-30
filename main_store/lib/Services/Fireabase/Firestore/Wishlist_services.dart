@@ -44,8 +44,7 @@ class WishListServices {
         var _ref = result.data()!['wishlist'];
         for (DocumentReference ref in _ref) {
           var product = await ref.get();
-          var products = ProductsModel.fromMap(
-              product.data(), product.id, product.reference, false);
+          var products = ProductsModel.fromMap(product.data(), [], []);
           list.add(products);
         }
         return list;

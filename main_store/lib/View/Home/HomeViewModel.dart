@@ -3,17 +3,20 @@ import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Models/Banners.dart';
 import 'package:main_store/Models/productsModel.dart';
-import 'package:main_store/Services/Fireabase/Firestore/get_products.dart';
+import 'package:main_store/Services/Api/Products/nearbyProducts.dart';
+import 'package:main_store/Services/Api/Products/onSaleProducts.dart';
+import 'package:main_store/Services/Api/Products/topSellingProducts.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
 
 class HomeViewModel extends ChangeNotifier {
   Navigation _navigation = locator<Navigation>();
+  OnSaleProducts _saleProducts = locator<OnSaleProducts>();
+  TopSelling _topSelling = locator<TopSelling>();
+  NearbyProduct _products = locator<NearbyProduct>();
   List<Banners> bannerlist = [];
-  List<String> _docIds = [];
   int present = 0;
-  int perPage = 14;
+  int perPage = 2;
   var items = <ProductsModel>[];
-  Products _products = locator<Products>();
   List<ProductsModel> onSaleProducts = [];
   List<ProductsModel> topSellingProducts = [];
   List<ProductsModel> nearbyProducts = [];
@@ -40,23 +43,23 @@ class HomeViewModel extends ChangeNotifier {
     _navigation.navigateTo(ProductDetailsPage, arguments: category);
   }
 
-  Future<List<String>> getAvailableProduct() async {
-    var result = await _products.getStoreProducts();
-    if (result is List<String>) {
-      _docIds = result;
-      notifyListeners();
-    }
-    return _docIds;
-  }
+  // Future<List<String>> getAvailableProduct() async {
+  //   var result = await _products.getStoreProducts();
+  //   if (result is List<String>) {
+  //     _docIds = result;
+  //     notifyListeners();
+  //   }
+  //   return _docIds;
+  // }
 
   getBanner(List<Banners> banners) {
     bannerlist = banners;
     notifyListeners();
   }
 
-  fetchNearbyProducts(List<String> doclist) async {
+  fetchNearbyProducts() async {
     isBusy(true);
-    var result = await _products.nearbyProducts(doclist);
+    var result = await _products.getProducts();
     if (result is List<ProductsModel>) {
       nearbyProducts = result;
       notifyListeners();
@@ -70,9 +73,9 @@ class HomeViewModel extends ChangeNotifier {
     isBusy(false);
   }
 
-  fetchTopSellingProducts(List<String> doclist) async {
+  fetchTopSellingProducts() async {
     isBusy(true);
-    var result = await _products.topSellingProducts(doclist);
+    var result = await _topSelling.getProducts();
     if (result is List<ProductsModel>) {
       topSellingProducts = result;
       notifyListeners();
@@ -82,9 +85,9 @@ class HomeViewModel extends ChangeNotifier {
     isBusy(false);
   }
 
-  fetchOnSaleProducts(List<String> doclist) async {
+  fetchOnSaleProducts() async {
     isBusy(true);
-    var result = await _products.onSaleProducts(doclist);
+    var result = await _saleProducts.getProducts();
     if (result is List<ProductsModel>) {
       onSaleProducts = result;
       notifyListeners();

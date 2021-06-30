@@ -92,7 +92,7 @@ class ProductDetailView extends StatelessWidget {
                           print('addtoCart');
                           model
                               .addtoCart(
-                            productDetails.productId,
+                            'productDetails.productId',
                             productDetails.by,
                           )
                               .then((val) {
@@ -212,7 +212,7 @@ class ProductDetails extends StatelessWidget {
   final double? price;
   final String? description;
   final double? salePrice;
-  final bool? onSale;
+  final int? onSale;
   final Function addtoCart;
   final Function(bool)? addorplus;
   final int? quantity;
@@ -236,7 +236,7 @@ class ProductDetails extends StatelessWidget {
     double _price = price ?? 0;
     String _decsription = description ?? dumpyProductDetail;
     double _salePrice = salePrice ?? 0;
-    bool _onSale = onSale ?? false;
+    int _onSale = onSale ?? 0;
     int _quantity = quantity ?? 0;
     bool _isLoading = isLoading ?? false;
     return Column(
@@ -283,7 +283,7 @@ class ProductDetails extends StatelessWidget {
           height: SizeConfig.blockSizeVertical * 2,
         ),
         Container(
-          child: _onSale
+          child: _onSale == 1
               ? Row(
                   children: [
                     Text(

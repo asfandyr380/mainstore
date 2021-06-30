@@ -73,32 +73,11 @@ class Products {
           for (var product in availableProduct.docs) {
             for (var res in prodcutResult.docs) {
               if (product.id == res.id) {
-                return prodcutResult.docs.map(
-                  (e) async {
-                    var _user = await _auth.currrentUser();
-                    var _userIp = await Ipify.ipv4();
-                    if (_user) {
-                      String _userID = await _auth.getUserId();
-                      List ref = await _wish.onWishList(_userID);
-                      if (ref.contains(e.reference)) {
-                        ProductsModel.fromMap(
-                            e.data(), e.id, e.reference, true);
-                      } else {
-                        ProductsModel.fromMap(
-                            e.data(), e.id, e.reference, false);
-                      }
-                    } else {
-                      List ref = await _wish.onWishList(_userIp);
-                      if (ref.contains(e.reference)) {
-                        ProductsModel.fromMap(
-                            e.data(), e.id, e.reference, true);
-                      } else {
-                        ProductsModel.fromMap(
-                            e.data(), e.id, e.reference, false);
-                      }
-                    }
-                  },
-                ).toList();
+                return prodcutResult.docs
+                    .map(
+                      (e) => ProductsModel.fromMap(e.data(), [], []),
+                    )
+                    .toList();
               }
             }
           }
@@ -123,28 +102,11 @@ class Products {
             doc.add(result);
           }
         }
-        return doc.map(
-          (e) async {
-            var _user = await _auth.currrentUser();
-            var _userIp = await Ipify.ipv4();
-            if (_user) {
-              String _userID = await _auth.getUserId();
-              List ref = await _wish.onWishList(_userID);
-              if (ref.contains(e.reference)) {
-                ProductsModel.fromMap(e.data(), e.id, e.reference, true);
-              } else {
-                ProductsModel.fromMap(e.data(), e.id, e.reference, false);
-              }
-            } else {
-              List ref = await _wish.onWishList(_userIp);
-              if (ref.contains(e.reference)) {
-                ProductsModel.fromMap(e.data(), e.id, e.reference, true);
-              } else {
-                ProductsModel.fromMap(e.data(), e.id, e.reference, false);
-              }
-            }
-          },
-        ).toList();
+        return doc
+            .map(
+              (e) => ProductsModel.fromMap(e.data(), [], []),
+            )
+            .toList();
       }
     } catch (e) {
       if (e is PlatformException) {
@@ -176,28 +138,11 @@ class Products {
             _productResults.add(products);
           }
         }
-        return _productResults.map(
-          (e) async {
-            var _user = await _auth.currrentUser();
-            var _userIp = await Ipify.ipv4();
-            if (_user) {
-              String _userID = await _auth.getUserId();
-              List ref = await _wish.onWishList(_userID);
-              if (ref.contains(e.reference)) {
-                ProductsModel.fromMap(e.data(), e.id, e.reference, true);
-              } else {
-                ProductsModel.fromMap(e.data(), e.id, e.reference, false);
-              }
-            } else {
-              List ref = await _wish.onWishList(_userIp);
-              if (ref.contains(e.reference)) {
-                ProductsModel.fromMap(e.data(), e.id, e.reference, true);
-              } else {
-                ProductsModel.fromMap(e.data(), e.id, e.reference, false);
-              }
-            }
-          },
-        ).toList();
+        return _productResults
+            .map(
+              (e) => ProductsModel.fromMap(e.data(), [], []),
+            )
+            .toList();
       }
     } catch (e) {
       if (e is PlatformException) {
@@ -220,26 +165,11 @@ class Products {
             _doclist.add(result);
           }
         }
-        return _doclist.map((e) async {
-          var _user = await _auth.currrentUser();
-          var _userIp = await Ipify.ipv4();
-          if (_user) {
-            String _userID = await _auth.getUserId();
-            List ref = await _wish.onWishList(_userID);
-            if (ref.contains(e.reference)) {
-              ProductsModel.fromMap(e.data(), e.id, e.reference, true);
-            } else {
-              ProductsModel.fromMap(e.data(), e.id, e.reference, false);
-            }
-          } else {
-            List ref = await _wish.onWishList(_userIp);
-            if (ref.contains(e.reference)) {
-              ProductsModel.fromMap(e.data(), e.id, e.reference, true);
-            } else {
-              ProductsModel.fromMap(e.data(), e.id, e.reference, false);
-            }
-          }
-        }).toList();
+        return _doclist
+            .map(
+              (e) => ProductsModel.fromMap(e.data(), [], []),
+            )
+            .toList();
       }
     } catch (e) {
       if (e is PlatformException) {
@@ -257,26 +187,11 @@ class Products {
               .orderBy('productPrice')
               .get();
       if (result.docs.isNotEmpty) {
-        return result.docs.map((e) async {
-          var _user = await _auth.currrentUser();
-          var _userIp = await Ipify.ipv4();
-          if (_user) {
-            String _userID = await _auth.getUserId();
-            List ref = await _wish.onWishList(_userID);
-            if (ref.contains(e.reference)) {
-              ProductsModel.fromMap(e.data(), e.id, e.reference, true);
-            } else {
-              ProductsModel.fromMap(e.data(), e.id, e.reference, false);
-            }
-          } else {
-            List ref = await _wish.onWishList(_userIp);
-            if (ref.contains(e.reference)) {
-              ProductsModel.fromMap(e.data(), e.id, e.reference, true);
-            } else {
-              ProductsModel.fromMap(e.data(), e.id, e.reference, false);
-            }
-          }
-        }).toList();
+        return result.docs
+            .map(
+              (e) => ProductsModel.fromMap(e.data(), [], []),
+            )
+            .toList();
       }
     } catch (e) {
       if (e is PlatformException) {

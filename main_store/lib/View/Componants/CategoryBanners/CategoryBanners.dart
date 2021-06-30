@@ -15,7 +15,7 @@ class CategoryBanners extends StatelessWidget {
     return ViewModelBuilder<BannersViewModel>.reactive(
       viewModelBuilder: () => BannersViewModel(),
       onModelReady: (model) {
-        model.fetchBanners().then((value) {
+        model.getBanners().then((value) {
           getBanner(value);
         });
       },

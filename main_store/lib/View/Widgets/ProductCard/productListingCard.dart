@@ -12,7 +12,7 @@ class ProductListingCards extends StatefulWidget {
   final String? image;
   final double? salePrice;
   final String? categoryName;
-  final bool? onSale;
+  final int? onSale;
   final Function? onTap;
   final bool? isGrid;
   final DocumentReference? reference;
@@ -52,7 +52,7 @@ class _ProductListingCardsState extends State<ProductListingCards> {
     SizeConfig().init(context);
     double _salePrice = widget.salePrice ?? 0;
     double _productPrice = widget.productPrice ?? 0;
-    bool _onSale = widget.onSale ?? false;
+    int _onSale = widget.onSale ?? 0;
     String _image = widget.image ?? placeholderProductPic;
     String _categoryName = widget.categoryName ?? '';
     bool _isGrid = widget.isGrid ?? false;
@@ -127,7 +127,7 @@ class _ProductListingCardsState extends State<ProductListingCards> {
                             ),
                           ),
                         ),
-                        _onSale
+                        _onSale == 1
                             ? Container(
                                 alignment: Alignment.center,
                                 width: SizeConfig.blockSizeHorizontal * 6,
@@ -179,7 +179,7 @@ class _ProductListingCardsState extends State<ProductListingCards> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _onSale
+                        _onSale == 1
                             ? Text(
                                 '£$_salePrice',
                                 style: TextStyle(
