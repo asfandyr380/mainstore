@@ -173,13 +173,13 @@ class Forum extends StatelessWidget {
                               ? () {
                                   model.isBusy(true);
                                   onSignInClick!(model.email, model.pass)
-                                      .then((value) => model.isBusy(value));
+                                      .then((value) => model.isBusy(false));
                                 }
                               : () {
                                   model.isBusy(true);
                                   onClick!(model.email, model.pass, model.name,
                                           model.phone)
-                                      .then((value) => model.isBusy(value));
+                                      .then((value) => model.isBusy(false));
                                 },
                           label: _isSignIn ? 'SIGN IN' : 'SIGN UP',
                           isEnable: _isSignIn ? true : model.isTicked,

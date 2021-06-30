@@ -36,8 +36,7 @@ class CartServices {
         }
         for (var cart in carts.docs) {
           var res = await _ref.Products.doc(cart.id).get();
-          var product =
-              ProductsModel.fromMap(res.data(), cart.id, res.reference);
+          var product = ProductsModel.fromMap(res.data(), [], []);
           var cartProduct = CartProducts.fromMap(cart.data(), product);
           cartProducts.add(cartProduct);
         }

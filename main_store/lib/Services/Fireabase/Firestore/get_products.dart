@@ -70,7 +70,7 @@ class Products {
               if (product.id == res.id) {
                 return prodcutResult.docs
                     .map(
-                      (e) => ProductsModel.fromMap(e.data(), e.id, e.reference),
+                      (e) => ProductsModel.fromMap(e.data(), [], []),
                     )
                     .toList();
               }
@@ -99,7 +99,7 @@ class Products {
         }
         return doc
             .map(
-              (e) => ProductsModel.fromMap(e.data(), e.id, e.reference),
+              (e) => ProductsModel.fromMap(e.data(), [], []),
             )
             .toList();
       }
@@ -135,7 +135,7 @@ class Products {
         }
         return _productResults
             .map(
-              (e) => ProductsModel.fromMap(e.data(), e.id, e.reference),
+              (e) => ProductsModel.fromMap(e.data(), [], []),
             )
             .toList();
       }
@@ -162,7 +162,7 @@ class Products {
         }
         return _doclist
             .map(
-              (e) => ProductsModel.fromMap(e.data(), e.id, e.reference),
+              (e) => ProductsModel.fromMap(e.data(), [], []),
             )
             .toList();
       }
@@ -184,7 +184,7 @@ class Products {
       if (result.docs.isNotEmpty) {
         return result.docs
             .map(
-              (e) => ProductsModel.fromMap(e.data(), e.id, e.reference),
+              (e) => ProductsModel.fromMap(e.data(), [], []),
             )
             .toList();
       }

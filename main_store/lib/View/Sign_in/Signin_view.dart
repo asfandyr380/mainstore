@@ -45,7 +45,7 @@ class _SignInPageState extends State<SignInPage> {
                     vertical: SizeConfig.blockSizeVertical * 4),
                 child: Forum(
                   isSignIn: true,
-                  onSignInClick: (email, pass) => model.signInUser(email, pass),
+                  onSignInClick: (email, pass) => model.logInUser(email, pass),
                 ),
               ),
               Padding(

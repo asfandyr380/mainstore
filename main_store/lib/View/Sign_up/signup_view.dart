@@ -31,7 +31,7 @@ class SignupPage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 20),
                 child: Forum(
                   onClick: (email, pass, name, phone) =>
-                      model.createNewUser(email, pass, name, phone),
+                      model.signUp(name, email, phone, pass),
                 ),
               ),
               Footer(),

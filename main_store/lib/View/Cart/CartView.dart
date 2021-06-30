@@ -228,7 +228,7 @@ class CartitemsContainer extends StatelessWidget {
                         price: item.products!.productPrice,
                         quantity: item.quantity,
                         onDeletePress: () {
-                          onDelete!(item.products!.productId, cart.storeName);
+                          onDelete!('item.products!.productId', cart.storeName);
                         },
                       ),
                     ),
