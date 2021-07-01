@@ -20,7 +20,7 @@ class ProductListingPage extends StatelessWidget {
     SizeConfig().init(context);
     return ViewModelBuilder<ProductListingPageViewModel>.reactive(
       viewModelBuilder: () => ProductListingPageViewModel(),
-      onModelReady: (model) => model.fetchProductByFilter(null, false),
+      onModelReady: (model) => model.fetchProductByFilter([]),
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -48,15 +48,17 @@ class ProductListingPage extends StatelessWidget {
                         child: FilterMenu(
                           value: model.range,
                           onSliderChange: (val) => model.onChange(val),
-                          onTap: (val) {
-                            model.fetchProductByFilter(val, false);
+                          onTap: (cate, state) {
+                            model.byCategory(cate, state);
                           },
                         ),
                       ),
                       Container(
                         child: Products(
                           isBusy: model.isLoading,
-                          details: model.productList,
+                          details: model.byRange
+                              ? model.filterlist
+                              : model.productList,
                           orderBy: (val) => model.orderBy(val),
                         ),
                       ),
@@ -234,7 +236,7 @@ class Banner extends StatelessWidget {
 class FilterMenu extends StatelessWidget {
   final SfRangeValues? value;
   final Function(SfRangeValues)? onSliderChange;
-  final Function(String)? onTap;
+  final Function(String, bool)? onTap;
   const FilterMenu({this.value, this.onSliderChange, this.onTap});
 
   @override
@@ -302,7 +304,7 @@ class FilterMenu extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerLeft,
                   child: SideNavMenu(
-                    onTap: (val) => onTap!(val),
+                    onTap: (val, state) => onTap!(val, state),
                     productMenu: true,
                   ),
                 ),

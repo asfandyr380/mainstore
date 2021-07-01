@@ -7,7 +7,7 @@ import 'SideNavViewModel.dart';
 
 class SideNavMenu extends StatelessWidget {
   final bool? productMenu;
-  final Function(String)? onTap;
+  final Function(String, bool)? onTap;
   SideNavMenu({this.productMenu, this.onTap});
 
   @override
@@ -52,7 +52,7 @@ class SideNavMenu extends StatelessWidget {
               Category(
                 isHome: productMenu,
                 items: cate,
-                onTap: (val) => onTap!(val),
+                onTap: (val, state) => onTap!(val, state),
               )
           ],
         ),
@@ -63,7 +63,7 @@ class SideNavMenu extends StatelessWidget {
 
 class Category extends StatelessWidget {
   final CategoryModel? items;
-  final Function(String)? onTap;
+  final Function(String, bool)? onTap;
   final bool? isHome;
   Category({this.items, this.onTap, this.isHome});
   @override
@@ -84,7 +84,7 @@ class Category extends StatelessWidget {
               isHome: isHome,
               title: item.cateName,
               items: item.subCate,
-              onTap: (val) => onTap!(val),
+              onTap: (val, state) => onTap!(val, state),
             )
         ],
       ),
@@ -95,7 +95,7 @@ class Category extends StatelessWidget {
 class SubItem extends StatelessWidget {
   final String? title;
   final List<String>? items;
-  final Function(String)? onTap;
+  final Function(String, bool)? onTap;
   final bool? isHome;
   SubItem({this.items, this.title, this.onTap, this.isHome});
   @override
@@ -111,13 +111,13 @@ class SubItem extends StatelessWidget {
             children: [
               for (var item in items!)
                 GestureDetector(
-                  onTap: () => onTap!(item),
+                  onTap: () => onTap!(item, true),
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: ListTile(
                       leading: _isHome
                           ? Checkbox(
-                              onChanged: (val) {},
+                              onChanged: (val) => onTap!(item, val!),
                               value: false,
                             )
                           : null,
@@ -128,13 +128,13 @@ class SubItem extends StatelessWidget {
             ],
           )
         : GestureDetector(
-            onTap: () => onTap!(title!),
+            onTap: () => onTap!(title!, true),
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
               child: ListTile(
                 leading: _isHome
                     ? Checkbox(
-                        onChanged: (val) {},
+                        onChanged: (val) => onTap!(title!, val!),
                         value: false,
                       )
                     : null,
