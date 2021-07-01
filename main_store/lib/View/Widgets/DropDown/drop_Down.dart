@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:main_store/Config/consts.dart';
 import 'package:main_store/View/Widgets/DropDown/dropdownViewModel.dart';
 import 'package:stacked/stacked.dart';
 
