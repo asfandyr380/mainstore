@@ -10,7 +10,11 @@ class ProductListingPageViewModel extends ChangeNotifier {
   FilterProducts _filterProducts = locator<FilterProducts>();
   SfRangeValues range = SfRangeValues(0, 100);
   List<ProductsModel> productList = [];
+  List<ProductsModel> filterlist = [];
+  List<String> category = [];
+
   bool isLoading = false;
+  bool byRange = false;
 
   isBusy(bool state) {
     isLoading = state;
@@ -19,30 +23,51 @@ class ProductListingPageViewModel extends ChangeNotifier {
 
   onChange(SfRangeValues newVal) {
     range = newVal;
+    byRange = true;
     notifyListeners();
-    fetchProductByFilter(null, false);
+    byPrice();
+  }
+
+  byPrice() async {
+    var list = productList;
+    filterlist = list
+        .where((p) =>
+            p.productPrice! >= range.start && p.productPrice! <= range.end)
+        .toList();
+    notifyListeners();
   }
 
   orderBy(val) {
-    if (val == "High to Low")
+    if (val == "High to Low") {
+      productList.sort((a, b) => b.productPrice!.compareTo(a.productPrice!));
+      filterlist.sort((a, b) => b.productPrice!.compareTo(a.productPrice!));
+      notifyListeners();
+    } else {
       productList.sort((a, b) => a.productPrice!.compareTo(b.productPrice!));
-    else
-      fetchProductByFilter(null, false);
+      filterlist.sort((a, b) => a.productPrice!.compareTo(b.productPrice!));
+      notifyListeners();
+    }
   }
 
-  changePriceRange() {
-    productList.sort((a, b) => a.productPrice!.compareTo(b.productPrice!));
+  byCategory(String cate, bool state) async {
+    if (state) {
+      category.add(cate);
+    } else {
+      category.remove(cate);
+    }
+    fetchProductByFilter(category);
   }
 
-  fetchProductByFilter(String? cate, bool? descending) async {
+  fetchProductByFilter(List<String>? cate) async {
     isBusy(true);
     var result = await _filterProducts.byCategory([]);
     if (result is List<ProductsModel>) {
       productList = result;
+      byRange = false;
       notifyListeners();
     } else {
       print(result);
-      isBusy(false);
     }
+    isBusy(false);
   }
 }
