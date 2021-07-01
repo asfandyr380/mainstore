@@ -7,8 +7,9 @@ import 'SideNavViewModel.dart';
 
 class SideNavMenu extends StatelessWidget {
   final bool? productMenu;
+  final bool? state;
   final Function(String, bool)? onTap;
-  SideNavMenu({this.productMenu, this.onTap});
+  SideNavMenu({this.productMenu, this.onTap, this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +51,7 @@ class SideNavMenu extends StatelessWidget {
                 : Container(),
             for (var cate in model.catelist)
               Category(
+                state: state,
                 isHome: productMenu,
                 items: cate,
                 onTap: (val, state) => onTap!(val, state),
@@ -65,7 +67,8 @@ class Category extends StatelessWidget {
   final CategoryModel? items;
   final Function(String, bool)? onTap;
   final bool? isHome;
-  Category({this.items, this.onTap, this.isHome});
+  final bool? state;
+  Category({this.items, this.onTap, this.isHome, this.state});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -81,6 +84,7 @@ class Category extends StatelessWidget {
         children: [
           for (var item in items!.subCategory)
             SubItem(
+              selectState: state,
               isHome: isHome,
               title: item.cateName,
               items: item.subCate,
@@ -97,7 +101,8 @@ class SubItem extends StatelessWidget {
   final List<String>? items;
   final Function(String, bool)? onTap;
   final bool? isHome;
-  SubItem({this.items, this.title, this.onTap, this.isHome});
+  final bool? selectState;
+  SubItem({this.items, this.title, this.onTap, this.isHome, this.selectState});
   @override
   Widget build(BuildContext context) {
     bool _isHome = isHome ?? false;
@@ -118,7 +123,7 @@ class SubItem extends StatelessWidget {
                       leading: _isHome
                           ? Checkbox(
                               onChanged: (val) => onTap!(item, val!),
-                              value: false,
+                              value: selectState,
                             )
                           : null,
                       title: Text(item),
@@ -135,7 +140,7 @@ class SubItem extends StatelessWidget {
                 leading: _isHome
                     ? Checkbox(
                         onChanged: (val) => onTap!(title!, val!),
-                        value: false,
+                        value: selectState,
                       )
                     : null,
                 title: Text(title!),

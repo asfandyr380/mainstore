@@ -12,7 +12,7 @@ class ProductListingPageViewModel extends ChangeNotifier {
   List<ProductsModel> productList = [];
   List<ProductsModel> filterlist = [];
   List<String> category = [];
-
+  bool selectState = false;
   bool isLoading = false;
   bool byRange = false;
 
@@ -52,15 +52,20 @@ class ProductListingPageViewModel extends ChangeNotifier {
   byCategory(String cate, bool state) async {
     if (state) {
       category.add(cate);
+      selectState = state;
+      notifyListeners();
     } else {
       category.remove(cate);
+      selectState = state;
+      notifyListeners();
     }
     fetchProductByFilter(category);
+    print(category);
   }
 
   fetchProductByFilter(List<String>? cate) async {
     isBusy(true);
-    var result = await _filterProducts.byCategory([]);
+    var result = await _filterProducts.byCategory(cate!);
     if (result is List<ProductsModel>) {
       productList = result;
       byRange = false;

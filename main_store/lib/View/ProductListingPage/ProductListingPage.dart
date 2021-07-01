@@ -46,6 +46,7 @@ class ProductListingPage extends StatelessWidget {
                     children: [
                       Container(
                         child: FilterMenu(
+                          state: model.selectState,
                           value: model.range,
                           onSliderChange: (val) => model.onChange(val),
                           onTap: (cate, state) {
@@ -237,7 +238,8 @@ class FilterMenu extends StatelessWidget {
   final SfRangeValues? value;
   final Function(SfRangeValues)? onSliderChange;
   final Function(String, bool)? onTap;
-  const FilterMenu({this.value, this.onSliderChange, this.onTap});
+  final bool? state;
+  const FilterMenu({this.value, this.onSliderChange, this.onTap, this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -304,6 +306,7 @@ class FilterMenu extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerLeft,
                   child: SideNavMenu(
+                    state: state,
                     onTap: (val, state) => onTap!(val, state),
                     productMenu: true,
                   ),

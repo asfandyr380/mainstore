@@ -39,7 +39,7 @@ class _CartViewPageState extends State<CartViewPage> {
     SizeConfig().init(context);
     return ViewModelBuilder<CartViewModel>.reactive(
       viewModelBuilder: () => CartViewModel(),
-      onModelReady: (model) => model.getCart(),
+      onModelReady: (model) => model.getcart(),
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Column(
