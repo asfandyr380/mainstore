@@ -21,8 +21,8 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: AdminConsoleView(),
-      initialRoute: ProductListing,
+      home: AdminConsoleView(),
+      // initialRoute: ProductListing,
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       onGenerateRoute: (settings) => generateRoute(settings),
       builder: (context, widget) => Navigator(
