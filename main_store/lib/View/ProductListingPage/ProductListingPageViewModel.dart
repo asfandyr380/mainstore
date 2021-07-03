@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/Services/Api/Products/filterProducts.dart';
-import 'package:main_store/Services/Fireabase/Firestore/get_products.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class ProductListingPageViewModel extends ChangeNotifier {
-  Products _products = locator<Products>();
   FilterProducts _filterProducts = locator<FilterProducts>();
   SfRangeValues range = SfRangeValues(0, 100);
   List<ProductsModel> productList = [];

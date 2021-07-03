@@ -127,19 +127,21 @@ class _WishCardState extends State<WishCard> {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               width: SizeConfig.blockSizeHorizontal * 6.2,
               decoration: BoxDecoration(
                 color: Colors.grey,
                 image: DecorationImage(
-                  fit: BoxFit.contain,
+                  fit: BoxFit.cover,
                   image: NetworkImage(_image),
                 ),
               ),
             ),
+            SizedBox(width: SizeConfig.blockSizeHorizontal * 10),
             Container(
+              width: SizeConfig.blockSizeHorizontal * 18,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,6 +165,7 @@ class _WishCardState extends State<WishCard> {
                 ],
               ),
             ),
+            Spacer(),
             Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -208,6 +211,7 @@ class _WishCardState extends State<WishCard> {
                 ],
               ),
             ),
+            Spacer(),
             Container(
               child: CartButton(),
             ),

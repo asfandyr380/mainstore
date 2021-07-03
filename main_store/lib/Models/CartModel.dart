@@ -11,11 +11,13 @@ class CartModel {
 }
 
 class CartProducts {
+  int cartId = 0;
   ProductsModel? products;
   int? quantity = 0;
   bool? isSelected = false;
   CartProducts.fromMap(Map map, ProductsModel product)
       : products = product,
         quantity = map['quantity'],
+        cartId = map['cart_Id'],
         isSelected = false;
 }

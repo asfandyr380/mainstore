@@ -7,6 +7,7 @@ import 'package:main_store/View/Widgets/ProductCard/CardViewModel.dart';
 import 'package:stacked/stacked.dart';
 
 class ProductListingCards extends StatefulWidget {
+  final int? productId;
   final String? productName;
   final double? productPrice;
   final String? image;
@@ -18,6 +19,7 @@ class ProductListingCards extends StatefulWidget {
   final DocumentReference? reference;
   final bool? onWishlist;
   ProductListingCards({
+    this.productId,
     this.categoryName,
     this.image,
     this.productName,
@@ -56,10 +58,10 @@ class _ProductListingCardsState extends State<ProductListingCards> {
     String _image = widget.image ?? placeholderProductPic;
     String _categoryName = widget.categoryName ?? '';
     bool _isGrid = widget.isGrid ?? false;
-    bool _onWishlist = widget.onWishlist ?? onWishlist;
 
     return ViewModelBuilder<CardViewModel>.reactive(
       viewModelBuilder: () => CardViewModel(),
+      onModelReady: (model) => model.onWishlist = widget.onWishlist!,
       builder: (context, model, child) => GestureDetector(
         onTap: () => widget.onTap!(),
         child: MouseRegion(
@@ -111,16 +113,26 @@ class _ProductListingCardsState extends State<ProductListingCards> {
                           ),
                           child: IconButton(
                             onPressed: () {
-                              model.addtoWishlist(widget.reference!);
-                              setState(() {
-                                if (onWishlist)
-                                  onWishlist = false;
-                                else
-                                  onWishlist = true;
-                              });
+                              if (model.onWishlist) {
+                                model.removeFromlist(widget.productId!);
+                                setState(() {
+                                  if (model.onWishlist)
+                                    model.onWishlist = false;
+                                  else
+                                    model.onWishlist = true;
+                                });
+                              } else {
+                                model.addtoWishlist(widget.productId!);
+                                setState(() {
+                                  if (model.onWishlist)
+                                    model.onWishlist = false;
+                                  else
+                                    model.onWishlist = true;
+                                });
+                              }
                             },
                             icon: Icon(
-                              _onWishlist
+                              model.onWishlist
                                   ? FontAwesomeIcons.solidHeart
                                   : FontAwesomeIcons.heart,
                               size: SizeConfig.blockSizeHorizontal * 1.5,

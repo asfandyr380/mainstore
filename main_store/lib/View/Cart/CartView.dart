@@ -94,18 +94,21 @@ class _CartViewPageState extends State<CartViewPage> {
                                     model.onSelect(val, cart),
                                 nestedSelectAll: (val) =>
                                     model.nestedSelectall(val, cart),
-                                onDelete: (ref, store) =>
-                                    model.removefromCart(store, ref).then(
+                                onDelete: (id, store) =>
+                                    model.removeProductFromCart(id).then(
                                   (e) {
-                                    showTopSnackBar(
-                                      context,
-                                      CustomSnackBar.error(
-                                        icon: Icon(Icons.delete_forever),
-                                        message: 'Product Removed from Cart',
-                                      ),
-                                      displayDuration:
-                                          Duration(milliseconds: 150),
-                                    );
+                                    if (e)
+                                      showTopSnackBar(
+                                        context,
+                                        CustomSnackBar.error(
+                                          icon: Icon(Icons.delete_forever,
+                                              size: 120,
+                                              color: Color(352321536)),
+                                          message: 'Product Removed from Cart',
+                                        ),
+                                        displayDuration:
+                                            Duration(milliseconds: 150),
+                                      );
                                   },
                                 ),
                               ),
@@ -137,7 +140,7 @@ class _CartViewPageState extends State<CartViewPage> {
 
 class CartitemsContainer extends StatelessWidget {
   final CartModel cart;
-  final Function(String, String)? onDelete;
+  final Function(int, String)? onDelete;
   final Function(bool, int)? addorPlus;
   final bool? selected;
   final Function(bool)? nestedSelectAll;
@@ -228,7 +231,7 @@ class CartitemsContainer extends StatelessWidget {
                         price: item.products!.productPrice,
                         quantity: item.quantity,
                         onDeletePress: () {
-                          onDelete!('item.products!.productId', cart.storeName);
+                          onDelete!(item.cartId, cart.storeName);
                         },
                       ),
                     ),

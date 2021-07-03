@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductsModel {
   int productId = 0;
+  int storeId = 0;
   String? name = '';
   String? description = '';
   String? by = '';
@@ -11,9 +12,10 @@ class ProductsModel {
   int? status = 1;
   List<String>? category = [];
   List<String>? images = [];
+  bool? onWishlist = false;
 
-  ProductsModel.fromMap(
-      Map<String, dynamic>? map, List<String>? images, List<String>? categories)
+  ProductsModel.fromMap(Map<String, dynamic>? map, List<String>? images,
+      List<String>? categories, bool onlist)
       : name = map!['name'] ?? '',
         productPrice = map['price'] ?? 0,
         salePrice = map['salePrice'] ?? 0,
@@ -23,5 +25,7 @@ class ProductsModel {
         status = map['status'] ?? 0,
         category = categories ?? [],
         images = images ?? [],
-        productId = map['id'];
+        productId = map['id'],
+        storeId = map['store_Id'],
+        onWishlist = onlist;
 }

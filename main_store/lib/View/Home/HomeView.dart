@@ -351,6 +351,8 @@ class NearbyProducts extends StatelessWidget {
                         child: ProductListingCards(
                           isGrid: true,
                           onTap: () => navegateToDetails!(productDetails![i]),
+                          productId: productDetails![i].productId,
+                          onWishlist: productDetails![i].onWishlist,
                           productName: productDetails![i].name,
                           categoryName: productDetails![i].by,
                           productPrice: productDetails![i].productPrice,
