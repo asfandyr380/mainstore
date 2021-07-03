@@ -102,6 +102,8 @@ class ProductListingRow extends StatelessWidget {
                         child: ProductListingCards(
                           onTap: () =>
                               model.navigatetoDetailPage(productDetails![i]),
+                          productId: productDetails![i].productId,
+                          onWishlist: productDetails![i].onWishlist,
                           productName: productDetails![i].name,
                           productPrice: productDetails![i].productPrice,
                           onSale: productDetails![i].onSale,
