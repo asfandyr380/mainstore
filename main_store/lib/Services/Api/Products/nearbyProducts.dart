@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +12,7 @@ class NearbyProduct {
   Future getProducts() async {
     List<ProductsModel> wishProducts = await _wish.getWishlist(6);
     List<ProductsModel> products = [];
-    Uri _BaseURL = Uri.parse('http://localhost:3005/api/products/');
+    Uri _BaseURL = Uri.parse('$baseUrl/products/');
     http.Response res = await http.get(_BaseURL);
     List decodedBody = jsonDecode(res.body);
     // print(decodedBody);

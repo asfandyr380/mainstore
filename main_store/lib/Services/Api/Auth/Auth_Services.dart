@@ -2,12 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Models/User_Model.dart';
 import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 
 class AuthServicesApi {
-  Uri _BaseURL = Uri.parse('http://localhost:3005/api/users/');
+  Uri _BaseURL = Uri.parse('$baseUrl/users/');
   StorageServices _services = locator<StorageServices>();
 
   Future createNewUser(
@@ -20,7 +21,7 @@ class AuthServicesApi {
       var decodedBody = jsonDecode(res.body);
       if (res.statusCode == 200 && decodedBody['success'] == 1) {
         UserModel user = await getUserbyId(decodedBody['insertId']);
-        await _services.saveUser(user.email!);
+        await _services.saveUser(user.email!, decodedBody['insertId']);
         return true;
       } else
         return decodedBody['message'];
@@ -34,7 +35,7 @@ class AuthServicesApi {
   }
 
   Future getUserbyId(int id) async {
-    Uri _UrlbyId = Uri.parse('http://localhost:3005/api/users/$id');
+    Uri _UrlbyId = Uri.parse('$baseUrl/users/$id');
     try {
       http.Response res = await http.get(_UrlbyId);
       var body = jsonDecode(res.body);
@@ -53,7 +54,7 @@ class AuthServicesApi {
   }
 
   Future logIn(String? email, String? password) async {
-    Uri _LOGINURL = Uri.parse('http://localhost:3005/api/users/login');
+    Uri _LOGINURL = Uri.parse('$baseUrl/users/login');
     try {
       UserModel user = UserModel(email: email, password: password);
       Map<String, dynamic> jsonBody = user.toJson();
@@ -62,8 +63,8 @@ class AuthServicesApi {
       var decodedBody = jsonDecode(res.body);
       if (res.statusCode == 200 && decodedBody['success'] == 1) {
         Map<String, dynamic> data = decodedBody['data'];
-        var user = UserModel.fromJson(decodedBody);
-        await _services.saveUser(user.email!);
+        var user = UserModel.fromJson(data);
+        await _services.saveUser(user.email!, user.id!);
         return true;
       } else
         return decodedBody['message'];

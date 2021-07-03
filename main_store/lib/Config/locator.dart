@@ -5,6 +5,7 @@ import 'package:main_store/Services/Api/Cart/cart_services.dart';
 import 'package:main_store/Services/Api/Products/filterProducts.dart';
 import 'package:main_store/Services/Api/Products/nearbyProducts.dart';
 import 'package:main_store/Services/Api/Products/onSaleProducts.dart';
+import 'package:main_store/Services/Api/Products/searchProducts.dart';
 import 'package:main_store/Services/Api/Products/topSellingProducts.dart';
 import 'package:main_store/Services/Api/Wishlist/wishlist_Services.dart';
 import 'package:main_store/Services/Dialog/Dialog_Services.dart';
@@ -36,4 +37,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => FilterProducts());
   locator.registerLazySingleton(() => CartService());
   locator.registerLazySingleton(() => WishServices());
+  locator.registerLazySingleton(() => SearchProductServices());
 }

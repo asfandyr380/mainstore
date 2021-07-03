@@ -5,7 +5,7 @@ import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/Header/HeaderViewModel.dart';
 import 'package:main_store/View/Componants/SideNav/SideNavView.dart';
 import 'package:main_store/View/Componants/SwipeBanner/SwipeBannerView.dart';
-import 'package:main_store/View/Widgets/SearchBarRow.dart';
+import 'package:main_store/View/Widgets/SearchWidget/SearchBarRow.dart';
 import 'package:stacked/stacked.dart';
 
 class Header extends StatelessWidget {

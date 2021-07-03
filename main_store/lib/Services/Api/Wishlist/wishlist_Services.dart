@@ -1,15 +1,15 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:main_store/Models/productsModel.dart';
+import 'package:main_store/Config/consts.dart';
 
 class WishServices {
   Future WishProductCount(int userId) async {
-    Uri wishUrl = Uri.parse('http://localhost:3005/api/wishlist/count/$userId');
+    Uri wishUrl = Uri.parse('$baseUrl/wishlist/count/$userId');
     http.Response res = await http.get(wishUrl);
     var decodedBody = jsonDecode(res.body);
     print(decodedBody);
-    if (res.statusCode == 200) {
+    if (res.statusCode == 200 && decodedBody.isNotEmpty) {
       return decodedBody[0]['totalProduct'];
     } else {
       return 0;
@@ -17,7 +17,7 @@ class WishServices {
   }
 
   Future addToWishlist(int userId, int productId) async {
-    Uri wishUrl = Uri.parse('http://localhost:3005/api/wishlist/');
+    Uri wishUrl = Uri.parse('$baseUrl/wishlist/');
     Map<String, dynamic> req = {
       "user_Id": userId.toString(),
       "product_Id": productId.toString()
@@ -32,7 +32,7 @@ class WishServices {
   }
 
   Future getWishlist(int userId) async {
-    Uri wishUrl = Uri.parse('http://localhost:3005/api/wishlist/$userId');
+    Uri wishUrl = Uri.parse('$baseUrl/wishlist/$userId');
     List<ProductsModel> products = [];
     http.Response res = await http.get(wishUrl);
     List decodedBody = jsonDecode(res.body);
@@ -54,7 +54,7 @@ class WishServices {
   }
 
   Future removeFromWish(int id) async {
-    Uri wishUrl = Uri.parse('http://localhost:3005/api/wishlist/remove/$id');
+    Uri wishUrl = Uri.parse('$baseUrl/wishlist/remove/$id');
     http.Response res = await http.get(wishUrl);
     var decodedBody = jsonDecode(res.body);
     if (decodedBody['success'] == 1) {

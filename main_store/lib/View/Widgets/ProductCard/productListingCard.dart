@@ -93,7 +93,7 @@ class _ProductListingCardsState extends State<ProductListingCards> {
                 children: [
                   Container(
                     height: _isGrid
-                        ? SizeConfig.blockSizeVertical * 20
+                        ? SizeConfig.blockSizeVertical * 18
                         : SizeConfig.blockSizeVertical * 28,
                     width: SizeConfig.blockSizeHorizontal * 15,
                     decoration: BoxDecoration(
@@ -182,7 +182,7 @@ class _ProductListingCardsState extends State<ProductListingCards> {
                     child: Text(
                       _categoryName,
                       style: TextStyle(
-                        fontSize: SizeConfig.blockSizeHorizontal * 0.7,
+                        fontSize: SizeConfig.blockSizeHorizontal * 0.5,
                       ),
                     ),
                   ),

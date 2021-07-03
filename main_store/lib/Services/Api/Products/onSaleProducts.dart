@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/Services/Api/Wishlist/wishlist_Services.dart';
@@ -12,7 +13,7 @@ class OnSaleProducts {
 
     List<ProductsModel> products = [];
     var product;
-    Uri _BaseURL = Uri.parse('http://localhost:3005/api/products/onSale');
+    Uri _BaseURL = Uri.parse('$baseUrl/products/onSale');
     http.Response res = await http.get(_BaseURL);
     List decodedBody = jsonDecode(res.body);
     // print(decodedBody);

@@ -11,6 +11,7 @@ class HeaderViewModel extends ChangeNotifier {
   Navigation _navigation = locator<Navigation>();
   CartService _cart = locator<CartService>();
   WishServices _wish = locator<WishServices>();
+
   bool userLogedIn = false;
   int cartCount = 0;
   int wishlistCount = 0;
@@ -29,28 +30,28 @@ class HeaderViewModel extends ChangeNotifier {
       super.notifyListeners();
     }
   }
-  // getCount() async {
-  //   var _userIp = await Ipify.ipv4();
-  //   var _user = await _auth.currrentUser();
-  //   if (_user) {
-  //     var userId = await _auth.getUserId();
-  //     var count = await _cart.getCartCount(userId);
-  //     cartCount = count;
-  //     notifyListeners();
-  //   } else {
-  //     var count = await _cart.getCartCount(_userIp);
-  //     cartCount = count;
-  //     notifyListeners();
-  //   }
-  // }
 
   getCount() async {
-    var wishcount = await _wish.WishProductCount(6);
-    print(wishcount);
-    var cartcount = await _cart.cartProductCount(6);
-    wishlistCount = wishcount;
-    cartCount = cartcount;
-    notifyListeners();
+    var user = await _services.getUser();
+    var _userIp = await Ipify.ipv4();
+    String i = _userIp.replaceAll('.', '');
+    String newI = i.substring(i.length - 5);
+    int ip = int.parse(newI);
+
+    if (user) {
+      int userId = await _services.getUserId();
+      var wishcount = await _wish.WishProductCount(userId);
+      var cartcount = await _cart.cartProductCount(userId);
+      wishlistCount = wishcount;
+      cartCount = cartcount;
+      notifyListeners();
+    } else {
+      var wishcount = await _wish.WishProductCount(ip);
+      var cartcount = await _cart.cartProductCount(ip);
+      wishlistCount = wishcount;
+      cartCount = cartcount;
+      notifyListeners();
+    }
   }
 
   onDropDownChange(var newValue, var dropDownVal) {

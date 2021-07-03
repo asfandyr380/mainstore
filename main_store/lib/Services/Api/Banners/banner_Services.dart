@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Models/Banners.dart';
 import 'package:main_store/Models/BrandsModel.dart';
 import 'package:main_store/Models/swipeBanner.dart';
 
 class BannerServices {
   Future getBanner() async {
-    Uri _BaseURL = Uri.parse('http://localhost:3005/api/banners/');
+    Uri _BaseURL = Uri.parse('$baseUrl/banners/');
     try {
       http.Response res = await http.get(_BaseURL);
       var decodedBody = jsonDecode(res.body);
@@ -25,7 +26,7 @@ class BannerServices {
   }
 
   Future getBrands() async {
-    Uri _BaseURL = Uri.parse('http://localhost:3005/api/brands/');
+    Uri _BaseURL = Uri.parse('$baseUrl/brands/');
 
     try {
       http.Response res = await http.get(_BaseURL);
@@ -44,7 +45,7 @@ class BannerServices {
   }
 
   Future fetchSwipeBanners() async {
-    Uri _BaseURL = Uri.parse('http://localhost:3005/api/swipeBanners/');
+    Uri _BaseURL = Uri.parse('$baseUrl/swipeBanners/');
 
     try {
       http.Response res = await http.get(_BaseURL);

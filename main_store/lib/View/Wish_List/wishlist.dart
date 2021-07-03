@@ -41,7 +41,7 @@ class WishlistView extends StatelessWidget {
                     for (var item in model.products)
                       Container(
                         padding: EdgeInsets.symmetric(
-                          horizontal: SizeConfig.blockSizeHorizontal * 3,
+                          horizontal: SizeConfig.blockSizeHorizontal * 10,
                           vertical: SizeConfig.blockSizeVertical * 2,
                         ),
                         child: WishCard(
@@ -161,52 +161,6 @@ class _WishCardState extends State<WishCard> {
                       fontSize: SizeConfig.blockSizeHorizontal * 1,
                       color: accentColor,
                     ),
-                  ),
-                ],
-              ),
-            ),
-            Spacer(),
-            Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Quantity',
-                        style: TextStyle(
-                          fontSize: SizeConfig.blockSizeHorizontal * 1,
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          FontAwesomeIcons.minusSquare,
-                          color: accentColor,
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        height: SizeConfig.blockSizeVertical * 4,
-                        width: SizeConfig.blockSizeHorizontal * 5,
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 0.5),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Text('1'),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          FontAwesomeIcons.plusSquare,
-                          color: accentColor,
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),

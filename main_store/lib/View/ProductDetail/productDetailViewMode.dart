@@ -4,9 +4,12 @@ import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/Services/Api/Cart/cart_services.dart';
 import 'package:main_store/Services/Api/Products/filterProducts.dart';
+import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 
 class ProductDetailViewModel extends ChangeNotifier {
   FilterProducts _filterProducts = locator<FilterProducts>();
+  StorageServices _services = locator<StorageServices>();
+
   CartService _cart = locator<CartService>();
   int quantity = 1;
   bool isLoading = false;
@@ -34,32 +37,31 @@ class ProductDetailViewModel extends ChangeNotifier {
 
   Future addtoCart(int productId, int storeId) async {
     isBusy(true);
-    int userId = 6;
-    var result = await _cart.addToCart(productId, storeId, userId, quantity);
-    if (result is bool) {
-      if (result)
+    var user = await _services.getUser();
+    var _userIp = await Ipify.ipv4();
+    String i = _userIp.replaceAll('.', '');
+    String newI = i.substring(i.length - 5);
+    int ip = int.parse(newI);
+    print(ip);
+    if (user) {
+      int userId = await _services.getUserId();
+      var result = await _cart.addToCart(productId, storeId, userId, quantity);
+      if (result == 1)
         return true;
       else
         return false;
+    } else {
+      var result = await _cart.addToCart(productId, storeId, ip, quantity);
+      if (result is bool) {
+        if (result)
+          return true;
+        else
+          return false;
+      }
     }
+    print(isLoading);
     isBusy(false);
   }
-
-  // Future addtoCart(String? productId, String? storeName) async {
-  //   isBusy(true);
-  //   var _userIp = await Ipify.ipv4();
-  //   var _user = await _auth.currrentUser();
-  //   print(quantity);
-  //   if (_user) {
-  //     String userId = await _auth.getUserId();
-  //     var result = await _cart.addtoCartCollection(
-  //         userId, productId!, storeName, quantity);
-  //     print(result);
-  //   } else {
-  //     await _cart.addtoCartCollection(_userIp, productId!, storeName, quantity);
-  //   }
-  //   isBusy(false);
-  // }
 
   fetchRelatedProduct(List<String> category) async {
     print(category);
