@@ -7,6 +7,7 @@ import 'package:main_store/Services/Api/Products/nearbyProducts.dart';
 import 'package:main_store/Services/Api/Products/onSaleProducts.dart';
 import 'package:main_store/Services/Api/Products/searchProducts.dart';
 import 'package:main_store/Services/Api/Products/topSellingProducts.dart';
+import 'package:main_store/Services/Api/Reviews/reviewsServices.dart';
 import 'package:main_store/Services/Api/Wishlist/wishlist_Services.dart';
 import 'package:main_store/Services/Dialog/Dialog_Services.dart';
 import 'package:main_store/Services/Fireabase/Auth/firebase_auth.dart';
@@ -38,4 +39,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => CartService());
   locator.registerLazySingleton(() => WishServices());
   locator.registerLazySingleton(() => SearchProductServices());
+  locator.registerLazySingleton(() => ReviewServices());
 }

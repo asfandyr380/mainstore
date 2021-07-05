@@ -1,20 +1,27 @@
 import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
+import 'package:main_store/Config/routes.dart';
+import 'package:main_store/Models/ReviewModel.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/Services/Api/Cart/cart_services.dart';
 import 'package:main_store/Services/Api/Products/filterProducts.dart';
+import 'package:main_store/Services/Api/Reviews/reviewsServices.dart';
+import 'package:main_store/Services/Navigation/navigation_services.dart';
 import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 
 class ProductDetailViewModel extends ChangeNotifier {
   FilterProducts _filterProducts = locator<FilterProducts>();
   StorageServices _services = locator<StorageServices>();
+  Navigation _navigation = locator<Navigation>();
+  ReviewServices _reviewServices = locator<ReviewServices>();
 
   CartService _cart = locator<CartService>();
   int quantity = 1;
   bool isLoading = false;
+  bool onReview = false;
   List<ProductsModel> relatedlist = [];
-
+  List<ReviewModel> reviewlist = [];
   addOrMiuns(bool adding) {
     if (adding) {
       quantity++;
@@ -28,7 +35,27 @@ class ProductDetailViewModel extends ChangeNotifier {
     }
   }
 
-  createBreadCrums() {}
+  changeView() async {
+    if (onReview) {
+      onReview = false;
+      notifyListeners();
+    } else {
+      onReview = true;
+      notifyListeners();
+    }
+  }
+
+  getReviews() async {
+    var result = await _reviewServices.getReviews();
+    if (result is List<ReviewModel>) {
+      reviewlist = result;
+      notifyListeners();
+    }
+  }
+
+  navigateToProductlisting(String cate) {
+    _navigation.navigateTo(ProductListing, arguments: [cate]);
+  }
 
   isBusy(bool state) {
     isLoading = state;

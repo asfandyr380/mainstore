@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/productsModel.dart';
+import 'package:main_store/View/Home/HomeView.dart';
 import 'package:main_store/View/Widgets/Mobile_AppBar.dart';
 import 'package:main_store/View/Widgets/snapshotCrousel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
@@ -23,8 +24,10 @@ class ProductDetailView extends StatelessWidget {
     SizeConfig().init(context);
     return ViewModelBuilder<ProductDetailViewModel>.reactive(
       viewModelBuilder: () => ProductDetailViewModel(),
-      onModelReady: (model) =>
-          model.fetchRelatedProduct(productDetails.category!),
+      onModelReady: (model) {
+        model.fetchRelatedProduct(productDetails.category!);
+        model.getReviews();
+      },
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -47,18 +50,17 @@ class ProductDetailView extends StatelessWidget {
                 ),
                 child: BreadCrumb(
                   items: [
-                    BreadCrumbItem(
-                      content: Text('General Grocery'),
-                      color: accentColor,
-                    ),
-                    BreadCrumbItem(
-                      content: Text('Category'),
-                      color: accentColor,
-                    ),
-                    BreadCrumbItem(
-                      content: Text('Product Name'),
-                      color: accentColor,
-                    ),
+                    for (var cate in productDetails.category!)
+                      productDetails.category!.last == cate
+                          ? BreadCrumbItem(
+                              onTap: () => model.navigateToProductlisting(cate),
+                              content: Text('$cate',
+                                  style: TextStyle(color: accentColor)),
+                            )
+                          : BreadCrumbItem(
+                              onTap: () => model.navigateToProductlisting(cate),
+                              content: Text('$cate'),
+                            ),
                   ],
                   divider: Icon(Icons.chevron_right),
                 ),
@@ -108,24 +110,49 @@ class ProductDetailView extends StatelessWidget {
                 ),
               ),
               // Reviews and Description Panal
-              DescriptionReviewsPanalHeader(),
+              DescriptionReviewsPanalHeader(
+                onDescPrss: () => model.changeView(),
+                onReviewPress: () => model.changeView(),
+                onReview: model.onReview,
+              ),
               SizedBox(
                 height: SizeConfig.blockSizeVertical * 3,
               ),
-              Container(
-                padding: EdgeInsets.only(
-                  bottom: SizeConfig.blockSizeVertical * 5,
-                ),
-                width: SizeConfig.blockSizeHorizontal * 90,
-                height: SizeConfig.blockSizeVertical * 30,
-                child: Text(
-                  "${productDetails.description}",
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
-                    fontSize: SizeConfig.blockSizeHorizontal * 1,
-                  ),
-                ),
-              ),
+              model.onReview
+                  ? Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.blockSizeHorizontal * 2),
+                      height: SizeConfig.blockSizeVertical * 22,
+                      width: double.infinity,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          for (var review in model.reviewlist)
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: SizeConfig.blockSizeVertical * 2,
+                                horizontal: SizeConfig.blockSizeHorizontal * 1,
+                              ),
+                              child: ReviewsCard(
+                                details: review,
+                              ),
+                            )
+                        ],
+                      ),
+                    )
+                  : Container(
+                      padding: EdgeInsets.only(
+                        bottom: SizeConfig.blockSizeVertical * 5,
+                      ),
+                      width: SizeConfig.blockSizeHorizontal * 90,
+                      child: Text(
+                        "${productDetails.description}",
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          fontSize: SizeConfig.blockSizeHorizontal * 1,
+                        ),
+                      ),
+                    ),
               Container(
                 padding: EdgeInsets.only(
                   bottom: SizeConfig.blockSizeVertical * 3,
@@ -148,8 +175,14 @@ class ProductDetailView extends StatelessWidget {
 }
 
 class DescriptionReviewsPanalHeader extends StatelessWidget {
+  final Function? onDescPrss;
+  final Function? onReviewPress;
+  final bool? onReview;
+  DescriptionReviewsPanalHeader(
+      {this.onDescPrss, this.onReviewPress, this.onReview});
   @override
   Widget build(BuildContext context) {
+    bool _onReview = onReview ?? false;
     return Container(
       height: SizeConfig.blockSizeVertical * 4,
       width: SizeConfig.blockSizeHorizontal * 90,
@@ -168,16 +201,30 @@ class DescriptionReviewsPanalHeader extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Text(
-              'Description |',
-              style: TextStyle(
-                fontSize: SizeConfig.blockSizeHorizontal * 1.2,
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => onDescPrss!(),
+                child: Text(
+                  'Description  | ',
+                  style: TextStyle(
+                    color: _onReview ? null : accentColor,
+                    fontSize: SizeConfig.blockSizeHorizontal * 1.2,
+                  ),
+                ),
               ),
             ),
-            Text(
-              ' Review',
-              style: TextStyle(
-                fontSize: SizeConfig.blockSizeHorizontal * 1.2,
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => onReviewPress!(),
+                child: Text(
+                  ' Review',
+                  style: TextStyle(
+                    color: _onReview ? accentColor : null,
+                    fontSize: SizeConfig.blockSizeHorizontal * 1.2,
+                  ),
+                ),
               ),
             ),
           ],

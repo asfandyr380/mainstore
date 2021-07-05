@@ -24,6 +24,7 @@ class OnSaleProducts {
       for (int i = 2; i <= 4; i++) {
         images.add(body['image$i']);
       }
+      categories.add(body['main_cate']);
       categories.add(body['cate_name']);
       categories.add(body['subCate_name']);
       if (wishProducts.isNotEmpty) {

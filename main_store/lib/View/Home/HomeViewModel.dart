@@ -1,11 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Models/Banners.dart';
+import 'package:main_store/Models/ReviewModel.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/Services/Api/Products/nearbyProducts.dart';
 import 'package:main_store/Services/Api/Products/onSaleProducts.dart';
 import 'package:main_store/Services/Api/Products/topSellingProducts.dart';
+import 'package:main_store/Services/Api/Reviews/reviewsServices.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
 
 class HomeViewModel extends ChangeNotifier {
@@ -13,7 +16,9 @@ class HomeViewModel extends ChangeNotifier {
   OnSaleProducts _saleProducts = locator<OnSaleProducts>();
   TopSelling _topSelling = locator<TopSelling>();
   NearbyProduct _products = locator<NearbyProduct>();
+  ReviewServices _reviewServices = locator<ReviewServices>();
   List<Banners> bannerlist = [];
+  List<ReviewModel> reviewlist = [];
   int present = 0;
   int perPage = 2;
   var items = <ProductsModel>[];
@@ -25,6 +30,14 @@ class HomeViewModel extends ChangeNotifier {
   isBusy(bool state) {
     isLoading = state;
     notifyListeners();
+  }
+
+  getReviews() async {
+    var result = await _reviewServices.getReviews();
+    if (result is List<ReviewModel>) {
+      reviewlist = result;
+      notifyListeners();
+    }
   }
 
   loadMore() async {

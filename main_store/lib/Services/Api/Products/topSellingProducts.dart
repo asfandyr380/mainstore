@@ -11,7 +11,6 @@ class TopSelling {
   Future getProducts() async {
     List<ProductsModel> wishProducts = await _wish.getWishlist(6);
     List<ProductsModel> products = [];
-    var product;
     Uri _BaseURL = Uri.parse('$baseUrl/products/topSelling');
     http.Response res = await http.get(_BaseURL);
     List decodedBody = jsonDecode(res.body);
@@ -23,6 +22,7 @@ class TopSelling {
       for (int i = 2; i <= 4; i++) {
         images.add(body['image$i']);
       }
+      categories.add(body['main_cate']);
       categories.add(body['cate_name']);
       categories.add(body['subCate_name'] ?? '');
       if (wishProducts.isNotEmpty) {

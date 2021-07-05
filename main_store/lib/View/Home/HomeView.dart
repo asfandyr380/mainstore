@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/Models/ReviewModel.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Componants/BrandsCard/BrandsCard.dart';
 import 'package:main_store/View/Componants/CategoryBanners/CategoryBanners.dart';
@@ -24,6 +25,7 @@ class Home extends StatelessWidget {
         model.fetchOnSaleProducts();
         model.fetchTopSellingProducts();
         model.fetchNearbyProducts();
+        model.getReviews();
       },
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
@@ -150,17 +152,17 @@ class Home extends StatelessWidget {
                 width: double.infinity,
                 height: SizeConfig.blockSizeVertical * 27,
                 child: ListView.separated(
+                  itemCount: model.reviewlist.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, i) => Container(
                     padding: EdgeInsets.symmetric(
                         vertical: SizeConfig.blockSizeVertical * 2,
                         horizontal: SizeConfig.blockSizeHorizontal * 1),
-                    child: ReviewsCard(),
+                    child: ReviewsCard(details: model.reviewlist[i]),
                   ),
                   separatorBuilder: (context, i) => SizedBox(
                     width: SizeConfig.blockSizeHorizontal * 1,
                   ),
-                  itemCount: 5,
                 ),
               ),
               Container(
@@ -215,7 +217,8 @@ class Home extends StatelessWidget {
 }
 
 class ReviewsCard extends StatelessWidget {
-  const ReviewsCard({Key? key}) : super(key: key);
+  final ReviewModel? details;
+  const ReviewsCard({this.details});
 
   @override
   Widget build(BuildContext context) {
@@ -238,11 +241,11 @@ class ReviewsCard extends StatelessWidget {
           Container(
               padding: EdgeInsets.symmetric(
                   horizontal: SizeConfig.blockSizeHorizontal * 2),
-              child: Text(dumyComment)),
+              child: Text(details!.message!)),
           SizedBox(
             height: SizeConfig.blockSizeVertical * 1,
           ),
-          Text('UserName'),
+          Text(details!.user!),
           SizedBox(
             height: SizeConfig.blockSizeVertical * 1,
           ),
@@ -252,7 +255,9 @@ class ReviewsCard extends StatelessWidget {
               for (int i = 0; i < 5; i++)
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: RatingStar(),
+                  child: RatingStar(
+                    isEnable: true,
+                  ),
                 ),
             ],
           )
@@ -264,7 +269,8 @@ class ReviewsCard extends StatelessWidget {
 
 class RatingStar extends StatelessWidget {
   final bool? isEnable;
-  RatingStar({this.isEnable});
+  final int? rating;
+  RatingStar({this.isEnable, this.rating});
 
   @override
   Widget build(BuildContext context) {
