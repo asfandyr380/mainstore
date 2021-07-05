@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/Banners.dart';
 import 'package:main_store/View/Componants/CategoryBanners/CategoryBannersViewModel.dart';
-import 'package:main_store/View/Widgets/banners.dart';
+import 'package:main_store/View/Widgets/Banners/banners.dart';
 import 'package:stacked/stacked.dart';
 
 class CategoryBanners extends StatelessWidget {
@@ -29,6 +28,9 @@ class CategoryBanners extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Ban(
+                  cate: model.bannerlist.isEmpty
+                      ? null
+                      : model.bannerlist[0].cate,
                   image: model.bannerlist.isEmpty
                       ? null
                       : model.bannerlist[0].image,
@@ -37,6 +39,9 @@ class CategoryBanners extends StatelessWidget {
                       : model.bannerlist[0].mainText,
                 ),
                 Ban(
+                  cate: model.bannerlist.isEmpty
+                      ? null
+                      : model.bannerlist[1].cate,
                   image: model.bannerlist.isEmpty
                       ? null
                       : model.bannerlist[1].image,
@@ -48,6 +53,9 @@ class CategoryBanners extends StatelessWidget {
                 Column(
                   children: [
                     SmallBanner(
+                      cate: model.bannerlist.isEmpty
+                          ? null
+                          : model.bannerlist[4].cate,
                       image: model.bannerlist.isEmpty
                           ? null
                           : model.bannerlist[4].image,
@@ -59,6 +67,9 @@ class CategoryBanners extends StatelessWidget {
                       height: SizeConfig.blockSizeVertical * 2,
                     ),
                     SmallBanner(
+                      cate: model.bannerlist.isEmpty
+                          ? null
+                          : model.bannerlist[4].cate,
                       image: model.bannerlist.isEmpty
                           ? null
                           : model.bannerlist[5].image,

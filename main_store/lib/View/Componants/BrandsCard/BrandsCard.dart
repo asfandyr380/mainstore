@@ -11,14 +11,22 @@ class BrandsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<BrandCardViewModel>.reactive(
       onModelReady: (model) => model.fetchBrands(),
-      builder: (context, model, child) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          for (var brand in model.brandslits)
-            BrandsCard(
-              image: brand.image,
-            ),
-        ],
+      builder: (context, model, child) => SingleChildScrollView(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            for (var brand in model.brandslits)
+              Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: SizeConfig.blockSizeVertical * 1,
+                  horizontal: SizeConfig.blockSizeHorizontal * 1,
+                ),
+                child: BrandsCard(
+                  image: brand.image,
+                ),
+              ),
+          ],
+        ),
       ),
       viewModelBuilder: () => BrandCardViewModel(),
     );

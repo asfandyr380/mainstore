@@ -13,14 +13,16 @@ import 'package:stacked/stacked.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class ProductListingPage extends StatelessWidget {
-  const ProductListingPage({Key? key}) : super(key: key);
+  final List<String>? cate;
+  ProductListingPage({this.cate});
 
   @override
   Widget build(BuildContext context) {
+    List<String> _cate = cate ?? [];
     SizeConfig().init(context);
     return ViewModelBuilder<ProductListingPageViewModel>.reactive(
       viewModelBuilder: () => ProductListingPageViewModel(),
-      onModelReady: (model) => model.fetchProductByFilter([]),
+      onModelReady: (model) => model.fetchProductByFilter(_cate),
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Column(
