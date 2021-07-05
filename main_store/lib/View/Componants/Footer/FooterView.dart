@@ -10,7 +10,7 @@ class Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return ViewModelBuilder.reactive(
+    return ViewModelBuilder<FooterViewModel>.reactive(
       viewModelBuilder: () => FooterViewModel(),
       builder: (context, model, child) => Column(
         children: [
@@ -85,9 +85,17 @@ class Footer extends StatelessWidget {
                               ),
                             ),
                           ),
-                          QuickLinks(pageName: 'Home'),
-                          QuickLinks(pageName: 'About'),
-                          QuickLinks(pageName: 'Contact'),
+                          QuickLinks(
+                              pageName: 'Home',
+                              onTap: () => model.navigateToHome()),
+                          QuickLinks(
+                            pageName: 'About',
+                            onTap: () => model.navigateToAbout(),
+                          ),
+                          QuickLinks(
+                            pageName: 'Contact',
+                            onTap: () => model.navigateToContact(),
+                          ),
                         ],
                       ),
                     ),

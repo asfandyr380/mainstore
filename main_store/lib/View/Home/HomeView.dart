@@ -9,7 +9,7 @@ import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Componants/ProductListingRows/ProductListingRows.dart';
 import 'package:main_store/View/Home/HomeViewModel.dart';
-import 'package:main_store/View/Widgets/banners.dart';
+import 'package:main_store/View/Widgets/Banners/banners.dart';
 import 'package:main_store/View/Widgets/listingName.dart';
 import 'package:main_store/View/Widgets/ProductCard/productListingCard.dart';
 import 'package:stacked/stacked.dart';
@@ -74,6 +74,9 @@ class Home extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MoreandMoreBanner(
+                      cate: model.bannerlist.isNotEmpty
+                          ? model.bannerlist[2].cate
+                          : null,
                       bannerText: model.bannerlist.isNotEmpty
                           ? model.bannerlist[2].mainText
                           : null,
@@ -82,6 +85,9 @@ class Home extends StatelessWidget {
                           : null,
                     ),
                     MoreandMoreBanner(
+                      cate: model.bannerlist.isNotEmpty
+                          ? model.bannerlist[3].cate
+                          : null,
                       bannerTextColor: Colors.white,
                       buttonColor: Colors.white,
                       bannerText: model.bannerlist.isNotEmpty

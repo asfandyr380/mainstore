@@ -151,7 +151,8 @@ class SwipeBannerText extends StatelessWidget {
               height: SizeConfig.blockSizeVertical * 1,
             ),
             // Explore Button
-            Container(
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
               child: Container(
                 alignment: Alignment.center,
                 width: SizeConfig.blockSizeHorizontal * 12,
