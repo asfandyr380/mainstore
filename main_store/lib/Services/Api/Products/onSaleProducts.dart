@@ -20,25 +20,28 @@ class OnSaleProducts {
     for (var body in decodedBody) {
       List<String> images = [];
       List<String> categories = [];
-      images.add(body['image']);
+      images.add(body['Product']['image']);
       for (int i = 2; i <= 4; i++) {
-        images.add(body['image$i']);
+        images.add(body['Product']['image$i']);
       }
-      categories.add(body['main_cate']);
-      categories.add(body['cate_name']);
-      categories.add(body['subCate_name']);
+      categories.add(body['Product']['main_cate']);
+      categories.add(body['Product']['cate_name']);
+      categories.add(body['Product']['subCate_name']);
       if (wishProducts.isNotEmpty) {
         var product;
         for (var list in wishProducts) {
-          if (list.productId == body['id']) {
-            product = ProductsModel.fromMap(body, images, categories, true);
+          if (list.productId == body['Product']['id']) {
+            product = ProductsModel.fromMap(
+                body['Product'], images, categories, true);
           } else {
-            product = ProductsModel.fromMap(body, images, categories, false);
+            product = ProductsModel.fromMap(
+                body['Product'], images, categories, false);
           }
           products.add(product);
         }
       } else {
-        var product = ProductsModel.fromMap(body, images, categories, false);
+        var product =
+            ProductsModel.fromMap(body['Product'], images, categories, false);
         products.add(product);
       }
     }

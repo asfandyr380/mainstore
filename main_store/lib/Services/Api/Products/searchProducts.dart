@@ -17,14 +17,15 @@ class SearchProductServices {
         for (var body in decodedBody) {
           List<String> images = [];
           List<String> categories = [];
-          images.add(body['image']);
+          images.add(body['Product']['image']);
           for (int i = 2; i <= 4; i++) {
-            images.add(body['image$i']);
+            images.add(body['Product']['image$i']);
           }
-          categories.add(body['main_cate']);
-          categories.add(body['cate_name']);
-          categories.add(body['subCate_name']);
-          var product = ProductsModel.fromMap(body, images, categories, false);
+          categories.add(body['Product']['main_cate']);
+          categories.add(body['Product']['cate_name']);
+          categories.add(body['Product']['subCate_name']);
+          var product =
+              ProductsModel.fromMap(body['Product'], images, categories, false);
           products.add(product);
         }
       }

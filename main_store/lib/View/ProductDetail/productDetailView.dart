@@ -250,6 +250,67 @@ class ProductImageCarousel extends StatelessWidget {
   }
 }
 
+class Attributes extends StatelessWidget {
+  const Attributes({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            child: Row(
+              children: [
+                Text(
+                  'Variants',
+                  style: TextStyle(color: Colors.grey),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal * 0.7,
+                ),
+                Text('Black'),
+              ],
+            ),
+          ),
+          Container(
+            width: SizeConfig.blockSizeHorizontal * 13,
+            height: SizeConfig.blockSizeVertical * 8,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: 3,
+                itemBuilder: (context, i) {
+                  return Container(
+                    padding: EdgeInsets.symmetric(
+                      vertical: SizeConfig.blockSizeVertical * 1,
+                      horizontal: SizeConfig.blockSizeHorizontal * 0.7,
+                    ),
+                    child: AttributeBox(),
+                  );
+                }),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AttributeBox extends StatelessWidget {
+  const AttributeBox({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: SizeConfig.blockSizeVertical * 0.8,
+      width: SizeConfig.blockSizeHorizontal * 3,
+      decoration: BoxDecoration(color: Colors.black),
+    );
+  }
+}
+
 class ProductDetails extends StatelessWidget {
   final String? name;
   final String? by;
@@ -363,6 +424,12 @@ class ProductDetails extends StatelessWidget {
               style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 0.8),
             ),
           ),
+        ),
+        SizedBox(
+          height: SizeConfig.blockSizeVertical * 3,
+        ),
+        Container(
+          child: Attributes(),
         ),
         SizedBox(
           height: SizeConfig.blockSizeVertical * 3,
