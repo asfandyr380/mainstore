@@ -92,10 +92,10 @@ class ProductDetailView extends StatelessWidget {
                         addorplus: (val) => model.addOrMiuns(val),
                         quantity: model.quantity,
                         isLoading: model.isLoading,
-                        addtoCart: () {
+                        addtoCart: (price) {
                           model
                               .addtoCart(productDetails.productId,
-                                  productDetails.storeId)
+                                  productDetails.storeId, price)
                               .then((val) {
                             showTopSnackBar(
                               context,
@@ -254,8 +254,8 @@ class ProductImageCarousel extends StatelessWidget {
 
 class Attributes extends StatefulWidget {
   final List<AttributeModel>? attribute;
-
-  Attributes({this.attribute});
+  final ValueChanged<double>? onPriceChange;
+  Attributes({this.attribute, this.onPriceChange});
 
   @override
   _AttributesState createState() => _AttributesState();
@@ -263,6 +263,16 @@ class Attributes extends StatefulWidget {
 
 class _AttributesState extends State<Attributes> {
   CustomGroupController controller = CustomGroupController();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.listen((val) {
+      var attr = val as AttributeModel;
+      widget.onPriceChange!(attr.price.toDouble());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -280,7 +290,7 @@ class _AttributesState extends State<Attributes> {
             height: SizeConfig.blockSizeVertical * 1,
           ),
           Container(
-            width: SizeConfig.blockSizeHorizontal * 12,
+            width: SizeConfig.blockSizeHorizontal * 15,
             height: SizeConfig.blockSizeVertical * 10,
             child: CustomGroupedCheckbox.grid(
                 controller: controller,
@@ -293,9 +303,6 @@ class _AttributesState extends State<Attributes> {
                       horizontal: SizeConfig.blockSizeHorizontal * 0.7,
                     ),
                     child: AttributeBox(
-                      onTap: () {
-                        controller.enabledItems([value]);
-                      },
                       isSelected: value,
                       variant: widget.attribute![i].variant,
                     ),
@@ -310,9 +317,8 @@ class _AttributesState extends State<Attributes> {
 
 class AttributeBox extends StatelessWidget {
   final bool? isSelected;
-  final Function? onTap;
   final String? variant;
-  AttributeBox({this.isSelected, this.onTap, this.variant});
+  AttributeBox({this.isSelected, this.variant});
 
   @override
   Widget build(BuildContext context) {
@@ -320,13 +326,18 @@ class AttributeBox extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () => onTap!(),
         child: Container(
           alignment: Alignment.center,
-          height: SizeConfig.blockSizeVertical * 0.8,
-          width: SizeConfig.blockSizeHorizontal * 3.5,
+          height: SizeConfig.blockSizeVertical * 2,
+          width: SizeConfig.blockSizeHorizontal * 5,
           decoration: BoxDecoration(
             color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 3,
+                color: Colors.grey.withOpacity(0.5),
+              ),
+            ],
             border: _isSelected ? Border.all(color: accentColor) : null,
           ),
           child: Text(
@@ -339,14 +350,14 @@ class AttributeBox extends StatelessWidget {
   }
 }
 
-class ProductDetails extends StatelessWidget {
+class ProductDetails extends StatefulWidget {
   final String? name;
   final String? by;
   final double? price;
   final String? description;
   final double? salePrice;
   final int? onSale;
-  final Function addtoCart;
+  final Function(double) addtoCart;
   final Function(bool)? addorplus;
   final int? quantity;
   final bool? isLoading;
@@ -364,16 +375,31 @@ class ProductDetails extends StatelessWidget {
     this.isLoading,
     this.attribute,
   });
+
+  @override
+  _ProductDetailsState createState() => _ProductDetailsState();
+}
+
+class _ProductDetailsState extends State<ProductDetails> {
+  double _attributePrice = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.attribute!.isNotEmpty)
+      _attributePrice = widget.attribute![0].price.toDouble();
+  }
+
   @override
   Widget build(BuildContext context) {
-    String _name = name ?? '';
-    String _by = by ?? '';
-    double _price = price ?? 0;
-    String _decsription = description ?? dumpyProductDetail;
-    double _salePrice = salePrice ?? 0;
-    int _onSale = onSale ?? 0;
-    int _quantity = quantity ?? 0;
-    bool _isLoading = isLoading ?? false;
+    String _name = widget.name ?? '';
+    String _by = widget.by ?? '';
+    double _price = widget.price ?? 0;
+    String _decsription = widget.description ?? dumpyProductDetail;
+    double _salePrice = widget.salePrice ?? 0;
+    int _onSale = widget.onSale ?? 0;
+    int _quantity = widget.quantity ?? 0;
+    bool _isLoading = widget.isLoading ?? false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -429,7 +455,9 @@ class ProductDetails extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '£$_price',
+                      widget.attribute!.isEmpty
+                          ? '£$_price'
+                          : '$_attributePrice',
                       style: TextStyle(
                           fontSize: SizeConfig.blockSizeHorizontal * 2),
                     ),
@@ -458,11 +486,17 @@ class ProductDetails extends StatelessWidget {
         SizedBox(
           height: SizeConfig.blockSizeVertical * 3,
         ),
-        attribute!.isEmpty
+        widget.attribute!.isEmpty
             ? Container()
             : Container(
                 child: Attributes(
-                  attribute: attribute,
+                  attribute: widget.attribute,
+                  onPriceChange: (p) {
+                    setState(() {
+                      _attributePrice = p;
+                      print("p for price $_attributePrice");
+                    });
+                  },
                 ),
               ),
         SizedBox(
@@ -491,7 +525,7 @@ class ProductDetails extends StatelessWidget {
                           MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: IconButton(
-                              onPressed: () => addorplus!(false),
+                              onPressed: () => widget.addorplus!(false),
                               icon: Icon(
                                 FontAwesomeIcons.minusSquare,
                                 size: SizeConfig.blockSizeHorizontal * 1.5,
@@ -522,7 +556,7 @@ class ProductDetails extends StatelessWidget {
                           MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: IconButton(
-                              onPressed: () => addorplus!(true),
+                              onPressed: () => widget.addorplus!(true),
                               icon: Icon(
                                 FontAwesomeIcons.plusSquare,
                                 size: SizeConfig.blockSizeHorizontal * 1.5,
@@ -559,7 +593,7 @@ class ProductDetails extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  addtoCart();
+                  widget.addtoCart(_attributePrice);
                 },
                 child: !_isLoading
                     ? Text(

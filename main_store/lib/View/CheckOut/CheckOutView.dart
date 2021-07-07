@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/Models/SummeryModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
-import 'package:main_store/View/Widgets/custom_button.dart';
-import 'package:main_store/View/Widgets/order_summary.dart';
+import 'package:main_store/View/Widgets/orderSummery/order_summary.dart';
 import 'package:main_store/View/Widgets/text_field.dart';
 import 'package:stacked/stacked.dart';
 import 'CheckOutViewModel.dart';
 
 class CheckOutPage extends StatefulWidget {
   final bool? checkout;
-  CheckOutPage({this.checkout});
+  final SummeryModel? m;
+  CheckOutPage({this.checkout, this.m});
 
   @override
   _CheckOutPageState createState() => _CheckOutPageState();
@@ -198,6 +199,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     //checkout Order Summary
                     OrderSummary(
                       checkout: _checkout,
+                      m: widget.m,
                     ),
                   ],
                 ),

@@ -7,6 +7,8 @@ import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Wish_List/wishlistViewModel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class WishlistView extends StatelessWidget {
   const WishlistView({Key? key}) : super(key: key);
@@ -21,8 +23,6 @@ class WishlistView extends StatelessWidget {
         body: model.products.isNotEmpty
             ? SingleChildScrollView(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
                   children: [
                     // Header
                     Container(
@@ -45,11 +45,22 @@ class WishlistView extends StatelessWidget {
                           vertical: SizeConfig.blockSizeVertical * 2,
                         ),
                         child: WishCard(
+                          addtoCart: () => model
+                              .addtoCart(item.productId, item.storeId, 0)
+                              .then((value) {
+                            showTopSnackBar(
+                              context,
+                              CustomSnackBar.success(
+                                message: 'Product Added to Cart',
+                              ),
+                              displayDuration: Duration(milliseconds: 150),
+                            );
+                          }),
                           details: item,
                         ),
                       ),
                     SizedBox(
-                      height: SizeConfig.blockSizeVertical * 4,
+                      height: SizeConfig.blockSizeVertical * 35.5,
                     ),
                     // Footer
                     Container(
@@ -84,7 +95,8 @@ class WishlistView extends StatelessWidget {
 
 class WishCard extends StatefulWidget {
   final ProductsModel? details;
-  const WishCard({this.details});
+  final Function? addtoCart;
+  const WishCard({this.details, this.addtoCart});
 
   @override
   _WishCardState createState() => _WishCardState();
@@ -167,7 +179,9 @@ class _WishCardState extends State<WishCard> {
             ),
             Spacer(),
             Container(
-              child: CartButton(),
+              child: CartButton(
+                onTap: () => widget.addtoCart!(),
+              ),
             ),
           ],
         ),
@@ -177,7 +191,8 @@ class _WishCardState extends State<WishCard> {
 }
 
 class CartButton extends StatefulWidget {
-  const CartButton({Key? key}) : super(key: key);
+  final Function? onTap;
+  const CartButton({this.onTap});
 
   @override
   _CartButtonState createState() => _CartButtonState();
@@ -198,50 +213,53 @@ class _CartButtonState extends State<CartButton> {
       cursor: SystemMouseCursors.click,
       onEnter: (e) => mouserEnter(true),
       onExit: (e) => mouserEnter(false),
-      child: AnimatedContainer(
-        duration: Duration(milliseconds: 120),
-        curve: Curves.easeOut,
-        alignment: Alignment.center,
-        width: hovring
-            ? SizeConfig.blockSizeHorizontal * 12
-            : SizeConfig.blockSizeHorizontal * 5,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(8),
-            bottomLeft: Radius.circular(8),
+      child: GestureDetector(
+        onTap: () => widget.onTap!(),
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 120),
+          curve: Curves.easeOut,
+          alignment: Alignment.center,
+          width: hovring
+              ? SizeConfig.blockSizeHorizontal * 12
+              : SizeConfig.blockSizeHorizontal * 5,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8),
+              bottomLeft: Radius.circular(8),
+            ),
+            color: accentColor,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                blurRadius: 3,
+              )
+            ],
           ),
-          color: accentColor,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.5),
-              blurRadius: 3,
-            )
-          ],
-        ),
-        child: hovring
-            ? Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    FontAwesomeIcons.shoppingCart,
-                    color: Colors.white,
-                  ),
-                  SizedBox(
-                    width: SizeConfig.blockSizeHorizontal * 0.5,
-                  ),
-                  Text(
-                    'Add To Cart',
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+          child: hovring
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      FontAwesomeIcons.shoppingCart,
                       color: Colors.white,
                     ),
-                  )
-                ],
-              )
-            : Icon(
-                FontAwesomeIcons.shoppingCart,
-                color: Colors.white,
-              ),
+                    SizedBox(
+                      width: SizeConfig.blockSizeHorizontal * 0.5,
+                    ),
+                    Text(
+                      'Add To Cart',
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                )
+              : Icon(
+                  FontAwesomeIcons.shoppingCart,
+                  color: Colors.white,
+                ),
+        ),
       ),
     );
   }

@@ -15,7 +15,6 @@ class ProductDetailViewModel extends ChangeNotifier {
   StorageServices _services = locator<StorageServices>();
   Navigation _navigation = locator<Navigation>();
   ReviewServices _reviewServices = locator<ReviewServices>();
-
   CartService _cart = locator<CartService>();
   int quantity = 1;
   bool isLoading = false;
@@ -62,7 +61,7 @@ class ProductDetailViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addtoCart(int productId, int storeId) async {
+  Future addtoCart(int productId, int storeId, double attributePrice) async {
     isBusy(true);
     var user = await _services.getUser();
     var _userIp = await Ipify.ipv4();
@@ -72,13 +71,15 @@ class ProductDetailViewModel extends ChangeNotifier {
     print(ip);
     if (user) {
       int userId = await _services.getUserId();
-      var result = await _cart.addToCart(productId, storeId, userId, quantity);
+      var result = await _cart.addToCart(
+          productId, storeId, userId, quantity, attributePrice);
       if (result == 1)
         return true;
       else
         return false;
     } else {
-      var result = await _cart.addToCart(productId, storeId, ip, quantity);
+      var result = await _cart.addToCart(
+          productId, storeId, ip, quantity, attributePrice);
       if (result is bool) {
         if (result)
           return true;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/routes.dart';
+import 'package:main_store/Models/SummeryModel.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/About_Us/AboutusView.dart';
 import 'package:main_store/View/Cart/CartView.dart';
@@ -12,6 +13,7 @@ import 'package:main_store/View/ProductListingPage/ProductListingPage.dart';
 import 'package:main_store/View/Sign_in/Signin_view.dart';
 import 'package:main_store/View/Sign_up/signup_view.dart';
 import 'package:main_store/View/Splash%20Screen/Splash_screen.dart';
+import 'package:main_store/View/SuccessPage/successPage.dart';
 import 'package:main_store/View/Wish_List/wishlist.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -26,9 +28,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case Cart:
       return _GeneratePageRoute(
           widget: CartViewPage(), routeName: settings.name);
+    case SuccessPage:
+      return _GeneratePageRoute(widget: Success(), routeName: settings.name);
     case Checkout:
+      SummeryModel? details = arg as SummeryModel?;
       return _GeneratePageRoute(
-          widget: CheckOutPage(), routeName: settings.name);
+          widget: CheckOutPage(m: details), routeName: settings.name);
     case LandingPageView:
       return _GeneratePageRoute(
           widget: LandingPage(), routeName: settings.name);

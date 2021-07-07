@@ -5,7 +5,7 @@ import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/CartModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
-import 'package:main_store/View/Widgets/order_summary.dart';
+import 'package:main_store/View/Widgets/orderSummery/order_summary.dart';
 import 'package:stacked/stacked.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -228,7 +228,9 @@ class CartitemsContainer extends StatelessWidget {
                         nestedSelect: item.isSelected,
                         image: item.products!.images![0],
                         name: item.products!.name,
-                        price: item.products!.productPrice,
+                        price: item.products!.attributePrice == 0
+                            ? item.products!.productPrice
+                            : item.products!.attributePrice,
                         quantity: item.quantity,
                         onDeletePress: () {
                           onDelete!(item.cartId, cart.storeName);
