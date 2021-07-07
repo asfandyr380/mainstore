@@ -1,3 +1,4 @@
+import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
@@ -81,6 +82,7 @@ class ProductDetailView extends StatelessWidget {
                     // Product Detials
                     Container(
                       child: ProductDetails(
+                        attribute: productDetails.attributes,
                         name: productDetails.name,
                         by: productDetails.by,
                         price: productDetails.productPrice,
@@ -250,45 +252,53 @@ class ProductImageCarousel extends StatelessWidget {
   }
 }
 
-class Attributes extends StatelessWidget {
-  const Attributes({Key? key}) : super(key: key);
+class Attributes extends StatefulWidget {
+  final List<AttributeModel>? attribute;
 
+  Attributes({this.attribute});
+
+  @override
+  _AttributesState createState() => _AttributesState();
+}
+
+class _AttributesState extends State<Attributes> {
+  CustomGroupController controller = CustomGroupController();
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Container(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            child: Row(
-              children: [
-                Text(
-                  'Variants',
-                  style: TextStyle(color: Colors.grey),
-                ),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal * 0.7,
-                ),
-                Text('Black'),
-              ],
+            child: Text(
+              'Variants',
+              style: TextStyle(color: Colors.grey),
             ),
           ),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical * 1,
+          ),
           Container(
-            width: SizeConfig.blockSizeHorizontal * 13,
-            height: SizeConfig.blockSizeVertical * 8,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 3,
-                itemBuilder: (context, i) {
+            width: SizeConfig.blockSizeHorizontal * 12,
+            height: SizeConfig.blockSizeVertical * 10,
+            child: CustomGroupedCheckbox.grid(
+                controller: controller,
+                isScroll: false,
+                values: widget.attribute!,
+                itemBuilder: (context, i, value, isDisable) {
                   return Container(
                     padding: EdgeInsets.symmetric(
                       vertical: SizeConfig.blockSizeVertical * 1,
                       horizontal: SizeConfig.blockSizeHorizontal * 0.7,
                     ),
-                    child: AttributeBox(),
+                    child: AttributeBox(
+                      onTap: () {
+                        controller.enabledItems([value]);
+                      },
+                      isSelected: value,
+                      variant: widget.attribute![i].variant,
+                    ),
                   );
                 }),
           ),
@@ -299,14 +309,32 @@ class Attributes extends StatelessWidget {
 }
 
 class AttributeBox extends StatelessWidget {
-  const AttributeBox({Key? key}) : super(key: key);
+  final bool? isSelected;
+  final Function? onTap;
+  final String? variant;
+  AttributeBox({this.isSelected, this.onTap, this.variant});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: SizeConfig.blockSizeVertical * 0.8,
-      width: SizeConfig.blockSizeHorizontal * 3,
-      decoration: BoxDecoration(color: Colors.black),
+    bool _isSelected = isSelected ?? false;
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => onTap!(),
+        child: Container(
+          alignment: Alignment.center,
+          height: SizeConfig.blockSizeVertical * 0.8,
+          width: SizeConfig.blockSizeHorizontal * 3.5,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: _isSelected ? Border.all(color: accentColor) : null,
+          ),
+          child: Text(
+            '$variant',
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w300),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -322,6 +350,7 @@ class ProductDetails extends StatelessWidget {
   final Function(bool)? addorplus;
   final int? quantity;
   final bool? isLoading;
+  final List<AttributeModel>? attribute;
   ProductDetails({
     this.salePrice,
     this.by,
@@ -333,6 +362,7 @@ class ProductDetails extends StatelessWidget {
     this.addorplus,
     this.quantity,
     this.isLoading,
+    this.attribute,
   });
   @override
   Widget build(BuildContext context) {
@@ -428,9 +458,13 @@ class ProductDetails extends StatelessWidget {
         SizedBox(
           height: SizeConfig.blockSizeVertical * 3,
         ),
-        Container(
-          child: Attributes(),
-        ),
+        attribute!.isEmpty
+            ? Container()
+            : Container(
+                child: Attributes(
+                  attribute: attribute,
+                ),
+              ),
         SizedBox(
           height: SizeConfig.blockSizeVertical * 3,
         ),

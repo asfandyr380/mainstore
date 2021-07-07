@@ -44,9 +44,11 @@ class WishServices {
         for (int i = 2; i <= 4; i++) {
           images.add(body['image$i']);
         }
+
         categories.add(body['cate_name']);
         categories.add(body['subCate_name'] ?? '');
-        var product = ProductsModel.fromMap(body, images, categories, false);
+        var product =
+            ProductsModel.fromMap(body, images, categories, false, []);
         products.add(product);
       }
     }

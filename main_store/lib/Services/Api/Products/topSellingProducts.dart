@@ -18,10 +18,18 @@ class TopSelling {
     for (var body in decodedBody) {
       List<String> images = [];
       List<String> categories = [];
+      List<AttributeModel> attributes = [];
+      List attribute = body['Attribute'];
       images.add(body['Product']['image']);
       for (int i = 2; i <= 4; i++) {
         images.add(body['Product']['image$i']);
       }
+      for (var att in attribute) {
+        images.add(att['image']);
+        var attribute = AttributeModel.fromJson(att);
+        attributes.add(attribute);
+      }
+
       categories.add(body['Product']['main_cate']);
       categories.add(body['Product']['cate_name']);
       categories.add(body['Product']['subCate_name'] ?? '');
@@ -30,16 +38,16 @@ class TopSelling {
         for (var list in wishProducts) {
           if (list.productId == body['Product']['id']) {
             product = ProductsModel.fromMap(
-                body['Product'], images, categories, true);
+                body['Product'], images, categories, true, attributes);
           } else {
             product = ProductsModel.fromMap(
-                body['Product'], images, categories, false);
+                body['Product'], images, categories, false, attributes);
           }
           products.add(product);
         }
       } else {
-        var product =
-            ProductsModel.fromMap(body['Product'], images, categories, false);
+        var product = ProductsModel.fromMap(
+            body['Product'], images, categories, false, attributes);
         products.add(product);
       }
     }

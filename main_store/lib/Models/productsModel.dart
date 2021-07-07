@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class ProductsModel {
   int productId = 0;
   int storeId = 0;
@@ -12,10 +10,11 @@ class ProductsModel {
   int? status = 1;
   List<String>? category = [];
   List<String>? images = [];
+  List<AttributeModel> attributes = [];
   bool? onWishlist = false;
 
   ProductsModel.fromMap(Map<String, dynamic>? map, List<String>? images,
-      List<String>? categories, bool onlist)
+      List<String>? categories, bool onlist, List<AttributeModel> attributelist)
       : name = map!['name'] ?? '',
         productPrice = map['price'] ?? 0,
         salePrice = map['salePrice'] ?? 0,
@@ -27,5 +26,23 @@ class ProductsModel {
         images = images ?? [],
         productId = map['id'],
         storeId = map['store_Id'],
-        onWishlist = onlist;
+        onWishlist = onlist,
+        attributes = attributelist;
+}
+
+class AttributeModel {
+  int id = 0;
+  int stock = 0;
+  String variant = '';
+  int price = 0;
+  String image = '';
+  bool isSelected = false;
+
+  AttributeModel.fromJson(Map map)
+      : id = map['attribute_Id'],
+        stock = map['stock'],
+        variant = map['variant'],
+        price = map['price'],
+        image = map['image'] ?? '',
+        isSelected = false;
 }

@@ -52,9 +52,10 @@ class CartService {
         for (int i = 2; i <= 4; i++) {
           images.add(product['image$i']);
         }
+
         categories.add(product['cate_name']);
         categories.add(product['subCate_name'] ?? '');
-        var pro = ProductsModel.fromMap(product, images, categories, false);
+        var pro = ProductsModel.fromMap(product, images, categories, false, []);
         var cartProduct = CartProducts.fromMap(product, pro);
         cartProducts.add(cartProduct);
       }

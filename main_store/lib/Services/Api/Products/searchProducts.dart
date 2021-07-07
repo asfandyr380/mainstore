@@ -16,16 +16,24 @@ class SearchProductServices {
       if (res.statusCode == 200) {
         for (var body in decodedBody) {
           List<String> images = [];
-          List<String> categories = [];
+          List<AttributeModel> attributes = [];
+          List attribute = body['Attribute'];
           images.add(body['Product']['image']);
           for (int i = 2; i <= 4; i++) {
             images.add(body['Product']['image$i']);
           }
+          for (var att in attribute) {
+            images.add(att['image']);
+            var attribute = AttributeModel.fromJson(att);
+            attributes.add(attribute);
+          }
+          List<String> categories = [];
+
           categories.add(body['Product']['main_cate']);
           categories.add(body['Product']['cate_name']);
           categories.add(body['Product']['subCate_name']);
-          var product =
-              ProductsModel.fromMap(body['Product'], images, categories, false);
+          var product = ProductsModel.fromMap(
+              body['Product'], images, categories, false, attributes);
           products.add(product);
         }
       }

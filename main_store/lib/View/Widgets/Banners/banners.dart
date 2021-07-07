@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
-import 'package:main_store/Extention/hover_extention.dart';
 import 'package:main_store/View/Widgets/Banners/bannerViewModel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -279,7 +278,7 @@ class BannerButton extends StatefulWidget {
 class _BannerButtonState extends State<BannerButton> {
   bool hovering = false;
   final nonHoverTransform = Matrix4.identity()..translate(0, 0, 0);
-  final hoverTransform = Matrix4.identity()..translate(0, 10, 0);
+  final hoverTransform = Matrix4.identity()..translate(0, -5, 0);
 
   mouseEnter(bool state) {
     setState(() {
@@ -297,6 +296,7 @@ class _BannerButtonState extends State<BannerButton> {
         transform: hovering ? hoverTransform : nonHoverTransform,
         child: OutlinedButton(
           style: OutlinedButton.styleFrom(
+            animationDuration: Duration(milliseconds: 150),
             primary: accentColor,
             backgroundColor: hovering ? accentColor : null,
             side: BorderSide(
