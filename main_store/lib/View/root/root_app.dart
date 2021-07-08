@@ -22,7 +22,7 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: SearchPage(),
+      // home: CategoryFilterMenu(),
       initialRoute: ProductListing,
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       onGenerateRoute: (settings) => generateRoute(settings),

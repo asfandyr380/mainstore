@@ -26,12 +26,14 @@ class FilterProducts {
       wishProducts = await _wish.getWishlist(ip);
     }
 
-    final Uri _OPTIONALURL = Uri.parse('$baseUrl/products/');
+    final Uri _OPTIONALURL = Uri.parse('$baseUrl/products/0');
     List<ProductsModel> products = [];
     if (categories.isEmpty) {
       http.Response res = await http.get(_OPTIONALURL);
-      List decodedBody = jsonDecode(res.body);
-      for (var body in decodedBody) {
+      var decodedBody = jsonDecode(res.body);
+      var totalProducts = decodedBody['TotalProducts'];
+      print(totalProducts);
+      for (var body in decodedBody['Products']) {
         List<String> images = [];
         List<String> categories = [];
         List<AttributeModel> attributes = [];

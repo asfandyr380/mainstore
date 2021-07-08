@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
+import 'package:main_store/Models/categoryModel.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/Services/Api/Products/filterProducts.dart';
+import 'package:main_store/Services/Fireabase/Firestore/get_categorys.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class ProductListingPageViewModel extends ChangeNotifier {
@@ -13,6 +15,23 @@ class ProductListingPageViewModel extends ChangeNotifier {
   bool selectState = false;
   bool isLoading = false;
   bool byRange = false;
+
+  GetCategorys _cate = locator<GetCategorys>();
+  List<Future<CategoryModel>> _categorylist = [];
+  List<CategoryModel> catelist = [];
+
+  fetchCategorys() async {
+    var result = await _cate.getCategory();
+    if (result is List<Future<CategoryModel>>) {
+      _categorylist = result;
+      notifyListeners();
+      for (var catemodel in _categorylist) {
+        catemodel.then((value) {
+          catelist.add(value);
+        });
+      }
+    }
+  }
 
   isBusy(bool state) {
     isLoading = state;
@@ -47,18 +66,11 @@ class ProductListingPageViewModel extends ChangeNotifier {
     }
   }
 
-  byCategory(String cate, bool state) async {
-    if (state) {
-      category.add(cate);
-      selectState = state;
-      notifyListeners();
-    } else {
-      category.remove(cate);
-      selectState = state;
-      notifyListeners();
-    }
-    fetchProductByFilter(category);
+  byCategory(List cate) async {
+    category = cate as List<String>;
+    notifyListeners();
     print(category);
+    fetchProductByFilter(category);
   }
 
   fetchProductByFilter(List<String>? cate) async {

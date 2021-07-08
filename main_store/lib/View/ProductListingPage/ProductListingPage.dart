@@ -1,7 +1,9 @@
+import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/Models/categoryModel.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
@@ -51,8 +53,8 @@ class ProductListingPage extends StatelessWidget {
                           state: model.selectState,
                           value: model.range,
                           onSliderChange: (val) => model.onChange(val),
-                          onTap: (cate, state) {
-                            model.byCategory(cate, state);
+                          onTap: (cate) {
+                            model.byCategory(cate);
                           },
                         ),
                       ),
@@ -239,7 +241,7 @@ class Banner extends StatelessWidget {
 class FilterMenu extends StatelessWidget {
   final SfRangeValues? value;
   final Function(SfRangeValues)? onSliderChange;
-  final Function(String, bool)? onTap;
+  final Function(List)? onTap;
   final bool? state;
   const FilterMenu({this.value, this.onSliderChange, this.onTap, this.state});
 
@@ -292,6 +294,7 @@ class FilterMenu extends StatelessWidget {
               top: SizeConfig.blockSizeVertical * 2,
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
                   alignment: Alignment.topLeft,
@@ -307,16 +310,74 @@ class FilterMenu extends StatelessWidget {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  child: SideNavMenu(
-                    state: state,
-                    onTap: (val, state) => onTap!(val, state),
-                    productMenu: true,
+                  child: CategoryFilterMenu(
+                    onSelect: (cate) => onTap!(cate),
                   ),
                 ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CategoryFilterMenu extends StatefulWidget {
+  final Function(List)? onSelect;
+
+  CategoryFilterMenu({this.onSelect});
+
+  @override
+  _CategoryFilterMenuState createState() => _CategoryFilterMenuState();
+}
+
+class _CategoryFilterMenuState extends State<CategoryFilterMenu> {
+  GroupController multipleCheckController = GroupController(
+    isMultipleSelection: true,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    multipleCheckController.listen((data) {
+      print(data);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<ProductListingPageViewModel>.reactive(
+      viewModelBuilder: () => ProductListingPageViewModel(),
+      onModelReady: (model) => model.fetchCategorys(),
+      builder: (context, model, child) => Container(
+        child: Column(
+          children: [
+            for (var c in model.catelist)
+              ExpansionTile(
+                title: Text(c.cateName!),
+                textColor: accentColor,
+                iconColor: accentColor,
+                children: [
+                  for (var sub in c.subCategory)
+                    SimpleGroupedCheckbox<String>(
+                      controller: multipleCheckController,
+                      itemsTitle: sub.subCate!,
+                      values: sub.subCate!,
+                      activeColor: accentColor,
+                      groupTitle: sub.cateName,
+                      checkFirstElement: false,
+                      helperGroupTitle: true,
+                      onItemSelected: (data) {
+                        // print(data);
+                        widget.onSelect!(data);
+                      },
+                      isExpandableTitle: sub.subCate!.isEmpty ? false : true,
+                    ),
+                ],
+              ),
+          ],
+        ),
       ),
     );
   }
