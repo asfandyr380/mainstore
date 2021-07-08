@@ -101,29 +101,6 @@ class CartViewModel extends ChangeNotifier {
     getCount();
   }
 
-  // getCart() async {
-  //   var _user = await _auth.currrentUser();
-  //   var _userIp = await Ipify.ipv4();
-  //   if (!_user) {
-  //     String userId = await _auth.getUserId();
-  //     var result = await _cartService.getCartProducts(6);
-  //     if (result is List<CartModel>) {
-  //       cartlist = result;
-  //       notifyListeners();
-  //     } else {
-  //       print(result);
-  //     }
-  //   } else {
-  //     var result = await _cart.getCartProducts(_userIp);
-  //     if (result is List<CartModel>) {
-  //       cartlist = result;
-  //       notifyListeners();
-  //     } else {
-  //       print(result);
-  //     }
-  //   }
-  // }
-
   Future removeProductFromCart(int id) async {
     var result = await _cartService.deleteFromCart(id);
     print(result);

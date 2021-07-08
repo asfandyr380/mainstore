@@ -20,7 +20,7 @@ class HomeViewModel extends ChangeNotifier {
   List<Banners> bannerlist = [];
   List<ReviewModel> reviewlist = [];
   int present = 0;
-  int perPage = 2;
+  int perPage = 1;
   var items = <ProductsModel>[];
   List<ProductsModel> onSaleProducts = [];
   List<ProductsModel> topSellingProducts = [];
@@ -55,15 +55,6 @@ class HomeViewModel extends ChangeNotifier {
   navigatetodetails(ProductsModel category) {
     _navigation.navigateTo(ProductDetailsPage, arguments: category);
   }
-
-  // Future<List<String>> getAvailableProduct() async {
-  //   var result = await _products.getStoreProducts();
-  //   if (result is List<String>) {
-  //     _docIds = result;
-  //     notifyListeners();
-  //   }
-  //   return _docIds;
-  // }
 
   getBanner(List<Banners> banners) {
     bannerlist = banners;

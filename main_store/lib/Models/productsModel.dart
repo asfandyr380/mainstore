@@ -5,6 +5,7 @@ class ProductsModel {
   String? description = '';
   String? by = '';
   double? productPrice = 0;
+  double? attributePrice = 0;
   double? salePrice = 0;
   int? onSale = 0;
   int? status = 1;
@@ -22,6 +23,7 @@ class ProductsModel {
         by = map['store_name'] ?? '',
         onSale = map['onSale'] ?? 0,
         status = map['status'] ?? 0,
+        attributePrice = map['attributePrice'],
         category = categories ?? [],
         images = images ?? [],
         productId = map['id'],

@@ -6,9 +6,9 @@ class Banners {
 
   Banners({this.image, this.mainText, this.id});
 
-  Banners.fromMap(Map map)
+  Banners.fromMap(Map map, String? image)
       : id = map['bannerid'] ?? 0,
-        image = map['image'] ?? '',
+        image = image ?? '',
         mainText = map['mainText'],
         cate = map['cate'];
 }

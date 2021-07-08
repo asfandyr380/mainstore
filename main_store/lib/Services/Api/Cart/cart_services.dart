@@ -17,13 +17,15 @@ class CartService {
     }
   }
 
-  Future addToCart(int productId, int storeId, int userId, int quantity) async {
+  Future addToCart(int productId, int storeId, int userId, int quantity,
+      double attributePrice) async {
     Uri _URL = Uri.parse('$baseUrl/cart/add/');
     Map<String, dynamic> req = {
       "product_Id": productId.toString(),
       "store_Id": storeId.toString(),
       "user_Id": userId.toString(),
-      "quantity": quantity.toString()
+      "quantity": quantity.toString(),
+      "attributePrice": attributePrice.toString()
     };
 
     http.Response res = await http.post(_URL, body: req);

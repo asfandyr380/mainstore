@@ -17,7 +17,14 @@ class Dropdown extends StatelessWidget {
           children: [
             DropdownButton<String>(
               value: model.dropDownVal,
+<<<<<<< HEAD
               icon: Icon(FontAwesomeIcons.chevronDown, color: footerColor),
+=======
+              icon: Icon(
+                FontAwesomeIcons.chevronDown,
+                color: footerColor,
+              ),
+>>>>>>> a4ab8aacc1a8607d453c9212c11ea0fdac0b6ef9
               iconSize: 15,
               elevation: 8,
               style: const TextStyle(color: Colors.black),
@@ -41,7 +48,14 @@ class Dropdown extends StatelessWidget {
                 );
               }).toList(),
             ),
+<<<<<<< HEAD
             Icon(FontAwesomeIcons.chevronDown, size: 12),
+=======
+            Icon(
+              FontAwesomeIcons.chevronDown,
+              size: 12,
+            ),
+>>>>>>> a4ab8aacc1a8607d453c9212c11ea0fdac0b6ef9
           ],
         ),
       ),

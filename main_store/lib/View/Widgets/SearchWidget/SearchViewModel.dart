@@ -9,8 +9,8 @@ class SearchViewModel extends ChangeNotifier {
   SearchProductServices _services = locator<SearchProductServices>();
   Navigation _navigation = locator<Navigation>();
 
-  Future<List> search(String key) async {
-    List<ProductsModel> result = await _services.seaerhForProduct(key);
+  Future<List> search(String? key) async {
+    List<ProductsModel> result = await _services.seaerhForProduct(key ?? '');
     return result;
   }
 

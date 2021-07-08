@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
@@ -29,6 +31,10 @@ class HeaderViewModel extends ChangeNotifier {
     if (!_disposed) {
       super.notifyListeners();
     }
+  }
+
+  reload() {
+    Timer.periodic(Duration(seconds: 5), (_) => getCount());
   }
 
   getCount() async {

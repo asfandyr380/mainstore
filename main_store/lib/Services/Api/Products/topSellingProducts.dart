@@ -1,15 +1,30 @@
 import 'dart:convert';
+import 'package:dart_ipify/dart_ipify.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:main_store/Services/Api/Wishlist/wishlist_Services.dart';
+import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 
 class TopSelling {
   WishServices _wish = locator<WishServices>();
+  StorageServices _services = locator<StorageServices>();
 
   Future getProducts() async {
-    List<ProductsModel> wishProducts = await _wish.getWishlist(6);
+    List<ProductsModel> wishProducts = [];
+    var user = await _services.getUser();
+    var _userIp = await Ipify.ipv4();
+    String i = _userIp.replaceAll('.', '');
+    String newI = i.substring(i.length - 5);
+    int ip = int.parse(newI);
+
+    if (user) {
+      int userId = await _services.getUserId();
+      wishProducts = await _wish.getWishlist(userId);
+    } else {
+      wishProducts = await _wish.getWishlist(ip);
+    }
     List<ProductsModel> products = [];
     Uri _BaseURL = Uri.parse('$baseUrl/products/topSelling');
     http.Response res = await http.get(_BaseURL);
