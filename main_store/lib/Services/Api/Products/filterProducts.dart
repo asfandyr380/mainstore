@@ -10,8 +10,9 @@ import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 class FilterProducts {
   WishServices _wish = locator<WishServices>();
   StorageServices _services = locator<StorageServices>();
+  int totalProducts = 0;
 
-  Future byCategory(List<String> categories) async {
+  Future byCategory(List<String> categories, int page) async {
     List<ProductsModel> wishProducts = [];
     var user = await _services.getUser();
     var _userIp = await Ipify.ipv4();
@@ -26,12 +27,12 @@ class FilterProducts {
       wishProducts = await _wish.getWishlist(ip);
     }
 
-    final Uri _OPTIONALURL = Uri.parse('$baseUrl/products/0');
+    final Uri _OPTIONALURL = Uri.parse('$baseUrl/products/$page');
     List<ProductsModel> products = [];
     if (categories.isEmpty) {
       http.Response res = await http.get(_OPTIONALURL);
       var decodedBody = jsonDecode(res.body);
-      var totalProducts = decodedBody['TotalProducts'];
+      totalProducts = decodedBody['TotalProducts'];
       print(totalProducts);
       for (var body in decodedBody['Products']) {
         List<String> images = [];
@@ -71,12 +72,13 @@ class FilterProducts {
       }
     } else {
       for (var category in categories) {
-        final Uri _URL = Uri.parse('$baseUrl/products/category');
+        final Uri _URL = Uri.parse('$baseUrl/products/category/$page');
         var reqBody = {'cate': category, 'subCate': category};
         http.Response res = await http.post(_URL, body: reqBody);
-        List decodedBody = jsonDecode(res.body);
-        // print(decodedBody);
-        for (var body in decodedBody) {
+        var decodedBody = jsonDecode(res.body);
+        totalProducts = decodedBody['TotalProducts'];
+        print(totalProducts);
+        for (var body in decodedBody['Products']) {
           List<String> images = [];
           List<String> categories = [];
           List<AttributeModel> attributes = [];

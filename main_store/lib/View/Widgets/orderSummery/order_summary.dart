@@ -13,8 +13,17 @@ class OrderSummary extends StatelessWidget {
   final double? total;
   final bool? checkout;
   final SummeryModel? m;
-  OrderSummary(
-      {this.checkout, this.shippingfee, this.subTotal, this.total, this.m});
+  final Function? pay;
+  final bool? isLoading;
+  OrderSummary({
+    this.checkout,
+    this.shippingfee,
+    this.subTotal,
+    this.total,
+    this.m,
+    this.pay,
+    this.isLoading,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +31,11 @@ class OrderSummary extends StatelessWidget {
     double _subTotal = subTotal ?? 0;
     double _shippingfee = shippingfee ?? 0;
     double _total = total ?? 0;
+    bool _isLoading = isLoading ?? false;
     return ViewModelBuilder<SummeryViewModel>.reactive(
       viewModelBuilder: () => SummeryViewModel(),
       builder: (context, model, child) => Container(
-        height: SizeConfig.blockSizeVertical * 48,
+        // height: SizeConfig.blockSizeVertical * 48,
         width: SizeConfig.blockSizeHorizontal * 22,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -39,19 +49,22 @@ class OrderSummary extends StatelessWidget {
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(
+              vertical: SizeConfig.blockSizeVertical * 1,
               horizontal: SizeConfig.blockSizeHorizontal * 1),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Row(
-                children: [
-                  Text(
-                    'Order Summary',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: SizeConfig.blockSizeHorizontal * 2),
-                  ),
-                ],
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Order Summary',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: SizeConfig.blockSizeHorizontal * 2),
+                ),
+              ),
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * 2,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,6 +84,9 @@ class OrderSummary extends StatelessWidget {
                         fontSize: SizeConfig.blockSizeHorizontal * 1),
                   ),
                 ],
+              ),
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * 0.8,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,44 +127,58 @@ class OrderSummary extends StatelessWidget {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  Text(
-                    'Select Payment Method:',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: SizeConfig.blockSizeHorizontal * 1),
-                  ),
-                ],
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * 2,
               ),
-              Row(
-                children: [
-                  Checkbox(
-                    side: BorderSide(width: 1),
-                    value: model.isChecked,
-                    onChanged: (val) => model.changeState(val),
-                    activeColor: accentColor,
-                  ),
-                  Container(
-                    width: SizeConfig.blockSizeHorizontal * 6,
-                    child: Image.asset('assets/images/paypal-logo.png'),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: SizeConfig.blockSizeHorizontal * 20,
-                    child: CustomButton(
-                      isEnable: model.isChecked,
-                      onPressed: () => _checkout
-                          ? model.navigateToCheckOut(
-                              _total, _subTotal, _shippingfee)
-                          : model.navigateToSuccess(),
-                      label: _checkout ? 'Check Out' : 'Proceed To Pay',
+              _checkout
+                  ? Container()
+                  : Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Select Payment Method:',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: SizeConfig.blockSizeHorizontal * 1),
+                      ),
                     ),
-                  ),
-                ],
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * 2,
+              ),
+              _checkout
+                  ? Container()
+                  : Row(
+                      children: [
+                        Checkbox(
+                          side: BorderSide(width: 1),
+                          value: model.isChecked,
+                          onChanged: (val) => model.changeState(val),
+                          activeColor: accentColor,
+                        ),
+                        Container(
+                          width: SizeConfig.blockSizeHorizontal * 6,
+                          child: Image.asset('assets/images/paypal-logo.png'),
+                        ),
+                      ],
+                    ),
+              _checkout
+                  ? Container()
+                  : SizedBox(
+                      height: SizeConfig.blockSizeVertical * 3,
+                    ),
+              Container(
+                width: SizeConfig.blockSizeHorizontal * 20,
+                child: CustomButton(
+                  isLoading: _isLoading,
+                  isEnable: _checkout ? true : model.isChecked,
+                  onPressed: () => _checkout
+                      ? model.navigateToCheckOut(
+                          _total, _subTotal, _shippingfee)
+                      : pay!(),
+                  label: _checkout ? 'Check Out' : 'Proceed To Pay',
+                ),
+              ),
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * 1,
               ),
             ],
           ),

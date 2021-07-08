@@ -15,10 +15,19 @@ class ProductListingPageViewModel extends ChangeNotifier {
   bool selectState = false;
   bool isLoading = false;
   bool byRange = false;
+  int totalCount = 0;
+  int currentPage = 0;
 
   GetCategorys _cate = locator<GetCategorys>();
   List<Future<CategoryModel>> _categorylist = [];
   List<CategoryModel> catelist = [];
+
+  changePage(int page) {
+    currentPage = page;
+    notifyListeners();
+    print(page);
+    fetchProductByFilter([]);
+  }
 
   fetchCategorys() async {
     var result = await _cate.getCategory();
@@ -73,13 +82,17 @@ class ProductListingPageViewModel extends ChangeNotifier {
     fetchProductByFilter(category);
   }
 
-  fetchProductByFilter(List<String>? cate) async {
+  fetchProductByFilter(
+    List<String>? cate,
+  ) async {
     isBusy(true);
-    var result = await _filterProducts.byCategory(cate!);
+    var result = await _filterProducts.byCategory(cate!, currentPage);
     if (result is List<ProductsModel>) {
       productList = result;
       byRange = false;
+      totalCount = _filterProducts.totalProducts;
       notifyListeners();
+      print('totalProducts $totalCount');
     } else {
       print(result);
     }

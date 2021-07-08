@@ -19,13 +19,17 @@ class HomeViewModel extends ChangeNotifier {
   ReviewServices _reviewServices = locator<ReviewServices>();
   List<Banners> bannerlist = [];
   List<ReviewModel> reviewlist = [];
-  int present = 0;
-  int perPage = 1;
   var items = <ProductsModel>[];
   List<ProductsModel> onSaleProducts = [];
   List<ProductsModel> topSellingProducts = [];
   List<ProductsModel> nearbyProducts = [];
   bool isLoading = false;
+  bool isNearbyloading = false;
+  bool isButtonLoading = false;
+  int topSaleCurrentPage = 0;
+  int onSaleCurrentPage = 0;
+  int nearbyCurrentPage = 0;
+  int totalProducts = 0;
 
   isBusy(bool state) {
     isLoading = state;
@@ -41,14 +45,10 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   loadMore() async {
-    if ((present + perPage) > nearbyProducts.length) {
-      items.addAll(nearbyProducts.getRange(present, nearbyProducts.length));
-      notifyListeners();
-    } else {
-      items.addAll(nearbyProducts.getRange(present, present + perPage));
-      notifyListeners();
-    }
-    present = present + perPage;
+    isButtonLoading = true;
+    nearbyCurrentPage += 1;
+    fetchNearbyProducts();
+    isButtonLoading = false;
     notifyListeners();
   }
 
@@ -62,26 +62,31 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   fetchNearbyProducts() async {
-    isBusy(true);
-    var result = await _products.getProducts();
+    if (!isButtonLoading) {
+      isNearbyloading = true;
+    }
+    notifyListeners();
+    var result = await _products.getProducts(nearbyCurrentPage);
     if (result is List<ProductsModel>) {
-      nearbyProducts = result;
-      notifyListeners();
-      // load more on button press
-      items.addAll(nearbyProducts.getRange(present, present + perPage));
-      present = present + perPage;
+      for (var p in result) {
+        nearbyProducts.add(p);
+      }
+      totalProducts = _products.totalProducts;
       notifyListeners();
     } else {
       print(result);
     }
-    isBusy(false);
+    isNearbyloading = false;
+    notifyListeners();
   }
 
   fetchTopSellingProducts() async {
     isBusy(true);
-    var result = await _topSelling.getProducts();
+    var result = await _topSelling.getProducts(topSaleCurrentPage);
     if (result is List<ProductsModel>) {
-      topSellingProducts = result;
+      for (var product in result) {
+        topSellingProducts.add(product);
+      }
       notifyListeners();
     } else {
       print(result);
@@ -91,9 +96,11 @@ class HomeViewModel extends ChangeNotifier {
 
   fetchOnSaleProducts() async {
     isBusy(true);
-    var result = await _saleProducts.getProducts();
+    var result = await _saleProducts.getProducts(onSaleCurrentPage);
     if (result is List<ProductsModel>) {
-      onSaleProducts = result;
+      for (var p in result) {
+        onSaleProducts.add(p);
+      }
       notifyListeners();
     } else {
       print(result);

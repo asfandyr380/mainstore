@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
@@ -108,29 +109,37 @@ class Home extends StatelessWidget {
                 child: NearbyProducts(
                   navegateToDetails: (e) => model.navigatetodetails(e),
                   productDetails: model.nearbyProducts,
-                  loadMore: () => model.loadMore(),
-                  present: model.present,
-                  items: model.items,
-                  isLoading: model.isLoading,
+                  isLoading: model.isNearbyloading,
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.blockSizeVertical * 4,
-                ),
-                child: ElevatedButton(
-                  onPressed: () => model.loadMore(),
-                  style: ElevatedButton.styleFrom(
-                    primary: accentColor,
-                    fixedSize: Size(
-                      SizeConfig.blockSizeHorizontal * 8,
-                      SizeConfig.blockSizeVertical * 5,
+              model.isButtonLoading
+                  ? Container(
+                      height: SizeConfig.blockSizeVertical * 1,
+                      width: SizeConfig.blockSizeHorizontal * 2,
+                      child: LinearProgressIndicator(
+                        color: accentColor,
+                      ),
+                    )
+                  : Container(),
+              model.totalProducts == model.nearbyCurrentPage + 1
+                  ? Container()
+                  : Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: SizeConfig.blockSizeVertical * 4,
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () => model.loadMore(),
+                        style: ElevatedButton.styleFrom(
+                          primary: accentColor,
+                          fixedSize: Size(
+                            SizeConfig.blockSizeHorizontal * 8,
+                            SizeConfig.blockSizeVertical * 5,
+                          ),
+                        ),
+                        child: Text('Load More',
+                            style: TextStyle(color: Colors.white)),
+                      ),
                     ),
-                  ),
-                  child:
-                      Text('Load More', style: TextStyle(color: Colors.white)),
-                ),
-              ),
               Divider(),
               // Reviews
               SizedBox(
@@ -249,17 +258,8 @@ class ReviewsCard extends StatelessWidget {
           SizedBox(
             height: SizeConfig.blockSizeVertical * 1,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              for (int i = 0; i < 5; i++)
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: RatingStar(
-                    isEnable: true,
-                  ),
-                ),
-            ],
+          RatingStar(
+            rating: details!.rating,
           )
         ],
       ),
@@ -268,43 +268,36 @@ class ReviewsCard extends StatelessWidget {
 }
 
 class RatingStar extends StatelessWidget {
-  final bool? isEnable;
   final int? rating;
-  RatingStar({this.isEnable, this.rating});
+  RatingStar({this.rating});
 
   @override
   Widget build(BuildContext context) {
-    bool _isEnable = isEnable ?? true;
-    return Container(
-      height: 35,
-      width: 35,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: _isEnable ? Colors.green : Colors.white,
+    int _rating = rating ?? 1;
+    return RatingBar.builder(
+      ignoreGestures: true,
+      initialRating: _rating.toDouble(),
+      minRating: 1,
+      direction: Axis.horizontal,
+      allowHalfRating: false,
+      itemCount: 5,
+      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+      itemBuilder: (context, _) => Icon(
+        Icons.star,
+        color: accentColor,
       ),
-      child: Icon(
-        FontAwesomeIcons.star,
-        size: 15,
-        color: _isEnable ? Colors.white : Colors.black,
-      ),
+      onRatingUpdate: (rating) {
+        print(rating);
+      },
     );
   }
 }
 
 class NearbyProducts extends StatelessWidget {
   List<ProductsModel>? productDetails;
-  final int? present;
-  final items;
   final Function(ProductsModel)? navegateToDetails;
-  final Function? loadMore;
   final bool? isLoading;
-  NearbyProducts(
-      {this.productDetails,
-      this.navegateToDetails,
-      this.items,
-      this.present,
-      this.loadMore,
-      this.isLoading});
+  NearbyProducts({this.productDetails, this.navegateToDetails, this.isLoading});
 
   @override
   Widget build(BuildContext context) {
@@ -347,11 +340,7 @@ class NearbyProducts extends StatelessWidget {
                                   ? 3
                                   : 2,
                     ),
-                    itemCount: productDetails == null
-                        ? 0
-                        : (present! <= productDetails!.length)
-                            ? items.length + 1
-                            : items.length,
+                    itemCount: productDetails!.length,
                     itemBuilder: (context, i) {
                       return Container(
                         padding: EdgeInsets.symmetric(

@@ -22,7 +22,7 @@ class Header extends StatelessWidget {
       viewModelBuilder: () => HeaderViewModel(),
       onModelReady: (model) {
         model.getUser();
-        model.reload();
+        model.getCount();
       },
       builder: (context, model, child) => Column(
         children: [

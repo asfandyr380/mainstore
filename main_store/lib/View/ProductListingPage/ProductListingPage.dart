@@ -47,6 +47,7 @@ class ProductListingPage extends StatelessWidget {
                 child: Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         child: FilterMenu(
@@ -71,12 +72,64 @@ class ProductListingPage extends StatelessWidget {
                   ),
                 ),
               ),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    for (int i = 0; i < model.totalCount; i++)
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Pagination(
+                          textColor: model.currentPage == i
+                              ? Colors.white
+                              : Colors.black,
+                          color: model.currentPage == i
+                              ? accentColor
+                              : footerColor,
+                          count: i,
+                          selectPage: (page) => model.changePage(page),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * 5,
+              ),
               // Footer
               Container(
                 child: Footer(),
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class Pagination extends StatelessWidget {
+  final int? count;
+  final Function(int)? selectPage;
+  final Color? color;
+  final Color? textColor;
+  Pagination({this.count, this.selectPage, this.color, this.textColor});
+  @override
+  Widget build(BuildContext context) {
+    int _count = count ?? 0;
+    return GestureDetector(
+      onTap: () => selectPage!(_count),
+      child: Container(
+        alignment: Alignment.center,
+        height: SizeConfig.blockSizeVertical * 3,
+        width: SizeConfig.blockSizeHorizontal * 2,
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Text(
+          '${_count + 1}',
+          style: TextStyle(color: textColor),
         ),
       ),
     );

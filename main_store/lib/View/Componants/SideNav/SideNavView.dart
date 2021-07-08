@@ -54,7 +54,7 @@ class SideNavMenu extends StatelessWidget {
                 state: state,
                 isHome: productMenu,
                 items: cate,
-                onTap: (val, state) => onTap!(val, state),
+                onTap: (val, state) => model.navigateToProductlisting(val),
               )
           ],
         ),
@@ -117,34 +117,30 @@ class SubItem extends StatelessWidget {
               for (var item in items!)
                 GestureDetector(
                   onTap: () => onTap!(item, true),
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: ListTile(
-                      leading: _isHome
-                          ? Checkbox(
-                              onChanged: (val) => onTap!(item, val!),
-                              value: selectState,
-                            )
-                          : null,
-                      title: Text(item),
-                    ),
+                  child: ListTile(
+                    mouseCursor: SystemMouseCursors.click,
+                    leading: _isHome
+                        ? Checkbox(
+                            onChanged: (val) => onTap!(item, val!),
+                            value: selectState,
+                          )
+                        : null,
+                    title: Text(item),
                   ),
                 ),
             ],
           )
         : GestureDetector(
             onTap: () => onTap!(title!, true),
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: ListTile(
-                leading: _isHome
-                    ? Checkbox(
-                        onChanged: (val) => onTap!(title!, val!),
-                        value: selectState,
-                      )
-                    : null,
-                title: Text(title!),
-              ),
+            child: ListTile(
+              mouseCursor: SystemMouseCursors.click,
+              leading: _isHome
+                  ? Checkbox(
+                      onChanged: (val) => onTap!(title!, val!),
+                      value: selectState,
+                    )
+                  : null,
+              title: Text(title!),
             ),
           );
   }

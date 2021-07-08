@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
+import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Models/swipeBanner.dart';
 import 'package:main_store/Services/Api/Banners/banner_Services.dart';
 import 'package:main_store/Services/Fireabase/Firestore/get_banners.dart';
+import 'package:main_store/Services/Navigation/navigation_services.dart';
 
 class SwipeBannerViewModel extends ChangeNotifier {
   int currentIndex = 0;
@@ -31,6 +33,12 @@ class SwipeBannerViewModel extends ChangeNotifier {
   onPageChange(int i) {
     currentIndex = i;
     notifyListeners();
+  }
+
+  Navigation _navigation = locator<Navigation>();
+  navigateToProductlisting(String cate) async {
+    print(cate);
+    _navigation.navigateTo(ProductListing, arguments: [cate]);
   }
 
   Future fetchBanner() async {

@@ -70,6 +70,25 @@ class CartService {
     return carts;
   }
 
+  Future checkoutProduct(int userId, double grandtotal) async {
+    Uri url = Uri.parse('$baseUrl/checkout/');
+    Map<String, dynamic> reqBody = {
+      "user_Id": userId.toString(),
+      "payment_status": '1',
+      "grandtotal": grandtotal.toString(),
+      "discount": '0',
+      "coupon_Id": '0',
+      "checkout_status": '1'
+    };
+    http.Response res = await http.post(url, body: reqBody);
+    var decodedBody = jsonDecode(res.body);
+    if (decodedBody['success'] == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future deleteFromCart(int cart_Id) async {
     Uri _BaseURL = Uri.parse('$baseUrl/cart/$cart_Id');
     http.Response res = await http.delete(_BaseURL);

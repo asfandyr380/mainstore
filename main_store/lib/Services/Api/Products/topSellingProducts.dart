@@ -10,8 +10,9 @@ import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 class TopSelling {
   WishServices _wish = locator<WishServices>();
   StorageServices _services = locator<StorageServices>();
+  int totalProducts = 0;
 
-  Future getProducts() async {
+  Future getProducts(int page) async {
     List<ProductsModel> wishProducts = [];
     var user = await _services.getUser();
     var _userIp = await Ipify.ipv4();
@@ -25,12 +26,12 @@ class TopSelling {
     } else {
       wishProducts = await _wish.getWishlist(ip);
     }
+    Uri _BaseURL = Uri.parse('$baseUrl/products/topSelling/$page');
     List<ProductsModel> products = [];
-    Uri _BaseURL = Uri.parse('$baseUrl/products/topSelling');
     http.Response res = await http.get(_BaseURL);
-    List decodedBody = jsonDecode(res.body);
-    // print(decodedBody);
-    for (var body in decodedBody) {
+    var decodedBody = jsonDecode(res.body);
+    totalProducts = decodedBody['TotalProducts'];
+    for (var body in decodedBody['Products']) {
       List<String> images = [];
       List<String> categories = [];
       List<AttributeModel> attributes = [];

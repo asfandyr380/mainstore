@@ -49,6 +49,7 @@ dependencies:
   shared_preferences: ^2.0.6
   flutter_typeahead: 3.1.0
   checkbox_grouped: ^1.5.0
+  flutter_rating_bar: ^4.0.0
   
 dev_dependencies:
   flutter_test:

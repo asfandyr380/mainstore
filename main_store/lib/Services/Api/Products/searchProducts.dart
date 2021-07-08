@@ -7,7 +7,7 @@ import 'package:main_store/Models/productsModel.dart';
 class SearchProductServices {
   Future seaerhForProduct(String searchKey) async {
     List<ProductsModel> products = [];
-    if (searchKey.isNotEmpty) {
+    if (searchKey != null && searchKey.isNotEmpty) {
       Map<String, dynamic> key = {'key': '%$searchKey%'};
       Uri url = Uri.parse('$baseUrl/products/search/');
       http.Response res = await http.post(url, body: key);

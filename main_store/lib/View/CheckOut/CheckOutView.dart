@@ -198,8 +198,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     ),
                     //checkout Order Summary
                     OrderSummary(
+                      isLoading: model.isLoading,
                       checkout: _checkout,
                       m: widget.m,
+                      pay: () => model.checkout(widget.m!),
                     ),
                   ],
                 ),

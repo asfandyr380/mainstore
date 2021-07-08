@@ -11,8 +11,8 @@ import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 class NearbyProduct {
   WishServices _wish = locator<WishServices>();
   StorageServices _services = locator<StorageServices>();
-
-  Future getProducts() async {
+  int totalProducts = 0;
+  Future getProducts(int page) async {
     List<ProductsModel> wishProducts = [];
     var _userIp = await Ipify.ipv4();
     var user = await _services.getUser();
@@ -26,10 +26,11 @@ class NearbyProduct {
       wishProducts = await _wish.getWishlist(ip);
     }
     List<ProductsModel> products = [];
-    Uri _BaseURL = Uri.parse('$baseUrl/products/');
+    Uri _BaseURL = Uri.parse('$baseUrl/products/$page');
     http.Response res = await http.get(_BaseURL);
-    List decodedBody = jsonDecode(res.body);
-    for (var body in decodedBody) {
+    var decodedBody = jsonDecode(res.body);
+    totalProducts = decodedBody['TotalProducts'];
+    for (var body in decodedBody['Products']) {
       List<String> images = [];
       List<String> categories = [];
       List<AttributeModel> attributes = [];

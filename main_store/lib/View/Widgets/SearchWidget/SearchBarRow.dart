@@ -30,6 +30,7 @@ class _SearchBarRowState extends State<SearchBarRow> {
               width: SizeConfig.blockSizeHorizontal * 40,
               child: TypeAheadField(
                 hideOnEmpty: true,
+                hideOnError: true,
                 textFieldConfiguration: TextFieldConfiguration(
                   autofocus: false,
                   style: DefaultTextStyle.of(context)

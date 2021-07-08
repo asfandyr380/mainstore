@@ -22,13 +22,8 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-<<<<<<< HEAD
-      // home: CategoryFilterMenu(),
-      initialRoute: ProductListing,
-=======
       // home: SearchPage(),
-      initialRoute: HomeView,
->>>>>>> a4ab8aacc1a8607d453c9212c11ea0fdac0b6ef9
+      initialRoute: ProductListing,
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       onGenerateRoute: (settings) => generateRoute(settings),
       builder: (context, widget) => Navigator(

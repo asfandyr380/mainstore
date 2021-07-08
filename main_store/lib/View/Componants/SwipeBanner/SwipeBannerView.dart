@@ -38,6 +38,8 @@ class _SwipeBannerState extends State<SwipeBanner> {
               children: [
                 for (var banner in model.list)
                   BannerImage(
+                    exploreProducts: (cate) =>
+                        model.navigateToProductlisting(cate),
                     bannerDetails: banner,
                   ),
               ],
@@ -66,7 +68,8 @@ class _SwipeBannerState extends State<SwipeBanner> {
 
 class BannerImage extends StatelessWidget {
   final Swipebanner? bannerDetails;
-  BannerImage({this.bannerDetails});
+  final Function(String)? exploreProducts;
+  BannerImage({this.bannerDetails, this.exploreProducts});
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +82,7 @@ class BannerImage extends StatelessWidget {
         ),
       ),
       child: SwipeBannerText(
+        onTap: () => exploreProducts!(bannerDetails!.cate!),
         mainText: bannerDetails!.mainText ?? '',
         subText: bannerDetails!.subText ?? '',
       ),
@@ -110,8 +114,8 @@ class PageSwipeIndicator extends StatelessWidget {
 class SwipeBannerText extends StatelessWidget {
   final String? mainText;
   final String? subText;
-
-  SwipeBannerText({this.mainText, this.subText});
+  final Function? onTap;
+  SwipeBannerText({this.mainText, this.subText, this.onTap});
   @override
   Widget build(BuildContext context) {
     String _subText = subText ?? '';
@@ -153,18 +157,21 @@ class SwipeBannerText extends StatelessWidget {
             // Explore Button
             MouseRegion(
               cursor: SystemMouseCursors.click,
-              child: Container(
-                alignment: Alignment.center,
-                width: SizeConfig.blockSizeHorizontal * 12,
-                height: SizeConfig.blockSizeVertical * 5,
-                decoration: BoxDecoration(
-                  color: accentColor,
-                ),
-                child: Text(
-                  'Explore Products',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: SizeConfig.blockSizeHorizontal * 1,
+              child: GestureDetector(
+                onTap: () => onTap!(),
+                child: Container(
+                  alignment: Alignment.center,
+                  width: SizeConfig.blockSizeHorizontal * 12,
+                  height: SizeConfig.blockSizeVertical * 5,
+                  decoration: BoxDecoration(
+                    color: accentColor,
+                  ),
+                  child: Text(
+                    'Explore Products',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: SizeConfig.blockSizeHorizontal * 1,
+                    ),
                   ),
                 ),
               ),
