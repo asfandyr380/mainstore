@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:dart_ipify/dart_ipify.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/locator.dart';
@@ -26,7 +25,7 @@ class OnSaleProducts {
       wishProducts = await _wish.getWishlist(ip);
     }
     List<ProductsModel> products = [];
-    Uri _BaseURL = Uri.parse('$baseUrl/products/onSale/$page');
+    Uri _BaseURL = Uri.parse('$baseUrl/products/onSale/');
     http.Response res = await http.get(_BaseURL);
     var decodedBody = jsonDecode(res.body);
     totalProducts = decodedBody['TotalProducts'];

@@ -15,7 +15,7 @@ class SummeryViewModel extends ChangeNotifier {
   }
 
   navigateToCheckOut(double total, double subTotal, double shipping) {
-    var m = SummeryModel.mapData(subTotal, shipping, total);
+    var m = SummeryModel.mapData(subTotal, shipping, total, []);
     _navigation.navigateTo(Checkout, arguments: m);
   }
 

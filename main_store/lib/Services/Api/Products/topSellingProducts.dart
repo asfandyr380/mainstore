@@ -26,7 +26,7 @@ class TopSelling {
     } else {
       wishProducts = await _wish.getWishlist(ip);
     }
-    Uri _BaseURL = Uri.parse('$baseUrl/products/topSelling/$page');
+    Uri _BaseURL = Uri.parse('$baseUrl/products/topSelling/');
     List<ProductsModel> products = [];
     http.Response res = await http.get(_BaseURL);
     var decodedBody = jsonDecode(res.body);

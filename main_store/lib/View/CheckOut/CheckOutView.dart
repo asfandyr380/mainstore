@@ -105,6 +105,9 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               Container(
                                 width: SizeConfig.blockSizeHorizontal * 42,
                                 child: TextInputField(
+                                    onChange: (val) {
+                                      model.phone = val;
+                                    },
                                     hint_text: 'Enter Phone Number'),
                               ),
                             ],
@@ -134,12 +137,19 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               children: [
                                 Container(
                                   width: SizeConfig.blockSizeHorizontal * 20,
-                                  child:
-                                      TextInputField(hint_text: 'First Name'),
+                                  child: TextInputField(
+                                      onChange: (val) {
+                                        model.firstName = val;
+                                      },
+                                      hint_text: 'First Name'),
                                 ),
                                 Container(
                                   width: SizeConfig.blockSizeHorizontal * 20,
-                                  child: TextInputField(hint_text: 'Last Name'),
+                                  child: TextInputField(
+                                      onChange: (val) {
+                                        model.lastName = val;
+                                      },
+                                      hint_text: 'Last Name'),
                                 ),
                               ],
                             ),
@@ -149,7 +159,11 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             children: [
                               Container(
                                 width: SizeConfig.blockSizeHorizontal * 42,
-                                child: TextInputField(hint_text: 'Address'),
+                                child: TextInputField(
+                                    onChange: (val) {
+                                      model.address = val;
+                                    },
+                                    hint_text: 'Address'),
                               ),
                             ],
                           ),
@@ -159,6 +173,9 @@ class _CheckOutPageState extends State<CheckOutPage> {
                               Container(
                                 width: SizeConfig.blockSizeHorizontal * 42,
                                 child: TextInputField(
+                                    onChange: (val) {
+                                      model.apartment = val;
+                                    },
                                     hint_text:
                                         'Apartment, Suit, etc(Optional)'),
                               ),
@@ -169,7 +186,11 @@ class _CheckOutPageState extends State<CheckOutPage> {
                             children: [
                               Container(
                                 width: SizeConfig.blockSizeHorizontal * 42,
-                                child: TextInputField(hint_text: 'City'),
+                                child: TextInputField(
+                                    onChange: (val) {
+                                      model.city = val;
+                                    },
+                                    hint_text: 'City'),
                               ),
                             ],
                           ),
@@ -183,12 +204,18 @@ class _CheckOutPageState extends State<CheckOutPage> {
                                 Container(
                                   width: SizeConfig.blockSizeHorizontal * 20,
                                   child: TextInputField(
+                                      onChange: (val) {
+                                        model.country = val;
+                                      },
                                       hint_text: 'Country/Region'),
                                 ),
                                 Container(
                                   width: SizeConfig.blockSizeHorizontal * 20,
-                                  child:
-                                      TextInputField(hint_text: 'Postal Code'),
+                                  child: TextInputField(
+                                      onChange: (val) {
+                                        model.postalCode = val;
+                                      },
+                                      hint_text: 'Postal Code'),
                                 ),
                               ],
                             ),

@@ -119,6 +119,7 @@ class _CartViewPageState extends State<CartViewPage> {
                       width: SizeConfig.blockSizeHorizontal * 4,
                     ),
                     OrderSummary(
+                      isEnable: model.cartlist.isEmpty ? false : true,
                       subTotal: model.subTotal,
                       total: model.total,
                       shippingfee: model.shipping,
@@ -127,6 +128,11 @@ class _CartViewPageState extends State<CartViewPage> {
                   ],
                 ),
               ),
+              model.cartlist.isEmpty
+                  ? SizedBox(
+                      height: SizeConfig.blockSizeVertical * 12,
+                    )
+                  : Container(),
               Container(
                 child: Footer(),
               ),

@@ -100,4 +100,19 @@ class CartService {
     else
       return false;
   }
+
+  Future updateCartStatus(int cartId) async {
+    Uri _BaseURL = Uri.parse('$baseUrl/cart/update/');
+    Map<String, dynamic> reqBody = {
+      'cart_status': "1",
+      'cartId': cartId.toString()
+    };
+    http.Response res = await http.put(_BaseURL, body: reqBody);
+    var decodedBody = jsonDecode(res.body);
+    if (decodedBody['success'] == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

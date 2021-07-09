@@ -15,6 +15,7 @@ class OrderSummary extends StatelessWidget {
   final SummeryModel? m;
   final Function? pay;
   final bool? isLoading;
+  final bool? isEnable;
   OrderSummary({
     this.checkout,
     this.shippingfee,
@@ -23,6 +24,7 @@ class OrderSummary extends StatelessWidget {
     this.m,
     this.pay,
     this.isLoading,
+    this.isEnable,
   });
 
   @override
@@ -169,7 +171,7 @@ class OrderSummary extends StatelessWidget {
                 width: SizeConfig.blockSizeHorizontal * 20,
                 child: CustomButton(
                   isLoading: _isLoading,
-                  isEnable: _checkout ? true : model.isChecked,
+                  isEnable: _checkout ? isEnable : model.isChecked,
                   onPressed: () => _checkout
                       ? model.navigateToCheckOut(
                           _total, _subTotal, _shippingfee)
