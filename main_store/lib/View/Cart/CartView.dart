@@ -5,7 +5,9 @@ import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/CartModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
+import 'package:main_store/View/LandingPage_Mobile/LandingPageView.dart';
 import 'package:main_store/View/Widgets/orderSummery/order_summary.dart';
+import 'package:main_store/View/Widgets/responsive.dart';
 import 'package:stacked/stacked.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -25,6 +27,20 @@ class TickBox extends StatelessWidget {
       onChanged: (val) => onTickChange(val),
       activeColor: accentColor,
     );
+  }
+}
+
+class CartView extends StatelessWidget {
+  const CartView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Responsive(
+        mobile: LandingPage(
+          index: 2,
+        ),
+        tablet: CartViewPage(),
+        desktop: CartViewPage());
   }
 }
 

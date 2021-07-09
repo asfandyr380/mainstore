@@ -11,20 +11,28 @@ class SigninViewModel extends ChangeNotifier {
   DialogService _alertDialog = locator<DialogService>();
   Navigation _navigation = locator<Navigation>();
   AuthServicesApi _authApi = locator<AuthServicesApi>();
+  bool isLoading = false;
 
   navigateToSignUpPage() {
     _navigation.navigateTo(SignUp);
   }
 
+  isBusy(bool state) async {
+    isLoading = state;
+    notifyListeners();
+  }
+
   Future logInUser(String email, String password) async {
+    isBusy(true);
     var result = await _authApi.logIn(email, password);
     if (result is bool) {
-      _navigation.pushReplaceRoute(Home());
+      _navigation.pushReplaceRoute(HomePage());
     } else {
       _alertDialog.showDialog(
           title: 'Authentication Error',
           description: result,
           buttonTitle: "Close");
     }
+    isBusy(false);
   }
 }

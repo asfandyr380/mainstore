@@ -5,13 +5,27 @@ import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Models/swipeBanner.dart';
 import 'package:main_store/Services/Api/Banners/banner_Services.dart';
-import 'package:main_store/Services/Fireabase/Firestore/get_banners.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
 
 class SwipeBannerViewModel extends ChangeNotifier {
   int currentIndex = 0;
   BannerServices _banner = locator<BannerServices>();
   List<Swipebanner> list = [];
+
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_disposed) {
+      super.notifyListeners();
+    }
+  }
 
   autoPlay(PageController controller) {
     Timer.periodic(Duration(seconds: 3), (Timer timer) {

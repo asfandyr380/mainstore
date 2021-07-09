@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
@@ -10,20 +12,34 @@ class SignupViewModel extends ChangeNotifier {
   DialogService _alertDialog = locator<DialogService>();
   Navigation _navigation = locator<Navigation>();
   AuthServicesApi _authApi = locator<AuthServicesApi>();
+  bool isCheck = false;
+  bool isLoading = false;
 
   navigateToLoginPage() {
     _navigation.navigateTo(SignIn);
   }
 
+  accepttermsandCondition(bool state) async {
+    isCheck = state;
+    notifyListeners();
+  }
+
+  isBusy(bool state) {
+    isLoading = state;
+    notifyListeners();
+  }
+
   Future signUp(String username, email, phone, password) async {
+    isBusy(true);
     var result = await _authApi.createNewUser(username, email, phone, password);
-    if (result is bool) {
-      _navigation.pushReplaceRoute(Home());
-    } else {
-      _alertDialog.showDialog(
-          title: 'Authentication Error',
-          description: result,
-          buttonTitle: "Close");
-    }
+    print(result);
+    _navigation.pushReplaceRoute(Home());
+    // } else {
+    //   _alertDialog.showDialog(
+    //       title: 'Authentication Error',
+    //       description: result,
+    //       buttonTitle: "Close");
+    // }
+    isBusy(false);
   }
 }

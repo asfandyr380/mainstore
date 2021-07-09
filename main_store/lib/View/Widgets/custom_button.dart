@@ -7,8 +7,10 @@ class CustomButton extends StatelessWidget {
   final String label;
   final bool? isEnable;
   final bool? isLoading;
+  final bool? onMobile;
   CustomButton(
       {this.isEnable,
+      this.onMobile,
       required this.onPressed,
       required this.label,
       this.isLoading});
@@ -17,6 +19,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     bool _isEnable = isEnable ?? false;
     bool _isLoading = isLoading ?? false;
+    bool _onMobile = onMobile ?? false;
     SizeConfig().init(context);
     return ConstrainedBox(
       constraints: BoxConstraints.tightFor(
@@ -40,7 +43,9 @@ class CustomButton extends StatelessWidget {
             : Text(
                 label,
                 style: TextStyle(
-                  fontSize: SizeConfig.blockSizeHorizontal * 1,
+                  fontSize: _onMobile
+                      ? SizeConfig.blockSizeHorizontal * 4.5
+                      : SizeConfig.blockSizeHorizontal * 1,
                 ),
               ),
       ),

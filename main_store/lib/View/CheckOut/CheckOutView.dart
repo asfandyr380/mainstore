@@ -5,9 +5,28 @@ import 'package:main_store/Models/SummeryModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Widgets/orderSummery/order_summary.dart';
+import 'package:main_store/View/Widgets/responsive.dart';
 import 'package:main_store/View/Widgets/text_field.dart';
 import 'package:stacked/stacked.dart';
 import 'CheckOutViewModel.dart';
+
+class CheckoutPage extends StatelessWidget {
+  final bool? checkout;
+  final SummeryModel? m;
+  const CheckoutPage({this.checkout, this.m});
+
+  @override
+  Widget build(BuildContext context) {
+    return Responsive(
+        mobile: CheckOutMobile(),
+        tablet: CheckOutPage(
+          m: m,
+        ),
+        desktop: CheckOutPage(
+          m: m,
+        ));
+  }
+}
 
 class CheckOutPage extends StatefulWidget {
   final bool? checkout;

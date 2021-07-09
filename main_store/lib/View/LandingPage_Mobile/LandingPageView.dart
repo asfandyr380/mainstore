@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
-import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Account/AccountView.dart';
 import 'package:main_store/View/Cart/CartView.dart';
-import 'package:main_store/View/CheckOut/CheckOutView.dart';
 import 'package:main_store/View/Home/HomeView.dart';
 import 'package:main_store/View/LandingPage_Mobile/LandingPageViewModel.dart';
 import 'package:main_store/View/SearchPage/SearchPageView.dart';
@@ -13,16 +11,21 @@ import 'package:stacked/stacked.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class LandingPage extends StatelessWidget {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final int? index;
+  final bool? onSignIn;
+  final bool? onSignUp;
+  LandingPage({this.index, this.onSignIn, this.onSignUp});
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+  late PersistentTabController _controller;
 
   @override
   Widget build(BuildContext context) {
+    _controller = PersistentTabController(initialIndex: index ?? 0);
     return ViewModelBuilder.reactive(
         builder: (context, model, child) => Scaffold(
               key: scaffoldKey,
               drawer: Drawer(
                 elevation: 16,
-                // Drawer content to be added
                 child: Center(
                   child: Text('No Data'),
                 ),
@@ -30,12 +33,16 @@ class LandingPage extends StatelessWidget {
               appBar: mobileAppBar(scaffoldKey),
               body: PersistentTabView(
                 context,
+                controller: _controller,
                 confineInSafeArea: true,
                 screens: [
                   Homemobile(),
                   SearchPage(),
                   CartMobileView(),
-                  AccountView(),
+                  AccountView(
+                    onSignIn: onSignIn,
+                    onSignUp: onSignUp,
+                  ),
                 ],
                 decoration: NavBarDecoration(
                   boxShadow: [

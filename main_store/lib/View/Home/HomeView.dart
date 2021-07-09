@@ -14,7 +14,17 @@ import 'package:main_store/View/Home/HomeViewModel.dart';
 import 'package:main_store/View/Widgets/Banners/banners.dart';
 import 'package:main_store/View/Widgets/listingName.dart';
 import 'package:main_store/View/Widgets/ProductCard/productListingCard.dart';
+import 'package:main_store/View/Widgets/responsive.dart';
 import 'package:stacked/stacked.dart';
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Responsive(mobile: Homemobile(), tablet: Home(), desktop: Home());
+  }
+}
 
 class Home extends StatelessWidget {
   @override

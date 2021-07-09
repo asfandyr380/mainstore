@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Forum/Forum.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
+import 'package:main_store/View/LandingPage_Mobile/LandingPageView.dart';
 import 'package:main_store/View/Sign_in/signin_viewModel.dart';
-import 'package:main_store/View/Widgets/Mobile_AppBar.dart';
 import 'package:main_store/View/Widgets/custom_button.dart';
+import 'package:main_store/View/Widgets/responsive.dart';
 import 'package:main_store/View/Widgets/text_field.dart';
 import 'package:stacked/stacked.dart';
+
+class SigninPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Responsive(
+        mobile: LandingPage(
+          index: 3,
+          onSignIn: true,
+        ),
+        tablet: SignInPage(),
+        desktop: SignInPage());
+  }
+}
 
 class SignInPage extends StatefulWidget {
   @override
@@ -69,20 +81,14 @@ class SignInMobileView extends StatefulWidget {
 }
 
 class _SignInMobileViewState extends State<SignInMobileView> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  String _email = '';
+  String _password = '';
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return ViewModelBuilder<SigninViewModel>.reactive(
       viewModelBuilder: () => SigninViewModel(),
       builder: (context, model, child) => Scaffold(
-        key: scaffoldKey,
         drawer: Drawer(
           elevation: 16,
           // Drawer content to be added
@@ -90,41 +96,15 @@ class _SignInMobileViewState extends State<SignInMobileView> {
             child: Text('No Data'),
           ),
         ),
-        appBar: mobileAppBar(scaffoldKey),
         body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //   children: [
-              //     IconButton(
-              //       onPressed: () async {
-              //         scaffoldKey.currentState?.openDrawer();
-              //       },
-              //       icon: FaIcon(
-              //         FontAwesomeIcons.alignJustify,
-              //         color: Colors.black,
-              //         size: 30,
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Padding(
-              //         padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
-              //         child: TextInputField(
-              //           hint_text: 'Search Products',
-              //           onMobile: true,
-              //         ),
-              //       ),
-              //     )
-              //   ],
-              // ),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: Text(
                   'Login',
                   style: TextStyle(
-                    fontFamily: 'Lato',
                     color: Colors.black,
                     fontSize: 30,
                     fontWeight: FontWeight.w500,
@@ -140,6 +120,9 @@ class _SignInMobileViewState extends State<SignInMobileView> {
                     color: Colors.white,
                   ),
                   child: TextInputField(
+                    onChange: (val) {
+                      _email = val;
+                    },
                     hint_text: 'Email',
                     onMobile: true,
                   ),
@@ -154,6 +137,9 @@ class _SignInMobileViewState extends State<SignInMobileView> {
                     color: Colors.white,
                   ),
                   child: TextInputField(
+                    onChange: (val) {
+                      _password = val;
+                    },
                     hint_text: 'Password',
                     onMobile: true,
                   ),
@@ -168,7 +154,6 @@ class _SignInMobileViewState extends State<SignInMobileView> {
                     Text(
                       'Forget Password?',
                       style: TextStyle(
-                        fontFamily: 'Lato',
                         color: accentColor,
                       ),
                     )
@@ -179,10 +164,10 @@ class _SignInMobileViewState extends State<SignInMobileView> {
                 width: SizeConfig.blockSizeHorizontal * 50,
                 height: 40,
                 child: CustomButton(
+                  isLoading: model.isLoading,
+                  onMobile: true,
                   isEnable: true,
-                  onPressed: () {
-                    print('Button pressed ...');
-                  },
+                  onPressed: () => model.logInUser(_email, _password),
                   label: 'SIGN IN',
                 ),
               ),
@@ -196,15 +181,19 @@ class _SignInMobileViewState extends State<SignInMobileView> {
                     Text(
                       'Don\'t have account ?',
                       style: TextStyle(
-                        fontFamily: 'Lato',
                         color: Colors.black,
                       ),
                     ),
-                    Text(
-                      'Register Here',
-                      style: TextStyle(
-                        fontFamily: 'Lato',
-                        color: Color(0xFF40A944),
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: () => model.navigateToSignUpPage(),
+                        child: Text(
+                          ' Register Here',
+                          style: TextStyle(
+                            color: Color(0xFF40A944),
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -220,7 +209,6 @@ class _SignInMobileViewState extends State<SignInMobileView> {
                     Text(
                       'Or Sign In with:',
                       style: TextStyle(
-                        fontFamily: 'Lato',
                         color: Colors.black,
                       ),
                     ),
@@ -238,14 +226,13 @@ class _SignInMobileViewState extends State<SignInMobileView> {
                       icon: Container(
                         height: 28,
                         width: 28,
-                        child: Image.network(
-                          'https://i0.wp.com/nanophorm.com/wp-content/uploads/2018/04/google-logo-icon-PNG-Transparent-Background.png?w=1000&ssl=1',
+                        child: Image.asset(
+                          'assets/images/png-transparent-google-logo-g-suite-google-guava-google-plus-company-text-logo.png',
                         ),
                       ),
                       label: Text(
                         'Sign in with Google',
                         style: TextStyle(
-                          fontFamily: 'Lato',
                           color: Colors.black,
                         ),
                       ),
@@ -264,14 +251,13 @@ class _SignInMobileViewState extends State<SignInMobileView> {
                       icon: Container(
                         height: 28,
                         width: 28,
-                        child: Image.network(
-                          'https://facebookbrand.com/wp-content/uploads/2019/04/f_logo_RGB-Hex-Blue_512.png?w=512&h=512',
+                        child: Image.asset(
+                          'assets/images/facebook.png',
                         ),
                       ),
                       label: Text(
                         'Sign in with Facebook',
                         style: TextStyle(
-                          fontFamily: 'Lato',
                           color: Colors.black,
                         ),
                       ),

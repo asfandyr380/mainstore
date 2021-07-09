@@ -20,9 +20,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   var arg = settings.arguments;
   switch (settings.name) {
     case SignIn:
-      return _GeneratePageRoute(widget: SignInPage(), routeName: settings.name);
+      return _GeneratePageRoute(widget: SigninPage(), routeName: settings.name);
     case SignUp:
-      return _GeneratePageRoute(widget: SignupPage(), routeName: settings.name);
+      return _GeneratePageRoute(widget: SignUpPage(), routeName: settings.name);
     case HomeView:
       return _GeneratePageRoute(widget: Home(), routeName: settings.name);
     case Cart:
@@ -33,7 +33,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case Checkout:
       SummeryModel? details = arg as SummeryModel?;
       return _GeneratePageRoute(
-          widget: CheckOutPage(m: details), routeName: settings.name);
+          widget: CheckoutPage(m: details), routeName: settings.name);
     case LandingPageView:
       return _GeneratePageRoute(
           widget: LandingPage(), routeName: settings.name);
@@ -51,7 +51,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case ProductDetailsPage:
       ProductsModel? details = arg as ProductsModel?;
       return _GeneratePageRoute(
-          widget: ProductDetailView(
+          widget: ProductDetailPage(
             productDetails: details!,
           ),
           routeName: settings.name);

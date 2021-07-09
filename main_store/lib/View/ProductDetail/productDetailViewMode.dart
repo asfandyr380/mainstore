@@ -21,6 +21,22 @@ class ProductDetailViewModel extends ChangeNotifier {
   bool onReview = false;
   List<ProductsModel> relatedlist = [];
   List<ReviewModel> reviewlist = [];
+
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_disposed) {
+      super.notifyListeners();
+    }
+  }
+
   addOrMiuns(bool adding) {
     if (adding) {
       quantity++;

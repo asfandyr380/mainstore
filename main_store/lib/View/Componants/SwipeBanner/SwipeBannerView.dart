@@ -14,6 +14,12 @@ class _SwipeBannerState extends State<SwipeBanner> {
   PageController _pageController = PageController(initialPage: 0);
 
   @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SwipeBannerViewModel>.reactive(
       viewModelBuilder: () => SwipeBannerViewModel(),

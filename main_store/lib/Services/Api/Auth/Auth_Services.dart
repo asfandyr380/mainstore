@@ -14,9 +14,12 @@ class AuthServicesApi {
   Future createNewUser(
       String username, String email, String phone, String password) async {
     try {
-      UserModel user = UserModel(
-          username: username, email: email, mobile: phone, password: password);
-      Map<String, dynamic> body = user.toJson();
+      Map<String, dynamic> body = {
+        'username': username,
+        'email': email,
+        'mobile': phone,
+        'password': password
+      };
       http.Response res = await http.post(_BaseURL, body: body);
       var decodedBody = jsonDecode(res.body);
       if (res.statusCode == 200 && decodedBody['success'] == 1) {
