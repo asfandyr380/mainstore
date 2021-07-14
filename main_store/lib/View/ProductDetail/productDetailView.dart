@@ -1,8 +1,11 @@
+import 'package:bottom_sheet/bottom_sheet.dart';
 import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/Models/ReviewModel.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Home/HomeView.dart';
 import 'package:main_store/View/Widgets/Mobile_AppBar.dart';
@@ -26,7 +29,7 @@ class ProductDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Responsive(
-        mobile: MobileProductDetailView(),
+        mobile: MobileProductDetailView(details: productDetails),
         tablet: ProductDetailView(productDetails: productDetails),
         desktop: ProductDetailView(productDetails: productDetails));
   }
@@ -467,15 +470,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                     Text(
                       '£$_salePrice',
                       style: TextStyle(
-                        fontSize: SizeConfig.blockSizeHorizontal * 1,
-                        decoration: TextDecoration.lineThrough,
+                        fontSize: SizeConfig.blockSizeHorizontal * 2.5,
                       ),
+                    ),
+                    SizedBox(
+                      width: SizeConfig.blockSizeHorizontal * 1,
                     ),
                     Text(
                       widget.attribute!.isEmpty
                           ? '£$_price'
                           : '$_attributePrice',
                       style: TextStyle(
+                          decoration: TextDecoration.lineThrough,
                           fontSize: SizeConfig.blockSizeHorizontal * 2),
                     ),
                   ],
@@ -654,14 +660,19 @@ class _ProductDetailsState extends State<ProductDetails> {
 
 // Mobile View
 class MobileProductDetailView extends StatelessWidget {
+  final ProductsModel? details;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final pageViewController = PageController();
-
+  MobileProductDetailView({this.details});
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return ViewModelBuilder<ProductDetailViewModel>.reactive(
       viewModelBuilder: () => ProductDetailViewModel(),
+      onModelReady: (model) {
+        model.fetchRelatedProduct(details!.category!);
+        model.getReviews();
+      },
       builder: (context, model, child) => Scaffold(
         key: scaffoldKey,
         drawer: Drawer(
@@ -672,153 +683,389 @@ class MobileProductDetailView extends StatelessWidget {
           ),
         ),
         appBar: mobileAppBar(scaffoldKey),
-        body: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: SizeConfig.blockSizeVertical * 33,
-                  width: SizeConfig.blockSizeHorizontal * 100,
-                  child: PageView(
-                    controller: pageViewController,
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      Image.network(
-                        'https://picsum.photos/seed/861/600',
-                        fit: BoxFit.fitWidth,
-                      ),
-                      Image.network(
-                        'https://picsum.photos/seed/782/600',
-                        fit: BoxFit.fitWidth,
-                      ),
-                      Image.network(
-                        'https://picsum.photos/seed/792/600',
-                        fit: BoxFit.fitWidth,
-                      )
-                    ],
-                  ),
-                ),
-                Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        top: SizeConfig.blockSizeVertical * 31,
-                        bottom: SizeConfig.blockSizeVertical * 1),
-                    child: SmoothPageIndicator(
-                      controller: pageViewController,
-                      count: 4,
-                      axisDirection: Axis.horizontal,
-                      onDotClicked: (i) {
-                        pageViewController.animateToPage(
-                          i,
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.ease,
-                        );
-                      },
-                      effect: ExpandingDotsEffect(
-                        expansionFactor: 3,
-                        spacing: 8,
-                        radius: 16,
-                        dotWidth: 10,
-                        dotHeight: 10,
-                        dotColor: Color(0xFF9E9E9E),
-                        activeDotColor: Color(0xFF40A944),
-                        paintStyle: PaintingStyle.fill,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.blockSizeHorizontal * 4),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
                 children: [
-                  Text(
-                    '£ 60',
-                    style: TextStyle(
-                      fontFamily: 'Lato',
-                      color: Color(0xFF40A944),
-                      fontSize: 45,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                    child: Text(
-                      'RedBull Energy Drink',
-                      style: TextStyle(
-                        fontFamily: 'Lato',
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                    child: Text(
-                      'lorem ipsum ddfds sdf d  aksfdasd ksjdkfd ksfdksjf akjsdfksj  ksjdksf ksdfj ksdjf sjf kjbjd ',
-                      style: TextStyle(
-                        fontFamily: 'Lato',
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                    child: Row(
+                  Container(
+                    height: SizeConfig.blockSizeVertical * 33,
+                    width: SizeConfig.blockSizeHorizontal * 100,
+                    child: PageView(
+                      controller: pageViewController,
+                      scrollDirection: Axis.horizontal,
                       children: [
-                        Text(
-                          'Category: ',
-                          style: TextStyle(
-                            fontFamily: 'Lato',
-                            color: Colors.black,
+                        for (var image in details!.images!)
+                          Image.network(
+                            '$image',
+                            fit: BoxFit.fitWidth,
                           ),
-                        ),
-                        Text(
-                          'Drinks',
-                          style: TextStyle(
-                            fontFamily: 'Lato',
-                            color: accentColor,
-                          ),
-                        )
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                    child: Row(
-                      children: [
-                        Text(
-                          'By: ',
-                          style: TextStyle(
-                            fontFamily: 'Lato',
-                            color: Colors.black,
-                          ),
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 31,
+                          bottom: SizeConfig.blockSizeVertical * 1),
+                      child: SmoothPageIndicator(
+                        controller: pageViewController,
+                        count: 4,
+                        axisDirection: Axis.horizontal,
+                        onDotClicked: (i) {
+                          pageViewController.animateToPage(
+                            i,
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.ease,
+                          );
+                        },
+                        effect: ExpandingDotsEffect(
+                          expansionFactor: 3,
+                          spacing: 8,
+                          radius: 16,
+                          dotWidth: 10,
+                          dotHeight: 10,
+                          dotColor: Color(0xFF9E9E9E),
+                          activeDotColor: Color(0xFF40A944),
+                          paintStyle: PaintingStyle.fill,
                         ),
-                        Text(
-                          'US Store',
-                          style: TextStyle(
-                            fontFamily: 'Lato',
-                            color: accentColor,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                    child: ElevatedButton.icon(
-                      label: Text('Add to Cart'),
-                      icon: FaIcon(FontAwesomeIcons.shoppingCart),
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(primary: accentColor),
+                      ),
                     ),
                   ),
                 ],
               ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.blockSizeHorizontal * 4),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        details!.onSale == 1
+                            ? Text(
+                                '£ ${details!.productPrice}',
+                                style: TextStyle(
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
+                            : Container(),
+                        SizedBox(
+                          width: SizeConfig.blockSizeHorizontal * 0.5,
+                        ),
+                        Text(
+                          '£ ${details!.productPrice}',
+                          style: TextStyle(
+                            decoration: details!.onSale == 1
+                                ? TextDecoration.lineThrough
+                                : null,
+                            color: Color(0xFF40A944),
+                            fontSize: 35,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                      child: Text(
+                        '${details!.name}',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                      child: Text(
+                        '${details!.description}',
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Category: ',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          Text(
+                            '${details!.category![0]}',
+                            style: TextStyle(
+                              color: accentColor,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                      child: Row(
+                        children: [
+                          Text(
+                            'By: ',
+                            style: TextStyle(
+                              fontFamily: 'Lato',
+                              color: Colors.black,
+                            ),
+                          ),
+                          Text(
+                            '${details!.by}',
+                            style: TextStyle(
+                              color: accentColor,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                      child: ElevatedButton.icon(
+                        label: model.isLoading
+                            ? Container(
+                                height: SizeConfig.blockSizeVertical * 2,
+                                width: SizeConfig.blockSizeHorizontal * 3,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Text('Add to Cart'),
+                        icon: FaIcon(FontAwesomeIcons.shoppingCart, size: 12),
+                        onPressed: () => {
+                          model
+                              .addtoCart(details!.productId, details!.storeId,
+                                  details!.productPrice!)
+                              .then((val) {
+                            showTopSnackBar(
+                              context,
+                              CustomSnackBar.success(
+                                message: 'Product Added to Cart',
+                              ),
+                              displayDuration: Duration(milliseconds: 150),
+                            );
+                          })
+                        },
+                        style: ElevatedButton.styleFrom(primary: accentColor),
+                      ),
+                    ),
+                    ReviewDescription(
+                      label: 'Description',
+                      onTap: () =>
+                          _showSheet(context, details!.description!, false),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical * 1.5,
+                    ),
+                    ReviewDescription(
+                      label: 'Reviews',
+                      onTap: () => _showSheet(
+                          context, details!.description!, true,
+                          reviews: model.reviewlist),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical * 3,
+                    ),
+                    ProductListingRowMobile(
+                      listingName: 'Related Products',
+                      productDetails: model.relatedlist,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+void _showSheet(BuildContext ctx, String desc, bool onReview,
+    {List<ReviewModel>? reviews}) {
+  showFlexibleBottomSheet<void>(
+    minHeight: 0,
+    initHeight: 0.5,
+    maxHeight: 1,
+    context: ctx,
+    builder: (ctx, controller, bottomsheet) => onReview
+        ? _buildReviewSheet(ctx, controller, bottomsheet, reviews: reviews)
+        : _buildDescriptionSheet(
+            ctx,
+            controller,
+            bottomsheet,
+            desc: desc,
+          ),
+    anchors: [0, 0.5, 1],
+  );
+}
+
+Widget _buildReviewSheet(BuildContext context,
+    ScrollController scrollController, double bottomSheetOffset,
+    {List<ReviewModel>? reviews}) {
+  return SafeArea(
+    child: Material(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(
+            10,
+          ),
+        ),
+        child: ListView(
+          children: [
+            Center(
+              child: Text(
+                'Reviews',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: SizeConfig.blockSizeHorizontal * 4),
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical * 1,
+            ),
+            for (var review in reviews!)
+              ReviewCardMobile(
+                  user: review.user,
+                  comment: review.message,
+                  rating: review.rating),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+class ReviewCardMobile extends StatelessWidget {
+  final String? comment;
+  final int? rating;
+  final String? user;
+  const ReviewCardMobile({this.comment, this.rating, this.user});
+
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 10),
+          child: Text('$user'),
+        ),
+        SizedBox(
+          height: SizeConfig.blockSizeVertical * 0.4,
+        ),
+        Container(
+          width: SizeConfig.blockSizeHorizontal * 80,
+          decoration: BoxDecoration(
+            color: accentColor,
+            gradient: LinearGradient(
+              colors: [accentColor.withOpacity(0.5), accentColor],
+            ),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8),
+              topRight: Radius.circular(8),
+              bottomRight: Radius.circular(8),
+            ),
+          ),
+          child: Container(
+            padding: EdgeInsets.all(8),
+            child: Text('$comment'),
+          ),
+        ),
+        SizedBox(
+          height: SizeConfig.blockSizeVertical * 0.4,
+        ),
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 75),
+          child: RatingBar.builder(
+            ignoreGestures: true,
+            initialRating: rating!.toDouble(),
+            minRating: 1,
+            direction: Axis.horizontal,
+            allowHalfRating: false,
+            itemCount: 5,
+            itemSize: SizeConfig.blockSizeHorizontal * 2,
+            itemPadding: EdgeInsets.symmetric(horizontal: 2),
+            itemBuilder: (context, _) => Icon(
+              Icons.star,
+              color: accentColor,
+            ),
+            onRatingUpdate: (rating) {
+              print(rating);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+Widget _buildDescriptionSheet(BuildContext context,
+    ScrollController scrollController, double bottomSheetOffset,
+    {String? desc}) {
+  return SafeArea(
+    child: Material(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(
+            10,
+          ),
+        ),
+        child: ListView(
+          children: [
+            Center(
+              child: Text(
+                'Description',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: SizeConfig.blockSizeHorizontal * 4),
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical * 1,
+            ),
+            Text('$desc'),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+class ReviewDescription extends StatelessWidget {
+  final String? label;
+  final Function? onTap;
+  const ReviewDescription({this.label, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => onTap!(),
+      child: Container(
+        width: double.infinity,
+        height: SizeConfig.blockSizeVertical * 4,
+        decoration: BoxDecoration(
+          color: footerColor,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              padding:
+                  EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 2),
+              child: Text('$label'),
+            ),
+            Container(
+              padding:
+                  EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 2),
+              child: Icon(FontAwesomeIcons.arrowRight, size: 12),
             ),
           ],
         ),

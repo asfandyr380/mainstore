@@ -111,6 +111,9 @@ class ProductListingRowMobile extends StatelessWidget {
                         controller: _scrollController,
                         index: i,
                         child: ProductCardMobile(
+                          onTap: () => model.navigatetoDetailPage(
+                            productDetails![i],
+                          ),
                           details: productDetails![i],
                         ),
                       );
@@ -140,7 +143,6 @@ class ProductListingRow extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     bool _isLoading = isLoading ?? false;
-    bool _onMobile = onMobile ?? true;
     return ViewModelBuilder<ProductListingRowViewModel>.reactive(
       viewModelBuilder: () => ProductListingRowViewModel(),
       builder: (context, model, child) => Column(

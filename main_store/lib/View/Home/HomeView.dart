@@ -39,6 +39,7 @@ class HomeMobile extends StatelessWidget {
         model.fetchTopSellingProducts();
         model.fetchOnSaleProducts();
         model.fetchNearbyProducts();
+        model.getReviews();
       },
       builder: (context, model, child) => Container(
         child: SingleChildScrollView(
@@ -69,6 +70,39 @@ class HomeMobile extends StatelessWidget {
                 isLoading: model.isLoading,
                 listingName: 'On Sale Products',
                 productDetails: model.onSaleProducts,
+              ),
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * 2,
+              ),
+              Container(
+                child: Text('What People Says about Us',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: SizeConfig.blockSizeHorizontal * 3)),
+              ),
+              SizedBox(
+                height: SizeConfig.blockSizeVertical * 2,
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.blockSizeHorizontal * 2,
+                ),
+                width: double.infinity,
+                height: SizeConfig.blockSizeVertical * 25,
+                child: ListView.separated(
+                  itemCount: model.reviewlist.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, i) => Container(
+                    padding: EdgeInsets.symmetric(
+                        vertical: SizeConfig.blockSizeVertical * 2,
+                        horizontal: SizeConfig.blockSizeHorizontal * 1),
+                    child: ReviewsCard(
+                        details: model.reviewlist[i], onMobile: true),
+                  ),
+                  separatorBuilder: (context, i) => SizedBox(
+                    width: SizeConfig.blockSizeHorizontal * 1,
+                  ),
+                ),
               ),
               NearbyProductsMobile(
                 navegateToDetails: (e) => model.navigatetodetails(e),
@@ -293,14 +327,20 @@ class Home extends StatelessWidget {
 }
 
 class ReviewsCard extends StatelessWidget {
+  final bool? onMobile;
   final ReviewModel? details;
-  const ReviewsCard({this.details});
+  const ReviewsCard({this.details, this.onMobile});
 
   @override
   Widget build(BuildContext context) {
+    bool _onMobile = onMobile ?? false;
     return Container(
-      height: SizeConfig.blockSizeVertical * 25,
-      width: SizeConfig.blockSizeHorizontal * 25,
+      height: _onMobile
+          ? SizeConfig.blockSizeVertical * 25
+          : SizeConfig.blockSizeVertical * 25,
+      width: _onMobile
+          ? SizeConfig.blockSizeHorizontal * 65
+          : SizeConfig.blockSizeHorizontal * 35,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -315,17 +355,33 @@ class ReviewsCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.blockSizeHorizontal * 2),
-              child: Text(details!.message!)),
+            padding: EdgeInsets.symmetric(
+                horizontal: SizeConfig.blockSizeHorizontal * 2),
+            child: Text(
+              details!.message!,
+              style: TextStyle(
+                fontSize: _onMobile
+                    ? SizeConfig.blockSizeHorizontal * 3
+                    : SizeConfig.blockSizeHorizontal * 1.5,
+              ),
+            ),
+          ),
           SizedBox(
             height: SizeConfig.blockSizeVertical * 1,
           ),
-          Text(details!.user!),
+          Text(
+            details!.user!,
+            style: TextStyle(
+              fontSize: _onMobile
+                  ? SizeConfig.blockSizeHorizontal * 2
+                  : SizeConfig.blockSizeHorizontal * 1,
+            ),
+          ),
           SizedBox(
             height: SizeConfig.blockSizeVertical * 1,
           ),
           RatingStar(
+            onMobile: _onMobile,
             rating: details!.rating,
           )
         ],
@@ -336,26 +392,31 @@ class ReviewsCard extends StatelessWidget {
 
 class RatingStar extends StatelessWidget {
   final int? rating;
-  RatingStar({this.rating});
+  final bool? onMobile;
+  RatingStar({this.rating, this.onMobile});
 
   @override
   Widget build(BuildContext context) {
     int _rating = rating ?? 1;
-    return RatingBar.builder(
-      ignoreGestures: true,
-      initialRating: _rating.toDouble(),
-      minRating: 1,
-      direction: Axis.horizontal,
-      allowHalfRating: false,
-      itemCount: 5,
-      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-      itemBuilder: (context, _) => Icon(
-        Icons.star,
-        color: accentColor,
+    return Container(
+      width: onMobile! ? SizeConfig.blockSizeHorizontal * 60 : null,
+      child: RatingBar.builder(
+        ignoreGestures: true,
+        initialRating: _rating.toDouble(),
+        minRating: 1,
+        direction: Axis.horizontal,
+        allowHalfRating: false,
+        itemCount: 5,
+        itemPadding: EdgeInsets.symmetric(horizontal: 2),
+        itemBuilder: (context, _) => Icon(
+          Icons.star,
+          color: accentColor,
+          size: 1,
+        ),
+        onRatingUpdate: (rating) {
+          print(rating);
+        },
       ),
-      onRatingUpdate: (rating) {
-        print(rating);
-      },
     );
   }
 }
@@ -364,8 +425,11 @@ class NearbyProductsMobile extends StatelessWidget {
   List<ProductsModel>? productDetails;
   final Function(ProductsModel)? navegateToDetails;
   final bool? isLoading;
-  NearbyProductsMobile(
-      {this.isLoading, this.navegateToDetails, this.productDetails});
+  NearbyProductsMobile({
+    this.isLoading,
+    this.navegateToDetails,
+    this.productDetails,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -407,6 +471,8 @@ class NearbyProductsMobile extends StatelessWidget {
                           horizontal: SizeConfig.blockSizeHorizontal * 2,
                         ),
                         child: ProductCardMobile(
+                          isGrid: true,
+                          onTap: () => navegateToDetails!(productDetails![i]),
                           details: productDetails![i],
                         ),
                       );
@@ -473,8 +539,6 @@ class NearbyProducts extends StatelessWidget {
                           vertical: SizeConfig.blockSizeVertical * 2,
                           horizontal: SizeConfig.blockSizeHorizontal * 2,
                         ),
-                        height: SizeConfig.blockSizeVertical * 10,
-                        width: SizeConfig.blockSizeHorizontal * 5,
                         child: ProductListingCards(
                           isGrid: true,
                           onTap: () => navegateToDetails!(productDetails![i]),

@@ -4,7 +4,7 @@ import 'package:main_store/Config/sizeconfig.dart';
 
 class CustomButton extends StatelessWidget {
   final Function? onPressed;
-  final String label;
+  final String? label;
   final bool? isEnable;
   final bool? isLoading;
   final bool? onMobile;
@@ -22,6 +22,7 @@ class CustomButton extends StatelessWidget {
     bool _isEnable = isEnable ?? false;
     bool _isLoading = isLoading ?? false;
     bool _onMobile = onMobile ?? false;
+    String _label = label ?? '';
     SizeConfig().init(context);
     return ConstrainedBox(
       constraints: BoxConstraints.tightFor(
@@ -45,7 +46,7 @@ class CustomButton extends StatelessWidget {
                 ),
               )
             : Text(
-                label,
+                _label,
                 style: TextStyle(
                   fontSize: _onMobile
                       ? SizeConfig.blockSizeHorizontal * 3.5

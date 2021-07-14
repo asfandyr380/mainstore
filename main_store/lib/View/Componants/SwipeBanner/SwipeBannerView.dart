@@ -154,7 +154,7 @@ class SwipeBannerText extends StatelessWidget {
             // Main Body Text
             Container(
               height: _onMobile
-                  ? SizeConfig.blockSizeVertical * 6
+                  ? SizeConfig.blockSizeVertical * 7
                   : SizeConfig.blockSizeVertical * 13,
               width: _onMobile
                   ? SizeConfig.blockSizeHorizontal * 35
