@@ -522,15 +522,16 @@ class SelectAllContainer extends StatelessWidget {
 class CartMobileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<CartMobileViewModel>.reactive(
-      viewModelBuilder: () => CartMobileViewModel(),
+    return ViewModelBuilder<CartViewModel>.reactive(
+      viewModelBuilder: () => CartViewModel(),
+      onModelReady: (model) => model.getcart(),
       builder: (context, model, child) => Scaffold(
-        body: SafeArea(
+        body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: SizeConfig.blockSizeHorizontal * 4),
+                horizontal: SizeConfig.blockSizeHorizontal * 4,
+                vertical: SizeConfig.blockSizeVertical * 4),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 //Title
                 Container(
@@ -552,7 +553,7 @@ class CartMobileView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Shopping Cart (3)',
+                          'Shopping Cart (${model.itemCount})',
                           style: TextStyle(
                             fontFamily: 'Lato',
                             fontSize: 18,
@@ -561,12 +562,11 @@ class CartMobileView extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            TickBox(onTickChange: (val) {}),
+                            TickBox(
+                                value: model.selected,
+                                onTickChange: (val) => model.selectall(val!)),
                             Text(
                               'Select All',
-                              style: TextStyle(
-                                fontFamily: 'Lato',
-                              ),
                             ),
                           ],
                         ),
@@ -574,503 +574,51 @@ class CartMobileView extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  height: SizeConfig.blockSizeVertical * 20,
-                  width: SizeConfig.blockSizeHorizontal * 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.grey,
+                model.isLoading
+                    ? Container(
+                        width: SizeConfig.blockSizeHorizontal * 90,
+                        child: LinearProgressIndicator(
+                          color: accentColor,
+                          backgroundColor: accentColor.withOpacity(0.5),
+                        ),
+                      )
+                    : SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                for (var cart in model.cartlist)
+                  Container(
+                    padding:
+                        EdgeInsets.only(top: SizeConfig.blockSizeVertical * 2),
+                    child: CartItemContainerMobile(
+                      cart: cart,
+                      selected: cart.isSelected,
+                      onSelect: (val, cart) => model.onSelect(val, cart),
+                      nestedSelectAll: (val) =>
+                          model.nestedSelectall(val, cart),
+                      onDelete: (id, store) =>
+                          model.removeProductFromCart(id).then(
+                        (e) {
+                          if (e)
+                            showTopSnackBar(
+                              context,
+                              CustomSnackBar.error(
+                                icon: Icon(Icons.delete_forever,
+                                    size: 120, color: Color(352321536)),
+                                message: 'Product Removed from Cart',
+                              ),
+                              displayDuration: Duration(milliseconds: 150),
+                            );
+                        },
+                      ),
                     ),
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: SizeConfig.blockSizeHorizontal * 2),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  TickBox(onTickChange: (val) {}),
-                                  Text(
-                                    'UK Grocery Store',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Shipping Charges : ',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  Text(
-                                    '£ 2.00',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: accentColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                        Divider(
-                          color: Colors.black87,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: SizeConfig.blockSizeVertical * 1),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                child: Row(
-                                  children: [
-                                    TickBox(
-                                      onTickChange: (val) {},
-                                    ),
-                                    Container(
-                                      height: 75,
-                                      width: 75,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          fit: BoxFit.contain,
-                                          image: AssetImage(
-                                              'assets/images/Capture.png'),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        width: SizeConfig.blockSizeHorizontal *
-                                            1.75),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Hershey\'s Syrup',
-                                          style: TextStyle(
-                                            fontFamily: 'Lato',
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                            height:
-                                                SizeConfig.blockSizeVertical *
-                                                    1),
-                                        Text(
-                                          'GBP £250',
-                                          style: TextStyle(
-                                            fontFamily: 'Lato',
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'Quantity :',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top:
-                                              SizeConfig.blockSizeVertical * 1),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            height:
-                                                SizeConfig.blockSizeHorizontal *
-                                                    6,
-                                            width:
-                                                SizeConfig.blockSizeVertical *
-                                                    6,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              border: Border.all(
-                                                width: 1,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                '1',
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                              width: SizeConfig
-                                                      .blockSizeHorizontal *
-                                                  2),
-                                          Icon(
-                                            FontAwesomeIcons.trashAlt,
-                                            size: 20,
-                                            color: Colors.red,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  height: SizeConfig.blockSizeVertical * 33,
-                  width: SizeConfig.blockSizeHorizontal * 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: SizeConfig.blockSizeHorizontal * 2),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  TickBox(onTickChange: (val) {}),
-                                  Text(
-                                    'MS Store',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Shipping Charges : ',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  Text(
-                                    '£ 1.00',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: accentColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                        Divider(
-                          color: Colors.black87,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: SizeConfig.blockSizeVertical * 1),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                child: Row(
-                                  children: [
-                                    TickBox(
-                                      onTickChange: (val) {},
-                                    ),
-                                    Container(
-                                      height: 75,
-                                      width: 75,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          fit: BoxFit.contain,
-                                          image: AssetImage(
-                                              'assets/images/suasages.png'),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        width: SizeConfig.blockSizeHorizontal *
-                                            1.75),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Hershey\'s Syrup',
-                                          style: TextStyle(
-                                            fontFamily: 'Lato',
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                            height:
-                                                SizeConfig.blockSizeVertical *
-                                                    1),
-                                        Text(
-                                          'GBP £250',
-                                          style: TextStyle(
-                                            fontFamily: 'Lato',
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'Quantity :',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top:
-                                              SizeConfig.blockSizeVertical * 1),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            height:
-                                                SizeConfig.blockSizeHorizontal *
-                                                    6,
-                                            width:
-                                                SizeConfig.blockSizeVertical *
-                                                    6,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              border: Border.all(
-                                                width: 1,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                '1',
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                              width: SizeConfig
-                                                      .blockSizeHorizontal *
-                                                  2),
-                                          Icon(
-                                            FontAwesomeIcons.trashAlt,
-                                            size: 20,
-                                            color: Colors.red,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.blockSizeVertical * 1,
-                        ),
-                        Divider(
-                          color: Colors.black87,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: SizeConfig.blockSizeVertical * 1),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                child: Row(
-                                  children: [
-                                    TickBox(
-                                      onTickChange: (val) {},
-                                    ),
-                                    Container(
-                                      height: 75,
-                                      width: 75,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          fit: BoxFit.contain,
-                                          image: AssetImage(
-                                              'assets/images/nutella.png'),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                        width: SizeConfig.blockSizeHorizontal *
-                                            1.75),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Nutella',
-                                          style: TextStyle(
-                                            fontFamily: 'Lato',
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                            height:
-                                                SizeConfig.blockSizeVertical *
-                                                    1),
-                                        Text(
-                                          'GBP £10',
-                                          style: TextStyle(
-                                            fontFamily: 'Lato',
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          'Quantity :',
-                                          style: TextStyle(
-                                              fontSize: 11,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top:
-                                              SizeConfig.blockSizeVertical * 1),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            height:
-                                                SizeConfig.blockSizeHorizontal *
-                                                    6,
-                                            width:
-                                                SizeConfig.blockSizeVertical *
-                                                    6,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              border: Border.all(
-                                                width: 1,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                '2',
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                              width: SizeConfig
-                                                      .blockSizeHorizontal *
-                                                  2),
-                                          Icon(
-                                            FontAwesomeIcons.trashAlt,
-                                            size: 20,
-                                            color: Colors.red,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
                 //CheckOut Button
+                SizedBox(height: SizeConfig.blockSizeVertical * 3),
                 Container(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () => model.navigateToCheckOut(
+                            model.total, model.subTotal, model.shipping),
                         child: Text(
                           'Check Out',
                         ),
@@ -1085,6 +633,236 @@ class CartMobileView extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class CartItemContainerMobile extends StatelessWidget {
+  final CartModel cart;
+  final Function(int, String)? onDelete;
+  final Function(bool, int)? addorPlus;
+  final bool? selected;
+  final Function(bool)? nestedSelectAll;
+  final Function(bool, CartProducts)? onSelect;
+  CartItemContainerMobile(
+      {this.addorPlus,
+      required this.cart,
+      this.nestedSelectAll,
+      this.onDelete,
+      this.onSelect,
+      this.selected});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: SizeConfig.blockSizeHorizontal * 100,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          width: 1,
+          color: Colors.grey,
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.blockSizeHorizontal * 2),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  child: Row(
+                    children: [
+                      TickBox(
+                          value: selected,
+                          onTickChange: (val) => nestedSelectAll!(val!)),
+                      Text(
+                        '${cart.storeName}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Row(
+                    children: [
+                      Text(
+                        'Shipping Charges : ',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        '£ 2.00',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: accentColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+            Divider(
+              color: Colors.black87,
+            ),
+            for (var item in cart.product)
+              Container(
+                padding:
+                    EdgeInsets.only(bottom: SizeConfig.blockSizeVertical * 2),
+                child: CartItems(
+                  onSelect: (val) => onSelect!(val, item),
+                  nestedSelect: item.isSelected,
+                  image: item.products!.images![0],
+                  name: item.products!.name,
+                  price: item.products!.attributePrice == 0
+                      ? item.products!.productPrice
+                      : item.products!.attributePrice,
+                  quantity: item.quantity,
+                  onDeletePress: () {
+                    onDelete!(item.cartId, cart.storeName);
+                  },
+                ),
+              )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CartItems extends StatelessWidget {
+  final int? quantity;
+  final String? image;
+  final String? name;
+  final double? price;
+  final Function()? onDeletePress;
+  final bool? nestedSelect;
+  final Function(bool)? onSelect;
+  CartItems({
+    this.quantity,
+    this.image,
+    this.name,
+    this.price,
+    this.onDeletePress,
+    this.nestedSelect,
+    this.onSelect,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    int _quantity = quantity ?? 1;
+    String _image = image ?? '';
+    String _name = name ?? '';
+    double _price = price ?? 0;
+    return Padding(
+      padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 1),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            child: Row(
+              children: [
+                TickBox(
+                    value: nestedSelect,
+                    onTickChange: (val) => onSelect!(val!)),
+                Container(
+                  height: 65,
+                  width: 65,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.contain,
+                      image: NetworkImage(_name),
+                    ),
+                  ),
+                ),
+                SizedBox(width: SizeConfig.blockSizeHorizontal * 1.75),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '$_name',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                    Text(
+                      '£ $_price',
+                      style: TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      'Quantity :',
+                      style:
+                          TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding:
+                      EdgeInsets.only(top: SizeConfig.blockSizeVertical * 1),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: SizeConfig.blockSizeHorizontal * 6,
+                        width: SizeConfig.blockSizeVertical * 6,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
+                            width: 1,
+                            color: Colors.black,
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '$_quantity',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
+                      IconButton(
+                        onPressed: () => onDeletePress!(),
+                        icon: Icon(
+                          FontAwesomeIcons.trashAlt,
+                          size: 20,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

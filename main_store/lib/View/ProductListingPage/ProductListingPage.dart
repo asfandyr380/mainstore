@@ -1,16 +1,35 @@
 import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
+import 'package:main_store/View/Componants/ProductListingRows/ProductListingRowViewModel.dart';
 import 'package:main_store/View/ProductListingPage/ProductListingPageViewModel.dart';
 import 'package:main_store/View/Widgets/CardGrid/CardGridView.dart';
 import 'package:main_store/View/Widgets/DropDown/drop_Down.dart';
+import 'package:main_store/View/Widgets/Mobile_AppBar.dart';
+import 'package:main_store/View/Widgets/ProductCard/productListingCard.dart';
+import 'package:main_store/View/Widgets/responsive.dart';
 import 'package:stacked/stacked.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
+
+class ListingPage extends StatelessWidget {
+  final List<String>? cate;
+  ListingPage({this.cate});
+  @override
+  Widget build(BuildContext context) {
+    List<String> _cate = cate ?? [];
+    return Responsive(
+      mobile: ListingPageMobile(cate: _cate),
+      tablet: ProductListingPage(cate: cate),
+      desktop: ProductListingPage(cate: cate),
+    );
+  }
+}
 
 class ProductListingPage extends StatelessWidget {
   final List<String>? cate;
@@ -428,6 +447,66 @@ class _CategoryFilterMenuState extends State<CategoryFilterMenu> {
                 ],
               ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class ListingPageMobile extends StatelessWidget {
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+  final List<String>? cate;
+  ListingPageMobile({this.cate});
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<ProductListingPageViewModel>.reactive(
+      viewModelBuilder: () => ProductListingPageViewModel(),
+      onModelReady: (model) => model.fetchProductByFilter(cate),
+      builder: (ctx, model, child) => Scaffold(
+        appBar: mobileAppBar(scaffoldKey),
+        body: Container(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: SizeConfig.blockSizeVertical * 2,
+                        horizontal: SizeConfig.blockSizeVertical * 2,
+                      ),
+                      child: Text('Results For: General Grocerey')),
+                  Container(
+                    padding: EdgeInsets.only(
+                        right: SizeConfig.blockSizeHorizontal * 2),
+                    child: Icon(FontAwesomeIcons.filter,
+                        size: SizeConfig.blockSizeHorizontal * 4),
+                  ),
+                ],
+              ),
+              model.isLoading
+                  ? Container(
+                      child: CircularProgressIndicator(
+                        color: accentColor,
+                      ),
+                    )
+                  : Container(
+                      height: SizeConfig.blockSizeVertical * 30,
+                      width: double.infinity,
+                      child: GridView.builder(
+                        itemCount: model.filterlist.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                        itemBuilder: (context, i) {
+                          return ProductCardMobile(
+                            details: model.filterlist[i],
+                          );
+                        },
+                      ),
+                    ),
+            ],
+          ),
         ),
       ),
     );

@@ -22,14 +22,14 @@ class CustomButton extends StatelessWidget {
     bool _isEnable = isEnable ?? false;
     bool _isLoading = isLoading ?? false;
     bool _onMobile = onMobile ?? false;
+    bool _onTablet = onTablet ?? false;
     String _label = label ?? '';
     SizeConfig().init(context);
-    return ConstrainedBox(
-      constraints: BoxConstraints.tightFor(
-          width: onTablet!
-              ? SizeConfig.blockSizeHorizontal * 38
-              : SizeConfig.blockSizeHorizontal * 30,
-          height: SizeConfig.blockSizeVertical * 5),
+    return Container(
+      width: _onTablet
+          ? SizeConfig.blockSizeHorizontal * 38
+          : SizeConfig.blockSizeHorizontal * 30,
+      height: SizeConfig.blockSizeVertical * 5,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(primary: accentColor),
         onPressed: _isEnable

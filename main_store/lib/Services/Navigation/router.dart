@@ -57,7 +57,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case ProductListing:
       List<String>? cate = arg as List<String>?;
       return _GeneratePageRoute(
-          widget: ProductListingPage(
+          widget: ListingPage(
             cate: cate,
           ),
           routeName: settings.name);

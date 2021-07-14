@@ -18,7 +18,9 @@ class CheckoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Responsive(
-        mobile: CheckOutMobile(),
+        mobile: CheckOutMobile(
+          details: m,
+        ),
         tablet: CheckOutPage(
           m: m,
         ),
@@ -262,9 +264,14 @@ class _CheckOutPageState extends State<CheckOutPage> {
 }
 
 class CheckOutMobile extends StatelessWidget {
+  final SummeryModel? details;
+  CheckOutMobile({this.details});
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    double _total = details!.total!;
+    double _subtotal = details!.subtotal!;
+    double _shipping = details!.shipping!;
     return ViewModelBuilder.reactive(
         builder: (context, model, child) => Scaffold(
               appBar: AppBar(
@@ -284,7 +291,6 @@ class CheckOutMobile extends StatelessWidget {
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 30,
-                            fontFamily: 'Lato',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -300,7 +306,6 @@ class CheckOutMobile extends StatelessWidget {
                           color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          fontFamily: 'Lato',
                         ),
                       ),
                     ),
@@ -323,7 +328,6 @@ class CheckOutMobile extends StatelessWidget {
                           color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          fontFamily: 'Lato',
                         ),
                       ),
                     ),
@@ -414,10 +418,10 @@ class CheckOutMobile extends StatelessWidget {
                       child: Text(
                         'Cart Summary',
                         style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Lato'),
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     Container(
@@ -425,7 +429,7 @@ class CheckOutMobile extends StatelessWidget {
                           top: SizeConfig.blockSizeVertical * 1,
                           left: SizeConfig.blockSizeHorizontal * 4),
                       child: Text(
-                        'Subtotal : £320',
+                        'Subtotal : £$_subtotal',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -438,7 +442,7 @@ class CheckOutMobile extends StatelessWidget {
                           top: SizeConfig.blockSizeVertical * 1,
                           left: SizeConfig.blockSizeHorizontal * 4),
                       child: Text(
-                        'Shipping : £100',
+                        'Shipping : £$_shipping',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -451,7 +455,7 @@ class CheckOutMobile extends StatelessWidget {
                           top: SizeConfig.blockSizeVertical * 1,
                           left: SizeConfig.blockSizeHorizontal * 4),
                       child: Text(
-                        'Total : £420',
+                        'Total : £$_total',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 16,
@@ -468,7 +472,6 @@ class CheckOutMobile extends StatelessWidget {
                         child: Text(
                           'Proceed to Pay',
                           style: TextStyle(
-                            fontFamily: 'Lato',
                             fontSize: 16,
                           ),
                         ),

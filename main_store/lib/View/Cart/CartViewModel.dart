@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
+import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Models/CartModel.dart';
+import 'package:main_store/Models/SummeryModel.dart';
 import 'package:main_store/Services/Api/Cart/cart_services.dart';
 import 'package:dart_ipify/dart_ipify.dart';
+import 'package:main_store/Services/Navigation/navigation_services.dart';
 import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 
 class CartViewModel extends ChangeNotifier {
   List<CartModel> cartlist = [];
   CartService _cartService = locator<CartService>();
   StorageServices _services = locator<StorageServices>();
-
+  Navigation _navigaton = locator<Navigation>();
   double subTotal = 0;
   double shipping = 0;
   double total = 0;
@@ -22,6 +25,11 @@ class CartViewModel extends ChangeNotifier {
   isBusy(bool state) {
     isLoading = state;
     notifyListeners();
+  }
+
+  navigateToCheckOut(double total, double subTotal, double shipping) {
+    var m = SummeryModel.mapData(subTotal, shipping, total, []);
+    _navigaton.navigateTo(Checkout, arguments: m);
   }
 
   onSelect(bool val, CartProducts cart) {
