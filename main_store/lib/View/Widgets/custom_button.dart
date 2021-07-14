@@ -8,9 +8,11 @@ class CustomButton extends StatelessWidget {
   final bool? isEnable;
   final bool? isLoading;
   final bool? onMobile;
+  final bool? onTablet;
   CustomButton(
       {this.isEnable,
       this.onMobile,
+      this.onTablet,
       required this.onPressed,
       required this.label,
       this.isLoading});
@@ -23,7 +25,9 @@ class CustomButton extends StatelessWidget {
     SizeConfig().init(context);
     return ConstrainedBox(
       constraints: BoxConstraints.tightFor(
-          width: SizeConfig.blockSizeHorizontal * 30,
+          width: onTablet!
+              ? SizeConfig.blockSizeHorizontal * 38
+              : SizeConfig.blockSizeHorizontal * 30,
           height: SizeConfig.blockSizeVertical * 5),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(primary: accentColor),
@@ -44,7 +48,7 @@ class CustomButton extends StatelessWidget {
                 label,
                 style: TextStyle(
                   fontSize: _onMobile
-                      ? SizeConfig.blockSizeHorizontal * 4.5
+                      ? SizeConfig.blockSizeHorizontal * 3.5
                       : SizeConfig.blockSizeHorizontal * 1,
                 ),
               ),

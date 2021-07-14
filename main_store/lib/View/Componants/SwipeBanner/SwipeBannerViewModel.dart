@@ -11,13 +11,14 @@ class SwipeBannerViewModel extends ChangeNotifier {
   int currentIndex = 0;
   BannerServices _banner = locator<BannerServices>();
   List<Swipebanner> list = [];
-
+  PageController pageController = PageController(initialPage: 0);
   bool _disposed = false;
 
   @override
   void dispose() {
     _disposed = true;
     super.dispose();
+    pageController.dispose();
   }
 
   @override
@@ -27,7 +28,7 @@ class SwipeBannerViewModel extends ChangeNotifier {
     }
   }
 
-  autoPlay(PageController controller) {
+  autoPlay() {
     Timer.periodic(Duration(seconds: 3), (Timer timer) {
       if (currentIndex < list.length - 1) {
         currentIndex++;
@@ -36,7 +37,7 @@ class SwipeBannerViewModel extends ChangeNotifier {
         currentIndex = 0;
         notifyListeners();
       }
-      controller.animateToPage(
+      pageController.animateToPage(
         currentIndex,
         duration: Duration(milliseconds: 350),
         curve: Curves.easeIn,

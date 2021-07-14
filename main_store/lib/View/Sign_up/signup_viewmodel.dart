@@ -29,17 +29,17 @@ class SignupViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future signUp(String username, email, phone, password) async {
+  signUp(String username, email, phone, password) async {
     isBusy(true);
     var result = await _authApi.createNewUser(username, email, phone, password);
-    print(result);
-    _navigation.pushReplaceRoute(Home());
-    // } else {
-    //   _alertDialog.showDialog(
-    //       title: 'Authentication Error',
-    //       description: result,
-    //       buttonTitle: "Close");
-    // }
+    if (result is bool) {
+      _navigation.pushReplaceRoute(Home());
+    } else {
+      _alertDialog.showDialog(
+          title: 'Authentication Error',
+          description: result,
+          buttonTitle: "Close");
+    }
     isBusy(false);
   }
 }

@@ -5,15 +5,17 @@ import 'package:main_store/View/Componants/BrandsCard/BrandsCardViewModel.dart';
 import 'package:stacked/stacked.dart';
 
 class BrandsRow extends StatelessWidget {
-  const BrandsRow({Key? key}) : super(key: key);
+  final bool? onMobile;
+  const BrandsRow({this.onMobile});
 
   @override
   Widget build(BuildContext context) {
+    bool _onMobile = onMobile ?? false;
     return ViewModelBuilder<BrandCardViewModel>.reactive(
       onModelReady: (model) => model.fetchBrands(),
       builder: (context, model, child) => SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             for (var brand in model.brandslits)
               Container(
@@ -22,6 +24,7 @@ class BrandsRow extends StatelessWidget {
                   horizontal: SizeConfig.blockSizeHorizontal * 1,
                 ),
                 child: BrandsCard(
+                  onMobile: _onMobile,
                   image: brand.image,
                 ),
               ),
@@ -35,14 +38,19 @@ class BrandsRow extends StatelessWidget {
 
 class BrandsCard extends StatelessWidget {
   final String? image;
-  BrandsCard({this.image});
+  final bool? onMobile;
+  BrandsCard({this.image, this.onMobile});
   @override
   Widget build(BuildContext context) {
     String _image = image ?? placeholderBrandPic;
     SizeConfig().init(context);
     return Container(
-      height: SizeConfig.blockSizeVertical * 8,
-      width: SizeConfig.blockSizeHorizontal * 10,
+      height: onMobile!
+          ? SizeConfig.blockSizeVertical * 4
+          : SizeConfig.blockSizeVertical * 8,
+      width: onMobile!
+          ? SizeConfig.blockSizeHorizontal * 17
+          : SizeConfig.blockSizeHorizontal * 10,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [

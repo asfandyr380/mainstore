@@ -7,6 +7,20 @@ import 'package:main_store/Services/Fireabase/Firestore/get_banners.dart';
 class BrandCardViewModel extends ChangeNotifier {
   BannerServices _banner = locator<BannerServices>();
   List<BrandsModel> brandslits = [];
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_disposed) {
+      super.notifyListeners();
+    }
+  }
 
   fetchBrands() async {
     var result = await _banner.getBrands();

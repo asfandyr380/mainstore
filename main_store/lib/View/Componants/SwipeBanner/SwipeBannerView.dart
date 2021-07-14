@@ -6,44 +6,43 @@ import 'package:main_store/View/Componants/SwipeBanner/SwipeBannerViewModel.dart
 import 'package:stacked/stacked.dart';
 
 class SwipeBanner extends StatefulWidget {
+  final bool? onMobile;
+  SwipeBanner({this.onMobile});
   @override
   _SwipeBannerState createState() => _SwipeBannerState();
 }
 
 class _SwipeBannerState extends State<SwipeBanner> {
-  PageController _pageController = PageController(initialPage: 0);
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pageController.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
+    bool _onMobile = widget.onMobile ?? false;
     return ViewModelBuilder<SwipeBannerViewModel>.reactive(
       viewModelBuilder: () => SwipeBannerViewModel(),
       onModelReady: (model) {
         model.fetchBanner().then((value) {
-          if (model.list.isNotEmpty) {
-            model.autoPlay(_pageController);
-          }
+          // if (model.list.isNotEmpty) {
+          //   model.autoPlay();
+          // }
         });
       },
       builder: (context, model, child) => Container(
-        height: SizeConfig.blockSizeVertical * 45,
-        width: SizeConfig.blockSizeHorizontal * 75,
+        height: _onMobile
+            ? SizeConfig.blockSizeVertical * 20
+            : SizeConfig.blockSizeVertical * 45,
+        width:
+            _onMobile ? double.infinity : SizeConfig.blockSizeHorizontal * 75,
         decoration: BoxDecoration(
           color: Colors.grey,
         ),
         child: Stack(
           children: [
             PageView(
-              controller: _pageController,
+              controller: model.pageController,
               onPageChanged: (i) => model.onPageChange(i),
               children: [
                 for (var banner in model.list)
                   BannerImage(
+                    onMobile: _onMobile,
                     exploreProducts: (cate) =>
                         model.navigateToProductlisting(cate),
                     bannerDetails: banner,
@@ -74,8 +73,9 @@ class _SwipeBannerState extends State<SwipeBanner> {
 
 class BannerImage extends StatelessWidget {
   final Swipebanner? bannerDetails;
+  final bool? onMobile;
   final Function(String)? exploreProducts;
-  BannerImage({this.bannerDetails, this.exploreProducts});
+  BannerImage({this.bannerDetails, this.exploreProducts, this.onMobile});
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +88,7 @@ class BannerImage extends StatelessWidget {
         ),
       ),
       child: SwipeBannerText(
+        onMobile: onMobile,
         onTap: () => exploreProducts!(bannerDetails!.cate!),
         mainText: bannerDetails!.mainText ?? '',
         subText: bannerDetails!.subText ?? '',
@@ -121,15 +122,19 @@ class SwipeBannerText extends StatelessWidget {
   final String? mainText;
   final String? subText;
   final Function? onTap;
-  SwipeBannerText({this.mainText, this.subText, this.onTap});
+  final bool? onMobile;
+  SwipeBannerText({this.mainText, this.subText, this.onTap, this.onMobile});
   @override
   Widget build(BuildContext context) {
     String _subText = subText ?? '';
     String _mainText = mainText ?? '';
+    bool _onMobile = onMobile ?? false;
     return Container(
       child: Container(
         padding: EdgeInsets.only(
-          top: SizeConfig.blockSizeVertical * 10,
+          top: _onMobile
+              ? SizeConfig.blockSizeVertical * 5
+              : SizeConfig.blockSizeVertical * 10,
           left: SizeConfig.blockSizeHorizontal * 3,
         ),
         child: Column(
@@ -140,25 +145,35 @@ class SwipeBannerText extends StatelessWidget {
               child: Text(
                 _subText,
                 style: TextStyle(
-                  fontSize: SizeConfig.blockSizeHorizontal * 1,
+                  fontSize: _onMobile
+                      ? SizeConfig.blockSizeHorizontal * 2
+                      : SizeConfig.blockSizeHorizontal * 1,
                 ),
               ),
             ),
             // Main Body Text
             Container(
-              height: SizeConfig.blockSizeVertical * 13,
-              width: SizeConfig.blockSizeHorizontal * 20,
+              height: _onMobile
+                  ? SizeConfig.blockSizeVertical * 6
+                  : SizeConfig.blockSizeVertical * 13,
+              width: _onMobile
+                  ? SizeConfig.blockSizeHorizontal * 35
+                  : SizeConfig.blockSizeHorizontal * 20,
               child: Text(
                 _mainText,
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: SizeConfig.blockSizeHorizontal * 2.5,
+                  fontSize: _onMobile
+                      ? SizeConfig.blockSizeHorizontal * 5
+                      : SizeConfig.blockSizeHorizontal * 2.5,
                 ),
               ),
             ),
             SizedBox(
-              height: SizeConfig.blockSizeVertical * 1,
+              height: _onMobile
+                  ? SizeConfig.blockSizeVertical * 0.5
+                  : SizeConfig.blockSizeVertical * 1,
             ),
             // Explore Button
             MouseRegion(
@@ -167,8 +182,12 @@ class SwipeBannerText extends StatelessWidget {
                 onTap: () => onTap!(),
                 child: Container(
                   alignment: Alignment.center,
-                  width: SizeConfig.blockSizeHorizontal * 12,
-                  height: SizeConfig.blockSizeVertical * 5,
+                  width: _onMobile
+                      ? SizeConfig.blockSizeHorizontal * 13
+                      : SizeConfig.blockSizeHorizontal * 12,
+                  height: _onMobile
+                      ? SizeConfig.blockSizeVertical * 2.2
+                      : SizeConfig.blockSizeVertical * 5,
                   decoration: BoxDecoration(
                     color: accentColor,
                   ),
@@ -176,7 +195,9 @@ class SwipeBannerText extends StatelessWidget {
                     'Explore Products',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: SizeConfig.blockSizeHorizontal * 1,
+                      fontSize: _onMobile
+                          ? SizeConfig.blockSizeHorizontal * 1.5
+                          : SizeConfig.blockSizeHorizontal * 1,
                     ),
                   ),
                 ),

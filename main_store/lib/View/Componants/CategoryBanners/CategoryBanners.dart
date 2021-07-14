@@ -3,11 +3,76 @@ import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/Banners.dart';
 import 'package:main_store/View/Componants/CategoryBanners/CategoryBannersViewModel.dart';
 import 'package:main_store/View/Widgets/Banners/banners.dart';
+import 'package:main_store/View/Widgets/responsive.dart';
 import 'package:stacked/stacked.dart';
 
 class CategoryBanners extends StatelessWidget {
   final Function(List<Banners>) getBanner;
   CategoryBanners({required this.getBanner});
+  @override
+  Widget build(BuildContext context) {
+    return Responsive(
+      mobile: CategoryBannerMobile(),
+      tablet: CategoryBannersWeb(getBanner: getBanner),
+      desktop: CategoryBannersWeb(getBanner: getBanner),
+    );
+  }
+}
+
+class CategoryBannerMobile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<BannersViewModel>.reactive(
+      viewModelBuilder: () => BannersViewModel(),
+      onModelReady: (model) => model.getBanners(),
+      builder: (context, model, child) => Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            for (int i = 0; i < 4; i++)
+              Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.blockSizeHorizontal * 1),
+                child: BanMobile(
+                  cate: model.bannerlist.isEmpty
+                      ? null
+                      : model
+                          .bannerlist[i == 2
+                              ? 4
+                              : i == 3
+                                  ? 5
+                                  : i]
+                          .cate,
+                  image: model.bannerlist.isEmpty
+                      ? null
+                      : model
+                          .bannerlist[i == 2
+                              ? 4
+                              : i == 3
+                                  ? 5
+                                  : i]
+                          .image,
+                  bannerText: model.bannerlist.isEmpty
+                      ? null
+                      : model
+                          .bannerlist[i == 2
+                              ? 4
+                              : i == 3
+                                  ? 5
+                                  : i]
+                          .mainText,
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CategoryBannersWeb extends StatelessWidget {
+  final Function(List<Banners>) getBanner;
+  CategoryBannersWeb({required this.getBanner});
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -69,7 +134,7 @@ class CategoryBanners extends StatelessWidget {
                     SmallBanner(
                       cate: model.bannerlist.isEmpty
                           ? null
-                          : model.bannerlist[4].cate,
+                          : model.bannerlist[5].cate,
                       image: model.bannerlist.isEmpty
                           ? null
                           : model.bannerlist[5].image,

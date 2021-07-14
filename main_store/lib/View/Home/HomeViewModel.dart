@@ -31,6 +31,21 @@ class HomeViewModel extends ChangeNotifier {
   int nearbyCurrentPage = 0;
   int totalProducts = 0;
 
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_disposed) {
+      super.notifyListeners();
+    }
+  }
+
   isBusy(bool state) {
     isLoading = state;
     notifyListeners();

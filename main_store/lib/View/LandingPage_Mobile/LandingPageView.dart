@@ -36,7 +36,7 @@ class LandingPage extends StatelessWidget {
                 controller: _controller,
                 confineInSafeArea: true,
                 screens: [
-                  Homemobile(),
+                  HomeMobile(),
                   SearchPage(),
                   CartMobileView(),
                   AccountView(

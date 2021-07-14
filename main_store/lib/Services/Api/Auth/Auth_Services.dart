@@ -8,11 +8,11 @@ import 'package:main_store/Models/User_Model.dart';
 import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 
 class AuthServicesApi {
-  Uri _BaseURL = Uri.parse('$baseUrl/users/');
   StorageServices _services = locator<StorageServices>();
 
   Future createNewUser(
       String username, String email, String phone, String password) async {
+    Uri _BaseURL = Uri.parse('$baseUrl/users/');
     try {
       Map<String, dynamic> body = {
         'username': username,
@@ -23,16 +23,16 @@ class AuthServicesApi {
       http.Response res = await http.post(_BaseURL, body: body);
       var decodedBody = jsonDecode(res.body);
       if (res.statusCode == 200 && decodedBody['success'] == 1) {
-        UserModel user = await getUserbyId(decodedBody['insertId']);
-        await _services.saveUser(user.email!, decodedBody['insertId']);
+        await _services.saveUser(email, decodedBody['data']['insertId']);
         return true;
-      } else
+      } else {
         return decodedBody['message'];
+      }
     } catch (e) {
       if (e is PlatformException) {
-        return e.message;
+        print(e.message);
       } else {
-        return e;
+        print(e);
       }
     }
   }
@@ -61,7 +61,6 @@ class AuthServicesApi {
     try {
       UserModel user = UserModel(email: email, password: password);
       Map<String, dynamic> jsonBody = user.toJson();
-      print(jsonBody);
       http.Response res = await http.post(_LOGINURL, body: jsonBody);
       var decodedBody = jsonDecode(res.body);
       if (res.statusCode == 200 && decodedBody['success'] == 1) {

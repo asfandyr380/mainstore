@@ -16,19 +16,27 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Responsive(
-        mobile: LandingPage(
-          index: 3,
-          onSignUp: true,
-        ),
-        tablet: SignupPage(),
-        desktop: SignupPage());
+      mobile: LandingPage(
+        index: 3,
+        onSignUp: true,
+      ),
+      tablet: SignUpWeb(
+        isTablet: true,
+      ),
+      desktop: SignUpWeb(),
+    );
   }
 }
 
-class SignupPage extends StatelessWidget {
+class SignUpWeb extends StatelessWidget {
+  final bool? isTablet;
+  SignUpWeb({this.isTablet});
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    var size = MediaQuery.of(context).size.width;
+    print(size);
+    bool _isTablet = isTablet ?? false;
     return ViewModelBuilder<SignupViewModel>.reactive(
       viewModelBuilder: () => SignupViewModel(),
       builder: (context, model, child) => Scaffold(
@@ -49,6 +57,7 @@ class SignupPage extends StatelessWidget {
                 alignment: Alignment.center,
                 padding: EdgeInsets.symmetric(vertical: 20),
                 child: Forum(
+                  isTablet: _isTablet,
                   onClick: (email, pass, name, phone) =>
                       model.signUp(name, email, phone, pass),
                 ),

@@ -32,16 +32,9 @@ class CardGridView extends StatelessWidget {
                   horizontal: SizeConfig.blockSizeHorizontal * 0.5),
               width: SizeConfig.blockSizeHorizontal * 5,
               child: ProductListingCards(
-                productId: productDetails![i].productId,
                 isGrid: true,
                 onTap: () => model.navigatetodetails(productDetails![i]),
-                productName: productDetails![i].name,
-                onWishlist: productDetails![i].onWishlist,
-                categoryName: productDetails![i].by,
-                productPrice: productDetails![i].productPrice,
-                image: productDetails![i].images![0],
-                salePrice: productDetails![i].salePrice,
-                onSale: productDetails![i].onSale,
+                details: productDetails![i],
               ),
             );
           },

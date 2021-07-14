@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/ReviewModel.dart';
@@ -10,7 +9,9 @@ import 'package:main_store/View/Componants/CategoryBanners/CategoryBanners.dart'
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Componants/ProductListingRows/ProductListingRows.dart';
+import 'package:main_store/View/Componants/SwipeBanner/SwipeBannerView.dart';
 import 'package:main_store/View/Home/HomeViewModel.dart';
+import 'package:main_store/View/LandingPage_Mobile/LandingPageView.dart';
 import 'package:main_store/View/Widgets/Banners/banners.dart';
 import 'package:main_store/View/Widgets/listingName.dart';
 import 'package:main_store/View/Widgets/ProductCard/productListingCard.dart';
@@ -22,7 +23,63 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Responsive(mobile: Homemobile(), tablet: Home(), desktop: Home());
+    return Responsive(
+        mobile: LandingPage(index: 0), tablet: Home(), desktop: Home());
+  }
+}
+
+class HomeMobile extends StatelessWidget {
+  const HomeMobile({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<HomeViewModel>.reactive(
+      viewModelBuilder: () => HomeViewModel(),
+      onModelReady: (model) {
+        model.fetchTopSellingProducts();
+        model.fetchOnSaleProducts();
+        model.fetchNearbyProducts();
+      },
+      builder: (context, model, child) => Container(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                child: SwipeBanner(
+                  onMobile: true,
+                ),
+              ),
+              SizedBox(height: SizeConfig.blockSizeVertical * 2),
+              CategoryBanners(
+                getBanner: (banners) => model.getBanner(banners),
+              ),
+              SizedBox(height: SizeConfig.blockSizeVertical * 2),
+              Container(
+                child: BrandsRow(
+                  onMobile: true,
+                ),
+              ),
+              SizedBox(height: SizeConfig.blockSizeVertical * 2),
+              ProductListingRowMobile(
+                isLoading: model.isLoading,
+                listingName: 'Top Selling Products',
+                productDetails: model.topSellingProducts,
+              ),
+              ProductListingRowMobile(
+                isLoading: model.isLoading,
+                listingName: 'On Sale Products',
+                productDetails: model.onSaleProducts,
+              ),
+              NearbyProductsMobile(
+                navegateToDetails: (e) => model.navigatetodetails(e),
+                productDetails: model.nearbyProducts,
+                isLoading: model.isNearbyloading,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -303,10 +360,70 @@ class RatingStar extends StatelessWidget {
   }
 }
 
+class NearbyProductsMobile extends StatelessWidget {
+  List<ProductsModel>? productDetails;
+  final Function(ProductsModel)? navegateToDetails;
+  final bool? isLoading;
+  NearbyProductsMobile(
+      {this.isLoading, this.navegateToDetails, this.productDetails});
+
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    bool _isLoading = isLoading ?? false;
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(
+                left: SizeConfig.blockSizeHorizontal * 2,
+                bottom: SizeConfig.blockSizeVertical * 2),
+            child: ListingName(
+              listingName: 'Products For You',
+            ),
+          ),
+          _isLoading
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: accentColor,
+                  ),
+                )
+              : Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.blockSizeVertical * 3,
+                  ),
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2),
+                    itemCount: productDetails!.length,
+                    itemBuilder: (context, i) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: SizeConfig.blockSizeVertical * 2,
+                          horizontal: SizeConfig.blockSizeHorizontal * 2,
+                        ),
+                        child: ProductCardMobile(
+                          details: productDetails![i],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+        ],
+      ),
+    );
+  }
+}
+
 class NearbyProducts extends StatelessWidget {
   List<ProductsModel>? productDetails;
   final Function(ProductsModel)? navegateToDetails;
   final bool? isLoading;
+
   NearbyProducts({this.productDetails, this.navegateToDetails, this.isLoading});
 
   @override
@@ -314,7 +431,6 @@ class NearbyProducts extends StatelessWidget {
     SizeConfig().init(context);
     bool _isLoading = isLoading ?? false;
     var width = MediaQuery.of(context).size.width;
-    print(width);
     return Container(
       alignment: Alignment.centerLeft,
       child: Column(
@@ -362,14 +478,7 @@ class NearbyProducts extends StatelessWidget {
                         child: ProductListingCards(
                           isGrid: true,
                           onTap: () => navegateToDetails!(productDetails![i]),
-                          productId: productDetails![i].productId,
-                          onWishlist: productDetails![i].onWishlist,
-                          productName: productDetails![i].name,
-                          categoryName: productDetails![i].by,
-                          productPrice: productDetails![i].productPrice,
-                          image: productDetails![i].images![0],
-                          salePrice: productDetails![i].salePrice,
-                          onSale: productDetails![i].onSale,
+                          details: productDetails![i],
                         ),
                       );
                     },
@@ -378,48 +487,5 @@ class NearbyProducts extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class Homemobile extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return ViewModelBuilder<HomeViewModel>.reactive(
-        builder: (context, model, child) => Scaffold(
-              body: Container(
-                height: SizeConfig.blockSizeVertical * 15,
-                width: SizeConfig.blockSizeHorizontal * 100,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                        'assets/images/grocery_demographics_banner.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Container(
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            '100%',
-                            style: TextStyle(
-                              color: accentColor,
-                            ),
-                          ),
-                          Text(
-                            'Genuine Products',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-        viewModelBuilder: () => HomeViewModel());
   }
 }

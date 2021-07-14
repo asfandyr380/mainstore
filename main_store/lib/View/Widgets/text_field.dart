@@ -7,8 +7,10 @@ class TextInputField extends StatelessWidget {
   final Function(String)? onChange;
   final bool? onMobile;
   final bool? onMobileappbar;
+  final bool? onTablet;
 
   TextInputField({
+    this.onTablet,
     this.onMobile,
     required this.hint_text,
     this.onChange,
@@ -24,8 +26,11 @@ class TextInputField extends StatelessWidget {
     return Form(
       // autovalidateMode: AutovalidateMode.always,
       child: Container(
-        width:
-            _onMobile ? double.infinity : SizeConfig.blockSizeHorizontal * 31,
+        width: _onMobile
+            ? double.infinity
+            : onTablet!
+                ? SizeConfig.blockSizeHorizontal * 37
+                : SizeConfig.blockSizeHorizontal * 31,
         height: _onMobile
             ? SizeConfig.blockSizeVertical * 5
             : SizeConfig.blockSizeVertical * 7,

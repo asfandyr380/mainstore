@@ -9,6 +9,7 @@ import 'package:stacked/stacked.dart';
 // Complete Forum For the SignUp/Sign In Screen
 class Forum extends StatelessWidget {
   final bool? isSignIn;
+  final bool? isTablet;
   final Future Function(
     String,
     String,
@@ -19,7 +20,7 @@ class Forum extends StatelessWidget {
     String,
     String,
   )? onClick;
-  Forum({this.isSignIn, this.onClick, this.onSignInClick});
+  Forum({this.isSignIn, this.onClick, this.onSignInClick, this.isTablet});
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,9 @@ class Forum extends StatelessWidget {
             height: _isSignIn
                 ? SizeConfig.blockSizeVertical * 50
                 : SizeConfig.blockSizeVertical * 70,
-            width: SizeConfig.blockSizeHorizontal * 35,
+            width: isTablet!
+                ? SizeConfig.blockSizeHorizontal * 45
+                : SizeConfig.blockSizeHorizontal * 35,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(3),
@@ -64,6 +67,7 @@ class Forum extends StatelessWidget {
                               horizontal: SizeConfig.blockSizeHorizontal * 1.2,
                             ),
                             child: TextInputField(
+                              onTablet: isTablet,
                               validateForm: (val) => model.validateForum(val),
                               onChange: (val) {
                                 model.name = val;
@@ -79,6 +83,7 @@ class Forum extends StatelessWidget {
                         ? Container(
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: TextInputField(
+                              onTablet: isTablet,
                               validateForm: (val) => model.validateForum(val),
                               onChange: (val) {
                                 model.phone = val;
@@ -93,6 +98,7 @@ class Forum extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       child: TextInputField(
+                        onTablet: isTablet,
                         validateForm: (val) => model.validateForum(val),
                         onChange: (val) {
                           model.email = val;
@@ -106,6 +112,7 @@ class Forum extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       child: TextInputField(
+                        onTablet: isTablet,
                         validateForm: (val) => model.validateForum(val),
                         onChange: (val) {
                           model.pass = val;
@@ -120,6 +127,7 @@ class Forum extends StatelessWidget {
                         ? Container(
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: TextInputField(
+                              onTablet: isTablet,
                               validateForm: (val) => model.validateForum(val),
                               onChange: (val) {
                                 model.confirm_pass = val;
@@ -145,7 +153,9 @@ class Forum extends StatelessWidget {
                                 ),
                                 Container(
                                   width: SizeConfig.blockSizeHorizontal * 15,
-                                  height: SizeConfig.blockSizeVertical * 3.5,
+                                  height: isTablet!
+                                      ? SizeConfig.blockSizeHorizontal * 2
+                                      : SizeConfig.blockSizeVertical * 3.5,
                                   child: Text(
                                     agreeing_term_text,
                                     textAlign: TextAlign.justify,
@@ -160,7 +170,9 @@ class Forum extends StatelessWidget {
                           )
                         : Container(
                             padding: EdgeInsets.only(
-                                left: SizeConfig.blockSizeHorizontal * 2),
+                                left: isTablet!
+                                    ? SizeConfig.blockSizeHorizontal * 3.5
+                                    : SizeConfig.blockSizeHorizontal * 2),
                             child: ForgetPasswordPage(),
                           ),
                     Container(
@@ -168,6 +180,7 @@ class Forum extends StatelessWidget {
                           vertical: SizeConfig.blockSizeVertical * 1,
                         ),
                         child: CustomButton(
+                          onTablet: isTablet,
                           isLoading: model.isLoading,
                           onPressed: _isSignIn
                               ? () {

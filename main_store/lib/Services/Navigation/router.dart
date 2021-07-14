@@ -24,10 +24,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case SignUp:
       return _GeneratePageRoute(widget: SignUpPage(), routeName: settings.name);
     case HomeView:
-      return _GeneratePageRoute(widget: Home(), routeName: settings.name);
+      return _GeneratePageRoute(widget: HomePage(), routeName: settings.name);
     case Cart:
-      return _GeneratePageRoute(
-          widget: CartViewPage(), routeName: settings.name);
+      return _GeneratePageRoute(widget: CartView(), routeName: settings.name);
     case SuccessPage:
       return _GeneratePageRoute(widget: Success(), routeName: settings.name);
     case Checkout:

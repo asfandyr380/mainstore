@@ -92,6 +92,50 @@ class SecondBanner extends StatelessWidget {
 }
 
 // Banner
+class BanMobile extends StatelessWidget {
+  final String? bannerText;
+  final String? image;
+  final String? cate;
+  BanMobile({this.bannerText, this.image, this.cate});
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    String _bannerText = bannerText ?? '';
+    String _image = image ?? placeholderBannerPic;
+    String _cate = cate ?? '';
+    return ViewModelBuilder<BannerViewModel>.reactive(
+      viewModelBuilder: () => BannerViewModel(),
+      builder: (context, model, child) => Column(
+        children: [
+          GestureDetector(
+            onTap: () => model.navigateToProductlisting(_cate),
+            child: Container(
+              height: SizeConfig.blockSizeVertical * 10,
+              width: SizeConfig.blockSizeHorizontal * 20,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(_image),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: SizeConfig.blockSizeVertical * 1),
+          Container(
+            width: SizeConfig.blockSizeHorizontal * 15,
+            height: SizeConfig.blockSizeVertical * 5,
+            child: Text(
+              _bannerText,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class Ban extends StatelessWidget {
   final bool? isMiddle;
   final String? bannerText;

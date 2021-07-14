@@ -23,7 +23,7 @@ class AccountView extends StatelessWidget {
           else if (_onSignUp)
             return SignUpMobile();
           else
-            return Homemobile();
+            return HomeMobile();
         },
         viewModelBuilder: () => AccountViewModel());
   }

@@ -19,20 +19,25 @@ class SigninPage extends StatelessWidget {
           index: 3,
           onSignIn: true,
         ),
-        tablet: SignInPage(),
-        desktop: SignInPage());
+        tablet: SignInWeb(
+          onTablet: true,
+        ),
+        desktop: SignInWeb());
   }
 }
 
-class SignInPage extends StatefulWidget {
+class SignInWeb extends StatefulWidget {
+  final bool? onTablet;
+  SignInWeb({this.onTablet});
   @override
   _SignInPageState createState() => _SignInPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignInPageState extends State<SignInWeb> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    bool _onTablet = widget.onTablet ?? false;
     return ViewModelBuilder<SigninViewModel>.reactive(
       viewModelBuilder: () => SigninViewModel(),
       builder: (context, model, child) => Scaffold(
@@ -56,6 +61,7 @@ class _SignInPageState extends State<SignInPage> {
                 padding: EdgeInsets.symmetric(
                     vertical: SizeConfig.blockSizeVertical * 4),
                 child: Forum(
+                  isTablet: _onTablet,
                   isSignIn: true,
                   onSignInClick: (email, pass) => model.logInUser(email, pass),
                 ),
@@ -164,6 +170,7 @@ class _SignInMobileViewState extends State<SignInMobileView> {
                 width: SizeConfig.blockSizeHorizontal * 50,
                 height: 40,
                 child: CustomButton(
+                  onTablet: false,
                   isLoading: model.isLoading,
                   onMobile: true,
                   isEnable: true,
