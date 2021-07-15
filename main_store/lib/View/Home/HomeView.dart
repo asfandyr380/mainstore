@@ -72,7 +72,7 @@ class HomeMobile extends StatelessWidget {
                 productDetails: model.onSaleProducts,
               ),
               SizedBox(
-                height: SizeConfig.blockSizeVertical * 2,
+                height: SizeConfig.blockSizeVertical * 1,
               ),
               Container(
                 child: Text('What People Says about Us',
@@ -81,14 +81,14 @@ class HomeMobile extends StatelessWidget {
                         fontSize: SizeConfig.blockSizeHorizontal * 3)),
               ),
               SizedBox(
-                height: SizeConfig.blockSizeVertical * 2,
+                height: SizeConfig.blockSizeVertical * 1,
               ),
               Container(
                 padding: EdgeInsets.symmetric(
                   horizontal: SizeConfig.blockSizeHorizontal * 2,
                 ),
                 width: double.infinity,
-                height: SizeConfig.blockSizeVertical * 25,
+                height: SizeConfig.blockSizeVertical * 20,
                 child: ListView.separated(
                   itemCount: model.reviewlist.length,
                   scrollDirection: Axis.horizontal,
@@ -336,7 +336,7 @@ class ReviewsCard extends StatelessWidget {
     bool _onMobile = onMobile ?? false;
     return Container(
       height: _onMobile
-          ? SizeConfig.blockSizeVertical * 25
+          ? SizeConfig.blockSizeVertical * 20
           : SizeConfig.blockSizeVertical * 25,
       width: _onMobile
           ? SizeConfig.blockSizeHorizontal * 65
@@ -373,7 +373,7 @@ class ReviewsCard extends StatelessWidget {
             details!.user!,
             style: TextStyle(
               fontSize: _onMobile
-                  ? SizeConfig.blockSizeHorizontal * 2
+                  ? SizeConfig.blockSizeHorizontal * 3
                   : SizeConfig.blockSizeHorizontal * 1,
             ),
           ),

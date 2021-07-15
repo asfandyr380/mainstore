@@ -26,7 +26,9 @@ class RootWidget extends StatelessWidget {
     return MaterialApp(
       // home: SignUpPage(),
       initialRoute: HomeView,
-      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+      theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+          textTheme: GoogleFonts.latoTextTheme()),
       onGenerateRoute: (settings) => generateRoute(settings),
       builder: (context, widget) => Navigator(
         onGenerateRoute: (settings) => MaterialPageRoute(

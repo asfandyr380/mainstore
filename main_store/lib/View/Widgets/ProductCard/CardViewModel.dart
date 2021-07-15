@@ -1,13 +1,16 @@
 import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
+import 'package:main_store/Config/routes.dart';
+import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/Services/Api/Wishlist/wishlist_Services.dart';
+import 'package:main_store/Services/Navigation/navigation_services.dart';
 import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 
 class CardViewModel extends ChangeNotifier {
   WishServices _wish = locator<WishServices>();
   StorageServices _services = locator<StorageServices>();
-
+  Navigation _navigation = locator<Navigation>();
   bool onWishlist = false;
 
   Future removeFromlist(int id) async {
@@ -19,6 +22,10 @@ class CardViewModel extends ChangeNotifier {
         return false;
       }
     }
+  }
+
+  navigatetoDetailPage(ProductsModel? details) {
+    _navigation.navigateTo(ProductDetailsPage, arguments: details);
   }
 
   Future addtoWishlist(int productId) async {

@@ -82,9 +82,7 @@ class ProductListingPageViewModel extends ChangeNotifier {
     fetchProductByFilter(category);
   }
 
-  fetchProductByFilter(
-    List<String>? cate,
-  ) async {
+  fetchProductByFilter(List<String>? cate) async {
     isBusy(true);
     var result = await _filterProducts.byCategory(cate!, currentPage);
     if (result is List<ProductsModel>) {

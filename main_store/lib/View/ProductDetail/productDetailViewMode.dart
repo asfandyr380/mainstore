@@ -84,26 +84,23 @@ class ProductDetailViewModel extends ChangeNotifier {
     String i = _userIp.replaceAll('.', '');
     String newI = i.substring(i.length - 5);
     int ip = int.parse(newI);
-    print(ip);
     if (user) {
       int userId = await _services.getUserId();
       var result = await _cart.addToCart(
           productId, storeId, userId, quantity, attributePrice);
       if (result == 1)
-        return true;
+        print("Product Added To Cart");
       else
-        return false;
+        print("Cannot add Product to Cart");
     } else {
       var result = await _cart.addToCart(
           productId, storeId, ip, quantity, attributePrice);
-      if (result is bool) {
-        if (result)
-          return true;
-        else
-          return false;
+      if (result == 1) {
+        print("Product Added To Cart");
+      } else {
+        print("Cannot add Product to Cart");
       }
     }
-    print(isLoading);
     isBusy(false);
   }
 

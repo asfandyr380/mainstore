@@ -5,7 +5,7 @@ import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Models/productsModel.dart';
 
 class SearchProductServices {
-  Future seaerhForProduct(String searchKey) async {
+  Future seaerhForProduct(String? searchKey) async {
     List<ProductsModel> products = [];
     if (searchKey != null && searchKey.isNotEmpty) {
       Map<String, dynamic> key = {'key': '%$searchKey%'};

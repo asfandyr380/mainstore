@@ -7,7 +7,6 @@ import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
-import 'package:main_store/View/Componants/ProductListingRows/ProductListingRowViewModel.dart';
 import 'package:main_store/View/ProductListingPage/ProductListingPageViewModel.dart';
 import 'package:main_store/View/Widgets/CardGrid/CardGridView.dart';
 import 'package:main_store/View/Widgets/DropDown/drop_Down.dart';
@@ -78,6 +77,8 @@ class ProductListingPage extends StatelessWidget {
                       ),
                       Container(
                         child: Products(
+                          currentPage: model.currentPage,
+                          totalCount: model.totalCount,
                           isBusy: model.isLoading,
                           details: model.byRange
                               ? model.filterlist
@@ -157,7 +158,14 @@ class Products extends StatelessWidget {
   final List<ProductsModel>? details;
   final Function? orderBy;
   final bool? isBusy;
-  Products({this.details, this.orderBy, this.isBusy});
+  final int? totalCount;
+  final int? currentPage;
+  Products(
+      {this.details,
+      this.orderBy,
+      this.isBusy,
+      this.currentPage,
+      this.totalCount});
 
   @override
   Widget build(BuildContext context) {
@@ -165,7 +173,11 @@ class Products extends StatelessWidget {
     return Column(
       children: [
         Container(
-          child: FilterHeader(orderBy: (val) => orderBy!(val)),
+          child: FilterHeader(
+            orderBy: (val) => orderBy!(val),
+            totalCount: totalCount,
+            currentPage: currentPage,
+          ),
         ),
         Container(
           padding: EdgeInsets.only(
@@ -189,9 +201,13 @@ class Products extends StatelessWidget {
 
 class FilterHeader extends StatelessWidget {
   final Function(String)? orderBy;
-  FilterHeader({this.orderBy});
+  final int? totalCount;
+  final int? currentPage;
+  FilterHeader({this.orderBy, this.currentPage, this.totalCount});
   @override
   Widget build(BuildContext context) {
+    int _totalCount = totalCount ?? 0;
+    int _currentPage = currentPage ?? 0;
     return Container(
       height: SizeConfig.blockSizeVertical * 5,
       width: SizeConfig.blockSizeHorizontal * 60,
@@ -226,14 +242,14 @@ class FilterHeader extends StatelessWidget {
                 ),
                 Container(
                   child: Text(
-                    '1 ',
+                    '${_currentPage + 1} ',
                     style: TextStyle(
                       color: accentColor,
                     ),
                   ),
                 ),
                 Container(
-                  child: Text('of 5'),
+                  child: Text('of $_totalCount'),
                 ),
               ],
             ),
@@ -491,16 +507,17 @@ class ListingPageMobile extends StatelessWidget {
                       ),
                     )
                   : Container(
-                      height: SizeConfig.blockSizeVertical * 30,
-                      width: double.infinity,
                       child: GridView.builder(
-                        itemCount: model.filterlist.length,
+                        shrinkWrap: true,
+                        itemCount: model.productList.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                         ),
                         itemBuilder: (context, i) {
                           return ProductCardMobile(
-                            details: model.filterlist[i],
+                            details: model.byRange
+                                ? model.filterlist[i]
+                                : model.productList[i],
                           );
                         },
                       ),
