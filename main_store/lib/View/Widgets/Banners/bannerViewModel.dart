@@ -9,4 +9,19 @@ class BannerViewModel extends ChangeNotifier {
     print(cate);
     _navigation.navigateTo(ProductListing, arguments: [cate]);
   }
+
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_disposed) {
+      super.notifyListeners();
+    }
+  }
 }

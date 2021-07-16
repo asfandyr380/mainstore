@@ -484,27 +484,12 @@ class ListingPageMobile extends StatelessWidget {
                   ),
                 ],
               ),
-              model.isLoading
-                  ? Container(
-                      child: CircularProgressIndicator(
-                        color: accentColor,
-                      ),
-                    )
-                  : Container(
-                      height: SizeConfig.blockSizeVertical * 30,
-                      width: double.infinity,
-                      child: GridView.builder(
-                        itemCount: model.filterlist.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                        ),
-                        itemBuilder: (context, i) {
-                          return ProductCardMobile(
-                            details: model.filterlist[i],
-                          );
-                        },
-                      ),
-                    ),
+              for (var l in model.filterlist)
+                Container(
+                  height: 10,
+                  width: 10,
+                  color: accentColor,
+                )
             ],
           ),
         ),
