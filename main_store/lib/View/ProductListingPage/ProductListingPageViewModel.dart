@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Models/categoryModel.dart';
 import 'package:main_store/Models/productsModel.dart';
+import 'package:main_store/Services/Api/Category/category_services.dart';
 import 'package:main_store/Services/Api/Products/filterProducts.dart';
 import 'package:main_store/Services/Fireabase/Firestore/get_categorys.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
@@ -18,8 +19,7 @@ class ProductListingPageViewModel extends ChangeNotifier {
   int totalCount = 0;
   int currentPage = 0;
 
-  GetCategorys _cate = locator<GetCategorys>();
-  List<Future<CategoryModel>> _categorylist = [];
+  CategoryServices _cate = locator<CategoryServices>();
   List<CategoryModel> catelist = [];
 
   changePage(int page) {
@@ -30,15 +30,10 @@ class ProductListingPageViewModel extends ChangeNotifier {
   }
 
   fetchCategorys() async {
-    var result = await _cate.getCategory();
-    if (result is List<Future<CategoryModel>>) {
-      _categorylist = result;
+    var result = await _cate.getCategorys();
+    if (result is List<CategoryModel>) {
+      catelist = result;
       notifyListeners();
-      for (var catemodel in _categorylist) {
-        catemodel.then((value) {
-          catelist.add(value);
-        });
-      }
     }
   }
 

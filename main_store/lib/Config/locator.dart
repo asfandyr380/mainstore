@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:main_store/Services/Api/Auth/Auth_Services.dart';
 import 'package:main_store/Services/Api/Banners/banner_Services.dart';
 import 'package:main_store/Services/Api/Cart/cart_services.dart';
+import 'package:main_store/Services/Api/Category/category_services.dart';
 import 'package:main_store/Services/Api/Products/filterProducts.dart';
 import 'package:main_store/Services/Api/Products/nearbyProducts.dart';
 import 'package:main_store/Services/Api/Products/onSaleProducts.dart';
@@ -24,7 +25,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => DocCollectionRef());
   locator.registerLazySingleton(() => FirestoreServices());
   locator.registerLazySingleton(() => BannerServices());
-  locator.registerLazySingleton(() => GetCategorys());
+  locator.registerLazySingleton(() => CategoryServices());
   locator.registerLazySingleton(() => AuthServicesApi());
   locator.registerLazySingleton(() => StorageServices());
   locator.registerLazySingleton(() => OnSaleProducts());
