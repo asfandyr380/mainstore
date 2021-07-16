@@ -31,8 +31,6 @@ class TickBox extends StatelessWidget {
 }
 
 class CartView extends StatelessWidget {
-  const CartView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Responsive(
@@ -83,7 +81,7 @@ class _CartViewPageState extends State<CartViewPage> {
                           child: SelectAllContainer(
                             totalCount: model.itemCount,
                             selected: model.selected,
-                            isSelected: (val) => model.selectall(val),
+                            isSelected: (val) => model.selectAll(val),
                           ),
                         ),
                         model.isLoading
@@ -104,6 +102,8 @@ class _CartViewPageState extends State<CartViewPage> {
                                 vertical: SizeConfig.blockSizeVertical * 2,
                               ),
                               child: CartitemsContainer(
+                                addorPlus: (val, cart) =>
+                                    model.addorPlus(val, cart),
                                 cart: cart,
                                 selected: cart.isSelected,
                                 onSelect: (val, cart) =>
@@ -135,6 +135,7 @@ class _CartViewPageState extends State<CartViewPage> {
                       width: SizeConfig.blockSizeHorizontal * 4,
                     ),
                     OrderSummary(
+                      ids: model.ids,
                       isEnable: model.cartlist.isEmpty ? false : true,
                       subTotal: model.subTotal,
                       total: model.total,
@@ -163,17 +164,17 @@ class _CartViewPageState extends State<CartViewPage> {
 class CartitemsContainer extends StatelessWidget {
   final CartModel cart;
   final Function(int, String)? onDelete;
-  final Function(bool, int)? addorPlus;
   final bool? selected;
   final Function(bool)? nestedSelectAll;
   final Function(bool, CartProducts)? onSelect;
+  final Function(bool, CartProducts)? addorPlus;
   CartitemsContainer({
     required this.cart,
     this.onDelete,
-    this.addorPlus,
     this.selected,
     this.nestedSelectAll,
     this.onSelect,
+    this.addorPlus,
   });
   @override
   Widget build(BuildContext context) {
@@ -203,7 +204,7 @@ class CartitemsContainer extends StatelessWidget {
                 children: [
                   TickBox(
                     onTickChange: (val) => nestedSelectAll!(val!),
-                    value: selected,
+                    value: cart.isSelected,
                   ),
                   Text(
                     cart.storeName,
@@ -246,6 +247,7 @@ class CartitemsContainer extends StatelessWidget {
                       padding: EdgeInsets.symmetric(
                           vertical: SizeConfig.blockSizeVertical * 1),
                       child: CartItem(
+                        addorPlus: (val) => addorPlus!(val, item),
                         onSelect: (val) => onSelect!(val, item),
                         nestedSelect: item.isSelected,
                         image: item.products!.images![0],
@@ -276,6 +278,7 @@ class CartItem extends StatelessWidget {
   final Function()? onDeletePress;
   final bool? nestedSelect;
   final Function(bool)? onSelect;
+  final Function(bool)? addorPlus;
   CartItem({
     this.quantity,
     this.image,
@@ -284,13 +287,14 @@ class CartItem extends StatelessWidget {
     this.onDeletePress,
     this.nestedSelect,
     this.onSelect,
+    this.addorPlus,
   });
 
   @override
   Widget build(BuildContext context) {
     String _image = image ?? '';
     String _name = name ?? '';
-    double _price = price ?? 0;
+    double _price = price! * quantity!;
     int _quantity = quantity ?? 0;
     SizeConfig().init(context);
     return Stack(
@@ -334,7 +338,7 @@ class CartItem extends StatelessWidget {
                     height: SizeConfig.blockSizeVertical * 0.5,
                   ),
                   Text(
-                    '£$_price',
+                    '£${_price.toStringAsFixed(2)}',
                     style: TextStyle(
                         color: accentColor,
                         fontSize: SizeConfig.blockSizeHorizontal * 0.7),
@@ -346,6 +350,7 @@ class CartItem extends StatelessWidget {
               ),
               Container(
                 child: QuantityColumn(
+                  addOrMinus: (val) => addorPlus!(val),
                   quantity: _quantity,
                 ),
               ),
@@ -371,42 +376,17 @@ class CartItem extends StatelessWidget {
 
 class QuantityColumn extends StatefulWidget {
   final int? quantity;
-  const QuantityColumn({this.quantity});
+  final Function(bool)? addOrMinus;
+  const QuantityColumn({this.quantity, this.addOrMinus});
 
   @override
   _QuantityColumnState createState() => _QuantityColumnState();
 }
 
 class _QuantityColumnState extends State<QuantityColumn> {
-  int q = 0;
-
-  addOrMiuns(
-    bool adding,
-  ) {
-    if (adding) {
-      setState(() {
-        q++;
-      });
-    } else {
-      if (q <= 1) {
-        setState(() {
-          q = 1;
-        });
-      } else
-        setState(() {
-          q--;
-        });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    q = widget.quantity!;
-  }
-
   @override
   Widget build(BuildContext context) {
+    int _q = widget.quantity ?? 1;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -421,7 +401,7 @@ class _QuantityColumnState extends State<QuantityColumn> {
             MouseRegion(
               cursor: SystemMouseCursors.click,
               child: IconButton(
-                onPressed: () => addOrMiuns(false),
+                onPressed: () => widget.addOrMinus!(false),
                 icon: Icon(
                   FontAwesomeIcons.minusSquare,
                   size: SizeConfig.blockSizeHorizontal * 1,
@@ -442,7 +422,7 @@ class _QuantityColumnState extends State<QuantityColumn> {
               ),
               child: Center(
                 child: Text(
-                  '${q}',
+                  '${_q}',
                   style:
                       TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 0.7),
                 ),
@@ -451,7 +431,7 @@ class _QuantityColumnState extends State<QuantityColumn> {
             MouseRegion(
               cursor: SystemMouseCursors.click,
               child: IconButton(
-                onPressed: () => addOrMiuns(true),
+                onPressed: () => widget.addOrMinus!(true),
                 icon: Icon(
                   FontAwesomeIcons.plusSquare,
                   size: SizeConfig.blockSizeHorizontal * 1,
@@ -564,7 +544,7 @@ class CartMobileView extends StatelessWidget {
                           children: [
                             TickBox(
                                 value: model.selected,
-                                onTickChange: (val) => model.selectall(val!)),
+                                onTickChange: (val) => model.selectAll(val!)),
                             Text(
                               'Select All',
                             ),
@@ -780,7 +760,7 @@ class CartItems extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.contain,
-                      image: NetworkImage(_name),
+                      image: NetworkImage(_image),
                     ),
                   ),
                 ),

@@ -12,11 +12,13 @@ class OrderSummary extends StatelessWidget {
   final double? shippingfee;
   final double? total;
   final bool? checkout;
+  final List<int>? ids;
   final SummeryModel? m;
   final Function? pay;
   final bool? isLoading;
   final bool? isEnable;
   OrderSummary({
+    this.ids,
     this.checkout,
     this.shippingfee,
     this.subTotal,
@@ -37,7 +39,6 @@ class OrderSummary extends StatelessWidget {
     return ViewModelBuilder<SummeryViewModel>.reactive(
       viewModelBuilder: () => SummeryViewModel(),
       builder: (context, model, child) => Container(
-        // height: SizeConfig.blockSizeVertical * 48,
         width: SizeConfig.blockSizeHorizontal * 22,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -174,7 +175,7 @@ class OrderSummary extends StatelessWidget {
                   isEnable: _checkout ? isEnable : model.isChecked,
                   onPressed: () => _checkout
                       ? model.navigateToCheckOut(
-                          _total, _subTotal, _shippingfee)
+                          _total, _subTotal, _shippingfee, ids)
                       : pay!(),
                   label: _checkout ? 'Check Out' : 'Proceed To Pay',
                 ),

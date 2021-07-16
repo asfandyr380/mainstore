@@ -21,7 +21,6 @@ class Forum extends StatelessWidget {
     String,
   )? onClick;
   Forum({this.isSignIn, this.onClick, this.onSignInClick, this.isTablet});
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);

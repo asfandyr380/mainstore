@@ -22,13 +22,13 @@ class TextInputField extends StatelessWidget {
     SizeConfig().init(context);
     bool _onMobile = onMobile ?? false;
     bool _onMobileappbar = onMobileappbar ?? false;
-
+    bool _onTablet = onTablet ?? false;
     return Form(
       // autovalidateMode: AutovalidateMode.always,
       child: Container(
         width: _onMobile
             ? double.infinity
-            : onTablet!
+            : _onTablet
                 ? SizeConfig.blockSizeHorizontal * 37
                 : SizeConfig.blockSizeHorizontal * 31,
         height: _onMobile

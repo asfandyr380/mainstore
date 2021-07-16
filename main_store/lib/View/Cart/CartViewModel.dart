@@ -10,6 +10,7 @@ import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 
 class CartViewModel extends ChangeNotifier {
   List<CartModel> cartlist = [];
+  List<int> ids = [];
   CartService _cartService = locator<CartService>();
   StorageServices _services = locator<StorageServices>();
   Navigation _navigaton = locator<Navigation>();
@@ -17,10 +18,20 @@ class CartViewModel extends ChangeNotifier {
   double shipping = 0;
   double total = 0;
   int itemCount = 0;
-  int quantity = 0;
   bool selected = false;
-  bool nestedSelect = false;
   bool isLoading = false;
+
+  addorPlus(bool state, CartProducts cart) async {
+    if (state) {
+      cart.quantity = cart.quantity! + 1;
+      notifyListeners();
+    } else {
+      if (cart.quantity != 1) {
+        cart.quantity = cart.quantity! - 1;
+        notifyListeners();
+      }
+    }
+  }
 
   isBusy(bool state) {
     isLoading = state;
@@ -36,24 +47,38 @@ class CartViewModel extends ChangeNotifier {
     cart.isSelected = val;
     notifyListeners();
     getSummery(product: cart);
+    getIds();
+    print(ids);
   }
 
-  nestedSelectall(bool checkState, CartModel cartProducts) {
-    cartProducts.isSelected = checkState;
-    for (var cart in cartProducts.product) {
-      cart.isSelected = checkState;
-      notifyListeners();
-      getSummery(cart: cartProducts, product: cart);
+  nestedSelectall(bool checkState, CartModel cart) {
+    cart.isSelected = checkState;
+    notifyListeners();
+    for (var cart in cart.product) {
+      onSelect(checkState, cart);
     }
   }
 
-  selectall(bool checkstate) {
+  selectAll(bool state) async {
+    selected = state;
     for (var cart in cartlist) {
-      selected = checkstate;
-      cart.isSelected = checkstate;
-      nestedSelectall(checkstate, cart);
+      cart.isSelected = state;
       notifyListeners();
-      // getSummery(cart, cart.product);
+      nestedSelectall(state, cart);
+    }
+  }
+
+  getIds() {
+    for (var cart in cartlist) {
+      for (var product in cart.product) {
+        if (product.isSelected!) {
+          if (ids.contains(product.cartId)) {
+            ids.remove(product.cartId);
+          } else {
+            ids.add(product.cartId);
+          }
+        }
+      }
     }
   }
 
@@ -64,7 +89,7 @@ class CartViewModel extends ChangeNotifier {
     }
   }
 
-  getSummery({CartModel? cart, required CartProducts product}) {
+  getSummery({required CartProducts product}) {
     if (product.isSelected!) {
       if (product.products!.attributePrice == 0) {
         subTotal += product.products!.productPrice! * product.quantity!;
@@ -130,5 +155,3 @@ class CartViewModel extends ChangeNotifier {
     subTotal = 0;
   }
 }
-
-class CartMobileViewModel extends ChangeNotifier {}

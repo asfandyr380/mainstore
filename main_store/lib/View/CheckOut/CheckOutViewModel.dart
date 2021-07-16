@@ -35,6 +35,7 @@ class CheckOutViewModel extends ChangeNotifier {
   }
 
   updateCart(List<int> ids) async {
+    print(ids);
     for (var id in ids) {
       var result = await _cartService.updateCartStatus(id);
       if (result) {
@@ -43,7 +44,7 @@ class CheckOutViewModel extends ChangeNotifier {
     }
   }
 
-  checkout(SummeryModel m) async {
+  checkout(SummeryModel m, List<int> ids) async {
     isBusy(true);
     if (phone.isEmpty ||
         firstName.isEmpty ||
@@ -66,6 +67,7 @@ class CheckOutViewModel extends ChangeNotifier {
         int userId = await _services.getUserId();
         var result = await _cartService.checkoutProduct(userId, m.total!);
         if (result) {
+          updateCart(ids);
           navigateToSuccess();
           return true;
         } else {
