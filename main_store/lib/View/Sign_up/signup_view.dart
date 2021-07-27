@@ -58,8 +58,8 @@ class SignUpWeb extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 20),
                 child: Forum(
                   isTablet: _isTablet,
-                  onClick: (email, pass, name, phone) =>
-                      model.signUp(name, email, phone, pass),
+                  onClick: (email, pass, name, phone, confirmPass) =>
+                      model.signUp(name, email, phone, pass, confirmPass),
                 ),
               ),
               Footer(),
@@ -211,7 +211,8 @@ class SignUpMobile extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: model.isCheck
-                  ? () => model.signUp(_username, _email, _phone, _password)
+                  ? () => model.signUp(
+                      _username, _email, _phone, _password, _confirmPass)
                   : null,
               child: model.isLoading
                   ? Container(

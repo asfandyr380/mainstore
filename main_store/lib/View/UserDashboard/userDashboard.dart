@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
@@ -19,35 +21,63 @@ class UserDashboard extends StatelessWidget {
                 height: SizeConfig.blockSizeVertical * 1,
               ),
               Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.blockSizeHorizontal * 1,
-                ),
                 child: Column(
                   children: [
                     Align(
                       alignment: Alignment.topLeft,
                       child: Row(
                         children: [
-                          Stack(
-                            children: [
-                              Center(
-                                child: Container(
-                                  height: SizeConfig.blockSizeVertical * 10,
-                                  width: SizeConfig.blockSizeHorizontal * 10,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(width: 1),
-                                  ),
+                          Container(
+                            // padding: EdgeInsets.only(
+                            //     top: SizeConfig.blockSizeVertical * 5),
+                            height: SizeConfig.blockSizeVertical * 45,
+                            color: Colors.amber,
+                            child: Stack(
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                      height: SizeConfig.blockSizeVertical * 40,
+                                      width:
+                                          SizeConfig.blockSizeHorizontal * 15,
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          right: BorderSide(width: 1),
+                                          left: BorderSide(width: 1),
+                                          bottom: BorderSide(width: 1),
+                                        ),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Positioned(
+                                            child: Container(
+                                              height:
+                                                  SizeConfig.blockSizeVertical *
+                                                      10,
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  10,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(width: 1),
+                                              ),
+                                            ),
+                                          ),
+                                          userSideNav(title: 'Dashboard'),
+                                          Divider(),
+                                          userSideNav(title: 'Order'),
+                                          Divider(),
+                                          userSideNav(
+                                              title: 'Profile Settings'),
+                                          Divider(),
+                                          userSideNav(title: 'Logout'),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Container(
-                                height: SizeConfig.blockSizeVertical * 50,
-                                width: SizeConfig.blockSizeHorizontal * 15,
-                                decoration: BoxDecoration(
-                                  border: Border.all(width: 1),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -110,6 +140,28 @@ class dashItems extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class userSideNav extends StatelessWidget {
+  final String title;
+  userSideNav({required this.title});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      width: SizeConfig.blockSizeHorizontal * 15,
+      height: SizeConfig.blockSizeVertical * 5,
+      padding: EdgeInsets.only(
+        left: SizeConfig.blockSizeHorizontal * 1,
+      ),
+      child: Text(
+        '$title',
+        style: TextStyle(
+            fontSize: SizeConfig.blockSizeHorizontal * 1,
+            fontWeight: FontWeight.bold),
       ),
     );
   }
