@@ -221,13 +221,13 @@ class CartitemsContainer extends StatelessWidget {
                     Text(
                       'shipping charges:',
                       style: TextStyle(
-                          fontSize: SizeConfig.blockSizeHorizontal * 0.7),
+                          fontSize: SizeConfig.blockSizeHorizontal * 1),
                     ),
                     Text(
-                      '£$_shippingCharges',
+                      ' £$_shippingCharges',
                       style: TextStyle(
                           color: accentColor,
-                          fontSize: SizeConfig.blockSizeHorizontal * 0.7),
+                          fontSize: SizeConfig.blockSizeHorizontal * 1),
                     ),
                   ],
                 ),
@@ -331,7 +331,7 @@ class CartItem extends StatelessWidget {
                     style: TextStyle(
                       fontSize: _name.length >= 20
                           ? SizeConfig.blockSizeHorizontal * 0.5
-                          : SizeConfig.blockSizeHorizontal * 1,
+                          : SizeConfig.blockSizeHorizontal * 1.1,
                     ),
                   ),
                   SizedBox(
@@ -341,7 +341,7 @@ class CartItem extends StatelessWidget {
                     '£${_price.toStringAsFixed(2)}',
                     style: TextStyle(
                         color: accentColor,
-                        fontSize: SizeConfig.blockSizeHorizontal * 0.7),
+                        fontSize: SizeConfig.blockSizeHorizontal * 1),
                   )
                 ],
               ),
@@ -473,9 +473,9 @@ class SelectAllContainer extends StatelessWidget {
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              alignment: Alignment.centerLeft,
               child: Text(
                 'Shopping Cart($_totalCount)',
                 style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 2),

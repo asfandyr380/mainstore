@@ -502,7 +502,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             child: Text(
               _decsription,
               textAlign: TextAlign.justify,
-              style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 0.8),
+              style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 1),
             ),
           ),
         ),
