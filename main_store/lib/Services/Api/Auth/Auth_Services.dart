@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:main_store/Config/consts.dart';
@@ -9,6 +9,19 @@ import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 
 class AuthServicesApi {
   StorageServices _services = locator<StorageServices>();
+
+  Future authenticateWithGoogle() async {
+    GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: [
+        'email',
+        'https://www.googleapis.com/auth/contacts.readonly',
+      ],
+    );
+    try {
+      var result = await _googleSignIn.signIn();
+      print(result!.displayName);
+    } catch (error) {}
+  }
 
   Future createNewUser(
       String username, String email, String phone, String password) async {

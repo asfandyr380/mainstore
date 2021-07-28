@@ -64,15 +64,26 @@ class Forum extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        'assets/images/google.png',
-                        height: 10,
-                        width: 10,
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: () => model.googleSignIn(),
+                          child: Image.asset(
+                            'assets/images/google.png',
+                            height: SizeConfig.blockSizeVertical * 5,
+                            width: SizeConfig.blockSizeHorizontal * 5,
+                          ),
+                        ),
                       ),
-                      Image.asset(
-                        'assets/images/facebook.png',
-                        height: SizeConfig.blockSizeVertical * 5,
-                        width: SizeConfig.blockSizeHorizontal * 5,
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          child: Image.asset(
+                            'assets/images/facebook.png',
+                            height: SizeConfig.blockSizeVertical * 5,
+                            width: SizeConfig.blockSizeHorizontal * 5,
+                          ),
+                        ),
                       ),
                     ],
                   ),
