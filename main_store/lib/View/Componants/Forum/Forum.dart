@@ -19,6 +19,7 @@ class Forum extends StatelessWidget {
     String,
     String,
     String,
+    String,
   )? onClick;
   Forum({this.isSignIn, this.onClick, this.onSignInClick, this.isTablet});
   @override
@@ -66,6 +67,7 @@ class Forum extends StatelessWidget {
                               horizontal: SizeConfig.blockSizeHorizontal * 1.2,
                             ),
                             child: TextInputField(
+                              type: TextInputType.name,
                               onTablet: isTablet,
                               validateForm: (val) => model.validateForum(val),
                               onChange: (val) {
@@ -82,6 +84,7 @@ class Forum extends StatelessWidget {
                         ? Container(
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: TextInputField(
+                              type: TextInputType.phone,
                               onTablet: isTablet,
                               validateForm: (val) => model.validateForum(val),
                               onChange: (val) {
@@ -111,6 +114,7 @@ class Forum extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       child: TextInputField(
+                        isObsocured: true,
                         onTablet: isTablet,
                         validateForm: (val) => model.validateForum(val),
                         onChange: (val) {
@@ -126,6 +130,7 @@ class Forum extends StatelessWidget {
                         ? Container(
                             padding: EdgeInsets.symmetric(horizontal: 15),
                             child: TextInputField(
+                              isObsocured: true,
                               onTablet: isTablet,
                               validateForm: (val) => model.validateForum(val),
                               onChange: (val) {
@@ -190,7 +195,7 @@ class Forum extends StatelessWidget {
                               : () {
                                   model.isBusy(true);
                                   onClick!(model.email, model.pass, model.name,
-                                          model.phone)
+                                          model.phone, model.confirm_pass)
                                       .then((value) => model.isBusy(false));
                                 },
                           label: _isSignIn ? 'SIGN IN' : 'SIGN UP',

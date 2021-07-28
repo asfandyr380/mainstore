@@ -74,7 +74,7 @@ class Category extends StatelessWidget {
     return Container(
       child: ExpansionTile(
         title: Text(
-          "${items!.cateName}",
+          "${items!.mainCate}",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         textColor: accentColor,
@@ -82,7 +82,7 @@ class Category extends StatelessWidget {
         childrenPadding:
             EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 1),
         children: [
-          for (var item in items!.subCategory)
+          for (var item in items!.superCate)
             SubItem(
               selectState: state,
               isHome: isHome,

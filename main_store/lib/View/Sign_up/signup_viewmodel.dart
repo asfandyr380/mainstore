@@ -29,17 +29,26 @@ class SignupViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  signUp(String username, email, phone, password) async {
+  signUp(String username, email, phone, password, confirmPass) async {
     isBusy(true);
-    var result = await _authApi.createNewUser(username, email, phone, password);
-    if (result is bool) {
-      _navigation.pushReplaceRoute(Home());
+    if (password == confirmPass) {
+      var result =
+          await _authApi.createNewUser(username, email, phone, password);
+      if (result is bool) {
+        _navigation.pushReplaceRoute(Home());
+      } else {
+        _alertDialog.showDialog(
+            title: 'Authentication Error',
+            description: result,
+            buttonTitle: "Close");
+      }
     } else {
       _alertDialog.showDialog(
-          title: 'Authentication Error',
-          description: result,
+          title: 'Password is Not Correct',
+          description: 'Confirm Password Does Not Match',
           buttonTitle: "Close");
     }
+
     isBusy(false);
   }
 }

@@ -5,11 +5,15 @@ class TextInputField extends StatelessWidget {
   final String hint_text;
   final Function(String?)? validateForm;
   final Function(String)? onChange;
+  final TextInputType? type;
   final bool? onMobile;
   final bool? onMobileappbar;
   final bool? onTablet;
+  final bool? isObsocured;
 
   TextInputField({
+    this.type,
+    this.isObsocured,
     this.onTablet,
     this.onMobile,
     required this.hint_text,
@@ -23,6 +27,7 @@ class TextInputField extends StatelessWidget {
     bool _onMobile = onMobile ?? false;
     bool _onMobileappbar = onMobileappbar ?? false;
     bool _onTablet = onTablet ?? false;
+    bool _isObsocured = isObsocured ?? false;
     return Form(
       // autovalidateMode: AutovalidateMode.always,
       child: Container(
@@ -35,6 +40,8 @@ class TextInputField extends StatelessWidget {
             ? SizeConfig.blockSizeVertical * 5
             : SizeConfig.blockSizeVertical * 7,
         child: TextFormField(
+          obscureText: _isObsocured,
+          keyboardType: type,
           validator: (value) => validateForm!(value),
           onChanged: (val) => onChange!(val),
           decoration: InputDecoration(

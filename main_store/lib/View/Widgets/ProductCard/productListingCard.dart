@@ -58,6 +58,7 @@ class _ProductCardMobileState extends State<ProductCardMobile> {
                     children: [
                       Container(
                         child: IconButton(
+                          tooltip: 'Add to Wishlist',
                           onPressed: () {
                             if (model.onWishlist) {
                               model.removeFromlist(_productId);
@@ -347,8 +348,7 @@ class _ProductListingCardsState extends State<ProductListingCards> {
                             ? Text(
                                 '£$_salePrice',
                                 style: TextStyle(
-                                  fontSize:
-                                      SizeConfig.blockSizeHorizontal * 1.5,
+                                  fontSize: SizeConfig.blockSizeHorizontal * 1,
                                 ),
                               )
                             : Container(),

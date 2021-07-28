@@ -17,6 +17,7 @@ import 'package:main_store/View/ProductDetail/productDetailView.dart';
 import 'package:main_store/View/ProductListingPage/ProductListingPage.dart';
 import 'package:main_store/View/Sign_in/Signin_view.dart';
 import 'package:main_store/View/Sign_up/signup_view.dart';
+import 'package:main_store/View/UserDashboard/userDashboard.dart';
 import 'package:main_store/View/Widgets/SearchWidget/SearchBarRow.dart';
 
 // This Widget is the Root of The Application
@@ -24,11 +25,9 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: SignUpPage(),
-      initialRoute: HomeView,
-      theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          textTheme: GoogleFonts.latoTextTheme()),
+      home: UserDashboard(),
+      // initialRoute: ProductListing,
+      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       onGenerateRoute: (settings) => generateRoute(settings),
       builder: (context, widget) => Navigator(
         onGenerateRoute: (settings) => MaterialPageRoute(

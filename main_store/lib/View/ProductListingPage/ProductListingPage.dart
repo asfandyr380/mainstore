@@ -441,11 +441,11 @@ class _CategoryFilterMenuState extends State<CategoryFilterMenu> {
           children: [
             for (var c in model.catelist)
               ExpansionTile(
-                title: Text(c.cateName!),
+                title: Text(c.mainCate!),
                 textColor: accentColor,
                 iconColor: accentColor,
                 children: [
-                  for (var sub in c.subCategory)
+                  for (var sub in c.superCate)
                     SimpleGroupedCheckbox<String>(
                       controller: multipleCheckController,
                       itemsTitle: sub.subCate!,
