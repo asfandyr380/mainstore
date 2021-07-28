@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/Forum/ForumViewModel.dart';
@@ -57,6 +58,23 @@ class Forum extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: SizeConfig.blockSizeHorizontal * 2,
                     ),
+                  ),
+                ),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/google.png',
+                        height: 10,
+                        width: 10,
+                      ),
+                      Image.asset(
+                        'assets/images/facebook.png',
+                        height: SizeConfig.blockSizeVertical * 5,
+                        width: SizeConfig.blockSizeHorizontal * 5,
+                      ),
+                    ],
                   ),
                 ),
                 Column(

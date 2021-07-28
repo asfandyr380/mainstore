@@ -25,8 +25,8 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: UserDashboard(),
-      // initialRoute: ProductListing,
+      // home: UserDashboard(),
+      initialRoute: SignUp,
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       onGenerateRoute: (settings) => generateRoute(settings),
       builder: (context, widget) => Navigator(

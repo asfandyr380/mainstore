@@ -63,11 +63,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     //checkout contact INFO
                     Container(
                       padding: EdgeInsets.symmetric(
-                        vertical: SizeConfig.blockSizeVertical * 2.5,
-                      ),
-                      height: _checkout
-                          ? SizeConfig.blockSizeVertical * 40
-                          : SizeConfig.blockSizeVertical * 80,
+                          vertical: SizeConfig.blockSizeVertical * 2.5,
+                          horizontal: SizeConfig.blockSizeHorizontal * 1),
+                      height:
+                          _checkout ? SizeConfig.blockSizeVertical * 40 : null,
                       width: SizeConfig.blockSizeHorizontal * 45,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -80,166 +79,152 @@ class _CheckOutPageState extends State<CheckOutPage> {
                         ],
                       ),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: SizeConfig.blockSizeHorizontal * 1,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Contact Information',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize:
-                                          SizeConfig.blockSizeHorizontal * 2),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Already have account?',
-                                      style: TextStyle(
-                                        fontSize:
-                                            SizeConfig.blockSizeHorizontal *
-                                                0.8,
-                                      ),
-                                    ),
-                                    Text(
-                                      ' Log in',
-                                      style: TextStyle(
-                                        fontSize:
-                                            SizeConfig.blockSizeHorizontal *
-                                                0.8,
-                                        color: Colors.lightBlue,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                width: SizeConfig.blockSizeHorizontal * 42,
-                                child: TextInputField(
-                                    onChange: (val) {
-                                      model.phone = val;
-                                    },
-                                    hint_text: 'Enter Phone Number'),
+                              Text(
+                                'Shipping Information',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: SizeConfig.blockSizeHorizontal * 2,
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'Already have account?',
+                                    style: TextStyle(
+                                      fontSize:
+                                          SizeConfig.blockSizeHorizontal * 0.8,
+                                    ),
+                                  ),
+                                  MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: GestureDetector(
+                                      onTap: () => model.navigateToLogin(),
+                                      child: Text(
+                                        ' Log in',
+                                        style: TextStyle(
+                                          fontSize:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  0.8,
+                                          color: Colors.lightBlue,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                             ],
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: SizeConfig.blockSizeHorizontal * 1),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Shipping Information',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize:
-                                        SizeConfig.blockSizeHorizontal * 2,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          SizedBox(
+                            height: SizeConfig.blockSizeVertical * 2,
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal:
-                                    SizeConfig.blockSizeHorizontal * 1.5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  width: SizeConfig.blockSizeHorizontal * 20,
-                                  child: TextInputField(
-                                      onChange: (val) {
-                                        model.firstName = val;
-                                      },
-                                      hint_text: 'First Name'),
-                                ),
-                                Container(
-                                  width: SizeConfig.blockSizeHorizontal * 20,
-                                  child: TextInputField(
-                                      onChange: (val) {
-                                        model.lastName = val;
-                                      },
-                                      hint_text: 'Last Name'),
-                                ),
-                              ],
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                width: SizeConfig.blockSizeHorizontal * 20,
+                                child: TextInputField(
+                                    onChange: (val) {
+                                      model.firstName = val;
+                                    },
+                                    hint_text: 'First Name'),
+                              ),
+                              Container(
+                                width: SizeConfig.blockSizeHorizontal * 20,
+                                child: TextInputField(
+                                    onChange: (val) {
+                                      model.lastName = val;
+                                    },
+                                    hint_text: 'Last Name'),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: SizeConfig.blockSizeVertical * 2,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Container(
-                                width: SizeConfig.blockSizeHorizontal * 42,
+                                width: SizeConfig.blockSizeHorizontal * 41,
                                 child: TextInputField(
                                     onChange: (val) {
                                       model.address = val;
+                                    },
+                                    hint_text: 'Email'),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: SizeConfig.blockSizeVertical * 2,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                width: SizeConfig.blockSizeHorizontal * 41,
+                                child: TextInputField(
+                                    onChange: (val) {
+                                      model.apartment = val;
+                                    },
+                                    hint_text: 'Phone'),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: SizeConfig.blockSizeVertical * 2,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Container(
+                                width: SizeConfig.blockSizeHorizontal * 41,
+                                child: TextInputField(
+                                    onChange: (val) {
+                                      model.city = val;
                                     },
                                     hint_text: 'Address'),
                               ),
                             ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Container(
-                                width: SizeConfig.blockSizeHorizontal * 42,
-                                child: TextInputField(
-                                    onChange: (val) {
-                                      model.apartment = val;
-                                    },
-                                    hint_text:
-                                        'Apartment, Suit, etc(Optional)'),
-                              ),
-                            ],
+                          SizedBox(
+                            height: SizeConfig.blockSizeVertical * 2,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
-                                width: SizeConfig.blockSizeHorizontal * 42,
+                                width: SizeConfig.blockSizeHorizontal * 20,
                                 child: TextInputField(
                                     onChange: (val) {
-                                      model.city = val;
+                                      model.country = val;
                                     },
                                     hint_text: 'City'),
                               ),
+                              Container(
+                                width: SizeConfig.blockSizeHorizontal * 20,
+                                child: TextInputField(
+                                    onChange: (val) {
+                                      model.postalCode = val;
+                                    },
+                                    hint_text: 'Postal Code'),
+                              ),
                             ],
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal:
-                                    SizeConfig.blockSizeHorizontal * 1.5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  width: SizeConfig.blockSizeHorizontal * 20,
-                                  child: TextInputField(
-                                      onChange: (val) {
-                                        model.country = val;
-                                      },
-                                      hint_text: 'Country/Region'),
-                                ),
-                                Container(
-                                  width: SizeConfig.blockSizeHorizontal * 20,
-                                  child: TextInputField(
-                                      onChange: (val) {
-                                        model.postalCode = val;
-                                      },
-                                      hint_text: 'Postal Code'),
-                                ),
-                              ],
-                            ),
+                          SizedBox(
+                            height: SizeConfig.blockSizeVertical * 2,
+                          ),
+                          Container(
+                            width: SizeConfig.blockSizeHorizontal * 41,
+                            child: TextInputField(
+                                onChange: (val) {
+                                  model.city = val;
+                                },
+                                hint_text: 'Country'),
                           ),
                         ],
                       ),

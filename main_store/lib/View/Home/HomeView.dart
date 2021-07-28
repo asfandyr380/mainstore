@@ -355,14 +355,14 @@ class ReviewsCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: EdgeInsets.symmetric(
+            margin: EdgeInsets.symmetric(
                 horizontal: SizeConfig.blockSizeHorizontal * 2),
             child: Text(
               details!.message!,
               style: TextStyle(
                 fontSize: _onMobile
                     ? SizeConfig.blockSizeHorizontal * 3
-                    : SizeConfig.blockSizeHorizontal * 1.5,
+                    : SizeConfig.blockSizeHorizontal * 1.2,
               ),
             ),
           ),
@@ -407,11 +407,11 @@ class RatingStar extends StatelessWidget {
         direction: Axis.horizontal,
         allowHalfRating: false,
         itemCount: 5,
+        itemSize: 20,
         itemPadding: EdgeInsets.symmetric(horizontal: 2),
         itemBuilder: (context, _) => Icon(
           Icons.star,
           color: accentColor,
-          size: 1,
         ),
         onRatingUpdate: (rating) {
           print(rating);

@@ -1,6 +1,7 @@
 import 'package:dart_ipify/dart_ipify.dart';
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
+import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Models/SummeryModel.dart';
 import 'package:main_store/Services/Api/Cart/cart_services.dart';
 import 'package:main_store/Services/Dialog/Dialog_Services.dart';
@@ -32,6 +33,10 @@ class CheckOutViewModel extends ChangeNotifier {
 
   navigateToSuccess() {
     _navigation.pushReplaceRoute(Success());
+  }
+
+  navigateToLogin() async {
+    _navigation.navigateTo(SignIn);
   }
 
   updateCart(List<int> ids) async {
