@@ -23,15 +23,18 @@ class AuthServicesApi {
     } catch (error) {}
   }
 
-  Future createNewUser(
-      String username, String email, String phone, String password) async {
+  Future createNewUser(String username, String email, String phone,
+      String password, String address, String city, String postalCode) async {
     Uri _BaseURL = Uri.parse('$baseUrl/users/');
     try {
       Map<String, dynamic> body = {
         'username': username,
         'email': email,
         'mobile': phone,
-        'password': password
+        'password': password,
+        'address': address,
+        "city": city,
+        "postal_code": postalCode
       };
       http.Response res = await http.post(_BaseURL, body: body);
       var decodedBody = jsonDecode(res.body);

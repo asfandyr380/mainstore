@@ -29,11 +29,12 @@ class SignupViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  signUp(String username, email, phone, password, confirmPass) async {
+  signUp(String username, email, phone, password, confirmPass, address, city,
+      postalCode) async {
     isBusy(true);
     if (password == confirmPass) {
-      var result =
-          await _authApi.createNewUser(username, email, phone, password);
+      var result = await _authApi.createNewUser(
+          username, email, phone, password, address, city, postalCode);
       if (result is bool) {
         _navigation.pushReplaceRoute(Home());
       } else {

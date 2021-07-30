@@ -6,6 +6,8 @@ import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Componants/contact_us/contactUsViewModel.dart';
 import 'package:main_store/View/Widgets/text_field.dart';
 import 'package:stacked/stacked.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class ContactUsView extends StatelessWidget {
   @override
@@ -47,30 +49,54 @@ class ContactUsView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                            width: SizeConfig.blockSizeHorizontal * 15,
-                            child: TextInputField(hint_text: 'First Name')),
+                          width: SizeConfig.blockSizeHorizontal * 15,
+                          child: TextInputField(
+                            hint_text: 'First Name',
+                            onChange: (val) {
+                              model.firstName = val;
+                            },
+                          ),
+                        ),
                         SizedBox(
                           width: SizeConfig.blockSizeHorizontal * 1,
                         ),
                         Container(
                             width: SizeConfig.blockSizeHorizontal * 15,
-                            child: TextInputField(hint_text: 'Last Name')),
+                            child: TextInputField(
+                              hint_text: 'Last Name',
+                              onChange: (val) {
+                                model.lastname = val;
+                              },
+                            )),
                       ],
                     ),
                     SizedBox(
                       height: SizeConfig.blockSizeVertical * 1.5,
                     ),
-                    TextInputField(hint_text: 'Email'),
+                    TextInputField(
+                      hint_text: 'Email',
+                      onChange: (val) {
+                        model.email = val;
+                      },
+                    ),
                     SizedBox(
                       height: SizeConfig.blockSizeVertical * 1.5,
                     ),
-                    TextInputField(hint_text: 'Phone Number'),
+                    TextInputField(
+                      hint_text: 'Phone Number',
+                      onChange: (val) {
+                        model.phone = val;
+                      },
+                    ),
                     SizedBox(
                       height: SizeConfig.blockSizeVertical * 1.5,
                     ),
                     Container(
                       width: SizeConfig.blockSizeHorizontal * 31,
                       child: TextFormField(
+                        onChanged: (val) {
+                          model.message = val;
+                        },
                         maxLines: 4,
                         decoration: InputDecoration(
                           hintText: 'Message',
@@ -102,7 +128,17 @@ class ContactUsView extends StatelessWidget {
                                 SizeConfig.blockSizeVertical * 5,
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () => model.sendForum().then((value) {
+                              if (value) {
+                                showTopSnackBar(
+                                  context,
+                                  CustomSnackBar.success(
+                                    message: 'Message Send Successfuly',
+                                  ),
+                                  displayDuration: Duration(milliseconds: 150),
+                                );
+                              }
+                            }),
                             child: Text('Contact Us'),
                           )),
                         ],

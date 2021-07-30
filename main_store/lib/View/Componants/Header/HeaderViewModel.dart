@@ -99,11 +99,7 @@ class HeaderViewModel extends ChangeNotifier {
     _navigation.navigateTo(Wishlist);
   }
 
-  navigateToSignInLogInPage(bool isSignIn) {
-    if (isSignIn) {
-      _navigation.navigateTo(SignUp);
-    } else {
-      _navigation.navigateTo(SignIn);
-    }
+  navigateToLogInPage() {
+    _navigation.navigateTo(SignIn);
   }
 }

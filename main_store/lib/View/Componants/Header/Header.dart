@@ -63,7 +63,7 @@ class Header extends StatelessWidget {
                         if (model.userLogedIn) {
                           model.signoutUser();
                         } else {
-                          model.navigateToSignInLogInPage(_isSignInPage);
+                          model.navigateToLogInPage();
                         }
                       }),
                 ),
@@ -143,7 +143,6 @@ class CartFavandSignupLoginRow extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    bool _isSignInPage = isSignInPage ?? false;
     bool _userLogedIn = userLogedIn ?? false;
     SizeConfig().init(context);
     return Container(
@@ -156,7 +155,7 @@ class CartFavandSignupLoginRow extends StatelessWidget {
               child: Container(
                 child: !_userLogedIn
                     ? Text(
-                        _isSignInPage ? 'SIGN UP' : 'LOGIN',
+                        'LOGIN',
                         style: TextStyle(
                             fontSize: SizeConfig.blockSizeHorizontal * 1),
                       )
