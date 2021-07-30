@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/UserDashboard/userDashboardViewModel.dart';
@@ -21,62 +22,34 @@ class UserDashboard extends StatelessWidget {
                 height: SizeConfig.blockSizeVertical * 1,
               ),
               Container(
-                child: Column(
+                child: Row(
                   children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Row(
+                    Container(
+                      margin: EdgeInsets.only(
+                          left: SizeConfig.blockSizeHorizontal * 0.5),
+                      width: SizeConfig.blockSizeHorizontal * 18,
+                      height: SizeConfig.blockSizeVertical * 60,
+                      child: Stack(
                         children: [
+                          Positioned(
+                            left: SizeConfig.blockSizeHorizontal * 1.6,
+                            child: Container(
+                              width: SizeConfig.blockSizeHorizontal * 15,
+                              height: SizeConfig.blockSizeVertical * 15,
+                              decoration: BoxDecoration(
+                                color: Colors.white70,
+                                shape: BoxShape.circle,
+                                border: Border.all(width: 0.5),
+                              ),
+                            ),
+                          ),
                           Container(
-                            // padding: EdgeInsets.only(
-                            //     top: SizeConfig.blockSizeVertical * 5),
-                            height: SizeConfig.blockSizeVertical * 45,
-                            color: Colors.amber,
-                            child: Stack(
-                              children: <Widget>[
-                                Column(
-                                  children: <Widget>[
-                                    Container(
-                                      height: SizeConfig.blockSizeVertical * 40,
-                                      width:
-                                          SizeConfig.blockSizeHorizontal * 15,
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          right: BorderSide(width: 1),
-                                          left: BorderSide(width: 1),
-                                          bottom: BorderSide(width: 1),
-                                        ),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Positioned(
-                                            child: Container(
-                                              height:
-                                                  SizeConfig.blockSizeVertical *
-                                                      10,
-                                              width: SizeConfig
-                                                      .blockSizeHorizontal *
-                                                  10,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                border: Border.all(width: 1),
-                                              ),
-                                            ),
-                                          ),
-                                          userSideNav(title: 'Dashboard'),
-                                          Divider(),
-                                          userSideNav(title: 'Order'),
-                                          Divider(),
-                                          userSideNav(
-                                              title: 'Profile Settings'),
-                                          Divider(),
-                                          userSideNav(title: 'Logout'),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            margin: EdgeInsets.only(
+                                top: SizeConfig.blockSizeVertical * 6),
+                            width: SizeConfig.blockSizeHorizontal * 18,
+                            height: SizeConfig.blockSizeVertical * 50,
+                            child: CustomPaint(
+                              painter: MyPainter(color: footerColor),
                             ),
                           ),
                         ],
@@ -90,6 +63,39 @@ class UserDashboard extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class MyPainter extends CustomPainter {
+  Color? color;
+  MyPainter({@required this.color});
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = new Paint()
+      ..color = color!
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+    var path = Path();
+    final double startPoint = size.width * 0.42;
+    final double rheight = 30;
+    path.moveTo(startPoint, rheight);
+    path.moveTo(0, rheight);
+    path.lineTo(71, rheight);
+    path.moveTo(startPoint + 80.5, rheight);
+    path.lineTo(size.width, rheight);
+    path.lineTo(size.width, size.height);
+    path.moveTo(0, rheight);
+    path.lineTo(0, size.height);
+    path.moveTo(0, size.height);
+    path.lineTo(size.width, size.height);
+    path.close();
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
   }
 }
 
