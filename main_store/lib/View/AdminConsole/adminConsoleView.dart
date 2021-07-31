@@ -14,7 +14,7 @@ class AdminConsoleView extends StatelessWidget {
         backgroundColor: Color(0xf7f7f7f7),
         body: Column(
           children: [
-            Header(),
+            AdminHeader(),
             Container(
               // Side NavBar
               child: Column(
@@ -93,7 +93,7 @@ class AdminConsoleView extends StatelessWidget {
   }
 }
 
-class Header extends StatelessWidget {
+class AdminHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
