@@ -49,9 +49,14 @@ class CartService {
       for (var product in products) {
         List<String> images = [];
         List<String> categories = [];
-        images.add(product['image']);
+
+        String imgPath = product['image'];
+        String image = '$baseUrl/products/getimage/$imgPath';
+        images.add(image);
         for (int i = 2; i <= 4; i++) {
-          images.add(product['image$i']);
+          String imgPath = product['image$i'];
+          String image = '$baseUrl/products/getimage/$imgPath';
+          images.add(image);
         }
 
         categories.add(product['cate_name']);

@@ -17,12 +17,18 @@ class SearchProductServices {
           List<String> images = [];
           List<AttributeModel> attributes = [];
           List attribute = body['Attribute'];
-          images.add(body['Product']['image']);
+          String imgPath = body['Product']['image'];
+          String image = '$baseUrl/products/getimage/$imgPath';
+          images.add(image);
           for (int i = 2; i <= 4; i++) {
-            images.add(body['Product']['image$i']);
+            String imgPath = body['Product']['image$i'];
+            String image = '$baseUrl/products/getimage/$imgPath';
+            images.add(image);
           }
           for (var att in attribute) {
-            images.add(att['image']);
+            String imgPath = att['image'];
+            String img = '$baseUrl/products/getimg/$imgPath';
+            images.add(img);
             var attribute = AttributeModel.fromJson(att);
             attributes.add(attribute);
           }
