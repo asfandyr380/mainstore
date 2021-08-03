@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 const Color accentColor = Color(0xff40a944);
 final footerColor = Color(0xffebebeb);
 // Strings
-const baseUrl = 'http://localhost:3000/api';
+const baseUrl = 'https://superstore69.herokuapp.com/api';
 final String agreeing_term_text =
     'By Creating an Account You agree to our Free Membership Agreement and Privacy Policy';
 final String footer_desc =

@@ -29,7 +29,7 @@ class CartService {
 
     http.Response res = await http.post(_URL, body: req);
     var decodedBody = jsonDecode(res.body);
-    // print(decodedBody);
+    print(decodedBody);
     if (decodedBody['success'] == 1) {
       print(decodedBody);
       return 1;

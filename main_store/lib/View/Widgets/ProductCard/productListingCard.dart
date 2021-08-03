@@ -341,31 +341,12 @@ class _ProductListingCardsState extends State<ProductListingCards> {
                   ),
                   // Price and Sale Price
                   Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _onSale == 1
-                            ? Text(
-                                '£$_salePrice',
-                                style: TextStyle(
-                                  fontSize: SizeConfig.blockSizeHorizontal * 1,
-                                ),
-                              )
-                            : Container(),
-                        SizedBox(
-                          width: SizeConfig.blockSizeHorizontal * 0.5,
-                        ),
-                        Text(
-                          '£$_productPrice',
-                          style: TextStyle(
-                            color: accentColor,
-                            decoration: _onSale == 1
-                                ? TextDecoration.lineThrough
-                                : null,
-                            fontSize: SizeConfig.blockSizeHorizontal * 1,
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      _onSale == 1 ? '£$_salePrice' : '£$_productPrice',
+                      style: TextStyle(
+                        color: accentColor,
+                        fontSize: SizeConfig.blockSizeHorizontal * 1,
+                      ),
                     ),
                   ),
                 ],

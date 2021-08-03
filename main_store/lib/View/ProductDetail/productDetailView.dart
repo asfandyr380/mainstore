@@ -465,29 +465,15 @@ class _ProductDetailsState extends State<ProductDetails> {
         ),
         Container(
           child: _onSale == 1
-              ? Row(
-                  children: [
-                    Text(
-                      '£$_salePrice',
-                      style: TextStyle(
-                        fontSize: SizeConfig.blockSizeHorizontal * 2.5,
-                      ),
-                    ),
-                    SizedBox(
-                      width: SizeConfig.blockSizeHorizontal * 1,
-                    ),
-                    Text(
-                      widget.attribute!.isEmpty
-                          ? '£$_price'
-                          : '$_attributePrice',
-                      style: TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          fontSize: SizeConfig.blockSizeHorizontal * 2),
-                    ),
-                  ],
+              ? Text(
+                  widget.attribute!.isEmpty
+                      ? '£$_salePrice'
+                      : '£$_attributePrice',
+                  style:
+                      TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 2),
                 )
               : Text(
-                  '£$_price',
+                  widget.attribute!.isEmpty ? '£$_price' : '£$_attributePrice',
                   style:
                       TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 2),
                 ),

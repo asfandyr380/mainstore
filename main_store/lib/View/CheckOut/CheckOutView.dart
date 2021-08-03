@@ -47,200 +47,228 @@ class _CheckOutPageState extends State<CheckOutPage> {
     return ViewModelBuilder<CheckOutViewModel>.reactive(
       viewModelBuilder: () => CheckOutViewModel(),
       builder: (context, model, child) => Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                child: Header(),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.blockSizeVertical * 5,
+        body: Form(
+          key: model.formKey,
+          autovalidateMode: model.autovalidateMode,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  child: Header(),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    //checkout contact INFO
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: SizeConfig.blockSizeVertical * 2.5,
-                          horizontal: SizeConfig.blockSizeHorizontal * 1),
-                      height:
-                          _checkout ? SizeConfig.blockSizeVertical * 40 : null,
-                      width: SizeConfig.blockSizeHorizontal * 45,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(3),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            blurRadius: 2,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Shipping Information',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: SizeConfig.blockSizeHorizontal * 2,
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    'Already have account?',
-                                    style: TextStyle(
-                                      fontSize:
-                                          SizeConfig.blockSizeHorizontal * 0.8,
-                                    ),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical * 5,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      //checkout contact INFO
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: SizeConfig.blockSizeVertical * 2.5,
+                            horizontal: SizeConfig.blockSizeHorizontal * 1),
+                        height: _checkout
+                            ? SizeConfig.blockSizeVertical * 40
+                            : null,
+                        width: SizeConfig.blockSizeHorizontal * 45,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(3),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              blurRadius: 2,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Shipping Information',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize:
+                                        SizeConfig.blockSizeHorizontal * 2,
                                   ),
-                                  MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    child: GestureDetector(
-                                      onTap: () => model.navigateToLogin(),
-                                      child: Text(
-                                        ' Log in',
-                                        style: TextStyle(
-                                          fontSize:
-                                              SizeConfig.blockSizeHorizontal *
-                                                  0.8,
-                                          color: Colors.lightBlue,
-                                        ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      'Already have account?',
+                                      style: TextStyle(
+                                        fontSize:
+                                            SizeConfig.blockSizeHorizontal *
+                                                0.8,
                                       ),
                                     ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 2,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                width: SizeConfig.blockSizeHorizontal * 20,
-                                child: TextInputField(
-                                    onChange: (val) {
-                                      model.firstName = val;
-                                    },
-                                    hint_text: 'First Name'),
-                              ),
-                              Container(
-                                width: SizeConfig.blockSizeHorizontal * 20,
-                                child: TextInputField(
-                                    onChange: (val) {
-                                      model.lastName = val;
-                                    },
-                                    hint_text: 'Last Name'),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 2,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Container(
-                                width: SizeConfig.blockSizeHorizontal * 41,
-                                child: TextInputField(
-                                    onChange: (val) {
-                                      model.address = val;
-                                    },
-                                    hint_text: 'Email'),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 2,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Container(
-                                width: SizeConfig.blockSizeHorizontal * 41,
-                                child: TextInputField(
-                                    onChange: (val) {
-                                      model.apartment = val;
-                                    },
-                                    hint_text: 'Phone'),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 2,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Container(
-                                width: SizeConfig.blockSizeHorizontal * 41,
-                                child: TextInputField(
-                                    onChange: (val) {
-                                      model.city = val;
-                                    },
-                                    hint_text: 'Address'),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 2,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                width: SizeConfig.blockSizeHorizontal * 20,
-                                child: TextInputField(
-                                    onChange: (val) {
-                                      model.country = val;
-                                    },
-                                    hint_text: 'City'),
-                              ),
-                              Container(
-                                width: SizeConfig.blockSizeHorizontal * 20,
-                                child: TextInputField(
-                                    onChange: (val) {
-                                      model.postalCode = val;
-                                    },
-                                    hint_text: 'Postal Code'),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 2,
-                          ),
-                          Container(
-                            width: SizeConfig.blockSizeHorizontal * 41,
-                            child: TextInputField(
-                                onChange: (val) {
-                                  model.city = val;
-                                },
-                                hint_text: 'Country'),
-                          ),
-                        ],
+                                    MouseRegion(
+                                      cursor: SystemMouseCursors.click,
+                                      child: GestureDetector(
+                                        onTap: () => model.navigateToLogin(),
+                                        child: Text(
+                                          ' Log in',
+                                          style: TextStyle(
+                                            fontSize:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    0.8,
+                                            color: Colors.lightBlue,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: SizeConfig.blockSizeVertical * 2,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  width: SizeConfig.blockSizeHorizontal * 20,
+                                  child: TextInputField(
+                                      validateForm: (val) => model
+                                          .validateForum(val, 'first name'),
+                                      onChange: (val) {
+                                        model.firstName = val;
+                                      },
+                                      hint_text: 'First Name'),
+                                ),
+                                Container(
+                                  width: SizeConfig.blockSizeHorizontal * 20,
+                                  child: TextInputField(
+                                      validateForm: (val) =>
+                                          model.validateForum(val, 'last Name'),
+                                      onChange: (val) {
+                                        model.lastName = val;
+                                      },
+                                      hint_text: 'Last Name'),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: SizeConfig.blockSizeVertical * 2,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  width: SizeConfig.blockSizeHorizontal * 41,
+                                  child: TextInputField(
+                                      validateForm: (val) =>
+                                          model.validateEmail(val!),
+                                      onChange: (val) {
+                                        model.address = val;
+                                      },
+                                      hint_text: 'Email'),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: SizeConfig.blockSizeVertical * 2,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  width: SizeConfig.blockSizeHorizontal * 41,
+                                  child: TextInputField(
+                                      validateForm: (val) =>
+                                          model.validateForum(val, 'Phone No'),
+                                      onChange: (val) {
+                                        model.apartment = val;
+                                      },
+                                      hint_text: 'Phone'),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: SizeConfig.blockSizeVertical * 2,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  width: SizeConfig.blockSizeHorizontal * 41,
+                                  child: TextInputField(
+                                      validateForm: (val) =>
+                                          model.validateForum(val, 'Address'),
+                                      onChange: (val) {
+                                        model.city = val;
+                                      },
+                                      hint_text: 'Address'),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: SizeConfig.blockSizeVertical * 2,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  width: SizeConfig.blockSizeHorizontal * 20,
+                                  child: TextInputField(
+                                      validateForm: (val) =>
+                                          model.validateForum(val, 'City'),
+                                      onChange: (val) {
+                                        model.country = val;
+                                      },
+                                      hint_text: 'City'),
+                                ),
+                                Container(
+                                  width: SizeConfig.blockSizeHorizontal * 20,
+                                  child: TextInputField(
+                                      validateForm: (val) => model
+                                          .validateForum(val, 'Postal Code'),
+                                      onChange: (val) {
+                                        model.postalCode = val;
+                                      },
+                                      hint_text: 'Postal Code'),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: SizeConfig.blockSizeVertical * 2,
+                            ),
+                            Container(
+                              width: SizeConfig.blockSizeHorizontal * 41,
+                              child: TextInputField(
+                                  validateForm: (val) =>
+                                      model.validateForum(val, 'Country'),
+                                  onChange: (val) {
+                                    model.city = val;
+                                  },
+                                  hint_text: 'Country'),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    //checkout Order Summary
-                    OrderSummary(
-                      isLoading: model.isLoading,
-                      checkout: _checkout,
-                      m: widget.m,
-                      pay: () => model.checkout(widget.m!, widget.m!.ids),
-                    ),
-                  ],
+                      //checkout Order Summary
+                      OrderSummary(
+                        isLoading: model.isLoading,
+                        checkout: _checkout,
+                        m: widget.m,
+                        pay: () {
+                          var result = model.validateInputs();
+                          if (result == 1) {
+                            model.checkout(widget.m!, widget.m!.ids);
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Footer(),
-            ],
+                Footer(),
+              ],
+            ),
           ),
         ),
       ),

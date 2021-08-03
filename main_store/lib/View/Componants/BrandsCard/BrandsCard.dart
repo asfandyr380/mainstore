@@ -26,6 +26,7 @@ class BrandsRow extends StatelessWidget {
                 child: BrandsCard(
                   onMobile: _onMobile,
                   image: brand.image,
+                  onTap: () => model.navigateToProductListing(),
                 ),
               ),
           ],
@@ -39,29 +40,36 @@ class BrandsRow extends StatelessWidget {
 class BrandsCard extends StatelessWidget {
   final String? image;
   final bool? onMobile;
-  BrandsCard({this.image, this.onMobile});
+  final Function? onTap;
+  BrandsCard({this.image, this.onMobile, this.onTap});
   @override
   Widget build(BuildContext context) {
     String _image = image ?? placeholderBrandPic;
     SizeConfig().init(context);
-    return Container(
-      height: onMobile!
-          ? SizeConfig.blockSizeVertical * 4
-          : SizeConfig.blockSizeVertical * 8,
-      width: onMobile!
-          ? SizeConfig.blockSizeHorizontal * 17
-          : SizeConfig.blockSizeHorizontal * 10,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(blurRadius: 0.5),
-        ],
-      ),
-      child: Container(
-        padding: EdgeInsets.all(8),
-        child: Image(
-          fit: BoxFit.contain,
-          image: NetworkImage(_image),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => onTap!(),
+        child: Container(
+          height: onMobile!
+              ? SizeConfig.blockSizeVertical * 4
+              : SizeConfig.blockSizeVertical * 8,
+          width: onMobile!
+              ? SizeConfig.blockSizeHorizontal * 17
+              : SizeConfig.blockSizeHorizontal * 10,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(blurRadius: 0.5),
+            ],
+          ),
+          child: Container(
+            padding: EdgeInsets.all(8),
+            child: Image(
+              fit: BoxFit.contain,
+              image: NetworkImage(_image),
+            ),
+          ),
         ),
       ),
     );
