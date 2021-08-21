@@ -77,7 +77,7 @@ class ProductDetailViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addtoCart(int productId, int storeId, double attributePrice) async {
+  Future addtoCart(int productId, int storeId, String attributePrice) async {
     isBusy(true);
     var user = await _services.getUser();
     var _userIp = await Ipify.ipv4();

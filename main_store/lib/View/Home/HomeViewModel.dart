@@ -51,6 +51,11 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  setBusy(bool state) {
+    isButtonLoading = state;
+    notifyListeners();
+  }
+
   getReviews() async {
     var result = await _reviewServices.getReviews();
     if (result is List<ReviewModel>) {
@@ -60,11 +65,15 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   loadMore() async {
-    isButtonLoading = true;
+    // print("Before ==> $isButtonLoading");
     nearbyCurrentPage += 1;
-    fetchNearbyProducts();
-    isButtonLoading = false;
-    notifyListeners();
+    if (nearbyProducts.length > totalProducts) {
+    } else {
+      setBusy(true);
+      fetchNearbyProducts();
+      // print("After ==> $isButtonLoading");
+      setBusy(false);
+    }
   }
 
   navigatetodetails(ProductsModel category) {
@@ -77,10 +86,6 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   fetchNearbyProducts() async {
-    if (!isButtonLoading) {
-      isNearbyloading = true;
-    }
-    notifyListeners();
     var result = await _products.getProducts(nearbyCurrentPage);
     if (result is List<ProductsModel>) {
       for (var p in result) {
@@ -88,11 +93,11 @@ class HomeViewModel extends ChangeNotifier {
       }
       totalProducts = _products.totalProducts;
       notifyListeners();
+      print('TotalProducts $totalProducts');
+      print('CurrentProducts ${nearbyProducts.length}');
     } else {
       print(result);
     }
-    isNearbyloading = false;
-    notifyListeners();
   }
 
   fetchTopSellingProducts() async {

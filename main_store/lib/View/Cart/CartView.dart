@@ -253,8 +253,8 @@ class CartitemsContainer extends StatelessWidget {
                         image: item.products!.images![0],
                         name: item.products!.name,
                         price: item.products!.attributePrice == 0
-                            ? item.products!.productPrice
-                            : item.products!.attributePrice,
+                            ? item.products!.productPrice.toString()
+                            : item.products!.attributePrice.toString(),
                         quantity: item.quantity,
                         onDeletePress: () {
                           onDelete!(item.cartId, cart.storeName);
@@ -274,7 +274,7 @@ class CartItem extends StatelessWidget {
   final int? quantity;
   final String? image;
   final String? name;
-  final double? price;
+  final String? price;
   final Function()? onDeletePress;
   final bool? nestedSelect;
   final Function(bool)? onSelect;
@@ -294,7 +294,7 @@ class CartItem extends StatelessWidget {
   Widget build(BuildContext context) {
     String _image = image ?? '';
     String _name = name ?? '';
-    double _price = price! * quantity!;
+    String _price = price! * quantity!;
     int _quantity = quantity ?? 0;
     SizeConfig().init(context);
     return Stack(
@@ -338,7 +338,7 @@ class CartItem extends StatelessWidget {
                     height: SizeConfig.blockSizeVertical * 0.5,
                   ),
                   Text(
-                    '£${_price.toStringAsFixed(2)}',
+                    '£${_price}',
                     style: TextStyle(
                         color: accentColor,
                         fontSize: SizeConfig.blockSizeHorizontal * 1),
@@ -704,8 +704,8 @@ class CartItemContainerMobile extends StatelessWidget {
                   image: item.products!.images![0],
                   name: item.products!.name,
                   price: item.products!.attributePrice == 0
-                      ? item.products!.productPrice
-                      : item.products!.attributePrice,
+                      ? item.products!.productPrice.toString()
+                      : item.products!.attributePrice.toString(),
                   quantity: item.quantity,
                   onDeletePress: () {
                     onDelete!(item.cartId, cart.storeName);
@@ -723,7 +723,7 @@ class CartItems extends StatelessWidget {
   final int? quantity;
   final String? image;
   final String? name;
-  final double? price;
+  final String? price;
   final Function()? onDeletePress;
   final bool? nestedSelect;
   final Function(bool)? onSelect;
@@ -742,7 +742,7 @@ class CartItems extends StatelessWidget {
     int _quantity = quantity ?? 1;
     String _image = image ?? '';
     String _name = name ?? '';
-    double _price = price ?? 0;
+    String _price = price ?? '0';
     return Padding(
       padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 1),
       child: Row(

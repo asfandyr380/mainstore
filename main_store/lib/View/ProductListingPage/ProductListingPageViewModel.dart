@@ -52,7 +52,8 @@ class ProductListingPageViewModel extends ChangeNotifier {
     var list = productList;
     filterlist = list
         .where((p) =>
-            p.productPrice! >= range.start && p.productPrice! <= range.end)
+            double.parse(p.productPrice!) >= range.start &&
+            double.parse(p.productPrice!) <= range.end)
         .toList();
     notifyListeners();
   }

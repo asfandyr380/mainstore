@@ -105,7 +105,7 @@ class ProductDetailView extends StatelessWidget {
                         attribute: productDetails.attributes,
                         name: productDetails.name,
                         by: productDetails.by,
-                        price: productDetails.productPrice,
+                        price: productDetails.productPrice!,
                         description: productDetails.description,
                         salePrice: productDetails.salePrice,
                         onSale: productDetails.onSale,
@@ -115,7 +115,7 @@ class ProductDetailView extends StatelessWidget {
                         addtoCart: (price) {
                           model
                               .addtoCart(productDetails.productId,
-                                  productDetails.storeId, price)
+                                  productDetails.storeId, price.toString())
                               .then((val) {
                             showTopSnackBar(
                               context,
@@ -373,11 +373,11 @@ class AttributeBox extends StatelessWidget {
 class ProductDetails extends StatefulWidget {
   final String? name;
   final String? by;
-  final double? price;
+  final String? price;
   final String? description;
-  final double? salePrice;
+  final String? salePrice;
   final int? onSale;
-  final Function(double) addtoCart;
+  final Function(int) addtoCart;
   final Function(bool)? addorplus;
   final int? quantity;
   final bool? isLoading;
@@ -401,22 +401,22 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  double _attributePrice = 0;
+  int _attributePrice = 0;
 
   @override
   void initState() {
     super.initState();
     if (widget.attribute!.isNotEmpty)
-      _attributePrice = widget.attribute![0].price.toDouble();
+      _attributePrice = widget.attribute![0].price;
   }
 
   @override
   Widget build(BuildContext context) {
     String _name = widget.name ?? '';
     String _by = widget.by ?? '';
-    double _price = widget.price ?? 0;
+    String _price = widget.price ?? '0';
     String _decsription = widget.description ?? dumpyProductDetail;
-    double _salePrice = widget.salePrice ?? 0;
+    String _salePrice = widget.salePrice ?? '0';
     int _onSale = widget.onSale ?? 0;
     int _quantity = widget.quantity ?? 0;
     bool _isLoading = widget.isLoading ?? false;
@@ -502,7 +502,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   attribute: widget.attribute,
                   onPriceChange: (p) {
                     setState(() {
-                      _attributePrice = p;
+                      _attributePrice = p.toInt();
                       print("p for price $_attributePrice");
                     });
                   },

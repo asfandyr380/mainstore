@@ -92,16 +92,20 @@ class CartViewModel extends ChangeNotifier {
   getSummery({required CartProducts product}) {
     if (product.isSelected!) {
       if (product.products!.attributePrice == 0) {
-        subTotal += product.products!.productPrice! * product.quantity!;
+        subTotal +=
+            double.parse(product.products!.productPrice!) * product.quantity!;
       } else {
-        subTotal += product.products!.attributePrice! * product.quantity!;
+        subTotal +=
+            double.parse(product.products!.attributePrice!) * product.quantity!;
       }
       notifyListeners();
     } else {
       if (product.products!.attributePrice == 0) {
-        subTotal -= product.products!.productPrice! * product.quantity!;
+        subTotal -=
+            double.parse(product.products!.productPrice!) * product.quantity!;
       } else {
-        subTotal -= product.products!.attributePrice! * product.quantity!;
+        subTotal -=
+            double.parse(product.products!.attributePrice!) * product.quantity!;
       }
       notifyListeners();
     }

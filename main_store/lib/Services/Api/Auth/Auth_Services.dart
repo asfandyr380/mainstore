@@ -9,18 +9,10 @@ import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 
 class AuthServicesApi {
   StorageServices _services = locator<StorageServices>();
+  static final _googleSignIn = GoogleSignIn();
 
-  Future authenticateWithGoogle() async {
-    GoogleSignIn _googleSignIn = GoogleSignIn(
-      scopes: [
-        'email',
-        'https://www.googleapis.com/auth/contacts.readonly',
-      ],
-    );
-    try {
-      var result = await _googleSignIn.signIn();
-      print(result!.displayName);
-    } catch (error) {}
+  Future googleLogin() async {
+    return await _googleSignIn.signIn();
   }
 
   Future createNewUser(String username, String email, String phone,

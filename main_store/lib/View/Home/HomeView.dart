@@ -213,16 +213,7 @@ class Home extends StatelessWidget {
                   isLoading: model.isNearbyloading,
                 ),
               ),
-              model.isButtonLoading
-                  ? Container(
-                      height: SizeConfig.blockSizeVertical * 1,
-                      width: SizeConfig.blockSizeHorizontal * 2,
-                      child: LinearProgressIndicator(
-                        color: accentColor,
-                      ),
-                    )
-                  : Container(),
-              model.totalProducts == model.nearbyCurrentPage + 1
+              model.nearbyProducts.length == model.totalProducts
                   ? Container()
                   : Container(
                       padding: EdgeInsets.symmetric(
@@ -237,8 +228,15 @@ class Home extends StatelessWidget {
                             SizeConfig.blockSizeVertical * 5,
                           ),
                         ),
-                        child: Text('Load More',
-                            style: TextStyle(color: Colors.white)),
+                        child: model.isButtonLoading
+                            ? Container(
+                                height: 12,
+                                width: 12,
+                                child: CircularProgressIndicator(
+                                    color: Colors.white),
+                              )
+                            : Text('Load More',
+                                style: TextStyle(color: Colors.white)),
                       ),
                     ),
               Divider(),
@@ -497,6 +495,7 @@ class NearbyProducts extends StatelessWidget {
     SizeConfig().init(context);
     bool _isLoading = isLoading ?? false;
     var width = MediaQuery.of(context).size.width;
+    print(width);
     return Container(
       alignment: Alignment.centerLeft,
       child: Column(
@@ -524,7 +523,7 @@ class NearbyProducts extends StatelessWidget {
                     // physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: (width >= 1440)
+                      crossAxisCount: (width >= 1366)
                           ? 5
                           : (width >= 1080)
                               ? 4

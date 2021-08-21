@@ -46,7 +46,7 @@ class WishlistView extends StatelessWidget {
                         ),
                         child: WishCard(
                           addtoCart: () => model
-                              .addtoCart(item.productId, item.storeId, 0)
+                              .addtoCart(item.productId, item.storeId, '0')
                               .then((value) {
                             showTopSnackBar(
                               context,
@@ -117,7 +117,7 @@ class _WishCardState extends State<WishCard> {
   @override
   Widget build(BuildContext context) {
     String _name = widget.details!.name ?? '';
-    double _price = widget.details!.productPrice ?? 0;
+    String _price = widget.details!.productPrice ?? '0';
     String _image = widget.details!.images![0];
     return MouseRegion(
       cursor: SystemMouseCursors.click,

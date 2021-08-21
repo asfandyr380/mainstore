@@ -17,7 +17,7 @@ class CartService {
   }
 
   Future addToCart(int productId, int storeId, int userId, int quantity,
-      double attributePrice) async {
+      String attributePrice) async {
     Uri _URL = Uri.parse('$baseUrl/cart/add/');
     Map<String, dynamic> req = {
       "product_Id": productId.toString(),

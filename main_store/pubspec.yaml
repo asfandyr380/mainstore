@@ -47,7 +47,7 @@ dependencies:
   checkbox_grouped: ^1.5.0
   flutter_rating_bar: ^4.0.0
   bottom_sheet: ^1.0.1
-  google_sign_in: ^5.0.5
+  google_sign_in: ^5.0.7
   
 dev_dependencies:
   flutter_test:

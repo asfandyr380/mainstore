@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Services/Api/Auth/Auth_Services.dart';
@@ -82,7 +83,10 @@ class ForumViewModel extends ChangeNotifier {
   }
 
   googleSignIn() async {
-    await _api.authenticateWithGoogle();
+    var result = await _api.googleLogin();
+    if (result is GoogleSignInAccount) {
+      print(result.displayName);
+    }
   }
 
   isBusy(bool loadingState) {
