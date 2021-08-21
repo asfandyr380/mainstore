@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Models/ReviewModel.dart';
+import 'package:main_store/Models/SummeryModel.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/Services/Api/Cart/cart_services.dart';
 import 'package:main_store/Services/Api/Products/filterProducts.dart';
@@ -113,5 +114,10 @@ class ProductDetailViewModel extends ChangeNotifier {
     } else {
       print(result);
     }
+  }
+
+  buyNow(var price, shipping) {
+    var m = SummeryModel.mapData(price, shipping, price, []);
+    _navigation.navigateTo(Checkout, arguments: m);
   }
 }

@@ -126,6 +126,8 @@ class ProductDetailView extends StatelessWidget {
                             );
                           });
                         },
+                        buyNow: () =>
+                            model.buyNow(productDetails.productPrice, 0),
                       ),
                     ),
                   ],
@@ -373,16 +375,18 @@ class AttributeBox extends StatelessWidget {
 class ProductDetails extends StatefulWidget {
   final String? name;
   final String? by;
-  final String? price;
+  final double? price;
   final String? description;
-  final String? salePrice;
+  final double? salePrice;
   final int? onSale;
   final Function(int) addtoCart;
   final Function(bool)? addorplus;
   final int? quantity;
   final bool? isLoading;
+  final Function? buyNow;
   final List<AttributeModel>? attribute;
   ProductDetails({
+    this.buyNow,
     this.salePrice,
     this.by,
     this.description,
@@ -414,9 +418,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     String _name = widget.name ?? '';
     String _by = widget.by ?? '';
-    String _price = widget.price ?? '0';
+    double _price = widget.price ?? 0;
     String _decsription = widget.description ?? dumpyProductDetail;
-    String _salePrice = widget.salePrice ?? '0';
+    double _salePrice = widget.salePrice ?? 0;
     int _onSale = widget.onSale ?? 0;
     int _quantity = widget.quantity ?? 0;
     bool _isLoading = widget.isLoading ?? false;
@@ -629,7 +633,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     SizeConfig.blockSizeVertical * 5,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () => widget.buyNow!(),
                 child: Text(
                   'Buy Now',
                   style:
@@ -826,7 +830,7 @@ class MobileProductDetailView extends StatelessWidget {
                         onPressed: () => {
                           model
                               .addtoCart(details!.productId, details!.storeId,
-                                  details!.productPrice!)
+                                  details!.productPrice!.toString())
                               .then((val) {
                             showTopSnackBar(
                               context,

@@ -117,7 +117,7 @@ class _WishCardState extends State<WishCard> {
   @override
   Widget build(BuildContext context) {
     String _name = widget.details!.name ?? '';
-    String _price = widget.details!.productPrice ?? '0';
+    double _price = widget.details!.productPrice ?? 0;
     String _image = widget.details!.images![0];
     return MouseRegion(
       cursor: SystemMouseCursors.click,

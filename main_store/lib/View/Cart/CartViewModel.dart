@@ -92,20 +92,16 @@ class CartViewModel extends ChangeNotifier {
   getSummery({required CartProducts product}) {
     if (product.isSelected!) {
       if (product.products!.attributePrice == 0) {
-        subTotal +=
-            double.parse(product.products!.productPrice!) * product.quantity!;
+        subTotal += product.products!.productPrice! * product.quantity!;
       } else {
-        subTotal +=
-            double.parse(product.products!.attributePrice!) * product.quantity!;
+        subTotal += product.products!.attributePrice! * product.quantity!;
       }
       notifyListeners();
     } else {
       if (product.products!.attributePrice == 0) {
-        subTotal -=
-            double.parse(product.products!.productPrice!) * product.quantity!;
+        subTotal -= product.products!.productPrice! * product.quantity!;
       } else {
-        subTotal -=
-            double.parse(product.products!.attributePrice!) * product.quantity!;
+        subTotal -= product.products!.attributePrice! * product.quantity!;
       }
       notifyListeners();
     }
@@ -121,12 +117,10 @@ class CartViewModel extends ChangeNotifier {
     int ip = int.parse(newI);
     if (user) {
       int id = await _services.getUserId();
-      print('userID $id');
       var result = await _cartService.getCartProducts(id);
       if (result is List<CartModel>) {
         cartlist = result;
         notifyListeners();
-        print(cartlist);
       } else {
         print(result);
       }

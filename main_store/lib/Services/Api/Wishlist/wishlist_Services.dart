@@ -40,11 +40,11 @@ class WishServices {
       for (var body in decodedBody) {
         List<String> images = [];
         List<String> categories = [];
-        String imgPath = body['Product']['image'];
+        String imgPath = body['image'];
         String image = '$baseUrl/products/getimage/$imgPath';
         images.add(image);
         for (int i = 2; i <= 4; i++) {
-          String imgPath = body['Product']['image$i'];
+          String imgPath = body['image$i'];
           String image = '$baseUrl/products/getimage/$imgPath';
           images.add(image);
         }

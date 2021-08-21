@@ -25,8 +25,8 @@ class _ProductCardMobileState extends State<ProductCardMobile> {
     String _categoryName = widget.details!.category![0];
     String _productName = widget.details!.name ?? '';
     int _onSale = widget.details!.onSale ?? 0;
-    String _salePrice = widget.details!.salePrice ?? '0';
-    String _price = widget.details!.productPrice ?? '0';
+    double _salePrice = widget.details!.salePrice ?? 0;
+    double _price = widget.details!.productPrice ?? 0;
     int _productId = widget.details!.productId;
     bool _isGrid = widget.isGrid ?? false;
     bool _isListingPage = widget.isListingPage ?? true;
@@ -206,8 +206,8 @@ class _ProductListingCardsState extends State<ProductListingCards> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    String _salePrice = widget.details!.salePrice ?? '0';
-    String _productPrice = widget.details!.productPrice ?? '0';
+    double _salePrice = widget.details!.salePrice ?? 0;
+    double _productPrice = widget.details!.productPrice ?? 0;
     int _prodcutId = widget.details!.productId;
     int _onSale = widget.details!.onSale ?? 0;
     String _image = widget.details!.images![0];

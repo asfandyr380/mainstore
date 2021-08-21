@@ -67,13 +67,10 @@ class HomeViewModel extends ChangeNotifier {
   loadMore() async {
     // print("Before ==> $isButtonLoading");
     nearbyCurrentPage += 1;
-    if (nearbyProducts.length > totalProducts) {
-    } else {
-      setBusy(true);
-      fetchNearbyProducts();
-      // print("After ==> $isButtonLoading");
-      setBusy(false);
-    }
+    setBusy(true);
+    fetchNearbyProducts();
+    // print("After ==> $isButtonLoading");
+    setBusy(false);
   }
 
   navigatetodetails(ProductsModel category) {
