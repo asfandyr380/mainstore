@@ -219,7 +219,7 @@ class FilterHeader extends StatelessWidget {
     int _currentPage = currentPage ?? 0;
     return Container(
       height: SizeConfig.blockSizeVertical * 5,
-      width: SizeConfig.blockSizeHorizontal * 60,
+      width: SizeConfig.blockSizeHorizontal * 70,
       decoration: BoxDecoration(
         color: footerColor,
         borderRadius: BorderRadius.circular(8),

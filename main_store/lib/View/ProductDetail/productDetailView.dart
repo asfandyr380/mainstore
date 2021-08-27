@@ -296,6 +296,7 @@ class _AttributesState extends State<Attributes> {
   @override
   void initState() {
     super.initState();
+    controller = CustomGroupController(initSelectedItem: widget.attribute![0]);
     controller.listen((val) {
       var attr = val as AttributeModel;
       widget.onPriceChange!(attr.price.toDouble());

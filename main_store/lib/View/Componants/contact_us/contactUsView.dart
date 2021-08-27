@@ -17,144 +17,161 @@ class ContactUsView extends StatelessWidget {
       viewModelBuilder: () => ContactUsViewModel(),
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    blurRadius: 2,
-                  )
-                ]),
-                child: Header(),
-              ),
-              SizedBox(
-                height: SizeConfig.blockSizeVertical * 2,
-              ),
-              Container(
-                child: Column(
-                  children: [
-                    Text(
-                      'Contact Us',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: SizeConfig.blockSizeHorizontal * 2,
-                      ),
-                    ),
-                    SizedBox(
-                      height: SizeConfig.blockSizeVertical * 2,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: SizeConfig.blockSizeHorizontal * 15,
-                          child: TextInputField(
-                            controller: model.controller,
-                            hint_text: 'First Name',
-                            onChange: (val) {
-                              model.firstName = val;
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          width: SizeConfig.blockSizeHorizontal * 1,
-                        ),
-                        Container(
-                            width: SizeConfig.blockSizeHorizontal * 15,
-                            child: TextInputField(
-                              controller: model.controller,
-                              hint_text: 'Last Name',
-                              onChange: (val) {
-                                model.lastname = val;
-                              },
-                            )),
-                      ],
-                    ),
-                    SizedBox(
-                      height: SizeConfig.blockSizeVertical * 1.5,
-                    ),
-                    TextInputField(
-                      controller: model.controller,
-                      hint_text: 'Email',
-                      onChange: (val) {
-                        model.email = val;
-                      },
-                    ),
-                    SizedBox(
-                      height: SizeConfig.blockSizeVertical * 1.5,
-                    ),
-                    TextInputField(
-                      hint_text: 'Phone Number',
-                      onChange: (val) {
-                        model.phone = val;
-                      },
-                    ),
-                    SizedBox(
-                      height: SizeConfig.blockSizeVertical * 1.5,
-                    ),
-                    Container(
-                      width: SizeConfig.blockSizeHorizontal * 31,
-                      child: TextFormField(
-                        onChanged: (val) {
-                          model.message = val;
-                        },
-                        maxLines: 4,
-                        decoration: InputDecoration(
-                          hintText: 'Message',
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(color: Colors.green),
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+          child: Form(
+            key: model.key,
+            autovalidateMode: model.mode,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      blurRadius: 2,
+                    )
+                  ]),
+                  child: Header(),
+                ),
+                SizedBox(
+                  height: SizeConfig.blockSizeVertical * 2,
+                ),
+                Container(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Contact Us',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: SizeConfig.blockSizeHorizontal * 2,
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: SizeConfig.blockSizeVertical * 2.5,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: SizeConfig.blockSizeHorizontal * 34.5),
-                      child: Row(
+                      SizedBox(
+                        height: SizeConfig.blockSizeVertical * 2,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                              child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: accentColor,
-                              fixedSize: Size(
-                                SizeConfig.blockSizeHorizontal * 10,
-                                SizeConfig.blockSizeVertical * 5,
-                              ),
+                            width: SizeConfig.blockSizeHorizontal * 15,
+                            child: TextInputField(
+                              controller: model.firstController,
+                              validateForm: (_) => model.validateForm(_),
+                              hint_text: 'First Name',
+                              onChange: (val) {
+                                model.firstName = val;
+                              },
                             ),
-                            onPressed: () => model.sendForum().then((value) {
-                              if (value) {
-                                showTopSnackBar(
-                                  context,
-                                  CustomSnackBar.success(
-                                    message: 'Message Send Successfuly',
-                                  ),
-                                  displayDuration: Duration(milliseconds: 150),
-                                );
-                              }
-                            }),
-                            child: Text('Contact Us'),
-                          )),
+                          ),
+                          SizedBox(
+                            width: SizeConfig.blockSizeHorizontal * 1,
+                          ),
+                          Container(
+                              width: SizeConfig.blockSizeHorizontal * 15,
+                              child: TextInputField(
+                                controller: model.lastController,
+                                validateForm: (_) => model.validateForm(_),
+                                hint_text: 'Last Name',
+                                onChange: (val) {
+                                  model.lastname = val;
+                                },
+                              )),
                         ],
                       ),
-                    )
-                  ],
+                      SizedBox(
+                        height: SizeConfig.blockSizeVertical * 1.5,
+                      ),
+                      TextInputField(
+                        controller: model.emailController,
+                        validateForm: (_) => model.validateForm(_),
+                        hint_text: 'Email',
+                        onChange: (val) {
+                          model.email = val;
+                        },
+                      ),
+                      SizedBox(
+                        height: SizeConfig.blockSizeVertical * 1.5,
+                      ),
+                      TextInputField(
+                        controller: model.phoneController,
+                        hint_text: 'Phone Number',
+                        validateForm: (_) => model.validateForm(_),
+                        onChange: (val) {
+                          model.phone = val;
+                        },
+                      ),
+                      SizedBox(
+                        height: SizeConfig.blockSizeVertical * 1.5,
+                      ),
+                      Container(
+                        width: SizeConfig.blockSizeHorizontal * 31,
+                        child: TextFormField(
+                          controller: model.msgController,
+                          validator: (_) => model.validateForm(_),
+                          onChanged: (val) {
+                            model.message = val;
+                          },
+                          maxLines: 4,
+                          decoration: InputDecoration(
+                            hintText: 'Message',
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(color: Colors.green),
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: SizeConfig.blockSizeVertical * 2.5,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: SizeConfig.blockSizeHorizontal * 34.5),
+                        child: Row(
+                          children: [
+                            Container(
+                                child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: accentColor,
+                                fixedSize: Size(
+                                  SizeConfig.blockSizeHorizontal * 10,
+                                  SizeConfig.blockSizeVertical * 5,
+                                ),
+                              ),
+                              onPressed: () {
+                                model.sendForum().then((value) {
+                                  var result = model.validateInputs();
+                                  if (result == 1) {
+                                    if (value) {
+                                      showTopSnackBar(
+                                        context,
+                                        CustomSnackBar.success(
+                                          message: 'Message Send Successfuly',
+                                        ),
+                                        displayDuration:
+                                            Duration(milliseconds: 150),
+                                      );
+                                    }
+                                  }
+                                });
+                              },
+                              child: Text('Contact Us'),
+                            )),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: SizeConfig.blockSizeVertical * 8,
-              ),
-              Footer(),
-            ],
+                SizedBox(
+                  height: SizeConfig.blockSizeVertical * 8,
+                ),
+                Footer(),
+              ],
+            ),
           ),
         ),
       ),
