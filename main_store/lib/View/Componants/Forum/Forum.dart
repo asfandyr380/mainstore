@@ -54,6 +54,9 @@ class Forum extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  SizedBox(
+                    height: SizeConfig.blockSizeVertical * 1.5,
+                  ),
                   Container(
                     child: Text(
                       _isSignIn ? 'SIGN IN' : 'SIGN UP',
@@ -320,6 +323,9 @@ class Forum extends StatelessWidget {
                           label: _isSignIn ? 'SIGN IN' : 'SIGN UP',
                           isEnable: _isSignIn ? true : model.isTicked,
                         ),
+                      ),
+                      SizedBox(
+                        height: SizeConfig.blockSizeVertical * 1.5,
                       ),
                       _isSignIn
                           ? Container(
