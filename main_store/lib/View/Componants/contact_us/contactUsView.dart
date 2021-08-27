@@ -51,6 +51,7 @@ class ContactUsView extends StatelessWidget {
                         Container(
                           width: SizeConfig.blockSizeHorizontal * 15,
                           child: TextInputField(
+                            controller: model.controller,
                             hint_text: 'First Name',
                             onChange: (val) {
                               model.firstName = val;
@@ -63,6 +64,7 @@ class ContactUsView extends StatelessWidget {
                         Container(
                             width: SizeConfig.blockSizeHorizontal * 15,
                             child: TextInputField(
+                              controller: model.controller,
                               hint_text: 'Last Name',
                               onChange: (val) {
                                 model.lastname = val;
@@ -74,6 +76,7 @@ class ContactUsView extends StatelessWidget {
                       height: SizeConfig.blockSizeVertical * 1.5,
                     ),
                     TextInputField(
+                      controller: model.controller,
                       hint_text: 'Email',
                       onChange: (val) {
                         model.email = val;

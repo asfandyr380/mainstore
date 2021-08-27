@@ -5,11 +5,13 @@ import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
 import 'package:main_store/Services/Navigation/router.dart';
 import 'package:main_store/View/Account/AccountView.dart';
+import 'package:main_store/View/AccountVerification/AccountVerification.dart';
 import 'package:main_store/View/AdminConsole/adminConsoleView.dart';
 import 'package:main_store/View/Cart/CartView.dart';
 import 'package:main_store/View/CheckOut/CheckOutView.dart';
 import 'package:main_store/View/Componants/Dialog/DialogView.dart';
 import 'package:main_store/View/Componants/contact_us/contactUsView.dart';
+import 'package:main_store/View/ForgotPassword/ForgotPassword.dart';
 import 'package:main_store/View/Home/HomeView.dart';
 import 'package:main_store/View/LandingPage_Mobile/LandingPageView.dart';
 import 'package:main_store/View/LandingPage_Mobile/LandingPageViewModel.dart';
@@ -27,7 +29,7 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: UserOrder(),
+      // home: AccountVerificationView(),
       initialRoute: HomeView,
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       onGenerateRoute: (settings) => generateRoute(settings),

@@ -12,9 +12,10 @@ class TextInputField extends StatelessWidget {
   final bool? onMobileappbar;
   final bool? onTablet;
   final bool? isObsocured;
-
+  final TextEditingController? controller;
   TextInputField({
     this.type,
+    this.controller,
     this.isObsocured,
     this.onTablet,
     this.onMobile,
@@ -42,6 +43,7 @@ class TextInputField extends StatelessWidget {
       //     ? SizeConfig.blockSizeVertical * 5
       //     : SizeConfig.blockSizeVertical * 7,
       child: TextFormField(
+        controller: controller,
         obscureText: _isObsocured,
         keyboardType: type,
         validator: (value) => validateForm!(value),

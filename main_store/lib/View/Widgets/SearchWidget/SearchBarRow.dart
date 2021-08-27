@@ -77,7 +77,8 @@ class _SearchBarRowState extends State<SearchBarRow> {
                       image: NetworkImage(m.images![0]),
                     )),
                     title: Text('${m.name}'),
-                    subtitle: Text('\$${m.productPrice}'),
+                    subtitle: Text(
+                        '\$${m.onSale == 1 ? m.salePrice : m.productPrice}'),
                   );
                 },
                 onSuggestionSelected: (result) {

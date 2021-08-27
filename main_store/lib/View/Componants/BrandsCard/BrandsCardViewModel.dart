@@ -25,8 +25,8 @@ class BrandCardViewModel extends ChangeNotifier {
   }
 
   List<String> li = [];
-  navigateToProductListing() {
-    _navigation.navigateTo(ProductListing, arguments: li);
+  navigateToProductListing(String name) {
+    _navigation.navigateTo(ProductListing, arguments: name);
   }
 
   fetchBrands() async {

@@ -3,7 +3,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Services/Api/Auth/Auth_Services.dart';
+import 'package:main_store/Services/Dialog/Dialog_Services.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
+import 'package:main_store/View/Home/HomeView.dart';
 
 class ForumViewModel extends ChangeNotifier {
   bool isTicked = false;
@@ -18,8 +20,14 @@ class ForumViewModel extends ChangeNotifier {
   String postal_code = '';
   AuthServicesApi _api = locator<AuthServicesApi>();
   Navigation _navigation = locator<Navigation>();
+  DialogService _alertDialog = locator<DialogService>();
+
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
   validateForum(String? forumValue, String fieldName) {
     // ignore: unnecessary_null_comparison
@@ -82,11 +90,31 @@ class ForumViewModel extends ChangeNotifier {
     _navigation.navigateTo(SignUp);
   }
 
-  googleSignIn() async {
+  googleSignIn(bool isSignIn) async {
     var result = await _api.googleLogin();
-    if (result is GoogleSignInAccount) {
-      print(result.displayName);
+    if (isSignIn) {
+      if (result is GoogleSignInAccount) {
+        String _googleEmail = result.email;
+        var res = await _api.loginWithGoogle(_googleEmail);
+        if (res is bool) {
+          _navigation.pushReplaceRoute(HomePage());
+        } else {
+          _alertDialog.showDialog(
+              title: 'Authentication Error',
+              description: res,
+              buttonTitle: "Close");
+        }
+      }
+    } else {
+      if (result is GoogleSignInAccount) {
+        usernameController.text = result.displayName!;
+        emailController.text = result.email;
+      }
     }
+  }
+
+  navigateToForgotPasswordPage() {
+    _navigation.navigateTo(ForgotPassword);
   }
 
   isBusy(bool loadingState) {

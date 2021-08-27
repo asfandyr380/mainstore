@@ -10,6 +10,7 @@ class ContactUsViewModel extends ChangeNotifier {
   String email = '';
   String phone = '';
   String message = '';
+  TextEditingController controller = TextEditingController();
   Future sendForum() async {
     MessageModel model = MessageModel(
       email: email,
@@ -20,6 +21,7 @@ class ContactUsViewModel extends ChangeNotifier {
     Map<String, dynamic> body = model.toJson();
     var result = await _messageServices.sendMessage(body);
     if (result == 1) {
+      controller.clear();
       return true;
     } else
       return false;

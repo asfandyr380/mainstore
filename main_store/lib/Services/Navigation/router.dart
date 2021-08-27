@@ -6,6 +6,7 @@ import 'package:main_store/View/About_Us/AboutusView.dart';
 import 'package:main_store/View/Cart/CartView.dart';
 import 'package:main_store/View/CheckOut/CheckOutView.dart';
 import 'package:main_store/View/Componants/contact_us/contactUsView.dart';
+import 'package:main_store/View/ForgotPassword/ForgotPassword.dart';
 import 'package:main_store/View/Home/HomeView.dart';
 import 'package:main_store/View/LandingPage_Mobile/LandingPageView.dart';
 import 'package:main_store/View/ProductDetail/productDetailView.dart';
@@ -47,6 +48,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case Wishlist:
       return _GeneratePageRoute(
           widget: WishlistView(), routeName: settings.name);
+    case ForgotPassword:
+      return _GeneratePageRoute(
+          widget: ForgotPasswordView(), routeName: settings.name);
     case ProductDetailsPage:
       ProductsModel? details = arg as ProductsModel?;
       return _GeneratePageRoute(
@@ -55,7 +59,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           ),
           routeName: settings.name);
     case ProductListing:
-      List<String>? cate = arg as List<String>?;
+      dynamic cate = arg as dynamic;
       return _GeneratePageRoute(
           widget: ListingPage(
             cate: cate,

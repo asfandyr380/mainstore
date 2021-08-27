@@ -90,8 +90,8 @@ class HomeViewModel extends ChangeNotifier {
       }
       totalProducts = _products.totalProducts;
       notifyListeners();
-      print('TotalProducts $totalProducts');
-      print('CurrentProducts ${nearbyProducts.length}');
+      // print('TotalProducts $totalProducts');
+      // print('CurrentProducts ${nearbyProducts.length}');
     } else {
       print(result);
     }
@@ -105,6 +105,7 @@ class HomeViewModel extends ChangeNotifier {
         topSellingProducts.add(product);
       }
       notifyListeners();
+      // print('Top Selling ==> $topSellingProducts');
     } else {
       print(result);
     }

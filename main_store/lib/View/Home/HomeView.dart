@@ -61,10 +61,13 @@ class HomeMobile extends StatelessWidget {
                 ),
               ),
               SizedBox(height: SizeConfig.blockSizeVertical * 2),
-              ProductListingRowMobile(
-                isLoading: model.isLoading,
-                listingName: 'Top Selling Products',
-                productDetails: model.topSellingProducts,
+              Visibility(
+                visible: !model.topSellingProducts.isEmpty,
+                child: ProductListingRowMobile(
+                  isLoading: model.isLoading,
+                  listingName: 'Top Selling Products',
+                  productDetails: model.topSellingProducts,
+                ),
               ),
               ProductListingRowMobile(
                 isLoading: model.isLoading,
@@ -124,8 +127,12 @@ class Home extends StatelessWidget {
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
       onModelReady: (model) {
-        model.fetchOnSaleProducts();
-        model.fetchTopSellingProducts();
+        Future.delayed(Duration(seconds: 2), () {
+          model.fetchOnSaleProducts();
+        });
+        Future.delayed(Duration(seconds: 4), () {
+          model.fetchTopSellingProducts();
+        });
         model.fetchNearbyProducts();
         model.getReviews();
       },
@@ -159,10 +166,13 @@ class Home extends StatelessWidget {
               SizedBox(
                 height: SizeConfig.blockSizeVertical * 2,
               ),
-              ProductListingRow(
-                isLoading: model.isLoading,
-                listingName: 'Top Selling Products',
-                productDetails: model.topSellingProducts,
+              Visibility(
+                visible: !model.topSellingProducts.isEmpty,
+                child: ProductListingRow(
+                  isLoading: model.isLoading,
+                  listingName: 'Top Selling Products',
+                  productDetails: model.topSellingProducts,
+                ),
               ),
               SizedBox(height: SizeConfig.blockSizeVertical * 2),
               ProductListingRow(

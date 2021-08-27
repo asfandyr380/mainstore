@@ -73,7 +73,7 @@ class Forum extends StatelessWidget {
                         MouseRegion(
                           cursor: SystemMouseCursors.click,
                           child: GestureDetector(
-                            onTap: () => model.googleSignIn(),
+                            onTap: () => model.googleSignIn(_isSignIn),
                             child: Image.asset(
                               'assets/images/google.png',
                               height: SizeConfig.blockSizeVertical * 5,
@@ -106,6 +106,7 @@ class Forum extends StatelessWidget {
                                     SizeConfig.blockSizeHorizontal * 1.2,
                               ),
                               child: TextInputField(
+                                controller: model.usernameController,
                                 type: TextInputType.name,
                                 onTablet: isTablet,
                                 validateForm: (val) =>
@@ -124,6 +125,7 @@ class Forum extends StatelessWidget {
                           ? Container(
                               padding: EdgeInsets.symmetric(horizontal: 15),
                               child: TextInputField(
+                                controller: model.phoneController,
                                 type: TextInputType.phone,
                                 onTablet: isTablet,
                                 validateForm: (val) =>
@@ -141,6 +143,7 @@ class Forum extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         child: TextInputField(
+                          controller: model.emailController,
                           onTablet: isTablet,
                           validateForm: (val) => model.validateEmail(val!),
                           onChange: (val) {
@@ -230,7 +233,6 @@ class Forum extends StatelessWidget {
                           ? Container(
                               padding: EdgeInsets.symmetric(horizontal: 15),
                               child: TextInputField(
-                                isObsocured: true,
                                 onTablet: isTablet,
                                 validateForm: (val) =>
                                     model.validateForum(val, 'Address'),
@@ -279,7 +281,9 @@ class Forum extends StatelessWidget {
                                   left: isTablet!
                                       ? SizeConfig.blockSizeHorizontal * 3.5
                                       : SizeConfig.blockSizeHorizontal * 2),
-                              child: ForgetPasswordPage(),
+                              child: ForgetPasswordPage(
+                                  onTap: () =>
+                                      model.navigateToForgotPasswordPage()),
                             ),
                       Container(
                         padding: EdgeInsets.symmetric(
@@ -361,17 +365,22 @@ class Forum extends StatelessWidget {
 }
 
 class ForgetPasswordPage extends StatelessWidget {
+  final Function? onTap;
+  ForgetPasswordPage({this.onTap});
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      child: Container(
-        alignment: Alignment.topLeft,
-        child: Text(
-          'Forget Password?',
-          style: TextStyle(
-            color: accentColor,
-            fontSize: SizeConfig.blockSizeHorizontal * 1,
+      child: GestureDetector(
+        onTap: () => onTap!(),
+        child: Container(
+          alignment: Alignment.topLeft,
+          child: Text(
+            'Forget Password?',
+            style: TextStyle(
+              color: accentColor,
+              fontSize: SizeConfig.blockSizeHorizontal * 1,
+            ),
           ),
         ),
       ),

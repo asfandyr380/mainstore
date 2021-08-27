@@ -5,8 +5,8 @@ class BrandsModel {
 
   BrandsModel({this.brandName, this.image});
 
-  BrandsModel.fromMap(Map map)
-      : id = map['id'] ?? 0,
-        brandName = map['brandName'] ?? '',
-        image = map['image'] ?? '';
+  BrandsModel.fromMap(Map map, String img)
+      : id = map['store_Id'] ?? 0,
+        brandName = map['store_name'] ?? '',
+        image = img;
 }

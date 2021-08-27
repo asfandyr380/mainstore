@@ -3,6 +3,7 @@ class ProductsModel {
   int storeId = 0;
   String? name = '';
   String? description = '';
+  String shortDsec = '';
   String? by = '';
   double? productPrice = 0;
   int? attributePrice = 0;
@@ -20,6 +21,7 @@ class ProductsModel {
         productPrice = map['price'],
         salePrice = map['salePrice'],
         description = map['description'] ?? '',
+        shortDsec = map['shortDesc'],
         by = map['store_name'] ?? '',
         onSale = map['onSale'] ?? 0,
         status = map['status'] ?? 0,

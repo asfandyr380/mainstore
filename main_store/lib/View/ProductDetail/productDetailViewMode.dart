@@ -117,7 +117,8 @@ class ProductDetailViewModel extends ChangeNotifier {
   }
 
   buyNow(var price, shipping) {
-    var m = SummeryModel.mapData(price, shipping, price, []);
+    var m =
+        SummeryModel.mapData(price * quantity, shipping, price * quantity, []);
     _navigation.navigateTo(Checkout, arguments: m);
   }
 }

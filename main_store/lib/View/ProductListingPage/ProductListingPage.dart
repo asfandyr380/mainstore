@@ -17,30 +17,39 @@ import 'package:stacked/stacked.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 class ListingPage extends StatelessWidget {
-  final List<String>? cate;
+  final dynamic cate;
   ListingPage({this.cate});
   @override
   Widget build(BuildContext context) {
-    List<String> _cate = cate ?? [];
     return Responsive(
-      mobile: ListingPageMobile(cate: _cate),
-      tablet: ProductListingPage(cate: cate),
+      mobile: ListingPageMobile(cate: cate is String ? [] : cate),
+      tablet: ProductListingPage(
+        cate: cate,
+      ),
       desktop: ProductListingPage(cate: cate),
     );
   }
 }
 
 class ProductListingPage extends StatelessWidget {
-  final List<String>? cate;
+  final dynamic cate;
   ProductListingPage({this.cate});
 
   @override
   Widget build(BuildContext context) {
-    List<String> _cate = cate ?? [];
+    // List<String> _cate = cate ?? [];
     SizeConfig().init(context);
     return ViewModelBuilder<ProductListingPageViewModel>.reactive(
       viewModelBuilder: () => ProductListingPageViewModel(),
-      onModelReady: (model) => model.fetchProductByFilter(_cate),
+      onModelReady: (model) {
+        if (cate is List<String>) {
+          model.fetchProductByFilter(cate);
+        } else if (cate == null) {
+          model.fetchProductByFilter([]);
+        } else {
+          model.filterByStore(cate);
+        }
+      },
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -94,7 +103,7 @@ class ProductListingPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    for (int i = 0; i < model.totalCount; i++)
+                    for (int i = 0; i < 10; i++)
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         child: Pagination(

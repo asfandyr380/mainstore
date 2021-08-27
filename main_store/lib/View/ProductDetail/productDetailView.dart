@@ -72,15 +72,21 @@ class ProductDetailView extends StatelessWidget {
                 child: BreadCrumb(
                   items: [
                     for (var cate in productDetails.category!)
-                      productDetails.category!.last == cate
-                          ? BreadCrumbItem(
-                              onTap: () => model.navigateToProductlisting(cate),
-                              content: Text('$cate',
-                                  style: TextStyle(color: accentColor)),
-                            )
+                      cate != "null"
+                          ? productDetails.category!.last == cate
+                              ? BreadCrumbItem(
+                                  onTap: () =>
+                                      model.navigateToProductlisting(cate),
+                                  content: Text('$cate',
+                                      style: TextStyle(color: accentColor)),
+                                )
+                              : BreadCrumbItem(
+                                  onTap: () =>
+                                      model.navigateToProductlisting(cate),
+                                  content: Text('$cate'),
+                                )
                           : BreadCrumbItem(
-                              onTap: () => model.navigateToProductlisting(cate),
-                              content: Text('$cate'),
+                              content: Text(''),
                             ),
                   ],
                   divider: Icon(Icons.chevron_right),
@@ -107,6 +113,7 @@ class ProductDetailView extends StatelessWidget {
                         by: productDetails.by,
                         price: productDetails.productPrice!,
                         description: productDetails.description,
+                        shortDesc: productDetails.shortDsec,
                         salePrice: productDetails.salePrice,
                         onSale: productDetails.onSale,
                         addorplus: (val) => model.addOrMiuns(val),
@@ -377,6 +384,7 @@ class ProductDetails extends StatefulWidget {
   final String? by;
   final double? price;
   final String? description;
+  final String? shortDesc;
   final double? salePrice;
   final int? onSale;
   final Function(int) addtoCart;
@@ -390,6 +398,7 @@ class ProductDetails extends StatefulWidget {
     this.salePrice,
     this.by,
     this.description,
+    this.shortDesc,
     this.name,
     this.price,
     this.onSale,
@@ -419,7 +428,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     String _name = widget.name ?? '';
     String _by = widget.by ?? '';
     double _price = widget.price ?? 0;
-    String _decsription = widget.description ?? dumpyProductDetail;
+    String _decsription = widget.description ?? '';
+    String _shortDesc = widget.shortDesc ?? '';
     double _salePrice = widget.salePrice ?? 0;
     int _onSale = widget.onSale ?? 0;
     int _quantity = widget.quantity ?? 0;
@@ -490,7 +500,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           height: SizeConfig.blockSizeVertical * 9,
           child: SingleChildScrollView(
             child: Text(
-              _decsription,
+              _shortDesc,
               textAlign: TextAlign.justify,
               style: TextStyle(fontSize: SizeConfig.blockSizeHorizontal * 1),
             ),

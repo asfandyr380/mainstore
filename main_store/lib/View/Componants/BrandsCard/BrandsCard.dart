@@ -26,7 +26,7 @@ class BrandsRow extends StatelessWidget {
                 child: BrandsCard(
                   onMobile: _onMobile,
                   image: brand.image,
-                  onTap: () => model.navigateToProductListing(),
+                  onTap: () => model.navigateToProductListing(brand.brandName!),
                 ),
               ),
           ],

@@ -16,10 +16,12 @@ class SideNavViewModel extends ChangeNotifier {
   }
 
   fetchCategorys() async {
-    var result = await _cate.getCategorys();
-    if (result is List<CategoryModel>) {
-      catelist = result;
-      notifyListeners();
-    }
+    Future.delayed(Duration(seconds: 7), () async {
+      var result = await _cate.getCategorys();
+      if (result is List<CategoryModel>) {
+        catelist = result;
+        notifyListeners();
+      }
+    });
   }
 }

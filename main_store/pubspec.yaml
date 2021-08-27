@@ -48,7 +48,8 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   bottom_sheet: ^1.0.1
   google_sign_in: ^5.0.7
-  
+  pin_code_fields: ^7.3.0
+  pinput: ^1.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

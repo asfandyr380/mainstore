@@ -33,14 +33,19 @@ class BannerServices {
   }
 
   Future getBrands() async {
-    Uri _BaseURL = Uri.parse('$baseUrl/brands/');
-
+    Uri _BaseURL = Uri.parse('$baseUrl/stores/');
+    List<BrandsModel> _stores = [];
     try {
       http.Response res = await http.get(_BaseURL);
       var decodedBody = jsonDecode(res.body);
       if (res.statusCode == 200 && decodedBody['success'] == 1) {
         List data = decodedBody['data'];
-        return data.map((e) => BrandsModel.fromMap(e)).toList();
+        for (var store in data) {
+          var img = "$baseUrl/stores/logo/${store['logo']}";
+          var s = BrandsModel.fromMap(store, img);
+          _stores.add(s);
+        }
+        return _stores;
       }
     } catch (e) {
       if (e is PlatformException) {

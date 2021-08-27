@@ -17,6 +17,16 @@ class StorageServices {
     return _preferences.get('id');
   }
 
+  Future saveCode(String code) async {
+    SharedPreferences _preferences = await SharedPreferences.getInstance();
+    return _preferences.setString('Code', code);
+  }
+
+  Future getCode() async {
+    SharedPreferences _preferences = await SharedPreferences.getInstance();
+    return _preferences.get('Code');
+  }
+
   Future deleteUser() async {
     SharedPreferences _preferences = await SharedPreferences.getInstance();
     _preferences.remove('user');

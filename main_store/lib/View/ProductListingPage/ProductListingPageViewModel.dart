@@ -29,11 +29,13 @@ class ProductListingPageViewModel extends ChangeNotifier {
   }
 
   fetchCategorys() async {
-    var result = await _cate.getCategorys();
-    if (result is List<CategoryModel>) {
-      catelist = result;
-      notifyListeners();
-    }
+    Future.delayed(Duration(seconds: 5), () async {
+      var result = await _cate.getCategorys();
+      if (result is List<CategoryModel>) {
+        catelist = result;
+        notifyListeners();
+      }
+    });
   }
 
   isBusy(bool state) {
@@ -72,8 +74,21 @@ class ProductListingPageViewModel extends ChangeNotifier {
   byCategory(List cate) async {
     category = cate as List<String>;
     notifyListeners();
-    print(category);
     fetchProductByFilter(category);
+  }
+
+  filterByStore(String name) async {
+    isBusy(true);
+    var result = await _filterProducts.byStore(name, currentPage);
+    if (result is List<ProductsModel>) {
+      productList = result;
+      byRange = false;
+      totalCount = _filterProducts.totalProducts;
+      notifyListeners();
+    } else {
+      print(result);
+    }
+    isBusy(false);
   }
 
   fetchProductByFilter(List<String>? cate) async {
@@ -84,7 +99,6 @@ class ProductListingPageViewModel extends ChangeNotifier {
       byRange = false;
       totalCount = _filterProducts.totalProducts;
       notifyListeners();
-      print('totalProducts $totalCount');
     } else {
       print(result);
     }
