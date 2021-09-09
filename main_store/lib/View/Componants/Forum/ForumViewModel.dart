@@ -113,6 +113,33 @@ class ForumViewModel extends ChangeNotifier {
     }
   }
 
+  facebookAuth(bool isSignIn) async {
+    var result = await _api.facebookLogin();
+
+    if (result != 0) {
+      if (isSignIn) {
+        if (result is Map<String, dynamic>) {
+          String _facebookEmail = result['email'];
+          var res = await _api.loginWithGoogle(_facebookEmail);
+          if (res is bool) {
+            _navigation.pushReplaceRoute(HomePage());
+          } else {
+            _alertDialog.showDialog(
+                title: 'Authentication Error',
+                description: res,
+                buttonTitle: "Close");
+          }
+        }
+      } else {
+        if (result is Map<String, dynamic>) {
+          usernameController.text = result['name']!;
+          emailController.text = result['email'];
+          notifyListeners();
+        }
+      }
+    }
+  }
+
   navigateToForgotPasswordPage() {
     _navigation.navigateTo(ForgotPassword);
   }

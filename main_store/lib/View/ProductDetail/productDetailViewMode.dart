@@ -107,7 +107,7 @@ class ProductDetailViewModel extends ChangeNotifier {
 
   fetchRelatedProduct(List<String> category) async {
     print(category);
-    var result = await _filterProducts.byCategory(category, 0);
+    var result = await _filterProducts.byCategory(category, category, 0);
     if (result is List<ProductsModel>) {
       relatedlist = result;
       notifyListeners();

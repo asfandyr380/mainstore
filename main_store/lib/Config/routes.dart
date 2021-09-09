@@ -12,3 +12,4 @@ const String SplashScreenView = "SplashScreen";
 const String Wishlist = 'Wish_list';
 const String SuccessPage = "Success";
 const String ForgotPassword = "ForgotPassword";
+const String Dashboard = "Dashboard";

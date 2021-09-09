@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Models/categoryModel.dart';
@@ -7,7 +6,8 @@ import 'package:main_store/Models/categoryModel.dart';
 class CategoryServices {
   Future getCategorys() async {
     List<SubCategory> superCates = [];
-    List<String> subCate = [];
+    List<SubSubCategory> subCate = [];
+    List<String> sub = [];
     List<CategoryModel> mainCates = [];
     Uri _url = Uri.parse('$baseUrl/categories/');
     http.Response res = await http.get(_url);
@@ -20,11 +20,14 @@ class CategoryServices {
         for (var sCate in superCate) {
           List s = sCate['SubCate'];
           for (var name in s) {
-            subCate.add(name['name']);
+            var subsub = SubSubCategory.fromMap(name['name']);
+            subCate.add(subsub);
+            sub.add(name['name']);
           }
-          var sC = SubCategory.fromMap(sCate, subCate);
+          var sC = SubCategory.fromMap(sCate, subCate, sub);
           superCates.add(sC);
           subCate = [];
+          sub = [];
         }
         var mainCate = CategoryModel.fromMap(cate, superCates);
         mainCates.add(mainCate);

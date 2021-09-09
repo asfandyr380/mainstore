@@ -10,10 +10,23 @@ class CategoryModel {
 
 class SubCategory {
   String? cateName = '';
+  bool? isSelected = false;
   List<String>? subCate = [];
-  SubCategory({this.cateName, this.subCate});
+  List<SubSubCategory>? sub = [];
 
-  SubCategory.fromMap(Map map, List<String>? subCate)
+  SubCategory.fromMap(Map map, List<SubSubCategory>? sub, List<String>? subCate)
       : cateName = map['Name'],
-        subCate = subCate ?? [];
+        sub = sub ?? [],
+        subCate = subCate ?? [],
+        isSelected = false;
+}
+
+class SubSubCategory {
+  String? cateName = '';
+  bool? isSelected = false;
+
+  SubSubCategory.fromMap(
+    String map,
+  )   : cateName = map,
+        isSelected = false;
 }

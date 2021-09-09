@@ -12,6 +12,8 @@ class NearbyProduct {
   WishServices _wish = locator<WishServices>();
   StorageServices _services = locator<StorageServices>();
   int totalProducts = 0;
+  int totalPage = 0;
+  int currentProduct = 0;
   Future getProducts(int page) async {
     List<ProductsModel> wishProducts = [];
     var _userIp = await Ipify.ipv4();
@@ -26,10 +28,12 @@ class NearbyProduct {
       wishProducts = await _wish.getWishlist(ip);
     }
     List<ProductsModel> products = [];
-    Uri _BaseURL = Uri.parse('$baseUrl/products/$page');
+    Uri _BaseURL = Uri.parse('$baseUrl/products/$page/15');
     http.Response res = await http.get(_BaseURL);
     var decodedBody = jsonDecode(res.body);
     totalProducts = decodedBody['TotalProducts'];
+    totalPage = decodedBody['TotalPage'];
+    currentProduct = decodedBody['CurrentProduct'];
     for (var body in decodedBody['Products']) {
       List<String> images = [];
       List<String> categories = [];

@@ -37,15 +37,14 @@ class ProductListingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // List<String> _cate = cate ?? [];
     SizeConfig().init(context);
     return ViewModelBuilder<ProductListingPageViewModel>.reactive(
       viewModelBuilder: () => ProductListingPageViewModel(),
       onModelReady: (model) {
         if (cate is List<String>) {
-          model.fetchProductByFilter(cate);
+          model.fetchProductByFilter([], cate);
         } else if (cate == null) {
-          model.fetchProductByFilter([]);
+          model.fetchProductByFilter([], []);
         } else {
           model.filterByStore(cate);
         }
@@ -87,7 +86,7 @@ class ProductListingPage extends StatelessWidget {
                       Container(
                         child: Products(
                           currentPage: model.currentPage,
-                          totalCount: model.totalCount,
+                          totalCount: model.totalPage,
                           isBusy: model.isLoading,
                           details: model.byRange
                               ? model.filterlist
@@ -103,10 +102,11 @@ class ProductListingPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < model.totalPage; i++)
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         child: Pagination(
+                          offset: i == 0 ? 0 : model.currentPage + 16,
                           textColor: model.currentPage == i
                               ? Colors.white
                               : Colors.black,
@@ -114,7 +114,8 @@ class ProductListingPage extends StatelessWidget {
                               ? accentColor
                               : footerColor,
                           count: i,
-                          selectPage: (page) => model.changePage(page),
+                          selectPage: (page, count) =>
+                              model.changePage(page, count),
                         ),
                       ),
                   ],
@@ -137,15 +138,17 @@ class ProductListingPage extends StatelessWidget {
 
 class Pagination extends StatelessWidget {
   final int? count;
-  final Function(int)? selectPage;
+  final Function(int, int)? selectPage;
   final Color? color;
   final Color? textColor;
-  Pagination({this.count, this.selectPage, this.color, this.textColor});
+  final int? offset;
+  Pagination(
+      {this.count, this.selectPage, this.color, this.textColor, this.offset});
   @override
   Widget build(BuildContext context) {
     int _count = count ?? 0;
     return GestureDetector(
-      onTap: () => selectPage!(_count),
+      onTap: () => selectPage!(offset!, _count),
       child: Container(
         alignment: Alignment.center,
         height: SizeConfig.blockSizeVertical * 3,
@@ -336,7 +339,7 @@ class Banner extends StatelessWidget {
 class FilterMenu extends StatelessWidget {
   final SfRangeValues? value;
   final Function(SfRangeValues)? onSliderChange;
-  final Function(List)? onTap;
+  final Function(Map)? onTap;
   final bool? state;
   const FilterMenu({this.value, this.onSliderChange, this.onTap, this.state});
 
@@ -419,7 +422,7 @@ class FilterMenu extends StatelessWidget {
 }
 
 class CategoryFilterMenu extends StatefulWidget {
-  final Function(List)? onSelect;
+  final Function(Map)? onSelect;
 
   CategoryFilterMenu({this.onSelect});
 
@@ -428,17 +431,10 @@ class CategoryFilterMenu extends StatefulWidget {
 }
 
 class _CategoryFilterMenuState extends State<CategoryFilterMenu> {
-  GroupController multipleCheckController = GroupController(
-    isMultipleSelection: true,
-  );
+  bool val = false;
 
-  @override
-  void initState() {
-    super.initState();
-    multipleCheckController.listen((data) {
-      print(data);
-    });
-  }
+  List superC = [];
+  List subC = [];
 
   @override
   Widget build(BuildContext context) {
@@ -455,20 +451,87 @@ class _CategoryFilterMenuState extends State<CategoryFilterMenu> {
                 iconColor: accentColor,
                 children: [
                   for (var sub in c.superCate)
-                    SimpleGroupedCheckbox<String>(
-                      controller: multipleCheckController,
-                      itemsTitle: sub.subCate!,
-                      values: sub.subCate!,
-                      activeColor: accentColor,
-                      groupTitle: sub.cateName,
-                      checkFirstElement: false,
-                      helperGroupTitle: true,
-                      onItemSelected: (data) {
-                        // print(data);
-                        widget.onSelect!(data);
-                      },
-                      isExpandableTitle: sub.subCate!.isEmpty ? false : true,
-                    ),
+                    sub.sub!.isEmpty
+                        ? ListTile(
+                            leading: Checkbox(
+                              value: sub.isSelected,
+                              activeColor: accentColor,
+                              onChanged: (_) {
+                                setState(() {
+                                  sub.isSelected = _;
+                                  if (superC.contains(sub.cateName)) {
+                                    superC.remove(sub.cateName);
+                                  } else {
+                                    superC.add(sub.cateName);
+                                  }
+                                  var map = {"Super": superC, "Sub": subC};
+                                  widget.onSelect!(map);
+                                });
+                              },
+                            ),
+                            title: Text(sub.cateName!),
+                          )
+                        : ExpansionTile(
+                            leading: Checkbox(
+                              value: sub.isSelected,
+                              activeColor: accentColor,
+                              onChanged: (_) {
+                                setState(() {
+                                  sub.isSelected = _;
+                                  sub.sub!.forEach((element) {
+                                    element.isSelected = _;
+                                    if (subC.contains(element.cateName)) {
+                                      subC.remove(element.cateName);
+                                    } else {
+                                      subC.add(element.cateName);
+                                    }
+                                  });
+                                  if (superC.contains(sub.cateName)) {
+                                    superC.remove(sub.cateName);
+                                  } else {
+                                    superC.add(sub.cateName);
+                                  }
+                                  var map = {"Super": superC, "Sub": subC};
+                                  widget.onSelect!(map);
+                                });
+                              },
+                            ),
+                            title: Text(sub.cateName!),
+                            textColor: accentColor,
+                            iconColor: accentColor,
+                            children: [
+                              for (var s in sub.sub!)
+                                Container(
+                                  padding: EdgeInsets.only(
+                                      left: SizeConfig.blockSizeHorizontal * 1),
+                                  child: ListTile(
+                                    leading: Checkbox(
+                                      value: s.isSelected,
+                                      activeColor: accentColor,
+                                      onChanged: (_) {
+                                        setState(() {
+                                          s.isSelected = _;
+                                          var check = sub.sub!.every(
+                                              (element) => element.isSelected!);
+                                          sub.isSelected = check;
+                                          if (subC.contains(s.cateName)) {
+                                            subC.remove(s.cateName);
+                                          } else {
+                                            subC.add(s.cateName);
+                                          }
+                                          var map = {
+                                            "Super": superC,
+                                            "Sub": subC
+                                          };
+                                          widget.onSelect!(map);
+                                        });
+                                      },
+                                    ),
+                                    title: Text(s.cateName!),
+                                  ),
+                                )
+                            ],
+                          ),
                 ],
               ),
           ],
@@ -486,7 +549,7 @@ class ListingPageMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProductListingPageViewModel>.reactive(
       viewModelBuilder: () => ProductListingPageViewModel(),
-      onModelReady: (model) => model.fetchProductByFilter(cate),
+      onModelReady: (model) => model.fetchProductByFilter(cate, cate),
       builder: (ctx, model, child) => Scaffold(
         appBar: mobileAppBar(scaffoldKey),
         body: Container(

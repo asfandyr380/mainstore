@@ -65,6 +65,18 @@ class HeaderViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  selectOption(String val) {
+    if (val == "1") {
+      navigateToDashboard();
+    } else if (val == "2") {
+      signoutUser();
+    }
+  }
+
+  navigateToDashboard() {
+    _navigation.navigateTo(Dashboard);
+  }
+
   // Signout Current User
   signoutUser() async {
     await _services.deleteUser().then(

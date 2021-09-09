@@ -87,6 +87,7 @@ class Forum extends StatelessWidget {
                         MouseRegion(
                           cursor: SystemMouseCursors.click,
                           child: GestureDetector(
+                            onTap: () => model.facebookAuth(_isSignIn),
                             child: Image.asset(
                               'assets/images/facebook.png',
                               height: SizeConfig.blockSizeVertical * 5,

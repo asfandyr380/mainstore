@@ -11,7 +11,6 @@ class SideNavViewModel extends ChangeNotifier {
 
   Navigation _navigation = locator<Navigation>();
   navigateToProductlisting(String cate) async {
-    print(cate);
     _navigation.navigateTo(ProductListing, arguments: [cate]);
   }
 

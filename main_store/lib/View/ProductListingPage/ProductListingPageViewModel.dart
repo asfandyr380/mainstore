@@ -16,26 +16,41 @@ class ProductListingPageViewModel extends ChangeNotifier {
   bool isLoading = false;
   bool byRange = false;
   int totalCount = 0;
+  int totalPage = 0;
   int currentPage = 0;
-
+  int currentProductOffset = 0;
   CategoryServices _cate = locator<CategoryServices>();
   List<CategoryModel> catelist = [];
 
-  changePage(int page) {
-    currentPage = page;
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_disposed) {
+      super.notifyListeners();
+    }
+  }
+
+  changePage(int page, count) {
+    currentPage = count;
+    currentProductOffset = page;
     notifyListeners();
     print(page);
-    fetchProductByFilter([]);
+    fetchProductByFilter([], []);
   }
 
   fetchCategorys() async {
-    Future.delayed(Duration(seconds: 5), () async {
-      var result = await _cate.getCategorys();
-      if (result is List<CategoryModel>) {
-        catelist = result;
-        notifyListeners();
-      }
-    });
+    var result = await _cate.getCategorys();
+    if (result is List<CategoryModel>) {
+      catelist = result;
+      notifyListeners();
+    }
   }
 
   isBusy(bool state) {
@@ -71,10 +86,11 @@ class ProductListingPageViewModel extends ChangeNotifier {
     }
   }
 
-  byCategory(List cate) async {
-    category = cate as List<String>;
-    notifyListeners();
-    fetchProductByFilter(category);
+  byCategory(Map cate) async {
+    print(cate);
+    List superCate = cate['Super'];
+    List subCate = cate['Sub'];
+    fetchProductByFilter(superCate, subCate);
   }
 
   filterByStore(String name) async {
@@ -91,13 +107,16 @@ class ProductListingPageViewModel extends ChangeNotifier {
     isBusy(false);
   }
 
-  fetchProductByFilter(List<String>? cate) async {
+  fetchProductByFilter(List? cate, List? sub) async {
     isBusy(true);
-    var result = await _filterProducts.byCategory(cate!, currentPage);
+    var result =
+        await _filterProducts.byCategory(cate!, sub!, currentProductOffset);
     if (result is List<ProductsModel>) {
       productList = result;
       byRange = false;
       totalCount = _filterProducts.totalProducts;
+      totalPage = _filterProducts.totalPage;
+      currentProductOffset = _filterProducts.currentProduct;
       notifyListeners();
     } else {
       print(result);

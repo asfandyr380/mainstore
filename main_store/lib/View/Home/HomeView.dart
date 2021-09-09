@@ -127,12 +127,10 @@ class Home extends StatelessWidget {
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
       onModelReady: (model) {
-        Future.delayed(Duration(seconds: 2), () {
-          model.fetchOnSaleProducts();
-        });
-        Future.delayed(Duration(seconds: 4), () {
-          model.fetchTopSellingProducts();
-        });
+        model.fetchOnSaleProducts();
+
+        model.fetchTopSellingProducts();
+
         model.fetchNearbyProducts();
         model.getReviews();
       },
@@ -223,7 +221,7 @@ class Home extends StatelessWidget {
                   isLoading: model.isNearbyloading,
                 ),
               ),
-              model.nearbyProducts.length == model.totalProducts
+              model.nearbyProducts.length >= model.totalProducts
                   ? Container()
                   : Container(
                       padding: EdgeInsets.symmetric(
@@ -284,41 +282,47 @@ class Home extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(
-                    vertical: SizeConfig.blockSizeVertical * 2),
-                child: Column(
+                padding:
+                    EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      child: Text(
-                        'Download App',
-                        style: TextStyle(
-                          fontSize: SizeConfig.blockSizeHorizontal * 2,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    Column(
                       children: [
-                        Container(
-                          child: Image.asset(
-                            'assets/images/47q2YGt.png',
-                            width: SizeConfig.blockSizeHorizontal * 20,
-                            height: SizeConfig.blockSizeVertical * 18,
-                          ),
+                        Text(
+                          'Download Our App',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: SizeConfig.blockSizeHorizontal * 2),
                         ),
-                        SizedBox(
-                          width: SizeConfig.blockSizeHorizontal * 4,
+                        SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                        Image.asset(
+                          'assets/images/nkZP7fe.png',
+                          fit: BoxFit.contain,
+                          height: SizeConfig.blockSizeVertical * 20,
+                          width: SizeConfig.blockSizeHorizontal * 20,
                         ),
-                        Container(
-                          child: Image.asset(
-                            'assets/images/nkZP7fe.png',
-                            width: SizeConfig.blockSizeHorizontal * 20,
-                            height: SizeConfig.blockSizeVertical * 18,
-                          ),
+                        Image.asset(
+                          'assets/images/47q2YGt.png',
+                          height: SizeConfig.blockSizeVertical * 20,
+                          width: SizeConfig.blockSizeHorizontal * 20,
                         ),
                       ],
                     ),
+                    Container(
+                      height: SizeConfig.blockSizeVertical * 30,
+                      width: SizeConfig.blockSizeHorizontal * 0.2,
+                      color: Colors.grey.withOpacity(0.5),
+                    ),
+                    Container(
+                        padding: EdgeInsets.only(
+                            right: SizeConfig.blockSizeHorizontal * 10),
+                        child: Image.asset(
+                          'assets/images/Iphone.png',
+                          fit: BoxFit.cover,
+                          height: SizeConfig.blockSizeVertical * 70,
+                          width: SizeConfig.blockSizeHorizontal * 30,
+                        )),
                   ],
                 ),
               ),

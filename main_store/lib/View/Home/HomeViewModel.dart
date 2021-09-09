@@ -28,9 +28,9 @@ class HomeViewModel extends ChangeNotifier {
   bool isButtonLoading = false;
   int topSaleCurrentPage = 0;
   int onSaleCurrentPage = 0;
-  int nearbyCurrentPage = 0;
   int totalProducts = 0;
-
+  int totalPage = 0;
+  int currentProductOffset = 0;
   bool _disposed = false;
 
   @override
@@ -65,11 +65,9 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   loadMore() async {
-    // print("Before ==> $isButtonLoading");
-    nearbyCurrentPage += 1;
+    currentProductOffset += 15;
     setBusy(true);
     fetchNearbyProducts();
-    // print("After ==> $isButtonLoading");
     setBusy(false);
   }
 
@@ -83,15 +81,15 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   fetchNearbyProducts() async {
-    var result = await _products.getProducts(nearbyCurrentPage);
+    var result = await _products.getProducts(currentProductOffset);
     if (result is List<ProductsModel>) {
       for (var p in result) {
         nearbyProducts.add(p);
       }
       totalProducts = _products.totalProducts;
+      totalPage = _products.totalPage;
+      currentProductOffset = _products.currentProduct;
       notifyListeners();
-      // print('TotalProducts $totalProducts');
-      // print('CurrentProducts ${nearbyProducts.length}');
     } else {
       print(result);
     }
@@ -105,7 +103,6 @@ class HomeViewModel extends ChangeNotifier {
         topSellingProducts.add(product);
       }
       notifyListeners();
-      // print('Top Selling ==> $topSellingProducts');
     } else {
       print(result);
     }

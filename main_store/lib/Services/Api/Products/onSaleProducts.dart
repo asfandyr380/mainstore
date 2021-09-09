@@ -25,7 +25,7 @@ class OnSaleProducts {
       wishProducts = await _wish.getWishlist(ip);
     }
     List<ProductsModel> products = [];
-    Uri _BaseURL = Uri.parse('$baseUrl/products/onSale/0');
+    Uri _BaseURL = Uri.parse('$baseUrl/products/onSale');
     http.Response res = await http.get(_BaseURL);
     var decodedBody = jsonDecode(res.body);
     totalProducts = decodedBody['TotalProducts'];

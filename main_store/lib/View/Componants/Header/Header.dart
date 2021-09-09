@@ -59,9 +59,9 @@ class Header extends StatelessWidget {
                       goToWishList: () => model.navigateToWishlist(),
                       userLogedIn: model.userLogedIn,
                       isSignInPage: _isSignInPage,
-                      onTap: () {
+                      onTap: (val) {
                         if (model.userLogedIn) {
-                          model.signoutUser();
+                          model.selectOption(val);
                         } else {
                           model.navigateToLogInPage();
                         }
@@ -126,7 +126,7 @@ class HomePageHeader extends StatelessWidget {
 
 class CartFavandSignupLoginRow extends StatelessWidget {
   final bool? isSignInPage;
-  final Function onTap;
+  final Function(String) onTap;
   final bool? userLogedIn;
   final Function? onCartPressed;
   final int? cartCount;
@@ -150,24 +150,38 @@ class CartFavandSignupLoginRow extends StatelessWidget {
         children: [
           MouseRegion(
             cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () => onTap(),
-              child: Container(
+            child: Container(
                 child: !_userLogedIn
-                    ? Text(
-                        'LOGIN',
-                        style: TextStyle(
-                            fontSize: SizeConfig.blockSizeHorizontal * 1),
-                      )
-                    : Text(
-                        'SIGN OUT',
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: SizeConfig.blockSizeHorizontal * 1,
+                    ? GestureDetector(
+                        onTap: () => onTap(''),
+                        child: Text(
+                          'LOGIN',
+                          style: TextStyle(
+                              fontSize: SizeConfig.blockSizeHorizontal * 1),
                         ),
-                      ),
-              ),
-            ),
+                      )
+                    : PopupMenuButton<String>(
+                        icon: CircleAvatar(
+                          backgroundColor: accentColor,
+                          child: Icon(Icons.person, color: Colors.white),
+                        ),
+                        onSelected: (_) => onTap(_),
+                        itemBuilder: (context) {
+                          return [
+                            PopupMenuItem<String>(
+                              value: "1",
+                              child: Text('Dashboard'),
+                            ),
+                            PopupMenuItem<String>(
+                              value: "2",
+                              child: Text(
+                                'Sign Out',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ];
+                        },
+                      )),
           ),
           SizedBox(
             width: SizeConfig.blockSizeHorizontal * 0.8,
