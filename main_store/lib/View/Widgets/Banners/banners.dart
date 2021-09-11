@@ -111,7 +111,7 @@ class BanMobile extends StatelessWidget {
             onTap: () => model.navigateToProductlisting(_cate),
             child: Container(
               height: SizeConfig.blockSizeVertical * 10,
-              width: SizeConfig.blockSizeHorizontal * 20,
+              width: SizeConfig.blockSizeHorizontal * 40,
               decoration: BoxDecoration(
                 color: Colors.grey,
                 image: DecorationImage(
@@ -123,8 +123,8 @@ class BanMobile extends StatelessWidget {
           ),
           SizedBox(height: SizeConfig.blockSizeVertical * 1),
           Container(
-            width: SizeConfig.blockSizeHorizontal * 15,
-            height: SizeConfig.blockSizeVertical * 5,
+            width: SizeConfig.blockSizeHorizontal * 20,
+            // height: SizeConfig.blockSizeVertical * 5,
             child: Text(
               _bannerText,
               textAlign: TextAlign.center,

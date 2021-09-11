@@ -25,9 +25,11 @@ class CategoryBannerMobile extends StatelessWidget {
     return ViewModelBuilder<BannersViewModel>.reactive(
       viewModelBuilder: () => BannersViewModel(),
       onModelReady: (model) => model.getBanners(),
-      builder: (context, model, child) => Container(
+      builder: (context, model, child) => SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             for (int i = 0; i < 4; i++)
               Container(

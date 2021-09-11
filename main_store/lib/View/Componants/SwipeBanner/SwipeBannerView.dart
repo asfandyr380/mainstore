@@ -133,7 +133,7 @@ class SwipeBannerText extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.only(
           top: _onMobile
-              ? SizeConfig.blockSizeVertical * 5
+              ? SizeConfig.blockSizeVertical * 2
               : SizeConfig.blockSizeVertical * 10,
           left: SizeConfig.blockSizeHorizontal * 3,
         ),
@@ -146,16 +146,14 @@ class SwipeBannerText extends StatelessWidget {
                 _subText,
                 style: TextStyle(
                   fontSize: _onMobile
-                      ? SizeConfig.blockSizeHorizontal * 2
+                      ? SizeConfig.blockSizeHorizontal * 3
                       : SizeConfig.blockSizeHorizontal * 1,
                 ),
               ),
             ),
             // Main Body Text
             Container(
-              height: _onMobile
-                  ? SizeConfig.blockSizeVertical * 7
-                  : SizeConfig.blockSizeVertical * 13,
+              height: _onMobile ? null : SizeConfig.blockSizeVertical * 13,
               width: _onMobile
                   ? SizeConfig.blockSizeHorizontal * 35
                   : SizeConfig.blockSizeHorizontal * 20,
@@ -183,21 +181,23 @@ class SwipeBannerText extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   width: _onMobile
-                      ? SizeConfig.blockSizeHorizontal * 13
+                      ? SizeConfig.blockSizeHorizontal * 30
                       : SizeConfig.blockSizeHorizontal * 12,
                   height: _onMobile
-                      ? SizeConfig.blockSizeVertical * 2.2
+                      ? SizeConfig.blockSizeVertical * 4
                       : SizeConfig.blockSizeVertical * 5,
                   decoration: BoxDecoration(
                     color: accentColor,
                   ),
-                  child: Text(
-                    'Explore Products',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: _onMobile
-                          ? SizeConfig.blockSizeHorizontal * 1.5
-                          : SizeConfig.blockSizeHorizontal * 1,
+                  child: Center(
+                    child: Text(
+                      'Explore Products',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: _onMobile
+                            ? SizeConfig.blockSizeHorizontal * 3.5
+                            : SizeConfig.blockSizeHorizontal * 1,
+                      ),
                     ),
                   ),
                 ),

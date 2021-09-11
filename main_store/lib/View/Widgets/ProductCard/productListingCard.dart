@@ -26,7 +26,7 @@ class _ProductCardMobileState extends State<ProductCardMobile> {
     String _productName = widget.details!.name ?? '';
     int _onSale = widget.details!.onSale ?? 0;
     double _salePrice = widget.details!.salePrice ?? 0;
-    double _price = widget.details!.productPrice ?? 0;
+    double _productPrice = widget.details!.productPrice ?? 0;
     int _productId = widget.details!.productId;
     bool _isGrid = widget.isGrid ?? false;
     bool _isListingPage = widget.isListingPage ?? true;
@@ -82,15 +82,14 @@ class _ProductCardMobileState extends State<ProductCardMobile> {
                             model.onWishlist
                                 ? FontAwesomeIcons.solidHeart
                                 : FontAwesomeIcons.heart,
-                            size: SizeConfig.blockSizeHorizontal * 3.5,
+                            size: SizeConfig.blockSizeHorizontal * 5,
                           ),
                         ),
                       ),
                       _onSale == 1
                           ? Container(
                               alignment: Alignment.center,
-                              width: SizeConfig.blockSizeHorizontal * 5,
-                              height: SizeConfig.blockSizeVertical * 5,
+                              padding: EdgeInsets.all(10),
                               margin: EdgeInsets.only(
                                   left: SizeConfig.blockSizeHorizontal * 18),
                               decoration: BoxDecoration(
@@ -102,8 +101,7 @@ class _ProductCardMobileState extends State<ProductCardMobile> {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize:
-                                      SizeConfig.blockSizeHorizontal * 1.5,
+                                  fontSize: SizeConfig.blockSizeHorizontal * 3,
                                 ),
                               ),
                             )
@@ -132,40 +130,18 @@ class _ProductCardMobileState extends State<ProductCardMobile> {
                 child: Text(
                   _categoryName,
                   style: TextStyle(
-                    fontSize: SizeConfig.blockSizeHorizontal * 2,
+                    fontSize: SizeConfig.blockSizeHorizontal * 3,
                   ),
                 ),
               ),
               // Price and Sale Price
               Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _onSale == 1
-                        ? Text(
-                            '£$_salePrice',
-                            style: TextStyle(
-                              fontSize: _isGrid
-                                  ? SizeConfig.blockSizeHorizontal * 3
-                                  : SizeConfig.blockSizeHorizontal * 3.5,
-                            ),
-                          )
-                        : Container(),
-                    SizedBox(
-                      width: SizeConfig.blockSizeHorizontal * 0.5,
-                    ),
-                    Text(
-                      '£$_price',
-                      style: TextStyle(
-                        color: accentColor,
-                        decoration:
-                            _onSale == 1 ? TextDecoration.lineThrough : null,
-                        fontSize: _isGrid
-                            ? SizeConfig.blockSizeHorizontal * 2
-                            : SizeConfig.blockSizeHorizontal * 2.5,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  _onSale == 1 ? '£$_salePrice' : '£$_productPrice',
+                  style: TextStyle(
+                    color: accentColor,
+                    fontSize: SizeConfig.blockSizeHorizontal * 3.5,
+                  ),
                 ),
               ),
             ],

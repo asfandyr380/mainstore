@@ -41,41 +41,14 @@ class ProductListingRowMobile extends StatelessWidget {
                     Text(
                       listingName!,
                       style: TextStyle(
-                        fontSize: SizeConfig.blockSizeHorizontal * 4,
+                        fontSize: SizeConfig.blockSizeHorizontal * 6,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Container(
-                      height: SizeConfig.blockSizeVertical * 0.2,
-                      width: SizeConfig.blockSizeHorizontal * 7,
+                      height: SizeConfig.blockSizeVertical * 0.5,
+                      width: SizeConfig.blockSizeHorizontal * 15,
                       color: accentColor,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding:
-                    EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 4),
-                child: Row(
-                  children: [
-                    ProductListNextArrowButton(
-                      onTap: () => model.scrollBack(
-                          _scrollController, productDetails!.length),
-                      icon: Icon(
-                        FontAwesomeIcons.arrowLeft,
-                        size: SizeConfig.blockSizeHorizontal * 3,
-                      ),
-                    ),
-                    SizedBox(width: SizeConfig.blockSizeHorizontal * 0.5),
-                    ProductListNextArrowButton(
-                      onTap: () => productDetails!.length < 5
-                          ? null
-                          : model.scrollNext(
-                              _scrollController, productDetails!.length),
-                      icon: Icon(
-                        FontAwesomeIcons.arrowRight,
-                        size: SizeConfig.blockSizeHorizontal * 3,
-                      ),
                     ),
                   ],
                 ),

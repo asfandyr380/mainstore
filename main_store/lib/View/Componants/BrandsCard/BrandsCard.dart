@@ -52,10 +52,10 @@ class BrandsCard extends StatelessWidget {
         onTap: () => onTap!(),
         child: Container(
           height: onMobile!
-              ? SizeConfig.blockSizeVertical * 4
+              ? SizeConfig.blockSizeVertical * 6
               : SizeConfig.blockSizeVertical * 8,
           width: onMobile!
-              ? SizeConfig.blockSizeHorizontal * 17
+              ? SizeConfig.blockSizeHorizontal * 30
               : SizeConfig.blockSizeHorizontal * 10,
           decoration: BoxDecoration(
             color: Colors.white,

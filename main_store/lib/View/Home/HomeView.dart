@@ -81,7 +81,7 @@ class HomeMobile extends StatelessWidget {
                 child: Text('What People Says about Us',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: SizeConfig.blockSizeHorizontal * 3)),
+                        fontSize: SizeConfig.blockSizeHorizontal * 5)),
               ),
               SizedBox(
                 height: SizeConfig.blockSizeVertical * 1,
@@ -347,12 +347,7 @@ class ReviewsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     bool _onMobile = onMobile ?? false;
     return Container(
-      height: _onMobile
-          ? SizeConfig.blockSizeVertical * 20
-          : SizeConfig.blockSizeVertical * 25,
-      width: _onMobile
-          ? SizeConfig.blockSizeHorizontal * 65
-          : SizeConfig.blockSizeHorizontal * 35,
+      padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -367,10 +362,12 @@ class ReviewsCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.symmetric(
-                horizontal: SizeConfig.blockSizeHorizontal * 2),
+            width: _onMobile
+                ? SizeConfig.blockSizeHorizontal * 65
+                : SizeConfig.blockSizeHorizontal * 30,
             child: Text(
               details!.message!,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: _onMobile
                     ? SizeConfig.blockSizeHorizontal * 3
@@ -411,7 +408,6 @@ class RatingStar extends StatelessWidget {
   Widget build(BuildContext context) {
     int _rating = rating ?? 1;
     return Container(
-      width: onMobile! ? SizeConfig.blockSizeHorizontal * 60 : null,
       child: RatingBar.builder(
         ignoreGestures: true,
         initialRating: _rating.toDouble(),
