@@ -48,6 +48,7 @@ class UserDashboard extends StatelessWidget {
                               height: SizeConfig.blockSizeVertical * 60,
                               child: Stack(
                                 children: [
+                                  UserSideBar(),
                                   Positioned(
                                     left: SizeConfig.blockSizeHorizontal * 1.6,
                                     child: Container(
@@ -56,7 +57,7 @@ class UserDashboard extends StatelessWidget {
                                           SizeConfig.blockSizeHorizontal * 15,
                                       height: SizeConfig.blockSizeVertical * 15,
                                       decoration: BoxDecoration(
-                                        color: Colors.white70,
+                                        color: Colors.white,
                                         shape: BoxShape.circle,
                                         border: Border.all(width: 0.5),
                                       ),
@@ -68,7 +69,6 @@ class UserDashboard extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  UserSideBar(),
                                 ],
                               ),
                             ),
@@ -137,8 +137,8 @@ class MyPainter extends CustomPainter {
     final double rheight = 30;
     path.moveTo(startPoint, rheight);
     path.moveTo(0, rheight);
-    path.lineTo(SizeConfig.blockSizeHorizontal * 5.30, rheight);
-    path.moveTo(startPoint + 80.5, rheight);
+    path.lineTo(SizeConfig.blockSizeHorizontal * 10.30, rheight);
+    path.moveTo(startPoint + 1, rheight);
     path.lineTo(size.width, rheight);
     path.lineTo(size.width, size.height);
     path.moveTo(0, rheight);
