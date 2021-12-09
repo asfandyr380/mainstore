@@ -1,9 +1,14 @@
 import 'dart:convert';
+import 'package:dart_ipify/dart_ipify.dart';
 import 'package:http/http.dart' as http;
+import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/Config/consts.dart';
+import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 
 class WishServices {
+  StorageServices _services = locator<StorageServices>();
+
   Future WishProductCount(int userId) async {
     Uri wishUrl = Uri.parse('$baseUrl/wishlist/count/$userId');
     http.Response res = await http.get(wishUrl);
@@ -68,5 +73,21 @@ class WishServices {
     } else {
       return false;
     }
+  }
+
+  Future<List<ProductsModel>> userFavouriteProducts() async {
+    List<ProductsModel> wishProducts = [];
+    String _userIp = await Ipify.ipv4();
+    bool user = await _services.getUser();
+    String i = _userIp.replaceAll('.', '');
+    String newI = i.substring(i.length - 5);
+    int ip = int.parse(newI);
+    if (user) {
+      int userId = await _services.getUserId();
+      wishProducts = await getWishlist(userId);
+    } else {
+      wishProducts = await getWishlist(ip);
+    }
+    return wishProducts;
   }
 }

@@ -1,65 +1,68 @@
 import 'dart:convert';
-
-import 'package:dart_ipify/dart_ipify.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:main_store/Services/Api/Wishlist/wishlist_Services.dart';
-import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 
 class NearbyProduct {
   WishServices _wish = locator<WishServices>();
-  StorageServices _services = locator<StorageServices>();
   int totalProducts = 0;
   int totalPage = 0;
   int currentProduct = 0;
   Future getProducts(int page) async {
-    List<ProductsModel> wishProducts = [];
-    var _userIp = await Ipify.ipv4();
-    var user = await _services.getUser();
-    String i = _userIp.replaceAll('.', '');
-    String newI = i.substring(i.length - 5);
-    int ip = int.parse(newI);
-    if (user) {
-      int userId = await _services.getUserId();
-      wishProducts = await _wish.getWishlist(userId);
-    } else {
-      wishProducts = await _wish.getWishlist(ip);
-    }
+    var wishProducts = await _wish.userFavouriteProducts();
+
     List<ProductsModel> products = [];
-    Uri _BaseURL = Uri.parse('$baseUrl/products/$page/15');
-    http.Response res = await http.get(_BaseURL);
+
+    // Http Request
+    Uri _baseURL = Uri.parse('$baseUrl/products/$page/15');
+    http.Response res = await http.get(_baseURL);
     var decodedBody = jsonDecode(res.body);
+
     totalProducts = decodedBody['TotalProducts'];
     totalPage = decodedBody['TotalPage'];
     currentProduct = decodedBody['CurrentProduct'];
+
+    // Computing Data
     for (var body in decodedBody['Products']) {
       List<String> images = [];
       List<String> categories = [];
       List<AttributeModel> attributes = [];
+
       List attribute = body['Attribute'];
 
+      // Add Fist Image to Images
       String imgPath = body['Product']['image'];
-      String image = '$baseUrl/products/getimage/$imgPath';
+      String image = '$baseUrl_Image/$imgPath';
       images.add(image);
+
+      // Add Other 3 Images if available
       for (int i = 2; i <= 4; i++) {
         String imgPath = body['Product']['image$i'];
-        String image = '$baseUrl/products/getimage/$imgPath';
-        images.add(image);
+        if (imgPath != '') {
+          String image = '$baseUrl_Image/$imgPath';
+          images.add(image);
+        }
       }
 
-      for (var att in attribute) {
-        String imgPath = att['image'];
-        String img = '$baseUrl/products/getimg/$imgPath';
-        images.add(img);
-        var attribute = AttributeModel.fromJson(att);
-        attributes.add(attribute);
+      // Add Attributes if Available
+      if (attribute.isNotEmpty) {
+        for (var att in attribute) {
+          imgPath = att['image'];
+          String img = '$baseUrl_Image/$imgPath';
+          images.add(img);
+          var attribute = AttributeModel.fromJson(att);
+          attributes.add(attribute);
+        }
       }
 
+      // Add Available Categories Attached with Product
       categories.add(body['Product']['main_cate']);
       categories.add(body['Product']['cate_name']);
       categories.add(body['Product']['subCate_name'] ?? '');
+
+      //  Check for if Product is in Wishlist of User
       if (wishProducts.isNotEmpty) {
         var product;
         for (var list in wishProducts) {
@@ -78,6 +81,8 @@ class NearbyProduct {
         products.add(product);
       }
     }
+
+    // Sorting Products From Low to High
     products.sort((a, b) {
       if (b.onWishlist!)
         return 1;
@@ -87,6 +92,7 @@ class NearbyProduct {
     final ids = products.map((e) => e.productId).toSet();
     products.retainWhere((x) => ids.remove(x.productId));
     products.sort((a, b) => a.productPrice!.compareTo(b.productPrice!));
+
     return products;
   }
 }

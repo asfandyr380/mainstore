@@ -40,6 +40,7 @@ class AttributeModel {
   String variant = '';
   int price = 0;
   String image = '';
+  num salePrice = 0;
   bool isSelected = false;
 
   AttributeModel.fromJson(Map map)
@@ -47,6 +48,7 @@ class AttributeModel {
         stock = map['stock'],
         variant = map['variant'],
         price = map['price'],
+        salePrice = map['salePrice'],
         image = map['image'] ?? '',
         isSelected = false;
 }

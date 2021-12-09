@@ -146,4 +146,18 @@ class HomeViewModel extends ChangeNotifier {
     }
     isBusy(false);
   }
+
+
+
+
+
+  // Initialize Everything Here
+  init() async
+  {
+
+  }
+
+
+
+
 }
