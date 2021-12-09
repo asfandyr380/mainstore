@@ -52,8 +52,8 @@ class HomeMobile extends StatelessWidget {
               ),
               SizedBox(height: SizeConfig.blockSizeVertical * 2),
               CategoryBanners(
-                getBanner: (banners) => model.getBanner(banners),
-              ),
+                  // getBanner: (banners) => model.getBanner(banners),
+                  ),
               SizedBox(height: SizeConfig.blockSizeVertical * 2),
               Container(
                 child: BrandsRow(
@@ -152,8 +152,8 @@ class Home extends StatelessWidget {
               ),
               Container(
                 child: CategoryBanners(
-                  getBanner: (banners) => model.getBanner(banners),
-                ),
+                    // getBanner: (banners) => model.getBanner(banners),
+                    ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(
@@ -186,28 +186,16 @@ class Home extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MoreandMoreBanner(
-                      cate: model.bannerlist.isNotEmpty
-                          ? model.bannerlist[2].cate
-                          : null,
-                      bannerText: model.bannerlist.isNotEmpty
-                          ? model.bannerlist[2].mainText
-                          : null,
-                      image: model.bannerlist.isNotEmpty
-                          ? model.bannerlist[2].image
-                          : null,
+                      cate: model.bannerlist[2].cate,
+                      bannerText: model.bannerlist[2].mainText,
+                      image: model.bannerlist[2].image,
                     ),
                     MoreandMoreBanner(
-                      cate: model.bannerlist.isNotEmpty
-                          ? model.bannerlist[3].cate
-                          : null,
+                      cate: model.bannerlist[3].cate,
                       bannerTextColor: Colors.white,
                       buttonColor: Colors.white,
-                      bannerText: model.bannerlist.isNotEmpty
-                          ? model.bannerlist[3].mainText
-                          : null,
-                      image: model.bannerlist.isNotEmpty
-                          ? model.bannerlist[3].image
-                          : null,
+                      bannerText: model.bannerlist[3].mainText,
+                      image: model.bannerlist[3].image,
                     ),
                   ],
                 ),

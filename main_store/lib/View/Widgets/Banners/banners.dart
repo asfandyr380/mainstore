@@ -147,7 +147,6 @@ class Ban extends StatelessWidget {
     SizeConfig().init(context);
     bool _isMiddle = isMiddle ?? false;
     String _bannerText = bannerText ?? '';
-    String _image = image ?? placeholderBannerPic;
     String _cate = cate ?? '';
     print(cate);
     return ViewModelBuilder<BannerViewModel>.reactive(
@@ -162,7 +161,7 @@ class Ban extends StatelessWidget {
           image: DecorationImage(
             fit: BoxFit.cover,
             image: NetworkImage(
-              _image,
+              "$baseUrl_Image/$image",
             ),
           ),
         ),
@@ -209,7 +208,6 @@ class SmallBanner extends StatelessWidget {
     String _cate = cate ?? '';
     SizeConfig().init(context);
     String _bannerText = bannerText ?? '';
-    String _image = image ?? placeholderBannerPic;
     return ViewModelBuilder<BannerViewModel>.reactive(
       viewModelBuilder: () => BannerViewModel(),
       builder: (context, model, child) => Container(
@@ -220,7 +218,7 @@ class SmallBanner extends StatelessWidget {
           image: DecorationImage(
             fit: BoxFit.cover,
             image: NetworkImage(
-              _image,
+              "$baseUrl_Image/$image",
             ),
           ),
         ),
@@ -261,7 +259,6 @@ class MoreandMoreBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String _bannerText = bannerText ?? '';
-    String _image = image ?? placeholderBannerPic;
     Color _bannerTextColor = bannerTextColor ?? Colors.black;
     String _cate = cate ?? '';
     return ViewModelBuilder<BannerViewModel>.reactive(
@@ -273,7 +270,7 @@ class MoreandMoreBanner extends StatelessWidget {
           color: Colors.grey,
           image: DecorationImage(
             fit: BoxFit.cover,
-            image: NetworkImage(_image),
+            image: NetworkImage( "$baseUrl_Image/$image",),
           ),
         ),
         child: Container(

@@ -15,6 +15,7 @@ class SideNavMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     bool _productMenu = productMenu ?? false;
+    bool _state = state ?? false;
     return ViewModelBuilder<SideNavViewModel>.reactive(
       viewModelBuilder: () => SideNavViewModel(),
       onModelReady: (model) => model.fetchCategorys(),
@@ -44,7 +45,9 @@ class SideNavMenu extends StatelessWidget {
                         'All Category',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: SizeConfig.blockSizeHorizontal * 1.5),
+                            fontSize: _state
+                                ? SizeConfig.blockSizeHorizontal * 2.5
+                                : SizeConfig.blockSizeHorizontal * 1.5),
                       ),
                     ),
                   )

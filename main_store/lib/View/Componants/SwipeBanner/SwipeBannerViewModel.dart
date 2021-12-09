@@ -1,16 +1,39 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Models/swipeBanner.dart';
-import 'package:main_store/Services/Api/Banners/banner_Services.dart';
+// import 'package:main_store/Services/Api/Banners/banner_Services.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
 
 class SwipeBannerViewModel extends ChangeNotifier {
   int currentIndex = 0;
-  BannerServices _banner = locator<BannerServices>();
-  List<Swipebanner> list = [];
+  // BannerServices _banner = locator<BannerServices>();
+  List<Swipebanner> list = [
+    Swipebanner(
+      id: 1,
+      cate: "Fresh Fruit & Vegetables",
+      mainText: "Fresh & Natural Fruits",
+      subText: "100% Genuine Products",
+      image: "$baseUrl_Image/grocerystore.png",
+    ),
+    Swipebanner(
+      id: 2,
+      cate: "Fresh Fruit & Vegetables",
+      mainText: "Vegetables & Healthy Diet",
+      subText: "100% Genuine Products",
+      image: "$baseUrl_Image/grocerystore.png",
+    ),
+    Swipebanner(
+      id: 2,
+      cate: "Fresh Fruit & Vegetables",
+      mainText: "Healthy Organic Products",
+      subText: "100% Genuine Products",
+      image: "$baseUrl_Image/grocerystore.png",
+    ),
+  ];
   PageController pageController = PageController(initialPage: 0);
   bool _disposed = false;
 
@@ -56,13 +79,13 @@ class SwipeBannerViewModel extends ChangeNotifier {
     _navigation.navigateTo(ProductListing, arguments: [cate]);
   }
 
-  Future fetchBanner() async {
-    var result = await _banner.fetchSwipeBanners();
-    if (result is List<Swipebanner>) {
-      list = result;
-      notifyListeners();
-    } else {
-      print(result);
-    }
-  }
+  // Future fetchBanner() async {
+  //   var result = await _banner.fetchSwipeBanners();
+  //   if (result is List<Swipebanner>) {
+  //     list = result;
+  //     notifyListeners();
+  //   } else {
+  //     print(result);
+  //   }
+  // }
 }

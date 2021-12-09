@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Models/Banners.dart';
@@ -17,7 +18,30 @@ class HomeViewModel extends ChangeNotifier {
   TopSelling _topSelling = locator<TopSelling>();
   NearbyProduct _products = locator<NearbyProduct>();
   ReviewServices _reviewServices = locator<ReviewServices>();
-  List<Banners> bannerlist = [];
+  List<Banners> bannerlist = [
+    Banners(
+        id: 1,
+        image: "img_banner4-1-new.jpeg",
+        mainText: "Fruits & Dried Fruits"),
+    Banners(
+        id: 2,
+        image: "global-grocery-items-counter-ad0653ad.jpeg",
+        mainText: "Grocery Items"),
+    Banners(
+        id: 3, image: "cosmetics.png", mainText: "Cosmetics"),
+    Banners(
+        id: 4,
+        image: "frozenmeat.png",
+        mainText: "Frozen Meat"),
+    Banners(
+        id: 5,
+        image: "img_banner4-3-new.jpeg",
+        mainText: "Fresh Bread"),
+    Banners(
+        id: 6,
+        image: "img_banner4-4-new.jpeg",
+        mainText: "Fish & SeaFood"),
+  ];
   List<ReviewModel> reviewlist = [];
   var items = <ProductsModel>[];
   List<ProductsModel> onSaleProducts = [];
@@ -75,10 +99,10 @@ class HomeViewModel extends ChangeNotifier {
     _navigation.navigateTo(ProductDetailsPage, arguments: category);
   }
 
-  getBanner(List<Banners> banners) {
-    bannerlist = banners;
-    notifyListeners();
-  }
+  // getBanner(List<Banners> banners) {
+  //   bannerlist = banners;
+  //   notifyListeners();
+  // }
 
   fetchNearbyProducts() async {
     var result = await _products.getProducts(currentProductOffset);

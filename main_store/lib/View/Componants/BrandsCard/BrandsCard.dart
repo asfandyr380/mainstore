@@ -23,11 +23,15 @@ class BrandsRow extends StatelessWidget {
                   vertical: SizeConfig.blockSizeVertical * 1,
                   horizontal: SizeConfig.blockSizeHorizontal * 1,
                 ),
-                child: BrandsCard(
-                  onMobile: _onMobile,
-                  image: brand.image,
-                  onTap: () => model.navigateToProductListing(brand.brandName!),
-                ),
+                child: brand.status == 1
+                    ? BrandsCard(
+                        store_name: brand.brandName!,
+                        onMobile: _onMobile,
+                        image: brand.image,
+                        onTap: () =>
+                            model.navigateToProductListing(brand.brandName!),
+                      )
+                    : null,
               ),
           ],
         ),
@@ -40,11 +44,11 @@ class BrandsRow extends StatelessWidget {
 class BrandsCard extends StatelessWidget {
   final String? image;
   final bool? onMobile;
+  final String store_name;
   final Function? onTap;
-  BrandsCard({this.image, this.onMobile, this.onTap});
+  BrandsCard({this.image, this.onMobile, this.onTap, required this.store_name});
   @override
   Widget build(BuildContext context) {
-    String _image = image ?? placeholderBrandPic;
     SizeConfig().init(context);
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -65,10 +69,12 @@ class BrandsCard extends StatelessWidget {
           ),
           child: Container(
             padding: EdgeInsets.all(8),
-            child: Image(
-              fit: BoxFit.contain,
-              image: NetworkImage(_image),
-            ),
+            child: image != ''
+                ? Image(
+                    fit: BoxFit.contain,
+                    image: NetworkImage("$baseUrl_Image/$image"),
+                  )
+                : Center(child: Text(store_name)),
           ),
         ),
       ),

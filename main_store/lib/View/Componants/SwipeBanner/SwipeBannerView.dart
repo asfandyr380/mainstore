@@ -18,13 +18,13 @@ class _SwipeBannerState extends State<SwipeBanner> {
     bool _onMobile = widget.onMobile ?? false;
     return ViewModelBuilder<SwipeBannerViewModel>.reactive(
       viewModelBuilder: () => SwipeBannerViewModel(),
-      onModelReady: (model) {
-        model.fetchBanner().then((value) {
-          // if (model.list.isNotEmpty) {
-          //   model.autoPlay();
-          // }
-        });
-      },
+      // onModelReady: (model) {
+      //   model.fetchBanner().then((value) {
+      //     // if (model.list.isNotEmpty) {
+      //     //   model.autoPlay();
+      //     // }
+      //   });
+      // },
       builder: (context, model, child) => Container(
         height: _onMobile
             ? SizeConfig.blockSizeVertical * 20
