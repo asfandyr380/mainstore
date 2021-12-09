@@ -5,11 +5,17 @@ const Color accentColor = Color(0xff40a944);
 final footerColor = Color(0xffebebeb);
 // Strings
 // Deployed URL
+<<<<<<< HEAD
 // const baseUrl = 'http://194.163.44.38:3000/api';
 
 // Testing URL
 const baseUrl = 'http://localhost:3000/api';
 const baseUrl_Image = 'http://localhost:3000/uploads';
+=======
+// const baseUrl = 'https://superstore69.herokuapp.com/api';
+// Testing URL
+const baseUrl = 'http://localhost:3000/api';
+>>>>>>> d983a7b4efe8b0e0952abc217e0b48f05af120c3
 
 final String agreeing_term_text =
     'By Creating an Account You agree to our Free Membership Agreement and Privacy Policy';
