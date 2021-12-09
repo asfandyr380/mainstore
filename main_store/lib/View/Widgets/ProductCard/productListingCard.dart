@@ -182,8 +182,17 @@ class _ProductListingCardsState extends State<ProductListingCards> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    double _salePrice = widget.details!.salePrice ?? 0;
-    double _productPrice = widget.details!.productPrice ?? 0;
+
+    double? price = widget.details!.attributes.isEmpty
+        ? (widget.details!.onSale != 0
+            ? widget.details!.salePrice
+            : widget.details!.productPrice)
+        : (widget.details!.attributes[0].salePrice != 0
+            ? widget.details!.attributes[0].salePrice.toDouble()
+            : widget.details!.attributes[0].price.toDouble());
+
+    // double _salePrice = widget.details!.salePrice ?? 0;
+    // double _productPrice = widget.details!.productPrice ?? 0;
     int _prodcutId = widget.details!.productId;
     int _onSale = widget.details!.onSale ?? 0;
     String _image = widget.details!.images![0];
@@ -318,7 +327,7 @@ class _ProductListingCardsState extends State<ProductListingCards> {
                   // Price and Sale Price
                   Container(
                     child: Text(
-                      _onSale == 1 ? '£$_salePrice' : '£$_productPrice',
+                      "$price",
                       style: TextStyle(
                         color: accentColor,
                         fontSize: SizeConfig.blockSizeHorizontal * 1,

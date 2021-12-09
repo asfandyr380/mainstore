@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Models/Banners.dart';
@@ -42,6 +41,7 @@ class HomeViewModel extends ChangeNotifier {
         image: "img_banner4-4-new.jpeg",
         mainText: "Fish & SeaFood"),
   ];
+  
   List<ReviewModel> reviewlist = [];
   var items = <ProductsModel>[];
   List<ProductsModel> onSaleProducts = [];

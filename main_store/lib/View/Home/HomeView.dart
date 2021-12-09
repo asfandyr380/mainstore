@@ -173,10 +173,13 @@ class Home extends StatelessWidget {
                 ),
               ),
               SizedBox(height: SizeConfig.blockSizeVertical * 2),
-              ProductListingRow(
-                isLoading: model.isLoading,
-                productDetails: model.onSaleProducts,
-                listingName: 'On Sale Products',
+              Visibility(
+                visible: !model.onSaleProducts.isEmpty,
+                child: ProductListingRow(
+                  isLoading: model.isLoading,
+                  productDetails: model.onSaleProducts,
+                  listingName: 'On Sale Products',
+                ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(
