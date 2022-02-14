@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
+import 'package:main_store/Models/CartModel.dart';
 import 'package:main_store/Models/SummeryModel.dart';
+import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Widgets/orderSummery/summeryViewModel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -13,6 +15,7 @@ class OrderSummary extends StatelessWidget {
   final double? total;
   final bool? checkout;
   final List<int>? ids;
+  final List<CartProducts>? selectedProducts;
   final SummeryModel? m;
   final Function? pay;
   final bool? isLoading;
@@ -27,6 +30,7 @@ class OrderSummary extends StatelessWidget {
     this.pay,
     this.isLoading,
     this.isEnable,
+    this.selectedProducts,
   });
 
   @override
@@ -175,7 +179,7 @@ class OrderSummary extends StatelessWidget {
                   isEnable: _checkout ? isEnable : model.isChecked,
                   onPressed: () => _checkout
                       ? model.navigateToCheckOut(
-                          _total, _subTotal, _shippingfee, ids)
+                          _total, _subTotal, _shippingfee, ids, selectedProducts)
                       : pay!(),
                   label: _checkout ? 'Check Out' : 'Proceed To Pay',
                 ),

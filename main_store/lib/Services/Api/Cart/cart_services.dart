@@ -70,25 +70,46 @@ class CartService {
       carts.add(cart);
       cartProducts = [];
     }
-
     return carts;
   }
 
-  Future checkoutProduct(int userId, double grandtotal) async {
+  Future checkoutProduct(
+    int userId,
+    double grandtotal,
+    double subTotal,
+    String address,
+    String postalCode,
+    String username,
+  ) async {
     Uri url = Uri.parse('$baseUrl/checkout/');
     Map<String, dynamic> reqBody = {
       "user_Id": userId.toString(),
-      "payment_status": '1',
+      "coupon_Id": '1',
+      "subTotal": subTotal.toString(),
       "grandtotal": grandtotal.toString(),
-      "discount": '0',
-      "coupon_Id": '0',
-      "checkout_status": '1'
+      "payment_status": '0',
+      "checkout_status": '1',
+      "quentity": "0", // not needed
     };
+
     http.Response res = await http.post(url, body: reqBody);
     var decodedBody = jsonDecode(res.body);
     if (decodedBody['success'] == 1) {
-      return true;
+      return decodedBody['data']['insertId'];
     } else {
+      print(decodedBody);
+      return false;
+    }
+  }
+
+  Future createOrder(Map<String, dynamic> reqBody) async {
+    Uri url = Uri.parse('$baseUrl/orders');
+    http.Response res = await http.post(url, body: reqBody);
+    var decodedBody = jsonDecode(res.body);
+    if (decodedBody['success'] == 1) {
+      return decodedBody['data']['insertId'];
+    } else {
+      print(decodedBody);
       return false;
     }
   }
@@ -105,16 +126,71 @@ class CartService {
       return false;
   }
 
-  Future updateCartStatus(int cartId) async {
+  Future updateCartStatus(String cartId, String orderId) async {
     Uri _BaseURL = Uri.parse('$baseUrl/cart/update/');
     Map<String, dynamic> reqBody = {
       'cart_status': "1",
-      'cartId': cartId.toString()
+      'cartId': cartId,
+      'orderId': orderId,
     };
     http.Response res = await http.put(_BaseURL, body: reqBody);
     var decodedBody = jsonDecode(res.body);
     if (decodedBody['success'] == 1) {
       return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future createCheckoutSession(
+    List<Map> items,
+    String checkoutId,
+    String username,
+    String postal,
+    String address,
+    List<int> ids,
+  ) async {
+    Uri _BaseURL = Uri.parse('$baseUrl/orders/paymentIntent');
+    Map<String, dynamic> reqBody = {
+      'items': items,
+      "checkoutId": checkoutId,
+      "username": username,
+      'postal': postal,
+      "address": address,
+      'ids': ids,
+    };
+    http.Response res = await http.post(_BaseURL,
+        body: jsonEncode(reqBody),
+        headers: {
+          "Accept": "application/json",
+          'Content-type': 'application/json'
+        });
+    var decodedBody = jsonDecode(res.body);
+    if (decodedBody['success'] == 1) {
+      return decodedBody['data']["id"];
+    } else {
+      return false;
+    }
+  }
+
+  Future updateCheckoutStatus(String id) async {
+    Uri _BaseURL = Uri.parse('$baseUrl/checkout/update');
+    Map<String, dynamic> reqBody = {'id': id, 'status': '1'};
+    http.Response res = await http.post(_BaseURL, body: reqBody);
+    var decodedBody = jsonDecode(res.body);
+    if (decodedBody['success'] == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future checkOrder(String checkoutId) async {
+    Uri _BaseURL = Uri.parse('$baseUrl/orders/checkOrder/$checkoutId');
+    http.Response res = await http.get(_BaseURL);
+    var decodedBody = jsonDecode(res.body);
+    if (decodedBody['success'] == 1) {
+      return decodedBody['data'];
     } else {
       return false;
     }

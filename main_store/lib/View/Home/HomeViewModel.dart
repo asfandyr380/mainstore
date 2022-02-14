@@ -1,15 +1,20 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Models/Banners.dart';
 import 'package:main_store/Models/ReviewModel.dart';
 import 'package:main_store/Models/productsModel.dart';
+
 import 'package:main_store/Services/Api/Products/nearbyProducts.dart';
 import 'package:main_store/Services/Api/Products/onSaleProducts.dart';
 import 'package:main_store/Services/Api/Products/topSellingProducts.dart';
 import 'package:main_store/Services/Api/Reviews/reviewsServices.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
+import 'package:map_picker/map_picker.dart';
 
 class HomeViewModel extends ChangeNotifier {
   Navigation _navigation = locator<Navigation>();
@@ -26,22 +31,12 @@ class HomeViewModel extends ChangeNotifier {
         id: 2,
         image: "global-grocery-items-counter-ad0653ad.jpeg",
         mainText: "Grocery Items"),
-    Banners(
-        id: 3, image: "cosmetics.png", mainText: "Cosmetics"),
-    Banners(
-        id: 4,
-        image: "frozenmeat.png",
-        mainText: "Frozen Meat"),
-    Banners(
-        id: 5,
-        image: "img_banner4-3-new.jpeg",
-        mainText: "Fresh Bread"),
-    Banners(
-        id: 6,
-        image: "img_banner4-4-new.jpeg",
-        mainText: "Fish & SeaFood"),
+    Banners(id: 3, image: "cosmetics.png", mainText: "Cosmetics"),
+    Banners(id: 4, image: "frozenmeat.png", mainText: "Frozen Meat"),
+    Banners(id: 5, image: "img_banner4-3-new.jpeg", mainText: "Fresh Bread"),
+    Banners(id: 6, image: "img_banner4-4-new.jpeg", mainText: "Fish & SeaFood"),
   ];
-  
+
   List<ReviewModel> reviewlist = [];
   var items = <ProductsModel>[];
   List<ProductsModel> onSaleProducts = [];
@@ -147,17 +142,67 @@ class HomeViewModel extends ChangeNotifier {
     isBusy(false);
   }
 
-
-
-
-
   // Initialize Everything Here
-  init() async
-  {
-
+  init(BuildContext context) async {
+    fetchOnSaleProducts();
+    fetchTopSellingProducts();
+    fetchNearbyProducts();
+    getReviews();
+    // Future.delayed(Duration(seconds: 5), () {
+    //   showLocationPicker(context);
+    // });
   }
 
+  final _controller = Completer<GoogleMapController>();
+  MapPickerController mapPickerController = MapPickerController();
 
+  CameraPosition cameraPosition = const CameraPosition(
+    target: LatLng(41.311158, 69.279737),
+    zoom: 14.4746,
+  );
 
+  showLocationPicker(BuildContext ctx) {
+    return showDialog(
+        context: ctx,
+        builder: (_) {
+          return AlertDialog(
+            title: Text("Location Picker"),
+            content: SizedBox(
+              height: 200,
+              width: 200,
+              child: MapPicker(
+                // pass icon widget
+                iconWidget: Icon(Icons.location_on_rounded),
+                //add map picker controller
+                mapPickerController: mapPickerController,
+                child: GoogleMap(
+                  myLocationEnabled: true,
+                  zoomControlsEnabled: false,
+                  // hide location button
+                  myLocationButtonEnabled: false,
+                  mapType: MapType.normal,
+                  //  camera position
+                  initialCameraPosition: cameraPosition,
+                  onMapCreated: (GoogleMapController controller) {
+                    _controller.complete(controller);
+                  },
+                  onCameraMoveStarted: () {
+                    // notify map is moving
+                    mapPickerController.mapMoving!();
+                  },
+                  onCameraMove: (cameraPosition) {
+                    this.cameraPosition = cameraPosition;
+                  },
+                  onCameraIdle: () async {
+                    // notify map stopped moving
+                    mapPickerController.mapFinishedMoving!();
+                  },
+                ),
+              ),
+            ),
+          );
+        });
+  }
 
+  disposeStuff() {}
 }

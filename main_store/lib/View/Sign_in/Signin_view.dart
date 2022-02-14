@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:main_store/Componants/Header/header_view.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Forum/Forum.dart';
-import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/LandingPage_Mobile/LandingPageView.dart';
 import 'package:main_store/View/Sign_in/signin_viewModel.dart';
 import 'package:main_store/View/Widgets/custom_button.dart';
@@ -52,9 +52,7 @@ class _SignInPageState extends State<SignInWeb> {
                     blurRadius: 2,
                   )
                 ]),
-                child: Header(
-                  isSignInPage: true,
-                ),
+                child: Header(type: HeaderViewType.searchable),
               ),
               Container(
                 alignment: Alignment.center,

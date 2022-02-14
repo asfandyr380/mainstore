@@ -9,7 +9,9 @@ final footerColor = Color(0xffebebeb);
 
 // Testing URL
 const baseUrl = 'http://localhost:3000/api';
-const baseUrl_Image = 'http://localhost:3000/uploads';
+const baseUrl_Image = 'http://194.163.44.38:3000/uploads';
+
+const apiKey = "pk_test_51IbRjcGYnh0U48qqHVRPXXtwPFXgex9Y6xUKzyq04dykLOPIYzcOfBbaF18QHuGc0iX5A3AcmHWJ5i1iuduPNnIW00M2RL7TiS";
 
 final String agreeing_term_text =
     'By Creating an Account You agree to our Free Membership Agreement and Privacy Policy';

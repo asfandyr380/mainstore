@@ -3,6 +3,7 @@ import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Models/CartModel.dart';
 import 'package:main_store/Models/SummeryModel.dart';
+import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/Services/Api/Cart/cart_services.dart';
 import 'package:dart_ipify/dart_ipify.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
@@ -11,6 +12,7 @@ import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
 class CartViewModel extends ChangeNotifier {
   List<CartModel> cartlist = [];
   List<int> ids = [];
+  List<CartProducts> selectedProducts = [];
   CartService _cartService = locator<CartService>();
   StorageServices _services = locator<StorageServices>();
   Navigation _navigaton = locator<Navigation>();
@@ -39,7 +41,7 @@ class CartViewModel extends ChangeNotifier {
   }
 
   navigateToCheckOut(double total, double subTotal, double shipping) {
-    var m = SummeryModel.mapData(subTotal, shipping, total, []);
+    var m = SummeryModel.mapData(subTotal, shipping, total, [], []);
     _navigaton.navigateTo(Checkout, arguments: m);
   }
 
@@ -48,7 +50,6 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
     getSummery(product: cart);
     getIds();
-    print(ids);
   }
 
   nestedSelectall(bool checkState, CartModel cart) {
@@ -74,8 +75,10 @@ class CartViewModel extends ChangeNotifier {
         if (product.isSelected!) {
           if (ids.contains(product.cartId)) {
             ids.remove(product.cartId);
+            selectedProducts.remove(product);
           } else {
             ids.add(product.cartId);
+            selectedProducts.add(product);
           }
         }
       }

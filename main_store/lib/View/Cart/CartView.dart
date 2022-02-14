@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:main_store/Componants/Header/header_view.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/CartModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
-import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/LandingPage_Mobile/LandingPageView.dart';
 import 'package:main_store/View/Widgets/orderSummery/order_summary.dart';
 import 'package:main_store/View/Widgets/responsive.dart';
@@ -65,7 +65,7 @@ class _CartViewPageState extends State<CartViewPage> {
                     blurRadius: 2,
                   )
                 ]),
-                child: Header(),
+                child: Header(type: HeaderViewType.searchable),
               ),
               Container(
                 padding: EdgeInsets.symmetric(
@@ -135,6 +135,7 @@ class _CartViewPageState extends State<CartViewPage> {
                       width: SizeConfig.blockSizeHorizontal * 4,
                     ),
                     OrderSummary(
+                      selectedProducts: model.selectedProducts,
                       ids: model.ids,
                       isEnable: model.cartlist.isEmpty ? false : true,
                       subTotal: model.subTotal,

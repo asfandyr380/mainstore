@@ -1,12 +1,11 @@
-import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:main_store/Componants/Header/header_view.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
-import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/ProductListingPage/ProductListingPageViewModel.dart';
 import 'package:main_store/View/Widgets/CardGrid/CardGridView.dart';
 import 'package:main_store/View/Widgets/DropDown/drop_Down.dart';
@@ -61,7 +60,7 @@ class ProductListingPage extends StatelessWidget {
                     blurRadius: 2,
                   )
                 ]),
-                child: Header(),
+                child: Header(type: HeaderViewType.searchable),
               ),
               Banner(),
               Container(

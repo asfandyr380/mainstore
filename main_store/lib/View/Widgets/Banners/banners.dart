@@ -4,89 +4,195 @@ import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Widgets/Banners/bannerViewModel.dart';
 import 'package:stacked/stacked.dart';
 
-class DiscountBanner extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    return Container(
-      height: SizeConfig.blockSizeVertical * 34,
-      width: SizeConfig.blockSizeHorizontal * 64,
-      decoration: BoxDecoration(
-        color: Colors.grey,
-      ),
-      child: Container(
-        padding: EdgeInsets.only(
-            top: SizeConfig.blockSizeVertical * 5,
-            left: SizeConfig.blockSizeHorizontal * 2),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text('Upto '),
-                Text(
-                  '50% ',
-                  style: TextStyle(color: accentColor),
-                ),
-                Text('Off'),
-              ],
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Container(
-              width: SizeConfig.blockSizeHorizontal * 12,
-              height: SizeConfig.blockSizeVertical * 10,
-              child: Text(
-                'Fresh Mango Drinks',
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: SizeConfig.blockSizeHorizontal * 2,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 1,
-            ),
-            BannerButton()
-          ],
-        ),
-      ),
-    );
-  }
-}
+enum BannersViewType { small, medium, large, long }
 
-class SecondBanner extends StatelessWidget {
+class BannerView extends StatelessWidget {
   final String? bannerText;
-  SecondBanner({this.bannerText});
+  final String? image;
+  final String? cate;
+  final Color? buttonColor;
+  final Color? bannerTextColor;
+  final BannersViewType type;
+  const BannerView({
+    this.bannerText,
+    this.cate,
+    this.image,
+    required this.type,
+    this.bannerTextColor,
+    this.buttonColor,
+  });
+
   @override
   Widget build(BuildContext context) {
     String _bannerText = bannerText ?? '';
-    SizeConfig().init(context);
-    return Container(
-      height: SizeConfig.blockSizeVertical * 70,
-      width: SizeConfig.blockSizeHorizontal * 30,
-      decoration: BoxDecoration(
-        color: Colors.grey,
-      ),
-      child: Padding(
-        padding: EdgeInsets.only(top: 8.0),
-        child: Column(
-          children: [
-            Text(
-              _bannerText,
-              style: BannerTextStyle.copyWith(
-                fontSize: SizeConfig.blockSizeHorizontal * 2,
+    String _cate = cate ?? '';
+    return ViewModelBuilder<BannerViewModel>.reactive(
+      viewModelBuilder: () => BannerViewModel(),
+      builder: (context, model, _) {
+        switch (type) {
+          case BannersViewType.small:
+            return Container(
+              height: SizeConfig.blockSizeVertical * 29,
+              width: SizeConfig.blockSizeHorizontal * 20,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    "$baseUrl_Image/$image",
+                  ),
+                ),
               ),
-            ),
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 1,
-            ),
-            BannerButton(),
-          ],
-        ),
-      ),
+              child: Padding(
+                padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 1),
+                child: Column(
+                  children: [
+                    Text(
+                      _bannerText,
+                      style: BannerTextStyle.copyWith(
+                        fontSize: SizeConfig.blockSizeHorizontal * 2,
+                      ),
+                    ),
+                    SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                    BannerButton(
+                      onPressed: () => model.navigateToProductlisting(_cate),
+                    ),
+                  ],
+                ),
+              ),
+            );
+
+          case BannersViewType.medium:
+            return Container(
+              height: SizeConfig.blockSizeVertical * 60,
+              width: SizeConfig.blockSizeHorizontal * 30,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    "$baseUrl_Image/$image",
+                  ),
+                ),
+              ),
+              child: Container(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.blockSizeHorizontal * 1,
+                  top: SizeConfig.blockSizeVertical * 2,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: SizeConfig.blockSizeHorizontal * 12,
+                      height: SizeConfig.blockSizeVertical * 10,
+                      child: Text(
+                        _bannerText,
+                        textAlign: TextAlign.start,
+                        style: BannerTextStyle.copyWith(
+                          fontSize: SizeConfig.blockSizeHorizontal * 2,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical * 1,
+                    ),
+                    BannerButton(
+                      onPressed: () => model.navigateToProductlisting(_cate),
+                    )
+                  ],
+                ),
+              ),
+            );
+
+          case BannersViewType.large:
+            return Container(
+              height: SizeConfig.blockSizeVertical * 60,
+              width: SizeConfig.blockSizeHorizontal * 42,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    "$baseUrl_Image/$image",
+                  ),
+                ),
+              ),
+              child: Container(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.blockSizeHorizontal * 1,
+                  top: SizeConfig.blockSizeVertical * 2,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: SizeConfig.blockSizeHorizontal * 12,
+                      height: SizeConfig.blockSizeVertical * 10,
+                      child: Text(
+                        _bannerText,
+                        textAlign: TextAlign.start,
+                        style: BannerTextStyle.copyWith(
+                          fontSize: SizeConfig.blockSizeHorizontal * 2,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical * 1,
+                    ),
+                    BannerButton(
+                      onPressed: () => model.navigateToProductlisting(_cate),
+                    )
+                  ],
+                ),
+              ),
+            );
+
+          case BannersViewType.long:
+            return Container(
+              height: SizeConfig.blockSizeVertical * 34,
+              width: SizeConfig.blockSizeHorizontal * 45,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    "$baseUrl_Image/$image",
+                  ),
+                ),
+              ),
+              child: Container(
+                padding: EdgeInsets.only(
+                    top: SizeConfig.blockSizeVertical * 18,
+                    left: SizeConfig.blockSizeHorizontal * 2),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: SizeConfig.blockSizeHorizontal * 12,
+                      height: SizeConfig.blockSizeVertical * 5,
+                      child: Text(
+                        _bannerText,
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: SizeConfig.blockSizeHorizontal * 2,
+                            color: bannerTextColor ?? Colors.black),
+                      ),
+                    ),
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical * 1,
+                    ),
+                    BannerButton(
+                      onPressed: () => model.navigateToProductlisting(_cate),
+                      buttonColor: buttonColor ?? Colors.black,
+                    )
+                  ],
+                ),
+              ),
+            );
+        }
+      },
     );
   }
 }
@@ -136,176 +242,6 @@ class BanMobile extends StatelessWidget {
   }
 }
 
-class Ban extends StatelessWidget {
-  final bool? isMiddle;
-  final String? bannerText;
-  final String? image;
-  final String? cate;
-  Ban({this.isMiddle, this.bannerText, this.image, this.cate});
-  @override
-  Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    bool _isMiddle = isMiddle ?? false;
-    String _bannerText = bannerText ?? '';
-    String _cate = cate ?? '';
-    print(cate);
-    return ViewModelBuilder<BannerViewModel>.reactive(
-      viewModelBuilder: () => BannerViewModel(),
-      builder: (context, model, child) => Container(
-        height: SizeConfig.blockSizeVertical * 60,
-        width: _isMiddle
-            ? SizeConfig.blockSizeHorizontal * 42
-            : SizeConfig.blockSizeHorizontal * 30,
-        decoration: BoxDecoration(
-          color: Colors.grey,
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(
-              "$baseUrl_Image/$image",
-            ),
-          ),
-        ),
-        child: Container(
-          padding: EdgeInsets.only(
-            left: SizeConfig.blockSizeHorizontal * 1,
-            top: SizeConfig.blockSizeVertical * 2,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: SizeConfig.blockSizeHorizontal * 12,
-                height: SizeConfig.blockSizeVertical * 10,
-                child: Text(
-                  _bannerText,
-                  textAlign: TextAlign.start,
-                  style: BannerTextStyle.copyWith(
-                    fontSize: SizeConfig.blockSizeHorizontal * 2,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: SizeConfig.blockSizeVertical * 1,
-              ),
-              BannerButton(
-                onPressed: () => model.navigateToProductlisting(_cate),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SmallBanner extends StatelessWidget {
-  final String? bannerText;
-  final String? image;
-  final String? cate;
-  SmallBanner({this.bannerText, this.image, this.cate});
-  @override
-  Widget build(BuildContext context) {
-    String _cate = cate ?? '';
-    SizeConfig().init(context);
-    String _bannerText = bannerText ?? '';
-    return ViewModelBuilder<BannerViewModel>.reactive(
-      viewModelBuilder: () => BannerViewModel(),
-      builder: (context, model, child) => Container(
-        height: SizeConfig.blockSizeVertical * 29,
-        width: SizeConfig.blockSizeHorizontal * 20,
-        decoration: BoxDecoration(
-          color: Colors.grey,
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage(
-              "$baseUrl_Image/$image",
-            ),
-          ),
-        ),
-        child: Padding(
-          padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 1),
-          child: Column(
-            children: [
-              Text(
-                _bannerText,
-                style: BannerTextStyle.copyWith(
-                  fontSize: SizeConfig.blockSizeHorizontal * 2,
-                ),
-              ),
-              SizedBox(height: SizeConfig.blockSizeVertical * 1),
-              BannerButton(
-                onPressed: () => model.navigateToProductlisting(_cate),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class MoreandMoreBanner extends StatelessWidget {
-  final String? bannerText;
-  final String? image;
-  final Color? buttonColor;
-  final Color? bannerTextColor;
-  final String? cate;
-  MoreandMoreBanner(
-      {this.bannerText,
-      this.image,
-      this.buttonColor,
-      this.bannerTextColor,
-      this.cate});
-  @override
-  Widget build(BuildContext context) {
-    String _bannerText = bannerText ?? '';
-    Color _bannerTextColor = bannerTextColor ?? Colors.black;
-    String _cate = cate ?? '';
-    return ViewModelBuilder<BannerViewModel>.reactive(
-      viewModelBuilder: () => BannerViewModel(),
-      builder: (context, model, child) => Container(
-        height: SizeConfig.blockSizeVertical * 34,
-        width: SizeConfig.blockSizeHorizontal * 45,
-        decoration: BoxDecoration(
-          color: Colors.grey,
-          image: DecorationImage(
-            fit: BoxFit.cover,
-            image: NetworkImage( "$baseUrl_Image/$image",),
-          ),
-        ),
-        child: Container(
-          padding: EdgeInsets.only(
-              top: SizeConfig.blockSizeVertical * 18,
-              left: SizeConfig.blockSizeHorizontal * 2),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: SizeConfig.blockSizeHorizontal * 12,
-                height: SizeConfig.blockSizeVertical * 5,
-                child: Text(
-                  _bannerText,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: SizeConfig.blockSizeHorizontal * 2,
-                      color: _bannerTextColor),
-                ),
-              ),
-              SizedBox(
-                height: SizeConfig.blockSizeVertical * 1,
-              ),
-              BannerButton(
-                onPressed: () => model.navigateToProductlisting(_cate),
-                buttonColor: buttonColor,
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class BannerButton extends StatefulWidget {
   final Color? buttonColor;

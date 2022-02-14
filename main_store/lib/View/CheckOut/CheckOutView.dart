@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:main_store/Componants/Header/header_view.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/SummeryModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
-import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Widgets/orderSummery/order_summary.dart';
 import 'package:main_store/View/Widgets/responsive.dart';
 import 'package:main_store/View/Widgets/text_field.dart';
@@ -18,15 +18,16 @@ class CheckoutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Responsive(
-        mobile: CheckOutMobile(
-          details: m,
-        ),
-        tablet: CheckOutPage(
-          m: m,
-        ),
-        desktop: CheckOutPage(
-          m: m,
-        ));
+      mobile: CheckOutMobile(
+        details: m,
+      ),
+      tablet: CheckOutPage(
+        m: m,
+      ),
+      desktop: CheckOutPage(
+        m: m,
+      ),
+    );
   }
 }
 
@@ -54,7 +55,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
             child: Column(
               children: [
                 Container(
-                  child: Header(),
+                  child: Header(type: HeaderViewType.searchable),
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:main_store/Componants/Header/header_view.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
-import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Wish_List/wishlistViewModel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -33,7 +33,7 @@ class WishlistView extends StatelessWidget {
                           blurRadius: 2,
                         )
                       ]),
-                      child: Header(),
+                      child: Header(type: HeaderViewType.searchable),
                     ),
                     SizedBox(
                       height: SizeConfig.blockSizeVertical * 1,
@@ -80,7 +80,7 @@ class WishlistView extends StatelessWidget {
                         blurRadius: 2,
                       )
                     ]),
-                    child: Header(),
+                    child: Header(type: HeaderViewType.searchable),
                   ),
                   // Footer
                   Container(

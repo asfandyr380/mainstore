@@ -114,4 +114,11 @@ class HeaderViewModel extends ChangeNotifier {
   navigateToLogInPage() {
     _navigation.navigateTo(SignIn);
   }
+
+  init() {
+    getUser();
+    getCount();
+  }
+
+  disposeStuff() {}
 }

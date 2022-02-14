@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:main_store/Componants/Header/header_view.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
-import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/ForgotPassword/forgotPassviewModel.dart';
 import 'package:main_store/View/Widgets/text_field.dart';
 import 'package:stacked/stacked.dart';
@@ -30,9 +30,7 @@ class ForgotPasswordView extends StatelessWidget {
                       blurRadius: 2,
                     )
                   ]),
-                  child: Header(
-                    isSignInPage: true,
-                  ),
+                  child: Header(type: HeaderViewType.searchable),
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 10),

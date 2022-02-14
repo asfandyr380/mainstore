@@ -15,6 +15,7 @@ class CartProducts {
   ProductsModel? products;
   int? quantity = 0;
   bool? isSelected = false;
+  CartProducts(this.cartId, this.isSelected, this.products, this.quantity);
   CartProducts.fromMap(Map map, ProductsModel product)
       : products = product,
         quantity = map['quantity'],

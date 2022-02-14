@@ -1,12 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Services/Api/Auth/Auth_Services.dart';
 import 'package:main_store/Services/Dialog/Dialog_Services.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
 import 'package:main_store/Services/SharedPreference/Storage_Services.dart';
-import 'package:main_store/View/Home/HomeView.dart';
+import 'package:main_store/View/Home/Views/home_desktop.dart';
 
 class AccountVerificationViewModel extends ChangeNotifier {
   Navigation _navigation = locator<Navigation>();

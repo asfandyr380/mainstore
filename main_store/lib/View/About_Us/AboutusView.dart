@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:main_store/Componants/Header/header_view.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/About_Us/AboutViewModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
-import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:stacked/stacked.dart';
 
 class AboutView extends StatelessWidget {
@@ -30,7 +30,7 @@ class AboutView extends StatelessWidget {
                 ],
               ),
               child: Header(
-                isSignInPage: true,
+                type: HeaderViewType.searchable,
               ),
             ),
             // // About Us Page

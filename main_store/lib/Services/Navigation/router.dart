@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/routes.dart';
+import 'package:main_store/Extention/string_externsion.dart';
 import 'package:main_store/Models/SummeryModel.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/View/About_Us/AboutusView.dart';
@@ -7,7 +8,7 @@ import 'package:main_store/View/Cart/CartView.dart';
 import 'package:main_store/View/CheckOut/CheckOutView.dart';
 import 'package:main_store/View/Componants/contact_us/contactUsView.dart';
 import 'package:main_store/View/ForgotPassword/ForgotPassword.dart';
-import 'package:main_store/View/Home/HomeView.dart';
+import 'package:main_store/View/Home/home_view.dart';
 import 'package:main_store/View/LandingPage_Mobile/LandingPageView.dart';
 import 'package:main_store/View/ProductDetail/productDetailView.dart';
 import 'package:main_store/View/ProductListingPage/ProductListingPage.dart';
@@ -19,56 +20,45 @@ import 'package:main_store/View/UserDashboard/userDashboard.dart';
 import 'package:main_store/View/Wish_List/wishlist.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
+  var routingData = settings.name!.getRoutingData;
   var arg = settings.arguments;
-  switch (settings.name) {
+  switch (routingData.route) {
     case SignIn:
-      return _GeneratePageRoute(widget: SigninPage(), routeName: settings.name);
+      return _getPageRoute(SigninPage(), settings);
     case SignUp:
-      return _GeneratePageRoute(widget: SignUpPage(), routeName: settings.name);
+      return _getPageRoute(SignUpPage(), settings);
+      ;
     case HomeView:
-      return _GeneratePageRoute(widget: HomePage(), routeName: settings.name);
+      return _getPageRoute(HomePage(), settings);
     case Cart:
-      return _GeneratePageRoute(widget: CartView(), routeName: settings.name);
+      return _getPageRoute(CartView(), settings);
     case SuccessPage:
-      return _GeneratePageRoute(widget: Success(), routeName: settings.name);
+      var id = routingData['id'];
+      return _getPageRoute(Success(id, routeData: routingData), settings);
     case Checkout:
       SummeryModel? details = arg as SummeryModel?;
-      return _GeneratePageRoute(
-          widget: CheckoutPage(m: details), routeName: settings.name);
+      return _getPageRoute(CheckOutPage(m: details), settings);
     case LandingPageView:
-      return _GeneratePageRoute(
-          widget: LandingPage(), routeName: settings.name);
+      return _getPageRoute(LandingPage(), settings);
     case ContactUs:
-      return _GeneratePageRoute(
-          widget: ContactUsView(), routeName: settings.name);
+      return _getPageRoute(ContactUsView(), settings);
     case AboutUs:
-      return _GeneratePageRoute(widget: AboutView(), routeName: settings.name);
+      return _getPageRoute(AboutView(), settings);
     case SplashScreenView:
-      return _GeneratePageRoute(
-          widget: SplashScreen(), routeName: settings.name);
+      return _getPageRoute(SplashScreen(), settings);
     case Dashboard:
-      return _GeneratePageRoute(
-          widget: UserDashboard(), routeName: settings.name);
+      return _getPageRoute(UserDashboard(), settings);
     case Wishlist:
-      return _GeneratePageRoute(
-          widget: WishlistView(), routeName: settings.name);
+      return _getPageRoute(WishlistView(), settings);
     case ForgotPassword:
-      return _GeneratePageRoute(
-          widget: ForgotPasswordView(), routeName: settings.name);
+      return _getPageRoute(ForgotPasswordView(), settings);
     case ProductDetailsPage:
       ProductsModel? details = arg as ProductsModel?;
-      return _GeneratePageRoute(
-          widget: ProductDetailPage(
-            productDetails: details!,
-          ),
-          routeName: settings.name);
+      return _getPageRoute(
+          ProductDetailView(productDetails: details!), settings);
     case ProductListing:
       dynamic cate = arg as dynamic;
-      return _GeneratePageRoute(
-          widget: ListingPage(
-            cate: cate,
-          ),
-          routeName: settings.name);
+      return _getPageRoute(ListingPage(cate: cate), settings);
 
     default:
       return MaterialPageRoute(
@@ -81,24 +71,31 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   }
 }
 
-class _GeneratePageRoute extends PageRouteBuilder {
-  final Widget widget;
-  final String? routeName;
-  _GeneratePageRoute({required this.widget, this.routeName})
+PageRoute _getPageRoute(Widget child, RouteSettings settings) {
+  return _FadeRoute(child: child, routeName: settings.name!);
+}
+
+class _FadeRoute extends PageRouteBuilder {
+  final Widget child;
+  final String routeName;
+  _FadeRoute({required this.child, required this.routeName})
       : super(
-            settings: RouteSettings(name: routeName),
-            pageBuilder: (BuildContext context, Animation<double> animation,
-                Animation<double> secondaryAnimation) {
-              return widget;
-            },
-            transitionDuration: Duration(milliseconds: 300),
-            transitionsBuilder: (BuildContext context,
-                Animation<double> animation,
-                Animation<double> secondaryAnimation,
-                Widget child) {
-              return FadeTransition(
-                opacity: Tween(begin: 0.0, end: 1.0).animate(animation),
-                child: child,
-              );
-            });
+          settings: RouteSettings(name: routeName),
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              child,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        );
 }

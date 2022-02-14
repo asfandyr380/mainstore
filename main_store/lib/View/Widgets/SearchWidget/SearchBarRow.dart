@@ -7,7 +7,7 @@ import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/productsModel.dart';
 import 'package:main_store/Services/Api/Products/searchProducts.dart';
-import 'package:main_store/View/Home/HomeView.dart';
+import 'package:main_store/View/Home/Views/home_desktop.dart';
 import 'package:main_store/View/Widgets/SearchWidget/SearchViewModel.dart';
 import 'package:stacked/stacked.dart';
 

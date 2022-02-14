@@ -1,12 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:main_store/Componants/Header/header_view.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
-import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/UserDashboard/userDashboard.dart';
 import 'package:main_store/View/UserDashboard/userInvoiceViewModel.dart';
-import 'package:main_store/View/Widgets/DropDown/invoiceDropdown.dart';
 import 'package:stacked/stacked.dart';
 
 class OrderInvoice extends StatelessWidget {
@@ -20,7 +18,7 @@ class OrderInvoice extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      child: Header(),
+                      child: Header(type: HeaderViewType.searchable),
                       decoration:
                           BoxDecoration(color: Colors.white, boxShadow: [
                         BoxShadow(

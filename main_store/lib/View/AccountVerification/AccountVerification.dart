@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:main_store/Componants/Header/header_view.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/AccountVerification/AccountVerificationModel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
-import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:stacked/stacked.dart';
 
@@ -34,7 +32,8 @@ class AccountVerificationView extends StatelessWidget {
                       )
                     ]),
                     child: Header(
-                      isSignInPage: true,
+                type: HeaderViewType.searchable,
+
                     ),
                   ),
                   Container(

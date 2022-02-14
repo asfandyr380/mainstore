@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:main_store/Componants/Header/header_view.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
 import 'package:main_store/View/Componants/Forum/Forum.dart';
-import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/LandingPage_Mobile/LandingPageView.dart';
 import 'package:main_store/View/Sign_up/signup_viewmodel.dart';
 import 'package:main_store/View/Widgets/responsive.dart';
@@ -51,7 +51,7 @@ class SignUpWeb extends StatelessWidget {
                     blurRadius: 2,
                   )
                 ]),
-                child: Header(),
+                child: Header(type: HeaderViewType.searchable),
               ),
               Container(
                 alignment: Alignment.center,

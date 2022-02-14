@@ -4,7 +4,7 @@ import 'package:main_store/Config/consts.dart';
 import 'package:main_store/View/Account/AccountView.dart';
 import 'package:main_store/View/Cart/CartView.dart';
 import 'package:main_store/View/Componants/SideNav/SideNavView.dart';
-import 'package:main_store/View/Home/HomeView.dart';
+import 'package:main_store/View/Home/Views/home_mobile.dart';
 import 'package:main_store/View/LandingPage_Mobile/LandingPageViewModel.dart';
 import 'package:main_store/View/SearchPage/SearchPageView.dart';
 import 'package:main_store/View/Widgets/Mobile_AppBar.dart';

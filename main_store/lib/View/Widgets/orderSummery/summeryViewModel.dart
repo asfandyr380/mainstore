@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:main_store/Config/locator.dart';
 import 'package:main_store/Config/routes.dart';
+import 'package:main_store/Models/CartModel.dart';
 import 'package:main_store/Models/SummeryModel.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
 import 'package:main_store/View/SuccessPage/successPage.dart';
@@ -15,12 +16,12 @@ class SummeryViewModel extends ChangeNotifier {
   }
 
   navigateToCheckOut(
-      double total, double subTotal, double shipping, List<int>? ids) {
-    var m = SummeryModel.mapData(subTotal, shipping, total, ids!);
+      double total, double subTotal, double shipping, List<int>? ids, List<CartProducts>? products) {
+    var m = SummeryModel.mapData(subTotal, shipping, total, ids!, products);
     _navigation.navigateTo(Checkout, arguments: m);
   }
 
   navigateToSuccess() {
-    _navigation.pushReplaceRoute(Success());
+    _navigation.pushReplaceRoute(Success(''));
   }
 }

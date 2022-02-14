@@ -3,16 +3,16 @@ import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:main_store/Componants/Header/header_view.dart';
 import 'package:main_store/Config/consts.dart';
 import 'package:main_store/Config/sizeconfig.dart';
 import 'package:main_store/Models/ReviewModel.dart';
 import 'package:main_store/Models/productsModel.dart';
-import 'package:main_store/View/Home/HomeView.dart';
+import 'package:main_store/View/Home/home_view.dart';
 import 'package:main_store/View/Widgets/Mobile_AppBar.dart';
 import 'package:main_store/View/Widgets/responsive.dart';
 import 'package:main_store/View/Widgets/snapshotCrousel.dart';
 import 'package:main_store/View/Componants/Footer/FooterView.dart';
-import 'package:main_store/View/Componants/Header/Header.dart';
 import 'package:main_store/View/Componants/ProductListingRows/ProductListingRows.dart';
 import 'package:main_store/View/ProductDetail/productDetailViewMode.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -61,7 +61,7 @@ class ProductDetailView extends StatelessWidget {
                     blurRadius: 2,
                   )
                 ]),
-                child: Header(),
+                child: Header(type: HeaderViewType.searchable),
               ),
               Container(
                 alignment: Alignment.centerLeft,
@@ -133,8 +133,12 @@ class ProductDetailView extends StatelessWidget {
                             );
                           });
                         },
-                        buyNow: () =>
-                            model.buyNow(productDetails.productPrice, 0),
+                        buyNow: () => model.buyNow(
+                          productDetails.productPrice,
+                          0,
+                          productDetails.productId,
+                          productDetails,
+                        ),
                       ),
                     ),
                   ],

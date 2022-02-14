@@ -5,7 +5,7 @@ import 'package:main_store/Config/routes.dart';
 import 'package:main_store/Services/Api/Auth/Auth_Services.dart';
 import 'package:main_store/Services/Dialog/Dialog_Services.dart';
 import 'package:main_store/Services/Navigation/navigation_services.dart';
-import 'package:main_store/View/Home/HomeView.dart';
+import 'package:main_store/View/Home/home_view.dart';
 
 class ForumViewModel extends ChangeNotifier {
   bool isTicked = false;
